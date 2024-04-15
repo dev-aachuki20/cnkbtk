@@ -90,6 +90,30 @@ Route::group(["namespace" => "App\Http\Controllers\Admin",'as' => 'admin.',"pref
     Route::post('tag/update-status', 'TagsController@updateStatus')->name('tag-management.tag.updateStatus');
     Route::post('advertisement/update-status', 'AdvertisementController@updateStatus')->name('advertisement.updateStatus');
     Route::post('plan/update-status', 'PlanController@updateStatus')->name('plan.updateStatus');
+
+
+    Route::get('member-registration/{range?}', 'StatisticsController@membersRegistrationGraph')->name('statistics.members-registration')
+    ->where('range', 'day|week|month')
+    ->defaults('range', 'day');
+
+    Route::get('number-of-posts/{range?}', 'StatisticsController@numberPostsGraph')->name('statistics.number-posters')
+    ->where('range', 'day|week|month')
+    ->defaults('range', 'day');
+
+    Route::get('visit-users/{range?}', 'StatisticsController@visitingUsersGraph')->name('statistics.visiting-users')
+    ->where('range', 'day|week|month')
+    ->defaults('range', 'day');
+
+
+    Route::get('popular-posters/{range?}', 'StatisticsController@popularPostersGraph')->name('statistics.popular-posters')
+    ->where('range', 'day|week|month')
+    ->defaults('range', 'day');
+
+    Route::get('mobile-access/{range?}', 'StatisticsController@mobileAccessGraph')->name('statistics.mobile-access')
+    ->where('range', 'day|week|month')
+    ->defaults('range', 'day');
+
+    
     // Resourse Routes
     Route::resource('settings', "SettingController")->only(['create','store']);
     Route::resource('users', "UserController");
