@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class UniqueVisitor extends Model
 {
     use HasFactory;
-    protected $fillable = ['ip_address','date'];
+    protected $fillable = ['ip_address','date', 'device_name'];
 }

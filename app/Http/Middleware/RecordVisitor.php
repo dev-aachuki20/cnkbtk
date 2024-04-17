@@ -16,15 +16,21 @@ class RecordVisitor
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next)
-    {      
+    {
+        $userAgent = $request->header('User-Agent');
+        $deviceName = null;
+
+        $deviceName = strpos($userAgent, 'Mobile') !== false ? 'Mobile Device' : 'Desktop Device';
+
         $result = UniqueVisitor::where(["date" => date("Y-m-d"), "ip_address" => $request->ip()])->first();
-        if(empty($result)){
+        if (empty($result)) {
             UniqueVisitor::create([
                 'ip_address' => $request->ip(),
-                'date' => date("Y-m-d")
+                'date' => date("Y-m-d"),
+                'device_name' => $deviceName,
             ]);
         }
-       
+
         return $next($request);
     }
 }
