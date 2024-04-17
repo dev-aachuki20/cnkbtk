@@ -20,7 +20,7 @@ class RecordVisitor
         $userAgent = $request->header('User-Agent');
         $deviceName = null;
 
-        $deviceName = strpos($userAgent, 'Mobile') !== false ? 'Mobile Device' : 'Desktop Device';
+        $deviceName = strpos($userAgent, 'Mobile') !== false ? 1 : 0;
 
         $result = UniqueVisitor::where(["date" => date("Y-m-d"), "ip_address" => $request->ip()])->first();
         if (empty($result)) {
