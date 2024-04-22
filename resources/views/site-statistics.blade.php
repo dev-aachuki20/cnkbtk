@@ -48,29 +48,29 @@ $siteSettingData = getSiteSetting();
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
 
                   <li class="nav-item" role="presentation">
-                    <button data-id="{{ route('admin.statistics.members-registration',['range'=>'week'] ) }}" class="nav-link filter-tabs active" id="registered-members" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
+                    <button data-id="{{ route('admin.statistics.members-registration',['range'=>'week'] ) }}" data-route="{{ route('admin.statistics.members-registration') }}" class="nav-link filter-tabs active" id="registered-members" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
                       {{trans("cruds.registered_members.title")}}
                     </button>
                   </li>
                   <li class="nav-item" role="presentation">
-                    <button data-id="{{ route('admin.statistics.number-posters',['range'=>'week'] ) }}" class="nav-link filter-tabs" id="number-posters" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
+                    <button data-id="{{ route('admin.statistics.number-posters',['range'=>'week'] ) }}" data-route="{{ route('admin.statistics.number-posters') }}" class="nav-link filter-tabs" id="number-posters" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
                       {{trans("cruds.number_of_posts.title")}}
                     </button>
                   </li>
                   <li class="nav-item" role="presentation">
-                    <button data-id="{{ route('admin.statistics.popular-posters',['range'=>'week'] ) }}" class="nav-link filter-tabs" id="popular-posters" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
+                    <button data-id="{{ route('admin.statistics.popular-posters',['range'=>'week'] ) }}" data-route="{{ route('admin.statistics.popular-posters') }}" class="nav-link filter-tabs" id="popular-posters" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
                       {{trans("cruds.most_popular_poster.title")}}
                     </button>
                   </li>
 
                   <li class="nav-item" role="presentation">
-                    <button data-id="{{ route('admin.statistics.visiting-users',['range'=>'week'] ) }}" class="nav-link filter-tabs" id="visit-users" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
+                    <button data-id="{{ route('admin.statistics.visiting-users',['range'=>'week'] ) }}" data-route="{{ route('admin.statistics.visiting-users') }}" class="nav-link filter-tabs" id="visit-users" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
                       {{trans("cruds.visiting_users.title")}}
                     </button>
                   </li>
 
                   <li class="nav-item" role="presentation">
-                    <button data-id="{{ route('admin.statistics.mobile-access',['range'=>'week'] ) }}" class="nav-link filter-tabs" id="mobile-access" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
+                    <button data-id="{{ route('admin.statistics.mobile-access',['range'=>'week'] ) }}" data-route="{{ route('admin.statistics.mobile-access') }}" class="nav-link filter-tabs" id="mobile-access" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
                       {{trans("cruds.mobile_access.title")}}
                     </button>
                   </li>
@@ -131,6 +131,19 @@ $siteSettingData = getSiteSetting();
         }
       });
 
+      function loadData(url) {
+        $.ajax({
+          url: url,
+          type: 'GET',
+          success: function(response) {
+            $(".profile-content").html(response.html);
+          },
+          error: function(xhr, status, error) {
+            console.error(error);
+          }
+        });
+      }
+
       $('.filter-tabs').click(function() {
         $('.nav-link').removeClass('active');
         $(this).addClass('active');
@@ -162,10 +175,23 @@ $siteSettingData = getSiteSetting();
         });
       });
 
-      function loadData(url) {
+      $(document).on('change', '#filter', function() {
+        var filter = this.value;
+        var startDate = $('#dateRangePicker').data('daterangepicker').startDate.format('YYYY-MM-DD');
+        var endDate = $('#dateRangePicker').data('daterangepicker').endDate.format('YYYY-MM-DD');
+        var activeRoute = $('.filter-tabs.active').data('route');
+
+        // Determine the route based on the active tab
+        var url = activeRoute + '/' + filter;
+
         $.ajax({
           url: url,
           type: 'GET',
+          data: {
+            start_date: startDate,
+            end_date: endDate,
+            range: filter,
+          },
           success: function(response) {
             $(".profile-content").html(response.html);
           },
@@ -173,33 +199,9 @@ $siteSettingData = getSiteSetting();
             console.error(error);
           }
         });
-      }
-
-      // Filteration by day/week/month
-      // $(document).ready(function() {
-      $(document).on('change', '#filter', function() {
-        var url = $('.filter-tabs.active').data('id');
-        loadData(url);
-        // var filter = this.value;
-        // var startDate = $('#dateRangePicker').data('daterangepicker').startDate.format('YYYY-MM-DD');
-        // var endDate = $('#dateRangePicker').data('daterangepicker').endDate.format('YYYY-MM-DD');
-        // var activeUrl = $('.filter-tabs.active').data('id');
-        // $.ajax({
-        //   url: "{{ route('admin.statistics.members-registration') }}/" + filter,
-        //   type: 'GET',
-        //   // data: {
-        //   //     start_date: startDate,
-        //   //     end_date: endDate
-        //   // },
-        //   success: function(response) {
-        //     $(".profile-content").html(response.html);
-        //   },
-        //   error: function(xhr, status, error) {
-        //     console.error(srror);
-        //   }
-        // });
       });
-      // });
+
+
     });
   </script>
   @endsection
