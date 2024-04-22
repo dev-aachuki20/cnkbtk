@@ -159,7 +159,7 @@ $siteSettingData = getSiteSetting();
         var url = $(this).data('id');
         loadData(url);
       });
-
+      
       $(".filter-tabs:first").trigger('click');
 
       $('#dateRangePicker').on('apply.daterangepicker', function(ev, picker) {
