@@ -16,31 +16,13 @@ class StatisticsController extends Controller
 {
         public function membersRegistrationGraph(Request $request, $range)
         {
-                if ($request->has('start_date') && $request->has('end_date') && $request->has('range')) {
-                        $startDate = Carbon::parse($request->start_date);
-                        $endDate = Carbon::parse($request->end_date);
-                        $range = $request->range;
-                        if ($range == 'day') {
-                                $startDate->startOfDay();
-                                $endDate->endOfDay();
-                                $interval = 'hour';
-                        }
-                        if ($range == 'week') {
-                                // $interval = 'week';
-                                $startDate->startOfDay();
-                                $endDate->endOfDay();
-                                $interval = 'day';
-                        }
-                        if ($range == 'month') {
-                                // $interval = 'month';
-                                $startDate->startOfDay();
-                                $endDate->endOfDay();
-                                $interval = 'day';
-                        }
-                } else {
+                $startDate = $request->has('start_date') ? Carbon::parse($request->start_date) : Carbon::now();
+                $endDate = $request->has('end_date') ? Carbon::parse($request->end_date) : Carbon::now();
 
-                        $startDate = Carbon::now();
-                        $endDate = Carbon::now();
+                if (!$request->has(['start_date', 'end_date', 'range'])) {
+                        if (!in_array($range, ['day', 'week', 'month'])) {
+                                return response()->json(['error' => 'Invalid range'], 400);
+                        }
 
                         if ($range == 'day') {
                                 $startDate->startOfDay();
@@ -50,15 +32,53 @@ class StatisticsController extends Controller
                                 $startDate = Carbon::today()->subDays(6)->startOfDay();
                                 $endDate = Carbon::today()->endOfDay();
                                 $interval = 'day';
-                        } elseif ($range == 'month') {
-                                $startDate->startOfMonth();
+                        } else {
+                                $startDate->startOfMonth()->startOfDay();
                                 $endDate->endOfDay();
                                 $interval = 'day';
+                        }
+                } else {
+                        $range = $request->range;
+                        if ($range == 'day') {
+                                $startDate->startOfDay();
+                                $endDate->endOfDay();
+                                $interval = 'hour';
+                        } elseif ($range == 'week') {
+                                $weeklyDateRanges = [];
+                                $currentDate = $startDate->copy();
+                                while ($currentDate->lte($endDate)) {
+                                        $endOfWeek = $currentDate->copy()->endOfWeek();
+                                        if ($endOfWeek->gt($endDate)) {
+                                                $endOfWeek = $endDate->copy();
+                                        }
+                                        $weeklyDateRanges[] = [
+                                                'start' => $currentDate->copy()->startOfDay(),
+                                                'end' => $endOfWeek->copy()->endOfDay()
+                                        ];
+                                        $currentDate->addWeek()->startOfWeek();
+                                }
+                                $labels = [];
+                                $data = [];
+                                foreach ($weeklyDateRanges as $week) {
+                                        $startOfWeek = $week['start'];
+                                        $endOfWeek = $week['end'];
+                                        $users = User::whereBetween('created_at', [$startOfWeek, $endOfWeek])->orderBy('created_at')->get();
+                                        $count = $users->count();
+                                        $data[] = $count;
+                                        $labels[] = $endOfWeek->toDateString();
+                                }
+                                $pluginText = trans("cruds.registered_members.fields.num_graph");
+                                $xAxisText =  trans("cruds.registered_members.fields.time");
+                                $yAxisText =  trans("cruds.registered_members.fields.count");
+                                $labelText =  trans("cruds.registered_members.fields.graph");
+                                $html = view('statistics.members-registration', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                                return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                         } else {
-                                return response()->json(['error' => 'Invalid range'], 400);
+                                $startDate->startOfMonth()->startOfDay();
+                                $endDate->endOfDay();
+                                $interval = 'day';
                         }
                 }
-
 
                 $labels = [];
                 $data = [];
@@ -67,10 +87,7 @@ class StatisticsController extends Controller
                 $yAxisText =  trans("cruds.registered_members.fields.count");
                 $labelText =  trans("cruds.registered_members.fields.graph");
 
-
-
                 $users = User::whereBetween('created_at', [$startDate, $endDate])->orderBy('created_at')->get();
-
                 $userCounts = $users->groupBy(function ($user) use ($interval) {
                         if ($interval === 'hour') {
                                 return $user->created_at->format('h a');
@@ -80,26 +97,22 @@ class StatisticsController extends Controller
                 });
 
                 $startDateCopy = $startDate->copy();
-
                 while ($startDateCopy->lte($endDate)) {
                         if ($interval === 'hour') {
                                 $date = $startDateCopy->format('h a');
                         } else {
                                 $date = $startDateCopy->format('Y-m-d');
                         }
-
                         $count = isset($userCounts[$date]) ? $userCounts[$date]->count() : 0;
-
                         $labels[] = $date;
                         $data[] = $count;
-
                         $startDateCopy->add(1, $interval);
                 }
 
                 $html = view('statistics.members-registration', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
-
                 return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
         }
+
 
 
 
