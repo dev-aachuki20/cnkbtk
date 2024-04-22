@@ -207,10 +207,6 @@ $siteSettingData = getSiteSetting();
           }
         });
       });
-
-
-
-
     });
   </script>
   @endsection

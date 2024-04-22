@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Poster;
-use App\Models\LoginLog;
 use App\Models\UniqueVisitor;
 use App\Models\PosterReadCount;
 use Carbon\Carbon;
@@ -113,33 +112,15 @@ class StatisticsController extends Controller
                 return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
         }
 
-
-
-
         public function numberPostsGraph(Request $request, $range)
         {
-                if ($request->has('start_date') && $request->has('end_date') && $request->has('range')) {
-                        $startDate = Carbon::parse($request->start_date);
-                        $endDate = Carbon::parse($request->end_date);
-                        $range = $request->range;
-                        if ($range == 'day') {
-                                $interval = 'hour';
+                $startDate = $request->has('start_date') ? Carbon::parse($request->start_date) : Carbon::now();
+                $endDate = $request->has('end_date') ? Carbon::parse($request->end_date) : Carbon::now();
+
+                if (!$request->has(['start_date', 'end_date', 'range'])) {
+                        if (!in_array($range, ['day', 'week', 'month'])) {
+                                return response()->json(['error' => 'Invalid range'], 400);
                         }
-                        if ($range == 'week') {
-                                // $interval = 'week';
-                                $startDate->startOfDay();
-                                $endDate->endOfDay();
-                                $interval = 'day';
-                        }
-                        if ($range == 'month') {
-                                // $interval = 'month';
-                                $startDate->startOfDay();
-                                $endDate->endOfDay();
-                                $interval = 'day';
-                        }
-                } else {
-                        $startDate = Carbon::now();
-                        $endDate = Carbon::now();
 
                         if ($range == 'day') {
                                 $startDate->startOfDay();
@@ -149,12 +130,51 @@ class StatisticsController extends Controller
                                 $startDate = Carbon::today()->subDays(6)->startOfDay();
                                 $endDate = Carbon::today()->endOfDay();
                                 $interval = 'day';
-                        } elseif ($range == 'month') {
-                                $startDate->startOfMonth();
+                        } else {
+                                $startDate->startOfMonth()->startOfDay();
                                 $endDate->endOfDay();
                                 $interval = 'day';
+                        }
+                } else {
+                        $range = $request->range;
+                        if ($range == 'day') {
+                                $startDate->startOfDay();
+                                $endDate->endOfDay();
+                                $interval = 'hour';
+                        } elseif ($range == 'week') {
+                                $weeklyDateRanges = [];
+                                $currentDate = $startDate->copy();
+                                while ($currentDate->lte($endDate)) {
+                                        $endOfWeek = $currentDate->copy()->endOfWeek();
+                                        if ($endOfWeek->gt($endDate)) {
+                                                $endOfWeek = $endDate->copy();
+                                        }
+                                        $weeklyDateRanges[] = [
+                                                'start' => $currentDate->copy()->startOfDay(),
+                                                'end' => $endOfWeek->copy()->endOfDay()
+                                        ];
+                                        $currentDate->addWeek()->startOfWeek();
+                                }
+                                $labels = [];
+                                $data = [];
+                                foreach ($weeklyDateRanges as $week) {
+                                        $startOfWeek = $week['start'];
+                                        $endOfWeek = $week['end'];
+                                        $posts = Poster::whereBetween('created_at', [$startDate, $endDate])->orderBy('created_at')->get();
+                                        $count = $posts->count();
+                                        $data[] = $count;
+                                        $labels[] = $endOfWeek->toDateString();
+                                }
+                                $pluginText = trans("cruds.registered_members.fields.num_graph");
+                                $xAxisText =  trans("cruds.registered_members.fields.time");
+                                $yAxisText =  trans("cruds.registered_members.fields.count");
+                                $labelText =  trans("cruds.registered_members.fields.graph");
+                                $html = view('statistics.members-registration', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                                return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                         } else {
-                                return response()->json(['error' => 'Invalid range'], 400);
+                                $startDate->startOfMonth()->startOfDay();
+                                $endDate->endOfDay();
+                                $interval = 'day';
                         }
                 }
 
@@ -201,28 +221,13 @@ class StatisticsController extends Controller
 
         public function visitingUsersGraph(Request $request, $range)
         {
-                if ($request->has('start_date') && $request->has('end_date') && $request->has('range')) {
-                        $startDate = Carbon::parse($request->start_date);
-                        $endDate = Carbon::parse($request->end_date);
-                        $range = $request->range;
-                        if ($range == 'day') {
-                                $interval = 'hour';
+                $startDate = $request->has('start_date') ? Carbon::parse($request->start_date) : Carbon::now();
+                $endDate = $request->has('end_date') ? Carbon::parse($request->end_date) : Carbon::now();
+
+                if (!$request->has(['start_date', 'end_date', 'range'])) {
+                        if (!in_array($range, ['day', 'week', 'month'])) {
+                                return response()->json(['error' => 'Invalid range'], 400);
                         }
-                        if ($range == 'week') {
-                                // $interval = 'week';
-                                $startDate->startOfDay();
-                                $endDate->endOfDay();
-                                $interval = 'day';
-                        }
-                        if ($range == 'month') {
-                                // $interval = 'month';
-                                $startDate->startOfDay();
-                                $endDate->endOfDay();
-                                $interval = 'day';
-                        }
-                } else {
-                        $startDate = Carbon::now();
-                        $endDate = Carbon::now();
 
                         if ($range == 'day') {
                                 $startDate->startOfDay();
@@ -232,12 +237,51 @@ class StatisticsController extends Controller
                                 $startDate = Carbon::today()->subDays(6)->startOfDay();
                                 $endDate = Carbon::today()->endOfDay();
                                 $interval = 'day';
-                        } elseif ($range == 'month') {
-                                $startDate->startOfMonth();
+                        } else {
+                                $startDate->startOfMonth()->startOfDay();
                                 $endDate->endOfDay();
                                 $interval = 'day';
+                        }
+                } else {
+                        $range = $request->range;
+                        if ($range == 'day') {
+                                $startDate->startOfDay();
+                                $endDate->endOfDay();
+                                $interval = 'hour';
+                        } elseif ($range == 'week') {
+                                $weeklyDateRanges = [];
+                                $currentDate = $startDate->copy();
+                                while ($currentDate->lte($endDate)) {
+                                        $endOfWeek = $currentDate->copy()->endOfWeek();
+                                        if ($endOfWeek->gt($endDate)) {
+                                                $endOfWeek = $endDate->copy();
+                                        }
+                                        $weeklyDateRanges[] = [
+                                                'start' => $currentDate->copy()->startOfDay(),
+                                                'end' => $endOfWeek->copy()->endOfDay()
+                                        ];
+                                        $currentDate->addWeek()->startOfWeek();
+                                }
+                                $labels = [];
+                                $data = [];
+                                foreach ($weeklyDateRanges as $week) {
+                                        $startOfWeek = $week['start'];
+                                        $endOfWeek = $week['end'];
+                                        $visitingUsers = UniqueVisitor::whereBetween('created_at', [$startDate, $endDate])->orderBy('created_at')->get();
+                                        $count = $visitingUsers->count();
+                                        $data[] = $count;
+                                        $labels[] = $endOfWeek->toDateString();
+                                }
+                                $pluginText = trans("cruds.registered_members.fields.num_graph");
+                                $xAxisText =  trans("cruds.registered_members.fields.time");
+                                $yAxisText =  trans("cruds.registered_members.fields.count");
+                                $labelText =  trans("cruds.registered_members.fields.graph");
+                                $html = view('statistics.members-registration', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                                return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                         } else {
-                                return response()->json(['error' => 'Invalid range'], 400);
+                                $startDate->startOfMonth()->startOfDay();
+                                $endDate->endOfDay();
+                                $interval = 'day';
                         }
                 }
 
@@ -281,31 +325,16 @@ class StatisticsController extends Controller
                 return response()->json(['success' => 'Graph Find Your Data', 'html' => $html], 200);
         }
 
-
         public function popularPostersGraph(Request $request, $range)
         {
-                if ($request->has('start_date') && $request->has('end_date') && $request->has('range')) {
-                        $startDate = Carbon::parse($request->start_date);
-                        $endDate = Carbon::parse($request->end_date);
-                        $range = $request->range;
-                        if ($range == 'day') {
-                                $interval = 'hour';
+
+                $startDate = $request->has('start_date') ? Carbon::parse($request->start_date) : Carbon::now();
+                $endDate = $request->has('end_date') ? Carbon::parse($request->end_date) : Carbon::now();
+
+                if (!$request->has(['start_date', 'end_date', 'range'])) {
+                        if (!in_array($range, ['day', 'week', 'month'])) {
+                                return response()->json(['error' => 'Invalid range'], 400);
                         }
-                        if ($range == 'week') {
-                                // $interval = 'week';
-                                $startDate->startOfDay();
-                                $endDate->endOfDay();
-                                $interval = 'day';
-                        }
-                        if ($range == 'month') {
-                                // $interval = 'month';
-                                $startDate->startOfDay();
-                                $endDate->endOfDay();
-                                $interval = 'day';
-                        }
-                } else {
-                        $startDate = Carbon::now();
-                        $endDate = Carbon::now();
 
                         if ($range == 'day') {
                                 $startDate->startOfDay();
@@ -315,12 +344,51 @@ class StatisticsController extends Controller
                                 $startDate = Carbon::today()->subDays(6)->startOfDay();
                                 $endDate = Carbon::today()->endOfDay();
                                 $interval = 'day';
-                        } elseif ($range == 'month') {
-                                $startDate->startOfMonth();
+                        } else {
+                                $startDate->startOfMonth()->startOfDay();
                                 $endDate->endOfDay();
                                 $interval = 'day';
+                        }
+                } else {
+                        $range = $request->range;
+                        if ($range == 'day') {
+                                $startDate->startOfDay();
+                                $endDate->endOfDay();
+                                $interval = 'hour';
+                        } elseif ($range == 'week') {
+                                $weeklyDateRanges = [];
+                                $currentDate = $startDate->copy();
+                                while ($currentDate->lte($endDate)) {
+                                        $endOfWeek = $currentDate->copy()->endOfWeek();
+                                        if ($endOfWeek->gt($endDate)) {
+                                                $endOfWeek = $endDate->copy();
+                                        }
+                                        $weeklyDateRanges[] = [
+                                                'start' => $currentDate->copy()->startOfDay(),
+                                                'end' => $endOfWeek->copy()->endOfDay()
+                                        ];
+                                        $currentDate->addWeek()->startOfWeek();
+                                }
+                                $labels = [];
+                                $data = [];
+                                foreach ($weeklyDateRanges as $week) {
+                                        $startOfWeek = $week['start'];
+                                        $endOfWeek = $week['end'];
+                                        $popularPosters = PosterReadCount::whereBetween('created_at', [$startDate, $endDate])->orderBy('created_at')->get();
+                                        $count = $popularPosters->count();
+                                        $data[] = $count;
+                                        $labels[] = $endOfWeek->toDateString();
+                                }
+                                $pluginText = trans("cruds.registered_members.fields.num_graph");
+                                $xAxisText =  trans("cruds.registered_members.fields.time");
+                                $yAxisText =  trans("cruds.registered_members.fields.count");
+                                $labelText =  trans("cruds.registered_members.fields.graph");
+                                $html = view('statistics.members-registration', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                                return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                         } else {
-                                return response()->json(['error' => 'Invalid range'], 400);
+                                $startDate->startOfMonth()->startOfDay();
+                                $endDate->endOfDay();
+                                $interval = 'day';
                         }
                 }
 
@@ -330,8 +398,6 @@ class StatisticsController extends Controller
                 $xAxisText =  trans("cruds.most_popular_poster.fields.time");
                 $yAxisText =  trans("cruds.most_popular_poster.fields.count");
                 $labelText =  trans("cruds.most_popular_poster.fields.graph");
-
-
 
 
                 $popularPosters = PosterReadCount::whereBetween('created_at', [$startDate, $endDate])->orderBy('created_at')->get();
@@ -368,28 +434,13 @@ class StatisticsController extends Controller
 
         public function mobileAccessGraph(Request $request, $range)
         {
-                if ($request->has('start_date') && $request->has('end_date') && $request->has('range')) {
-                        $startDate = Carbon::parse($request->start_date);
-                        $endDate = Carbon::parse($request->end_date);
-                        $range = $request->range;
-                        if ($range == 'day') {
-                                $interval = 'hour';
+                $startDate = $request->has('start_date') ? Carbon::parse($request->start_date) : Carbon::now();
+                $endDate = $request->has('end_date') ? Carbon::parse($request->end_date) : Carbon::now();
+
+                if (!$request->has(['start_date', 'end_date', 'range'])) {
+                        if (!in_array($range, ['day', 'week', 'month'])) {
+                                return response()->json(['error' => 'Invalid range'], 400);
                         }
-                        if ($range == 'week') {
-                                // $interval = 'week';
-                                $startDate->startOfDay();
-                                $endDate->endOfDay();
-                                $interval = 'day';
-                        }
-                        if ($range == 'month') {
-                                // $interval = 'month';
-                                $startDate->startOfDay();
-                                $endDate->endOfDay();
-                                $interval = 'day';
-                        }
-                } else {
-                        $startDate = Carbon::now();
-                        $endDate = Carbon::now();
 
                         if ($range == 'day') {
                                 $startDate->startOfDay();
@@ -399,12 +450,51 @@ class StatisticsController extends Controller
                                 $startDate = Carbon::today()->subDays(6)->startOfDay();
                                 $endDate = Carbon::today()->endOfDay();
                                 $interval = 'day';
-                        } elseif ($range == 'month') {
-                                $startDate->startOfMonth();
+                        } else {
+                                $startDate->startOfMonth()->startOfDay();
                                 $endDate->endOfDay();
                                 $interval = 'day';
+                        }
+                } else {
+                        $range = $request->range;
+                        if ($range == 'day') {
+                                $startDate->startOfDay();
+                                $endDate->endOfDay();
+                                $interval = 'hour';
+                        } elseif ($range == 'week') {
+                                $weeklyDateRanges = [];
+                                $currentDate = $startDate->copy();
+                                while ($currentDate->lte($endDate)) {
+                                        $endOfWeek = $currentDate->copy()->endOfWeek();
+                                        if ($endOfWeek->gt($endDate)) {
+                                                $endOfWeek = $endDate->copy();
+                                        }
+                                        $weeklyDateRanges[] = [
+                                                'start' => $currentDate->copy()->startOfDay(),
+                                                'end' => $endOfWeek->copy()->endOfDay()
+                                        ];
+                                        $currentDate->addWeek()->startOfWeek();
+                                }
+                                $labels = [];
+                                $data = [];
+                                foreach ($weeklyDateRanges as $week) {
+                                        $startOfWeek = $week['start'];
+                                        $endOfWeek = $week['end'];
+                                        $mobilesAccess = UniqueVisitor::whereBetween('created_at', [$startDate, $endDate])->where('device_name', 0)->orderBy('created_at')->get();
+                                        $count = $mobilesAccess->count();
+                                        $data[] = $count;
+                                        $labels[] = $endOfWeek->toDateString();
+                                }
+                                $pluginText = trans("cruds.registered_members.fields.num_graph");
+                                $xAxisText =  trans("cruds.registered_members.fields.time");
+                                $yAxisText =  trans("cruds.registered_members.fields.count");
+                                $labelText =  trans("cruds.registered_members.fields.graph");
+                                $html = view('statistics.members-registration', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                                return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                         } else {
-                                return response()->json(['error' => 'Invalid range'], 400);
+                                $startDate->startOfMonth()->startOfDay();
+                                $endDate->endOfDay();
+                                $interval = 'day';
                         }
                 }
 
