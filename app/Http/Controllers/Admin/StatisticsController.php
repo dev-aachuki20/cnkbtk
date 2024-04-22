@@ -47,8 +47,8 @@ class StatisticsController extends Controller
                                 $endDate->endOfDay();
                                 $interval = 'hour';
                         } elseif ($range == 'week') {
-                                $startDate->startOfWeek();
-                                $endDate->endOfWeek();
+                                $startDate = Carbon::today()->subDays(6)->startOfDay();
+                                $endDate = Carbon::today()->endOfDay();
                                 $interval = 'day';
                         } elseif ($range == 'month') {
                                 $startDate->startOfMonth();
@@ -133,8 +133,8 @@ class StatisticsController extends Controller
                                 $endDate->endOfDay();
                                 $interval = 'hour';
                         } elseif ($range == 'week') {
-                                $startDate->startOfWeek();
-                                $endDate->endOfWeek();
+                                $startDate = Carbon::today()->subDays(6)->startOfDay();
+                                $endDate = Carbon::today()->endOfDay();
                                 $interval = 'day';
                         } elseif ($range == 'month') {
                                 $startDate->startOfMonth();
@@ -181,7 +181,7 @@ class StatisticsController extends Controller
                         $startDateCopy->add(1, $interval);
                 }
 
-                $html = view('statistics.number-posters', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                $html = view('statistics.members-registration', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
                 return response()->json(['success' => 'Graph Find Your Data', 'html' => $html], 200);
         }
@@ -216,8 +216,8 @@ class StatisticsController extends Controller
                                 $endDate->endOfDay();
                                 $interval = 'hour';
                         } elseif ($range == 'week') {
-                                $startDate->startOfWeek();
-                                $endDate->endOfWeek();
+                                $startDate = Carbon::today()->subDays(6)->startOfDay();
+                                $endDate = Carbon::today()->endOfDay();
                                 $interval = 'day';
                         } elseif ($range == 'month') {
                                 $startDate->startOfMonth();
@@ -263,7 +263,7 @@ class StatisticsController extends Controller
                         $startDateCopy->add(1, $interval);
                 }
 
-                $html = view('statistics.visiting-users', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                $html = view('statistics.members-registration', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
                 return response()->json(['success' => 'Graph Find Your Data', 'html' => $html], 200);
         }
@@ -299,8 +299,8 @@ class StatisticsController extends Controller
                                 $endDate->endOfDay();
                                 $interval = 'hour';
                         } elseif ($range == 'week') {
-                                $startDate->startOfWeek();
-                                $endDate->endOfWeek();
+                                $startDate = Carbon::today()->subDays(6)->startOfDay();
+                                $endDate = Carbon::today()->endOfDay();
                                 $interval = 'day';
                         } elseif ($range == 'month') {
                                 $startDate->startOfMonth();
@@ -348,7 +348,7 @@ class StatisticsController extends Controller
                         $startDateCopy->add(1, $interval);
                 }
 
-                $html = view('statistics.popular-posters', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                $html = view('statistics.members-registration', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
                 return response()->json(['success' => 'Graph Find Your Data', 'html' => $html], 200);
         }
@@ -383,8 +383,8 @@ class StatisticsController extends Controller
                                 $endDate->endOfDay();
                                 $interval = 'hour';
                         } elseif ($range == 'week') {
-                                $startDate->startOfWeek();
-                                $endDate->endOfWeek();
+                                $startDate = Carbon::today()->subDays(6)->startOfDay();
+                                $endDate = Carbon::today()->endOfDay();
                                 $interval = 'day';
                         } elseif ($range == 'month') {
                                 $startDate->startOfMonth();
@@ -431,7 +431,7 @@ class StatisticsController extends Controller
                         $startDateCopy->add(1, $interval);
                 }
 
-                $html = view('statistics.mobile-access', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                $html = view('statistics.members-registration', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
                 return response()->json(['success' => 'Graph Find Your Data', 'html' => $html], 200);
         }

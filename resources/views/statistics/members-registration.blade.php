@@ -58,5 +58,4 @@
     };
 
     var myChart = new Chart(ctx, config);
-
 </script>
