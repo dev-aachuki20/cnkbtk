@@ -21,31 +21,38 @@ class StatisticsController extends Controller
                         $endDate = Carbon::parse($request->end_date);
                         $range = $request->range;
                         if ($range == 'day') {
+                                $startDate->startOfDay();
+                                $endDate->endOfDay();
                                 $interval = 'hour';
                         }
                         if ($range == 'week') {
-                                // $startDate->endOfWeek();
-                                $interval = 'week';
+                                // $interval = 'week';
+                                $startDate->startOfDay();
+                                $endDate->endOfDay();
+                                $interval = 'day';
                         }
                         if ($range == 'month') {
-                                // $startDate->endOfMonth();
-                                $interval = 'month';
+                                // $interval = 'month';
+                                $startDate->startOfDay();
+                                $endDate->endOfDay();
+                                $interval = 'day';
                         }
-                } 
-                else {
+                } else {
+
                         $startDate = Carbon::now();
                         $endDate = Carbon::now();
+
                         if ($range == 'day') {
                                 $startDate->startOfDay();
                                 $endDate->endOfDay();
                                 $interval = 'hour';
                         } elseif ($range == 'week') {
-                                $startDate->subDays(6)->startOfDay();
-                                $endDate->endOfDay();
+                                $startDate->startOfWeek();
+                                $endDate->endOfWeek();
                                 $interval = 'day';
                         } elseif ($range == 'month') {
                                 $startDate->startOfMonth();
-                                $endDate->endOfMonth();
+                                $endDate->endOfDay();
                                 $interval = 'day';
                         } else {
                                 return response()->json(['error' => 'Invalid range'], 400);
@@ -106,10 +113,16 @@ class StatisticsController extends Controller
                                 $interval = 'hour';
                         }
                         if ($range == 'week') {
-                                $interval = 'week';
+                                // $interval = 'week';
+                                $startDate->startOfDay();
+                                $endDate->endOfDay();
+                                $interval = 'day';
                         }
                         if ($range == 'month') {
-                                $interval = 'month';
+                                // $interval = 'month';
+                                $startDate->startOfDay();
+                                $endDate->endOfDay();
+                                $interval = 'day';
                         }
                 } else {
                         $startDate = Carbon::now();
@@ -120,12 +133,12 @@ class StatisticsController extends Controller
                                 $endDate->endOfDay();
                                 $interval = 'hour';
                         } elseif ($range == 'week') {
-                                $startDate->subDays(6)->startOfDay();;
+                                $startDate->startOfWeek();
                                 $endDate->endOfWeek();
                                 $interval = 'day';
                         } elseif ($range == 'month') {
                                 $startDate->startOfMonth();
-                                $endDate->endOfMonth();
+                                $endDate->endOfDay();
                                 $interval = 'day';
                         } else {
                                 return response()->json(['error' => 'Invalid range'], 400);
@@ -183,10 +196,16 @@ class StatisticsController extends Controller
                                 $interval = 'hour';
                         }
                         if ($range == 'week') {
-                                $interval = 'week';
+                                // $interval = 'week';
+                                $startDate->startOfDay();
+                                $endDate->endOfDay();
+                                $interval = 'day';
                         }
                         if ($range == 'month') {
-                                $interval = 'month';
+                                // $interval = 'month';
+                                $startDate->startOfDay();
+                                $endDate->endOfDay();
+                                $interval = 'day';
                         }
                 } else {
                         $startDate = Carbon::now();
@@ -197,12 +216,12 @@ class StatisticsController extends Controller
                                 $endDate->endOfDay();
                                 $interval = 'hour';
                         } elseif ($range == 'week') {
-                                $startDate->subDays(7)->startOfDay();;
+                                $startDate->startOfWeek();
                                 $endDate->endOfWeek();
                                 $interval = 'day';
                         } elseif ($range == 'month') {
                                 $startDate->startOfMonth();
-                                $endDate->endOfMonth();
+                                $endDate->endOfDay();
                                 $interval = 'day';
                         } else {
                                 return response()->json(['error' => 'Invalid range'], 400);
@@ -260,10 +279,16 @@ class StatisticsController extends Controller
                                 $interval = 'hour';
                         }
                         if ($range == 'week') {
-                                $interval = 'week';
+                                // $interval = 'week';
+                                $startDate->startOfDay();
+                                $endDate->endOfDay();
+                                $interval = 'day';
                         }
                         if ($range == 'month') {
-                                $interval = 'month';
+                                // $interval = 'month';
+                                $startDate->startOfDay();
+                                $endDate->endOfDay();
+                                $interval = 'day';
                         }
                 } else {
                         $startDate = Carbon::now();
@@ -274,12 +299,12 @@ class StatisticsController extends Controller
                                 $endDate->endOfDay();
                                 $interval = 'hour';
                         } elseif ($range == 'week') {
-                                $startDate->subDays(7)->startOfDay();;
+                                $startDate->startOfWeek();
                                 $endDate->endOfWeek();
                                 $interval = 'day';
                         } elseif ($range == 'month') {
                                 $startDate->startOfMonth();
-                                $endDate->endOfMonth();
+                                $endDate->endOfDay();
                                 $interval = 'day';
                         } else {
                                 return response()->json(['error' => 'Invalid range'], 400);
@@ -338,10 +363,16 @@ class StatisticsController extends Controller
                                 $interval = 'hour';
                         }
                         if ($range == 'week') {
-                                $interval = 'week';
+                                // $interval = 'week';
+                                $startDate->startOfDay();
+                                $endDate->endOfDay();
+                                $interval = 'day';
                         }
                         if ($range == 'month') {
-                                $interval = 'month';
+                                // $interval = 'month';
+                                $startDate->startOfDay();
+                                $endDate->endOfDay();
+                                $interval = 'day';
                         }
                 } else {
                         $startDate = Carbon::now();
@@ -352,12 +383,12 @@ class StatisticsController extends Controller
                                 $endDate->endOfDay();
                                 $interval = 'hour';
                         } elseif ($range == 'week') {
-                                $startDate->subDays(7)->startOfDay();;
+                                $startDate->startOfWeek();
                                 $endDate->endOfWeek();
                                 $interval = 'day';
                         } elseif ($range == 'month') {
                                 $startDate->startOfMonth();
-                                $endDate->endOfMonth();
+                                $endDate->endOfDay();
                                 $interval = 'day';
                         } else {
                                 return response()->json(['error' => 'Invalid range'], 400);

@@ -98,6 +98,15 @@ $siteSettingData = getSiteSetting();
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
   <script>
     $(document).ready(function() {
+      $('#filter').val('week');
+
+      $('.filter-tabs').click(function() {
+        $('.nav-link').removeClass('active');
+        $(this).addClass('active');
+        $('#filter').val('week');
+        $('#filter').change();
+      });
+
       $('#dateRangePicker').daterangepicker({
         maxDate: new Date(),
         locale: {
@@ -177,8 +186,8 @@ $siteSettingData = getSiteSetting();
 
       $(document).on('change', '#filter', function() {
         var filter = this.value;
-        var startDate = $('#dateRangePicker').data('daterangepicker').startDate.format('YYYY-MM-DD');
-        var endDate = $('#dateRangePicker').data('daterangepicker').endDate.format('YYYY-MM-DD');
+        // var startDate = $('#dateRangePicker').data('daterangepicker').startDate.format('YYYY-MM-DD');
+        // var endDate = $('#dateRangePicker').data('daterangepicker').endDate.format('YYYY-MM-DD');
         var activeRoute = $('.filter-tabs.active').data('route');
 
         // Determine the route based on the active tab
@@ -188,8 +197,6 @@ $siteSettingData = getSiteSetting();
           url: url,
           type: 'GET',
           data: {
-            start_date: startDate,
-            end_date: endDate,
             range: filter,
           },
           success: function(response) {
@@ -200,6 +207,8 @@ $siteSettingData = getSiteSetting();
           }
         });
       });
+
+
 
 
     });
