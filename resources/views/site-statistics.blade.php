@@ -137,7 +137,7 @@ $siteSettingData = getSiteSetting();
         var url = $(this).data('id');
         loadData(url);
       });
-
+      
       $(".filter-tabs:first").trigger('click');
 
       $('#dateRangePicker').on('apply.daterangepicker', function(ev, picker) {
@@ -174,32 +174,6 @@ $siteSettingData = getSiteSetting();
           }
         });
       }
-
-      // Filteration by day/week/month
-      // $(document).ready(function() {
-      $(document).on('change', '#filter', function() {
-        var url = $('.filter-tabs.active').data('id');
-        loadData(url);
-        // var filter = this.value;
-        // var startDate = $('#dateRangePicker').data('daterangepicker').startDate.format('YYYY-MM-DD');
-        // var endDate = $('#dateRangePicker').data('daterangepicker').endDate.format('YYYY-MM-DD');
-        // var activeUrl = $('.filter-tabs.active').data('id');
-        // $.ajax({
-        //   url: "{{ route('admin.statistics.members-registration') }}/" + filter,
-        //   type: 'GET',
-        //   // data: {
-        //   //     start_date: startDate,
-        //   //     end_date: endDate
-        //   // },
-        //   success: function(response) {
-        //     $(".profile-content").html(response.html);
-        //   },
-        //   error: function(xhr, status, error) {
-        //     console.error(srror);
-        //   }
-        // });
-      });
-      // });
     });
   </script>
   @endsection
