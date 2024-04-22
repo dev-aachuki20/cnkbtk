@@ -95,6 +95,36 @@ return [
     'date' => 'Date',
     'reads' => "Reads",
     'upload_files' => 'Upload files',
-    'upload_pictures' => 'Upload pictures'
+    'upload_pictures' => 'Upload pictures',
+
+
+    'days_of_week' => [
+        'sunday'    => 'Su',
+        'monday'    => 'Mo',
+        'tuesday'   => 'Tu',
+        'wednesday' => 'We',
+        'thursday'  => 'Th',
+        'friday'    => 'Fr',
+        'saturday'  => 'Sa',
+    ],
+
+    'month_names' => [
+        'january'    => 'Jan',
+        'february'    => 'Feb',
+        'march'   => 'Mar',
+        'april' => 'Apr',
+        'may'  => 'May',
+        'june'    => 'Jun',
+        'july'  => 'Jul',
+        'august'  => 'Aug',
+        'september'  => 'Sep',
+        'october'  => 'Oct',
+        'november'  => 'Nov',
+        'december'  => 'Dec',
+    ],
+
+
+
+    
 ];
     

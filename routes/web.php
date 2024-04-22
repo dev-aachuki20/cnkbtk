@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Routes which does not require any authentication 
-Route::group(["namespace" => "App\Http\Controllers"],function(){
+Route::group(["namespace" => "App\Http\Controllers"], function () {
     Route::get('/', "HomeController@index")->name('home');
     Route::view('privacy-policy', "privacy-policy")->name('privacy-policy');
     Route::view('terms-condition', "terms-condition")->name('terms-condition');
@@ -40,28 +40,26 @@ Route::group(["namespace" => "App\Http\Controllers"],function(){
             app()->setLocale($locale);
             session()->put('locale', $locale);
             session()->save();
-            return  back()->with(["alert-type" => "success","message" => trans('global.language_change_success')]);
+            return  back()->with(["alert-type" => "success", "message" => trans('global.language_change_success')]);
         }
-        return back()->with(["alert-type" => "error","message" => trans('global.language_change_error')]);
+        return back()->with(["alert-type" => "error", "message" => trans('global.language_change_error')]);
     })->name("update-language");
 
     // Report Route 
     Route::post('report/create', "ReportController@create")->name('report.create');
     Route::post('report/store', "ReportController@store")->name('report.store');
-    
-
 });
 
 
-Route::resource('post', "App\Http\Controllers\PosterController")->middleware(["auth","verified","status"]);
+Route::resource('post', "App\Http\Controllers\PosterController")->middleware(["auth", "verified", "status"]);
 // Route::get("post/edit/{param}","App\Http\Controllers\PosterController@edit")->name("post.edit")->middleware('auth');
-Route::post('post/update-status', 'App\Http\Controllers\PosterController@updateStatus')->name('post.updateStatus')->middleware(["auth","verified"]);
-Route::post("post/remove-episode","App\Http\Controllers\PosterController@removeEpisode")->name("post.remove-episode")->middleware(["auth","verified"]);
-Route::post("post/upload-image","App\Http\Controllers\PosterController@uploadImage")->name("post.upload-image")->middleware(["auth","verified"]);
+Route::post('post/update-status', 'App\Http\Controllers\PosterController@updateStatus')->name('post.updateStatus')->middleware(["auth", "verified"]);
+Route::post("post/remove-episode", "App\Http\Controllers\PosterController@removeEpisode")->name("post.remove-episode")->middleware(["auth", "verified"]);
+Route::post("post/upload-image", "App\Http\Controllers\PosterController@uploadImage")->name("post.upload-image")->middleware(["auth", "verified"]);
 
 // User and creator routes 
 //Route::view('/create-post', "user.create_post")->name('create-post');
-Route::group(["namespace" => "App\Http\Controllers\User",'as' => 'user.',"prefix" => "user",'middleware' => ["auth","verified","status"]],function(){
+Route::group(["namespace" => "App\Http\Controllers\User", 'as' => 'user.', "prefix" => "user", 'middleware' => ["auth", "verified", "status"]], function () {
     // User Profile Related Route
     Route::get('/profile', "HomeController@index")->name('profile');
     Route::post('/profile/update', "ProfileController@updateProfile")->name('profile.update');
@@ -71,10 +69,10 @@ Route::group(["namespace" => "App\Http\Controllers\User",'as' => 'user.',"prefix
     //Point Related Routes
     Route::get('/self-top-up', "PointsController@selftopup")->name('self-top-up');
     Route::post('/self-top-up/submit', "PointsController@paymenttopup")->name('self-top-up.submit');
-});   
+});
 
 // Admin  routes
-Route::group(["namespace" => "App\Http\Controllers\Admin",'as' => 'admin.',"prefix" => "admin","middleware" => ["auth","isadmin","status"]],function(){
+Route::group(["namespace" => "App\Http\Controllers\Admin", 'as' => 'admin.', "prefix" => "admin", "middleware" => ["auth", "isadmin", "status"]], function () {
     // Home Page Routes 
     Route::get('dashboard', "DashboardController@index")->name('dashboard');
     Route::get('profile', "ProfileController@profile")->name('profile');
@@ -92,58 +90,46 @@ Route::group(["namespace" => "App\Http\Controllers\Admin",'as' => 'admin.',"pref
     Route::post('plan/update-status', 'PlanController@updateStatus')->name('plan.updateStatus');
 
 
-    Route::get('member-registration/{range?}', 'StatisticsController@membersRegistrationGraph')->name('statistics.members-registration')
-    ->where('range', 'day|week|month')
-    ->defaults('range', 'day');
+    // Site statistics Graph Filteration routes start
+    Route::get('member-registration/{range?}', 'StatisticsController@membersRegistrationGraph')->name('statistics.members-registration');
 
-    Route::get('number-of-posts/{range?}', 'StatisticsController@numberPostsGraph')->name('statistics.number-posters')
-    ->where('range', 'day|week|month')
-    ->defaults('range', 'day');
+    Route::get('number-of-posts/{range?}', 'StatisticsController@numberPostsGraph')->name('statistics.number-posters');
 
-    Route::get('visit-users/{range?}', 'StatisticsController@visitingUsersGraph')->name('statistics.visiting-users')
-    ->where('range', 'day|week|month')
-    ->defaults('range', 'day');
+    Route::get('visit-users/{range?}', 'StatisticsController@visitingUsersGraph')->name('statistics.visiting-users');
 
+    Route::get('popular-posters/{range?}', 'StatisticsController@popularPostersGraph')->name('statistics.popular-posters');
 
-    Route::get('popular-posters/{range?}', 'StatisticsController@popularPostersGraph')->name('statistics.popular-posters')
-    ->where('range', 'day|week|month')
-    ->defaults('range', 'day');
+    Route::get('mobile-access/{range?}', 'StatisticsController@mobileAccessGraph')->name('statistics.mobile-access');
+    // Site statistics Graph Filteration routes end
 
-    Route::get('mobile-access/{range?}', 'StatisticsController@mobileAccessGraph')->name('statistics.mobile-access')
-    ->where('range', 'day|week|month')
-    ->defaults('range', 'day');
-
-    
     // Resourse Routes
-    Route::resource('settings', "SettingController")->only(['create','store']);
+    Route::resource('settings', "SettingController")->only(['create', 'store']);
     Route::resource('users', "UserController");
     Route::resource('email-templates', "EmailTemplateController");
     Route::resource('advertisement', "AdvertisementController");
     Route::resource('plan', "PlanController");
     Route::resource('query', "QueriesController");
     Route::resource('report', "ReportController");
-    Route::group(["prefix" => "section"],function(){
+    Route::group(["prefix" => "section"], function () {
         Route::resource('parent-section', "SectionController");
         Route::resource('sub-section', "SubSectionController");
         Route::resource('child-section', "ChildSectionController");
-    }); 
+    });
     // Tag management routes
-    Route::group(["prefix" => "tags"],function(){
+    Route::group(["prefix" => "tags"], function () {
         Route::resource('tag-type', "TagTypeController");
         Route::resource('tag', "TagsController");
-    }); 
+    });
 });
 
 
 
 //  Shared Pages
-Route::view('site-statistics','site-statistics')->name('site-statistics');
+Route::view('site-statistics', 'site-statistics')->name('site-statistics')->middleware('checkUserRole');
 
 
 // Login Registeres releted routes 
 Auth::routes();
-Route::get('/email/verify', [App\Http\Controllers\Auth\VerificationController::class,'show'])->name('verification.notice');
-Route::get('/email/verify/{id}/{hash}', [App\Http\Controllers\Auth\VerificationController::class,'verify'])->name('verification.verify')->middleware(['signed']);
-Route::post('/email/resend', [App\Http\Controllers\Auth\VerificationController::class,'resend'])->name('verification.resend');
-
-
+Route::get('/email/verify', [App\Http\Controllers\Auth\VerificationController::class, 'show'])->name('verification.notice');
+Route::get('/email/verify/{id}/{hash}', [App\Http\Controllers\Auth\VerificationController::class, 'verify'])->name('verification.verify')->middleware(['signed']);
+Route::post('/email/resend', [App\Http\Controllers\Auth\VerificationController::class, 'resend'])->name('verification.resend');

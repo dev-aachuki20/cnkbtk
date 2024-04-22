@@ -90,7 +90,7 @@ return [
                 'show_in_footer' => '在页脚中显示',
                 'position' => '位置',
                 'parent_section' => "家长部分",
-                'section_logo' => "部分标志",                
+                'section_logo' => "部分标志",
             ],
             'delete_message' => '如果您删除子部分，则所有子部分都将与其海报一起删除'
         ],
@@ -114,7 +114,7 @@ return [
             ],
             'delete_message' => 'If you delete child section all the posters will delete.'
         ]
-       
+
     ],
     // Tag Type and Tag Cruds
     'tag_management'  => [
@@ -122,27 +122,27 @@ return [
         'title_singular'            => '标签管理',
         //Tag Type Cruds
         'tag_type' => [
-                'title'              => '标签类型',
-                'title_singular'     => '标签类型',
-                'fields' => [
-                    'id' =>  'ID',
-                    'title' => "标题",
-                ],
-                'delete_message' => '如果删除，则该标签类型的所有标签都会被删除'
+            'title'              => '标签类型',
+            'title_singular'     => '标签类型',
+            'fields' => [
+                'id' =>  'ID',
+                'title' => "标题",
+            ],
+            'delete_message' => '如果删除，则该标签类型的所有标签都会被删除'
         ],
         //Tags Cruds
         'tag' => [
-                'title'              => '标签',
-                'title_singular'     => '标签',
-                'fields' => [
-                    'id' =>  'ID',
-                    'title' => "标题",
-                    'tag_type' => "标签类型",
-                ]
+            'title'              => '标签',
+            'title_singular'     => '标签',
+            'fields' => [
+                'id' =>  'ID',
+                'title' => "标题",
+                'tag_type' => "标签类型",
+            ]
         ],
 
-            
-        
+
+
     ],
     //Advertisement Cruds
     'advertisement' => [
@@ -159,7 +159,7 @@ return [
     'post_management' => [
         'title'                     => '海报管理',
         'title_singular'            => '海报管理',
-        
+
     ],
 
     'plan' => [
@@ -202,7 +202,7 @@ return [
         'title' => '积分',
         'title_singular' => '观点'
     ],
-    
+
 
 
     //  Global
@@ -234,12 +234,79 @@ return [
         'allowed_file_type' => '（允许类型 jpg | png | jpeg | JPG | JPEG | PNG)',
         'allowed_file_type_png' => '（允许类型 png | PNG)',
         'na' => "无法使用",
-        'purchase' => "购买"
+        'purchase' => "购买",
+        'apply' => '申請',
     ],
-    
+
     'lang' => [
         'english' => "英语",
         'chinese' => "中国人",
-    ]
+    ],
+
+    'statistics' => [
+        'title' => '網站統計',
+        'statistics_filteration' => [
+            'title' => '選擇過濾器：',
+            'daterange_title' => '選擇日期範圍：',
+            'day' => "天空",
+            'week' => "星期",
+            'month' => "月",
+        ]
+    ],
+
+    'registered_members' => [
+        'title'                     => '註冊會員',
+        'title_singular'            => '註冊會員',
+        'fields' => [
+            'num_graph' => '會員註冊圖',
+            'time'      => '會員註冊時間',
+            'count'     => '會員數量',
+            'graph'     => '會員圖',
+        ]
+    ],
+
+    'number_of_posts' => [
+        'title'            => '貼文數量',
+        'title_singular'   => '貼文數量',
+        'fields' => [
+            'num_graph'    => '點數圖',
+            'time'         => '點數 時間',
+            'count'        => '點數',
+            'graph'        => '點圖',
+        ]
+    ],
+
+    'most_popular_poster' => [
+        'title'             => '最受歡迎的海報',
+        'title_singular'    => '最受歡迎海報',
+        'fields' => [
+            'num_graph'     => '最受歡迎的海報圖',
+            'time'          => '熱門海報時間',
+            'count'         => '熱門海報數量',
+            'graph'         => '熱門海報圖',
+        ]
+    ],
+
+    'visiting_users' => [
+        'title'             => '來訪用戶',
+        'title_singular'    => '來訪用戶',
+        'fields' => [
+            'num_graph'     => '訪問用戶圖',
+            'time'          => '參觀時間',
+            'count'         => '訪問用戶數',
+            'graph'         => '訪問圖',
+        ]
+    ],
+
+    'mobile_access' => [
+        'title'             => '移動訪問',
+        'title_singular'    => '移動訪問',
+        'fields' => [
+            'num_graph'     => '行動訪問用戶圖',
+            'time'          => '移動訪問時間',
+            'count'         => '移動訪問計數',
+            'graph'         => '移動訪問圖',
+        ]
+    ],
 
 ];

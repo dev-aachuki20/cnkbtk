@@ -23,16 +23,10 @@ class StatisticsController extends Controller
                         if ($range == 'day') {
                                 $interval = 'hour';
                         }
-                        if ($range == 'week') {
-                                // $startDate->endOfWeek();
-                                $interval = 'week';
+                        if ($range == 'week' || $range == 'month') {
+                                $interval = 'day';
                         }
-                        if ($range == 'month') {
-                                // $startDate->endOfMonth();
-                                $interval = 'month';
-                        }
-                } 
-                else {
+                } else {
                         $startDate = Carbon::now();
                         $endDate = Carbon::now();
                         if ($range == 'day') {
@@ -55,10 +49,10 @@ class StatisticsController extends Controller
 
                 $labels = [];
                 $data = [];
-                $pluginText = trans("cruds.registered_members.fields.num_graph");
-                $xAxisText =  trans("cruds.registered_members.fields.time");
-                $yAxisText =  trans("cruds.registered_members.fields.count");
-                $labelText =  trans("cruds.registered_members.fields.graph");
+                $pluginText = 'Members Registration Graph';
+                $xAxisText = 'Members Registration Time';
+                $yAxisText = 'Members Count';
+                $labelText = 'Members Graph';
 
 
 
@@ -105,11 +99,8 @@ class StatisticsController extends Controller
                         if ($range == 'day') {
                                 $interval = 'hour';
                         }
-                        if ($range == 'week') {
-                                $interval = 'week';
-                        }
-                        if ($range == 'month') {
-                                $interval = 'month';
+                        if ($range == 'week' || $range == 'month') {
+                                $interval = 'day';
                         }
                 } else {
                         $startDate = Carbon::now();
@@ -134,10 +125,10 @@ class StatisticsController extends Controller
 
                 $labels = [];
                 $data = [];
-                $pluginText = trans("cruds.number_of_posts.fields.num_graph");
-                $xAxisText =  trans("cruds.number_of_posts.fields.time");
-                $yAxisText =  trans("cruds.number_of_posts.fields.count");
-                $labelText =  trans("cruds.number_of_posts.fields.graph");
+                $pluginText = 'Number Of Points Graph';
+                $xAxisText = 'Number Of Points Time';
+                $yAxisText = 'Points Count';
+                $labelText = 'Points Graph';
 
                 $posts = Poster::whereBetween('created_at', [$startDate, $endDate])->orderBy('created_at')->get();
 
@@ -168,10 +159,12 @@ class StatisticsController extends Controller
                         $startDateCopy->add(1, $interval);
                 }
 
-                $html = view('statistics.number-posters', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                $html = view('statistics.members-registration', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
                 return response()->json(['success' => 'Graph Find Your Data', 'html' => $html], 200);
         }
+
+
 
         public function visitingUsersGraph(Request $request, $range)
         {
@@ -182,11 +175,8 @@ class StatisticsController extends Controller
                         if ($range == 'day') {
                                 $interval = 'hour';
                         }
-                        if ($range == 'week') {
-                                $interval = 'week';
-                        }
-                        if ($range == 'month') {
-                                $interval = 'month';
+                        if ($range == 'week' || $range == 'month') {
+                                $interval = 'day';
                         }
                 } else {
                         $startDate = Carbon::now();
@@ -211,11 +201,10 @@ class StatisticsController extends Controller
 
                 $labels = [];
                 $data = [];
-
-                $pluginText = trans("cruds.visiting_users.fields.num_graph");
-                $xAxisText =  trans("cruds.visiting_users.fields.time");
-                $yAxisText =  trans("cruds.visiting_users.fields.count");
-                $labelText =  trans("cruds.visiting_users.fields.graph");
+                $pluginText = 'Visiting Users Graph';
+                $xAxisText = 'Visiting Time';
+                $yAxisText = 'Visiting Users Count';
+                $labelText = 'Visiting  Graph';
 
                 $visitingUsers = UniqueVisitor::whereBetween('created_at', [$startDate, $endDate])->orderBy('created_at')->get();
 
@@ -244,7 +233,7 @@ class StatisticsController extends Controller
                         $startDateCopy->add(1, $interval);
                 }
 
-                $html = view('statistics.visiting-users', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                $html = view('statistics.members-registration', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
                 return response()->json(['success' => 'Graph Find Your Data', 'html' => $html], 200);
         }
@@ -259,11 +248,8 @@ class StatisticsController extends Controller
                         if ($range == 'day') {
                                 $interval = 'hour';
                         }
-                        if ($range == 'week') {
-                                $interval = 'week';
-                        }
-                        if ($range == 'month') {
-                                $interval = 'month';
+                        if ($range == 'week' || $range == 'month') {
+                                $interval = 'day';
                         }
                 } else {
                         $startDate = Carbon::now();
@@ -288,11 +274,10 @@ class StatisticsController extends Controller
 
                 $labels = [];
                 $data = [];
-                $pluginText = trans("cruds.most_popular_poster.fields.num_graph");
-                $xAxisText =  trans("cruds.most_popular_poster.fields.time");
-                $yAxisText =  trans("cruds.most_popular_poster.fields.count");
-                $labelText =  trans("cruds.most_popular_poster.fields.graph");
-
+                $pluginText = 'Most Of Popular Posters Graph';
+                $xAxisText = 'Popular Posters Time';
+                $yAxisText = 'Popular Posters Count';
+                $labelText = 'Popular Posters  Graph';
 
 
 
@@ -323,7 +308,7 @@ class StatisticsController extends Controller
                         $startDateCopy->add(1, $interval);
                 }
 
-                $html = view('statistics.popular-posters', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                $html = view('statistics.members-registration', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
                 return response()->json(['success' => 'Graph Find Your Data', 'html' => $html], 200);
         }
@@ -337,11 +322,8 @@ class StatisticsController extends Controller
                         if ($range == 'day') {
                                 $interval = 'hour';
                         }
-                        if ($range == 'week') {
-                                $interval = 'week';
-                        }
-                        if ($range == 'month') {
-                                $interval = 'month';
+                        if ($range == 'week' || $range == 'month') {
+                                $interval = 'day';
                         }
                 } else {
                         $startDate = Carbon::now();
@@ -366,11 +348,10 @@ class StatisticsController extends Controller
 
                 $labels = [];
                 $data = [];
-                $pluginText = trans("cruds.mobile_access.fields.num_graph");
-                $xAxisText =  trans("cruds.mobile_access.fields.time");
-                $yAxisText =  trans("cruds.mobile_access.fields.count");
-                $labelText =  trans("cruds.mobile_access.fields.graph");
-
+                $pluginText = 'Mobile Access Graph';
+                $xAxisText = 'Mobile Access Time';
+                $yAxisText = 'Mobile Access Count';
+                $labelText = 'Mobile Access Graph';
 
                 $mobilesAccess = UniqueVisitor::whereBetween('created_at', [$startDate, $endDate])->where('device_name', 0)->orderBy('created_at')->get();
 
@@ -400,7 +381,7 @@ class StatisticsController extends Controller
                         $startDateCopy->add(1, $interval);
                 }
 
-                $html = view('statistics.mobile-access', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                $html = view('statistics.members-registration', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
                 return response()->json(['success' => 'Graph Find Your Data', 'html' => $html], 200);
         }

@@ -53,7 +53,7 @@ return [
     "dashboard_message" => "您好，欢迎来到 CNKBTK",
 
     // Alert Types 
-    'alert' =>[
+    'alert' => [
         'info' => '信息',
         'success' => '成功',
         'error' => '错误',
@@ -90,7 +90,32 @@ return [
     'date' => '日期',
     'reads' => "读",
     'upload_files' => '上传文件',
-    'upload_pictures' => '上传图片'
-    
-    
+    'upload_pictures' => '上传图片',
+
+    'days_of_week' => [
+        'sunday'    => '蘇',
+        'monday'    => '莫',
+        'tuesday'   => '塗',
+        'wednesday' => '星期三',
+        'thursday'  => '釷',
+        'friday'    => '星期五',
+        'saturday'  => '薩',
+    ],
+
+    'month_names' => [
+        'january'    => '一月',
+        'february'   => '二月',
+        'march'      => '三月',
+        'april'      => '四月',
+        'may'        => '五月',
+        'june'       => '六月',
+        'july'       => '七月',
+        'august'     => '八月',
+        'september'  => '九月',
+        'october'    => '十月',
+        'november'   => '十一月',
+        'december'   => '十二月',
+    ],
+
+
 ];

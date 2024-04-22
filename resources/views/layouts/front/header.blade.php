@@ -201,10 +201,11 @@
             <li class="nav-item">
               <a class="nav-link {{Request::is('/') ? 'active' : ''}}" aria-current="page" href="{{route('home')}}">{{trans("global.forum")}}</a>
             </li>
-
-            <li class="nav-item">
-              <a class="nav-link {{Request::is('site-statistics') ? 'active' : ''}}" href="{{route('site-statistics')}}" >{{trans("global.site_statistics")}}</a>
-            </li>
+            
+              <li class="nav-item">
+                <a class="nav-link site-statistics {{Request::is('site-statistics') ? 'active' : ''}}" href="{{route('site-statistics')}}" >{{trans("global.site_statistics")}}</a>
+              </li>
+              
 
             <li class="nav-item">
 

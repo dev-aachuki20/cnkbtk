@@ -210,7 +210,13 @@ return [
         ]
 
         
-    ]
+        ],
+
+        'site_statistics' => [
+            'basic' => "基本的",
+            'profile' => '輪廓',
+            'site' => '網站統計'
+        ],
 
     
 ];

@@ -113,7 +113,7 @@ return [
             ],
             'delete_message' => '如果删除子部分，所有海报都将被删除'
         ]
-        
+
     ],
     // Tag Type and Tag Cruds
     'tag_management'  => [
@@ -126,7 +126,7 @@ return [
             'fields' => [
                 'id' =>  'ID',
                 'title' => "Title",
-                
+
             ],
             'delete_message' => 'If you delete it , all the tags with in these tag type will delete'
         ],
@@ -152,7 +152,7 @@ return [
             'url' => 'URL',
         ]
     ],
-     //Post management Cruds
+    //Post management Cruds
     'post_management' => [
         'title'                     => 'Posters Management',
         'title_singular'            => 'Poster Management',
@@ -182,7 +182,7 @@ return [
             'message' => 'Message',
         ]
     ],
-    
+
     'reports' => [
         'title' => 'Reports',
         'title_singular' => 'Report',
@@ -200,8 +200,8 @@ return [
         'title_singular' => 'Point'
     ],
 
-     //  Global
-     'global' => [
+    //  Global
+    'global' => [
         'status' => 'Status',
         'created_date' => 'Created Date',
         'updated_date' => 'Updated Date',
@@ -230,11 +230,77 @@ return [
         'allowed_file_type_png' => '(Allowed type png | PNG)',
         'na' => "N/A",
         'purchase' => "Purchase",
-     ],
+        'apply' => 'Apply',
+    ],
 
     'lang' => [
         'english' => "English",
         'chinese' => "Chinese",
-    ]
+    ],
 
+    'statistics' => [
+        'title' => 'Site statistics',
+        'statistics_filteration' => [
+            'title'             => 'Select Filter:',
+            'daterange_title'   => 'Select Date Range:',
+            'day'               => "Day",
+            'week'              => "Week",
+            'month'             => "Month",
+        ]
+    ],
+
+    'registered_members' => [
+        'title'             => 'Registered Members',
+        'title_singular'    => 'Registered Member',
+        'fields' => [
+            'num_graph'  => 'Members Registration Graph',
+            'time'       => 'Members Registration Time',
+            'count'      => 'Members Count',
+            'graph'      => 'Members Graph',
+        ]
+    ],
+
+    'number_of_posts' => [
+        'title'            => 'Number Of Posts',
+        'title_singular'   => 'Number Of Post',
+        'fields' => [
+            'num_graph'    => 'Number Of Points Graph',
+            'time'         => 'Number Of Points Time',
+            'count'        => 'Points Count',
+            'graph'        => 'Points Graph',
+        ]
+    ],
+
+    'most_popular_poster' => [
+        'title'             => 'Most Popular Posters',
+        'title_singular'    => 'Most Popular Poster',
+        'fields' => [
+            'num_graph'     => 'Most Of Popular Posters Graph',
+            'time'          => 'Popular Posters Time',
+            'count'         => 'Popular Posters Count',
+            'graph'         => 'Popular Posters Graph',
+        ]
+    ],
+
+    'visiting_users' => [
+        'title'             => 'Visiting Users',
+        'title_singular'    => 'Visiting User',
+        'fields' => [
+            'num_graph'     => 'Visiting Users Graph',
+            'time'          => 'Visiting Time',
+            'count'         => 'Visiting Users Count',
+            'graph'         => 'Visiting Graph',
+        ]
+    ],
+
+    'mobile_access' => [
+        'title'             => 'Mobile Access',
+        'title_singular'    => 'Mobile Access',
+        'fields' => [
+            'num_graph'     => 'Mobile Access Users Graph',
+            'time'          => 'Mobile Access Time',
+            'count'         => 'Mobile Access Count',
+            'graph'         => 'Mobile Access Graph',
+        ]
+    ],
 ];

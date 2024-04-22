@@ -192,8 +192,14 @@ return [
         ]
 
         
-    ]
+        ],
 
+
+    'site_statistics' => [
+        'basic' => "Basic",
+        'profile' => 'Profile',
+        'site' => 'Site statistics'
+    ],
 
     
 

@@ -36,8 +36,11 @@ return [
     "insufficient_point" => "You do not have sufficient points to purchase this episode , Please top up your wallet.",
     "purchase.success" => "You have successfully purchased the episode you can access the content now.",
     "you_can_not_purchase_your_own_posters" => "You can not purchase your own posters",
-    "user_inactivated" => "Your account is inactivated."
-    // 
+    "user_inactivated" => "Your account is inactivated.",
+
+    // Unauthorized
+    'logged_in_route_access' => 'Sorry! Please Login First.',
+    'access_denied' => 'Sorry! You not have access.',
 
 
 ];

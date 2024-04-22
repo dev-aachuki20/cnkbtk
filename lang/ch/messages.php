@@ -38,7 +38,11 @@ return [
     "insufficient_point" => "您的积分不足以购买本集，请充值您的钱包",
     "purchase.success" => "您已成功购买该剧集，现在可以访问内容",
     "you_can_not_purchase_your_own_posters" => "您不能购买自己的海报",
-    "user_inactivated" => "您的帐户已停用"
+    "user_inactivated" => "您的帐户已停用",
+
+     // Site statistics access
+     'logged_in_route_access' => '對不起！請先登入。',
+     'access_denied' => '對不起！您無權訪問。',
 
 ];
 

@@ -83,7 +83,7 @@
     });
 
 
-    $(".self-top-up").click(function(e){
+    $(".self-top-up, .site-statistics").click(function(e){
       e.preventDefault();
       @if(!auth()->check())
         toastr.info("{{ Session::get('message') }}", '{{trans("Please Login to access this page.")}}');
