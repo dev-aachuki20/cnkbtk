@@ -58,19 +58,5 @@
     var myChart = new Chart(ctx, config);
 
    
-    $(document).ready(function() {
-        $('#filter').change(function() {
-            var filter = this.value;
-            $.ajax({
-                url: "{{ route('admin.statistics.number-posters') }}/" + filter,
-                type: 'GET',
-                success: function(response) {
-                    $(".profile-content").html(response.html);
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-    });
+    
 </script>
