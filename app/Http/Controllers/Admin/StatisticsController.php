@@ -33,7 +33,7 @@ class StatisticsController extends Controller
                 $interval = 'day';
                 } else {
                 $startDate->startOfMonth()->startOfDay();
-                $endDate = Carbon::today()->endOfMonth()->endOfDay(); 
+                $endDate->endOfDay();
                 $interval = 'day';
                 }
         } else {
@@ -71,7 +71,7 @@ class StatisticsController extends Controller
                         $xAxisText =  trans("cruds.registered_members.fields.time");
                         $yAxisText =  trans("cruds.registered_members.fields.count");
                         $labelText =  trans("cruds.registered_members.fields.graph");
-                        $html = view('statistics.members-registration', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                        $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
                         return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                 } 
                 else {
@@ -102,7 +102,7 @@ class StatisticsController extends Controller
                         $xAxisText =  trans("cruds.registered_members.fields.time");
                         $yAxisText =  trans("cruds.registered_members.fields.count");
                         $labelText =  trans("cruds.registered_members.fields.graph");
-                        $html = view('statistics.members-registration', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                        $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
                         return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                 }
         }
@@ -136,7 +136,7 @@ class StatisticsController extends Controller
                 $startDateCopy->add(1, $interval);
         }
 
-        $html = view('statistics.members-registration', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+        $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
         return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
         }
 
@@ -198,7 +198,7 @@ class StatisticsController extends Controller
                                 $xAxisText =  trans("cruds.registered_members.fields.time");
                                 $yAxisText =  trans("cruds.registered_members.fields.count");
                                 $labelText =  trans("cruds.registered_members.fields.graph");
-                                $html = view('statistics.members-registration', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                                $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
                                 return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                         } else {
                                 $monthlyDateRanges = [];
@@ -228,7 +228,7 @@ class StatisticsController extends Controller
                                 $xAxisText =  trans("cruds.registered_members.fields.time");
                                 $yAxisText =  trans("cruds.registered_members.fields.count");
                                 $labelText =  trans("cruds.registered_members.fields.graph");
-                                $html = view('statistics.members-registration', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                                $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
                                 return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                    
                         }
@@ -270,7 +270,7 @@ class StatisticsController extends Controller
                         $startDateCopy->add(1, $interval);
                 }
 
-                $html = view('statistics.members-registration', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
                 return response()->json(['success' => 'Graph Find Your Data', 'html' => $html], 200);
         }
@@ -332,7 +332,7 @@ class StatisticsController extends Controller
                                 $xAxisText =  trans("cruds.registered_members.fields.time");
                                 $yAxisText =  trans("cruds.registered_members.fields.count");
                                 $labelText =  trans("cruds.registered_members.fields.graph");
-                                $html = view('statistics.members-registration', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                                $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
                                 return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                         } else {
                                 $monthlyDateRanges = [];
@@ -362,7 +362,7 @@ class StatisticsController extends Controller
                         $xAxisText =  trans("cruds.registered_members.fields.time");
                         $yAxisText =  trans("cruds.registered_members.fields.count");
                         $labelText =  trans("cruds.registered_members.fields.graph");
-                        $html = view('statistics.members-registration', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                        $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
                         return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                         }
                 }
@@ -402,7 +402,7 @@ class StatisticsController extends Controller
                         $startDateCopy->add(1, $interval);
                 }
 
-                $html = view('statistics.members-registration', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
                 return response()->json(['success' => 'Graph Find Your Data', 'html' => $html], 200);
         }
@@ -465,7 +465,7 @@ class StatisticsController extends Controller
                                 $xAxisText =  trans("cruds.registered_members.fields.time");
                                 $yAxisText =  trans("cruds.registered_members.fields.count");
                                 $labelText =  trans("cruds.registered_members.fields.graph");
-                                $html = view('statistics.members-registration', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                                $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
                                 return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                         } else {
                                 $monthlyDateRanges = [];
@@ -495,7 +495,7 @@ class StatisticsController extends Controller
                         $xAxisText =  trans("cruds.registered_members.fields.time");
                         $yAxisText =  trans("cruds.registered_members.fields.count");
                         $labelText =  trans("cruds.registered_members.fields.graph");
-                        $html = view('statistics.members-registration', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                        $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
                         return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                         }
                 }
@@ -535,7 +535,7 @@ class StatisticsController extends Controller
                         $startDateCopy->add(1, $interval);
                 }
 
-                $html = view('statistics.members-registration', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
                 return response()->json(['success' => 'Graph Find Your Data', 'html' => $html], 200);
         }
@@ -597,7 +597,7 @@ class StatisticsController extends Controller
                                 $xAxisText =  trans("cruds.registered_members.fields.time");
                                 $yAxisText =  trans("cruds.registered_members.fields.count");
                                 $labelText =  trans("cruds.registered_members.fields.graph");
-                                $html = view('statistics.members-registration', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                                $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
                                 return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                         } else {
                                 $monthlyDateRanges = [];
@@ -627,7 +627,7 @@ class StatisticsController extends Controller
                                 $xAxisText =  trans("cruds.registered_members.fields.time");
                                 $yAxisText =  trans("cruds.registered_members.fields.count");
                                 $labelText =  trans("cruds.registered_members.fields.graph");
-                                $html = view('statistics.members-registration', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                                $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
                                 return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                         }
                 }
@@ -668,7 +668,7 @@ class StatisticsController extends Controller
                         $startDateCopy->add(1, $interval);
                 }
 
-                $html = view('statistics.members-registration', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
                 return response()->json(['success' => 'Graph Find Your Data', 'html' => $html], 200);
         }
