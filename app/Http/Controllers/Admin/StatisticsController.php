@@ -67,15 +67,15 @@ class StatisticsController extends Controller
                         if ($range == 'day') {
                                 $interval = 'hour';
                         }
-                        
+
                         $totalDays = count($labels);
                         $totalUsers = array_sum($data);
                         $average = $totalDays > 0 ? $totalUsers / $totalDays : 0;
-                
-                       
+
+
                         $labels[] = 'Average';
                         $data[] = $average;
-                
+
                         $pluginText = trans("cruds.registered_members.fields.num_graph");
                         $xAxisText =  trans("cruds.registered_members.fields.time");
                         $yAxisText =  trans("cruds.registered_members.fields.count");
@@ -116,10 +116,10 @@ class StatisticsController extends Controller
                 $totalDays = count($labels);
                 $totalUsers = array_sum($data);
                 $average = $totalDays > 0 ? $totalUsers / $totalDays : 0;
-            
+
                 $labels[] = 'Average';
                 $data[] = $average;
-            
+
                 $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
                 return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
         }
@@ -178,10 +178,10 @@ class StatisticsController extends Controller
                                 $interval = 'hour';
                         }
 
-                        $pluginText = trans("cruds.registered_members.fields.num_graph");
-                        $xAxisText =  trans("cruds.registered_members.fields.time");
-                        $yAxisText =  trans("cruds.registered_members.fields.count");
-                        $labelText =  trans("cruds.registered_members.fields.graph");
+                        $pluginText = trans("cruds.number_of_posts.fields.num_graph");
+                        $xAxisText =  trans("cruds.number_of_posts.fields.time");
+                        $yAxisText =  trans("cruds.number_of_posts.fields.count");
+                        $labelText =  trans("cruds.number_of_posts.fields.graph");
                         $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
                         return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                 }
@@ -281,10 +281,10 @@ class StatisticsController extends Controller
                                 $interval = 'hour';
                         }
 
-                        $pluginText = trans("cruds.registered_members.fields.num_graph");
-                        $xAxisText =  trans("cruds.registered_members.fields.time");
-                        $yAxisText =  trans("cruds.registered_members.fields.count");
-                        $labelText =  trans("cruds.registered_members.fields.graph");
+                        $pluginText = trans("cruds.visiting_users.fields.num_graph");
+                        $xAxisText =  trans("cruds.visiting_users.fields.time");
+                        $yAxisText =  trans("cruds.visiting_users.fields.count");
+                        $labelText =  trans("cruds.visiting_users.fields.graph");
                         $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
                         return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                 }
@@ -385,10 +385,10 @@ class StatisticsController extends Controller
                                 $interval = 'hour';
                         }
 
-                        $pluginText = trans("cruds.registered_members.fields.num_graph");
-                        $xAxisText =  trans("cruds.registered_members.fields.time");
-                        $yAxisText =  trans("cruds.registered_members.fields.count");
-                        $labelText =  trans("cruds.registered_members.fields.graph");
+                        $pluginText = trans("cruds.most_popular_poster.fields.num_graph");
+                        $xAxisText =  trans("cruds.most_popular_poster.fields.time");
+                        $yAxisText =  trans("cruds.most_popular_poster.fields.count");
+                        $labelText =  trans("cruds.most_popular_poster.fields.graph");
                         $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
                         return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                 }
@@ -474,12 +474,6 @@ class StatisticsController extends Controller
                                         $data[] = $count;
                                         $labels[] = $endOfWeek->toDateString();
                                 }
-                                $pluginText = trans("cruds.registered_members.fields.num_graph");
-                                $xAxisText =  trans("cruds.registered_members.fields.time");
-                                $yAxisText =  trans("cruds.registered_members.fields.count");
-                                $labelText =  trans("cruds.registered_members.fields.graph");
-                                $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
-                                return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                         }
                         if ($range == 'month') {
                                 $monthlyDateRanges = $this->getMonthlyDateRanges($startDate, $endDate);
@@ -496,10 +490,10 @@ class StatisticsController extends Controller
                                 $interval = 'hour';
                         }
 
-                        $pluginText = trans("cruds.registered_members.fields.num_graph");
-                        $xAxisText =  trans("cruds.registered_members.fields.time");
-                        $yAxisText =  trans("cruds.registered_members.fields.count");
-                        $labelText =  trans("cruds.registered_members.fields.graph");
+                        $pluginText = trans("cruds.mobile_access.fields.num_graph");
+                        $xAxisText =  trans("cruds.mobile_access.fields.time");
+                        $yAxisText =  trans("cruds.mobile_access.fields.count");
+                        $labelText =  trans("cruds.mobile_access.fields.graph");
                         $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
                         return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                 }
@@ -623,16 +617,16 @@ class StatisticsController extends Controller
                         $data[] = $count;
                         $labels[] = $end->toDateString();
                 }
-                 
-                        $totalDays = count($dateRanges);
-                        $totalUsers = array_sum($data);
-                        $average = $totalDays > 0 ? $totalUsers / $totalDays : 0;
+
+                $totalDays = count($dateRanges);
+                $totalUsers = array_sum($data);
+                $average = $totalDays > 0 ? $totalUsers / $totalDays : 0;
                 $pluginText = trans("cruds.registered_members.fields.num_graph");
                 $xAxisText =  trans("cruds.registered_members.fields.time");
                 $yAxisText =  trans("cruds.registered_members.fields.count");
                 $labelText =  trans("cruds.registered_members.fields.graph");
-                     $labels[] = 'Average';
-                     $data[] = $average;
+                $labels[] = 'Average';
+                $data[] = $average;
                 $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
                 return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
         }
