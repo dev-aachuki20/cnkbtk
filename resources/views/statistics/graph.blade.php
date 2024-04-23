@@ -25,7 +25,7 @@
     };
 
     var config = {
-        type: 'line',
+        type: 'bar',
         data: data,
         options: {
             plugins: {

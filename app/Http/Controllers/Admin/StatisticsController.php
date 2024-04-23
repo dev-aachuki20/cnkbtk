@@ -69,7 +69,15 @@ class StatisticsController extends Controller
                         if ($range == 'day') {
                                 $interval = 'hour';
                         }
-
+                        
+                        $totalDays = count($labels);
+                        $totalUsers = array_sum($data);
+                        $average = $totalDays > 0 ? $totalUsers / $totalDays : 0;
+                
+                       
+                        $labels[] = 'Average';
+                        $data[] = $average;
+                
                         $pluginText = trans("cruds.registered_members.fields.num_graph");
                         $xAxisText =  trans("cruds.registered_members.fields.time");
                         $yAxisText =  trans("cruds.registered_members.fields.count");
@@ -107,7 +115,13 @@ class StatisticsController extends Controller
                         $data[] = $count;
                         $startDateCopy->add(1, $interval);
                 }
-
+                $totalDays = count($labels);
+                $totalUsers = array_sum($data);
+                $average = $totalDays > 0 ? $totalUsers / $totalDays : 0;
+            
+                $labels[] = 'Average';
+                $data[] = $average;
+            
                 $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
                 return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
         }
@@ -592,6 +606,36 @@ class StatisticsController extends Controller
                 $xAxisText =  trans("cruds.registered_members.fields.time");
                 $yAxisText =  trans("cruds.registered_members.fields.count");
                 $labelText =  trans("cruds.registered_members.fields.graph");
+                $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
+        }
+
+        private function generate($dateRanges, $rangeType)
+        {
+                $labels = [];
+                $data = [];
+                foreach ($dateRanges as $range) {
+                        $start = $range['start'];
+                        $end = $range['end'];
+                        if ($rangeType === 'week') {
+                                $posts = Poster::whereBetween('created_at', [$start, $end])->orderBy('created_at')->get();
+                        } else {
+                                $users = User::whereBetween('created_at', [$start, $end])->orderBy('created_at')->get();
+                        }
+                        $count = $posts->count() ?? $users->count();
+                        $data[] = $count;
+                        $labels[] = $end->toDateString();
+                }
+                 
+                        $totalDays = count($dateRanges);
+                        $totalUsers = array_sum($data);
+                        $average = $totalDays > 0 ? $totalUsers / $totalDays : 0;
+                $pluginText = trans("cruds.registered_members.fields.num_graph");
+                $xAxisText =  trans("cruds.registered_members.fields.time");
+                $yAxisText =  trans("cruds.registered_members.fields.count");
+                $labelText =  trans("cruds.registered_members.fields.graph");
+                     $labels[] = 'Average';
+                     $data[] = $average;
                 $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
                 return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
         }
