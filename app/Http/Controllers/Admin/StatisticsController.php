@@ -46,7 +46,6 @@ class StatisticsController extends Controller
                         $range = $request->range;
                         if ($range == 'week') {
                                 $weeklyDateRanges = $this->getWeeklyDateRanges($startDate, $endDate);
-
                                 foreach ($weeklyDateRanges as $week) {
                                         $startOfWeek = $week['start'];
                                         $endOfWeek = $week['end'];
@@ -128,37 +127,23 @@ class StatisticsController extends Controller
                                 $startDate->startOfDay();
                                 $endDate->endOfDay();
                                 $interval = 'hour';
-                        } elseif ($range == 'week') {
+                        }
+                        if ($range == 'week') {
                                 $startDate = Carbon::today()->subDays(6)->startOfDay();
                                 $endDate = Carbon::today()->endOfDay();
                                 $interval = 'day';
-                        } else {
+                        }
+                        if ($range == 'month') {
                                 $startDate->startOfMonth()->startOfDay();
                                 $endDate->endOfDay();
                                 $interval = 'day';
                         }
                 } else {
+                        $data = [];
+                        $labels = [];
                         $range = $request->range;
-                        if ($range == 'day') {
-                                $startDate->startOfDay();
-                                $endDate->endOfDay();
-                                $interval = 'hour';
-                        } elseif ($range == 'week') {
-                                $weeklyDateRanges = [];
-                                $currentDate = $startDate->copy();
-                                while ($currentDate->lte($endDate)) {
-                                        $endOfWeek = $currentDate->copy()->endOfWeek();
-                                        if ($endOfWeek->gt($endDate)) {
-                                                $endOfWeek = $endDate->copy();
-                                        }
-                                        $weeklyDateRanges[] = [
-                                                'start' => $currentDate->copy()->startOfDay(),
-                                                'end' => $endOfWeek->copy()->endOfDay()
-                                        ];
-                                        $currentDate->addWeek()->startOfWeek();
-                                }
-                                $labels = [];
-                                $data = [];
+                        if ($range == 'week') {
+                                $weeklyDateRanges = $this->getWeeklyDateRanges($startDate, $endDate);
                                 foreach ($weeklyDateRanges as $week) {
                                         $startOfWeek = $week['start'];
                                         $endOfWeek = $week['end'];
@@ -167,43 +152,27 @@ class StatisticsController extends Controller
                                         $data[] = $count;
                                         $labels[] = $endOfWeek->toDateString();
                                 }
-                                $pluginText = trans("cruds.registered_members.fields.num_graph");
-                                $xAxisText =  trans("cruds.registered_members.fields.time");
-                                $yAxisText =  trans("cruds.registered_members.fields.count");
-                                $labelText =  trans("cruds.registered_members.fields.graph");
-                                $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
-                                return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                         } else {
-                                $monthlyDateRanges = [];
-                                $currentDate = $startDate->copy()->startOfMonth();
-                                while ($currentDate->lte($endDate)) {
-                                        $endOfMonth = $currentDate->copy()->endOfMonth();
-                                        if ($endOfMonth->gt($endDate)) {
-                                                $endOfMonth = $endDate->copy();
-                                        }
-                                        $monthlyDateRanges[] = [
-                                                'start' => $currentDate->copy()->startOfDay(),
-                                                'end' => $endOfMonth->copy()->endOfDay()
-                                        ];
-                                        $currentDate->addMonth()->startOfMonth();
-                                }
-                                $labels = [];
-                                $data = [];
+                                $monthlyDateRanges = $this->getMonthlyDateRanges($startDate, $endDate);
                                 foreach ($monthlyDateRanges as $month) {
                                         $startOfMonth = $month['start'];
                                         $endOfMonth = $month['end'];
-                                        $users = User::whereBetween('created_at', [$startOfMonth, $endOfMonth])->orderBy('created_at')->get();
+                                        $users = Poster::whereBetween('created_at', [$startOfMonth, $endOfMonth])->orderBy('created_at')->get();
                                         $count = $users->count();
                                         $data[] = $count;
                                         $labels[] = $endOfMonth->toDateString();
                                 }
-                                $pluginText = trans("cruds.registered_members.fields.num_graph");
-                                $xAxisText =  trans("cruds.registered_members.fields.time");
-                                $yAxisText =  trans("cruds.registered_members.fields.count");
-                                $labelText =  trans("cruds.registered_members.fields.graph");
-                                $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
-                                return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                         }
+                        if ($range == 'day') {
+                                $interval = 'hour';
+                        }
+
+                        $pluginText = trans("cruds.registered_members.fields.num_graph");
+                        $xAxisText =  trans("cruds.registered_members.fields.time");
+                        $yAxisText =  trans("cruds.registered_members.fields.count");
+                        $labelText =  trans("cruds.registered_members.fields.graph");
+                        $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                        return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                 }
 
                 $labels = [];
@@ -261,37 +230,23 @@ class StatisticsController extends Controller
                                 $startDate->startOfDay();
                                 $endDate->endOfDay();
                                 $interval = 'hour';
-                        } elseif ($range == 'week') {
+                        }
+                        if ($range == 'week') {
                                 $startDate = Carbon::today()->subDays(6)->startOfDay();
                                 $endDate = Carbon::today()->endOfDay();
                                 $interval = 'day';
-                        } else {
+                        }
+                        if ($range == 'month') {
                                 $startDate->startOfMonth()->startOfDay();
                                 $endDate->endOfDay();
                                 $interval = 'day';
                         }
                 } else {
+                        $data = [];
+                        $labels = [];
                         $range = $request->range;
-                        if ($range == 'day') {
-                                $startDate->startOfDay();
-                                $endDate->endOfDay();
-                                $interval = 'hour';
-                        } elseif ($range == 'week') {
-                                $weeklyDateRanges = [];
-                                $currentDate = $startDate->copy();
-                                while ($currentDate->lte($endDate)) {
-                                        $endOfWeek = $currentDate->copy()->endOfWeek();
-                                        if ($endOfWeek->gt($endDate)) {
-                                                $endOfWeek = $endDate->copy();
-                                        }
-                                        $weeklyDateRanges[] = [
-                                                'start' => $currentDate->copy()->startOfDay(),
-                                                'end' => $endOfWeek->copy()->endOfDay()
-                                        ];
-                                        $currentDate->addWeek()->startOfWeek();
-                                }
-                                $labels = [];
-                                $data = [];
+                        if ($range == 'week') {
+                                $weeklyDateRanges = $this->getWeeklyDateRanges($startDate, $endDate);
                                 foreach ($weeklyDateRanges as $week) {
                                         $startOfWeek = $week['start'];
                                         $endOfWeek = $week['end'];
@@ -300,43 +255,27 @@ class StatisticsController extends Controller
                                         $data[] = $count;
                                         $labels[] = $endOfWeek->toDateString();
                                 }
-                                $pluginText = trans("cruds.registered_members.fields.num_graph");
-                                $xAxisText =  trans("cruds.registered_members.fields.time");
-                                $yAxisText =  trans("cruds.registered_members.fields.count");
-                                $labelText =  trans("cruds.registered_members.fields.graph");
-                                $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
-                                return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                         } else {
-                                $monthlyDateRanges = [];
-                                $currentDate = $startDate->copy()->startOfMonth();
-                                while ($currentDate->lte($endDate)) {
-                                        $endOfMonth = $currentDate->copy()->endOfMonth();
-                                        if ($endOfMonth->gt($endDate)) {
-                                                $endOfMonth = $endDate->copy();
-                                        }
-                                        $monthlyDateRanges[] = [
-                                                'start' => $currentDate->copy()->startOfDay(),
-                                                'end' => $endOfMonth->copy()->endOfDay()
-                                        ];
-                                        $currentDate->addMonth()->startOfMonth();
-                                }
-                                $labels = [];
-                                $data = [];
+                                $monthlyDateRanges = $this->getMonthlyDateRanges($startDate, $endDate);
                                 foreach ($monthlyDateRanges as $month) {
                                         $startOfMonth = $month['start'];
                                         $endOfMonth = $month['end'];
-                                        $users = User::whereBetween('created_at', [$startOfMonth, $endOfMonth])->orderBy('created_at')->get();
+                                        $users = UniqueVisitor::whereBetween('created_at', [$startOfMonth, $endOfMonth])->orderBy('created_at')->get();
                                         $count = $users->count();
                                         $data[] = $count;
                                         $labels[] = $endOfMonth->toDateString();
                                 }
-                                $pluginText = trans("cruds.registered_members.fields.num_graph");
-                                $xAxisText =  trans("cruds.registered_members.fields.time");
-                                $yAxisText =  trans("cruds.registered_members.fields.count");
-                                $labelText =  trans("cruds.registered_members.fields.graph");
-                                $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
-                                return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                         }
+                        if ($range == 'day') {
+                                $interval = 'hour';
+                        }
+
+                        $pluginText = trans("cruds.registered_members.fields.num_graph");
+                        $xAxisText =  trans("cruds.registered_members.fields.time");
+                        $yAxisText =  trans("cruds.registered_members.fields.count");
+                        $labelText =  trans("cruds.registered_members.fields.graph");
+                        $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                        return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                 }
 
                 $labels = [];
@@ -394,37 +333,23 @@ class StatisticsController extends Controller
                                 $startDate->startOfDay();
                                 $endDate->endOfDay();
                                 $interval = 'hour';
-                        } elseif ($range == 'week') {
+                        }
+                        if ($range == 'week') {
                                 $startDate = Carbon::today()->subDays(6)->startOfDay();
                                 $endDate = Carbon::today()->endOfDay();
                                 $interval = 'day';
-                        } else {
+                        }
+                        if ($range == 'month') {
                                 $startDate->startOfMonth()->startOfDay();
                                 $endDate->endOfDay();
                                 $interval = 'day';
                         }
                 } else {
+                        $data = [];
+                        $labels = [];
                         $range = $request->range;
-                        if ($range == 'day') {
-                                $startDate->startOfDay();
-                                $endDate->endOfDay();
-                                $interval = 'hour';
-                        } elseif ($range == 'week') {
-                                $weeklyDateRanges = [];
-                                $currentDate = $startDate->copy();
-                                while ($currentDate->lte($endDate)) {
-                                        $endOfWeek = $currentDate->copy()->endOfWeek();
-                                        if ($endOfWeek->gt($endDate)) {
-                                                $endOfWeek = $endDate->copy();
-                                        }
-                                        $weeklyDateRanges[] = [
-                                                'start' => $currentDate->copy()->startOfDay(),
-                                                'end' => $endOfWeek->copy()->endOfDay()
-                                        ];
-                                        $currentDate->addWeek()->startOfWeek();
-                                }
-                                $labels = [];
-                                $data = [];
+                        if ($range == 'week') {
+                                $weeklyDateRanges = $this->getWeeklyDateRanges($startDate, $endDate);
                                 foreach ($weeklyDateRanges as $week) {
                                         $startOfWeek = $week['start'];
                                         $endOfWeek = $week['end'];
@@ -433,43 +358,28 @@ class StatisticsController extends Controller
                                         $data[] = $count;
                                         $labels[] = $endOfWeek->toDateString();
                                 }
-                                $pluginText = trans("cruds.registered_members.fields.num_graph");
-                                $xAxisText =  trans("cruds.registered_members.fields.time");
-                                $yAxisText =  trans("cruds.registered_members.fields.count");
-                                $labelText =  trans("cruds.registered_members.fields.graph");
-                                $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
-                                return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                         } else {
-                                $monthlyDateRanges = [];
-                                $currentDate = $startDate->copy()->startOfMonth();
-                                while ($currentDate->lte($endDate)) {
-                                        $endOfMonth = $currentDate->copy()->endOfMonth();
-                                        if ($endOfMonth->gt($endDate)) {
-                                                $endOfMonth = $endDate->copy();
-                                        }
-                                        $monthlyDateRanges[] = [
-                                                'start' => $currentDate->copy()->startOfDay(),
-                                                'end' => $endOfMonth->copy()->endOfDay()
-                                        ];
-                                        $currentDate->addMonth()->startOfMonth();
-                                }
-                                $labels = [];
-                                $data = [];
+                                $monthlyDateRanges = $this->getMonthlyDateRanges($startDate, $endDate);
                                 foreach ($monthlyDateRanges as $month) {
                                         $startOfMonth = $month['start'];
                                         $endOfMonth = $month['end'];
-                                        $users = User::whereBetween('created_at', [$startOfMonth, $endOfMonth])->orderBy('created_at')->get();
+                                        $users = PosterReadCount::whereBetween('created_at', [$startOfMonth, $endOfMonth])->orderBy('created_at')->get();
                                         $count = $users->count();
                                         $data[] = $count;
                                         $labels[] = $endOfMonth->toDateString();
                                 }
-                                $pluginText = trans("cruds.registered_members.fields.num_graph");
-                                $xAxisText =  trans("cruds.registered_members.fields.time");
-                                $yAxisText =  trans("cruds.registered_members.fields.count");
-                                $labelText =  trans("cruds.registered_members.fields.graph");
-                                $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
-                                return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                         }
+
+                        if ($range == 'day') {
+                                $interval = 'hour';
+                        }
+
+                        $pluginText = trans("cruds.registered_members.fields.num_graph");
+                        $xAxisText =  trans("cruds.registered_members.fields.time");
+                        $yAxisText =  trans("cruds.registered_members.fields.count");
+                        $labelText =  trans("cruds.registered_members.fields.graph");
+                        $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                        return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                 }
 
                 $labels = [];
@@ -527,37 +437,24 @@ class StatisticsController extends Controller
                                 $startDate->startOfDay();
                                 $endDate->endOfDay();
                                 $interval = 'hour';
-                        } elseif ($range == 'week') {
+                        }
+                        if ($range == 'week') {
                                 $startDate = Carbon::today()->subDays(6)->startOfDay();
                                 $endDate = Carbon::today()->endOfDay();
                                 $interval = 'day';
-                        } else {
+                        }
+                        if ($range == 'month') {
                                 $startDate->startOfMonth()->startOfDay();
                                 $endDate->endOfDay();
                                 $interval = 'day';
                         }
                 } else {
+                        $data = [];
+                        $labels = [];
                         $range = $request->range;
-                        if ($range == 'day') {
-                                $startDate->startOfDay();
-                                $endDate->endOfDay();
-                                $interval = 'hour';
-                        } elseif ($range == 'week') {
-                                $weeklyDateRanges = [];
-                                $currentDate = $startDate->copy();
-                                while ($currentDate->lte($endDate)) {
-                                        $endOfWeek = $currentDate->copy()->endOfWeek();
-                                        if ($endOfWeek->gt($endDate)) {
-                                                $endOfWeek = $endDate->copy();
-                                        }
-                                        $weeklyDateRanges[] = [
-                                                'start' => $currentDate->copy()->startOfDay(),
-                                                'end' => $endOfWeek->copy()->endOfDay()
-                                        ];
-                                        $currentDate->addWeek()->startOfWeek();
-                                }
-                                $labels = [];
-                                $data = [];
+                        if ($range == 'week') {
+                                $weeklyDateRanges = $this->getWeeklyDateRanges($startDate, $endDate);
+
                                 foreach ($weeklyDateRanges as $week) {
                                         $startOfWeek = $week['start'];
                                         $endOfWeek = $week['end'];
@@ -572,37 +469,28 @@ class StatisticsController extends Controller
                                 $labelText =  trans("cruds.registered_members.fields.graph");
                                 $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
                                 return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
-                        } else {
-                                $monthlyDateRanges = [];
-                                $currentDate = $startDate->copy()->startOfMonth();
-                                while ($currentDate->lte($endDate)) {
-                                        $endOfMonth = $currentDate->copy()->endOfMonth();
-                                        if ($endOfMonth->gt($endDate)) {
-                                                $endOfMonth = $endDate->copy();
-                                        }
-                                        $monthlyDateRanges[] = [
-                                                'start' => $currentDate->copy()->startOfDay(),
-                                                'end' => $endOfMonth->copy()->endOfDay()
-                                        ];
-                                        $currentDate->addMonth()->startOfMonth();
-                                }
-                                $labels = [];
-                                $data = [];
+                        }
+                        if ($range == 'month') {
+                                $monthlyDateRanges = $this->getMonthlyDateRanges($startDate, $endDate);
                                 foreach ($monthlyDateRanges as $month) {
                                         $startOfMonth = $month['start'];
                                         $endOfMonth = $month['end'];
-                                        $users = User::whereBetween('created_at', [$startOfMonth, $endOfMonth])->orderBy('created_at')->get();
+                                        $users = UniqueVisitor::whereBetween('created_at', [$startOfMonth, $endOfMonth])->where('device_name', 0)->orderBy('created_at')->get();
                                         $count = $users->count();
                                         $data[] = $count;
                                         $labels[] = $endOfMonth->toDateString();
                                 }
-                                $pluginText = trans("cruds.registered_members.fields.num_graph");
-                                $xAxisText =  trans("cruds.registered_members.fields.time");
-                                $yAxisText =  trans("cruds.registered_members.fields.count");
-                                $labelText =  trans("cruds.registered_members.fields.graph");
-                                $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
-                                return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                         }
+                        if ($range == 'day') {
+                                $interval = 'hour';
+                        }
+
+                        $pluginText = trans("cruds.registered_members.fields.num_graph");
+                        $xAxisText =  trans("cruds.registered_members.fields.time");
+                        $yAxisText =  trans("cruds.registered_members.fields.count");
+                        $labelText =  trans("cruds.registered_members.fields.graph");
+                        $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                        return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
                 }
 
                 $labels = [];
