@@ -14,8 +14,6 @@ use DB;
 
 class StatisticsController extends Controller
 {
-
-
         public function membersRegistrationGraph(Request $request, $range)
         {
                 $startDate = $request->has('start_date') ? Carbon::parse($request->start_date) : Carbon::now();
@@ -111,7 +109,6 @@ class StatisticsController extends Controller
                 $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
                 return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
         }
-
 
         public function numberPostsGraph(Request $request, $range)
         {
