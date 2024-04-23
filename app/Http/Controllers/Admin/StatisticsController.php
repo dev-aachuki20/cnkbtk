@@ -45,23 +45,32 @@ class StatisticsController extends Controller
                         $labels = [];
                         $range = $request->range;
                         if ($range == 'week') {
-                                $dateRanges = $this->getDateRanges($startDate, $endDate, $range);
+                                $weeklyDateRanges = $this->getWeeklyDateRanges($startDate, $endDate);
+
+                                foreach ($weeklyDateRanges as $week) {
+                                        $startOfWeek = $week['start'];
+                                        $endOfWeek = $week['end'];
+                                        $users = User::whereBetween('created_at', [$startOfWeek, $endOfWeek])->orderBy('created_at')->get();
+                                        $count = $users->count();
+                                        $data[] = $count;
+                                        $labels[] = $endOfWeek->toDateString();
+                                }
                         }
                         if ($range == 'month') {
-                                $dateRanges = $this->getDateRanges($startDate, $endDate, $range);
+                                $monthlyDateRanges = $this->getMonthlyDateRanges($startDate, $endDate);
+                                foreach ($monthlyDateRanges as $month) {
+                                        $startOfMonth = $month['start'];
+                                        $endOfMonth = $month['end'];
+                                        $users = User::whereBetween('created_at', [$startOfMonth, $endOfMonth])->orderBy('created_at')->get();
+                                        $count = $users->count();
+                                        $data[] = $count;
+                                        $labels[] = $endOfMonth->toDateString();
+                                }
                         }
                         if ($range == 'day') {
                                 $interval = 'hour';
                         }
 
-                        foreach ($dateRanges as $range) {
-                                $startDate = $range['start'];
-                                $endDate = $range['end'];
-                                $users = User::whereBetween('created_at', [$startDate, $endDate])->orderBy('created_at')->get();
-                                $count = $users->count();
-                                $data[] = $count;
-                                $labels[] = $endDate->toDateString() ?? $endDate->toDateString();
-                        }
                         $pluginText = trans("cruds.registered_members.fields.num_graph");
                         $xAxisText =  trans("cruds.registered_members.fields.time");
                         $yAxisText =  trans("cruds.registered_members.fields.count");
@@ -637,38 +646,65 @@ class StatisticsController extends Controller
                 return response()->json(['success' => 'Graph Find Your Data', 'html' => $html], 200);
         }
 
-        // weekly and monthly date-range filteration
-        private function getDateRanges($startDate, $endDate, $range = 'week')
+        // weekly date-range filteration
+        private function getWeeklyDateRanges($startDate, $endDate)
         {
-                $dateRanges = [];
-                if ($range == 'week') {
-                        $currentDate = $startDate->copy();
-                        while ($currentDate->lte($endDate)) {
-                                $end = $currentDate->copy()->endOfWeek();
-                                if ($end->gt($endDate)) {
-                                        $endOfWeek = $endDate->copy();
-                                }
-                                $weeklyDateRanges[] = [
-                                        'start' => $currentDate->copy()->startOfDay(),
-                                        'end' => $endOfWeek->copy()->endOfDay()
-                                ];
-                                $currentDate->addWeek()->startOfWeek();
+                $weeklyDateRanges = [];
+                $currentDate = $startDate->copy();
+                while ($currentDate->lte($endDate)) {
+                        $endOfWeek = $currentDate->copy()->endOfWeek();
+                        if ($endOfWeek->gt($endDate)) {
+                                $endOfWeek = $endDate->copy();
                         }
-                } else {
-                        $currentDate = $startDate->copy()->startOfMonth();
-                        while ($currentDate->lte($endDate)) {
-                                $end = $currentDate->copy()->endOfMonth();
-                                if ($end->gt($endDate)) {
-                                        $endOfMonth = $endDate->copy();
-                                }
-                                $monthlyDateRanges[] = [
-                                        'start' => $currentDate->copy()->startOfDay(),
-                                        'end' => $endOfMonth->copy()->endOfDay()
-                                ];
-                                $currentDate->addMonth()->startOfMonth();
-                        }
+                        $weeklyDateRanges[] = [
+                                'start' => $currentDate->copy()->startOfDay(),
+                                'end' => $endOfWeek->copy()->endOfDay()
+                        ];
+                        $currentDate->addWeek()->startOfWeek();
                 }
+                return $weeklyDateRanges;
+        }
 
-                return $dateRanges;
+        // monthly date-range filteration
+        private function getMonthlyDateRanges($startDate, $endDate)
+        {
+                $monthlyDateRanges = [];
+                $currentDate = $startDate->copy()->startOfMonth();
+                while ($currentDate->lte($endDate)) {
+                        $endOfMonth = $currentDate->copy()->endOfMonth();
+                        if ($endOfMonth->gt($endDate)) {
+                                $endOfMonth = $endDate->copy();
+                        }
+                        $monthlyDateRanges[] = [
+                                'start' => $currentDate->copy()->startOfDay(),
+                                'end' => $endOfMonth->copy()->endOfDay()
+                        ];
+                        $currentDate->addMonth()->startOfMonth();
+                }
+                return $monthlyDateRanges;
+        }
+
+        private function generateGraph($dateRanges, $rangeType)
+        {
+                $labels = [];
+                $data = [];
+                foreach ($dateRanges as $range) {
+                        $start = $range['start'];
+                        $end = $range['end'];
+                        if ($rangeType === 'week') {
+                                $posts = Poster::whereBetween('created_at', [$start, $end])->orderBy('created_at')->get();
+                        } else {
+                                $users = User::whereBetween('created_at', [$start, $end])->orderBy('created_at')->get();
+                        }
+                        $count = $posts->count() ?? $users->count();
+                        $data[] = $count;
+                        $labels[] = $end->toDateString();
+                }
+                $pluginText = trans("cruds.registered_members.fields.num_graph");
+                $xAxisText =  trans("cruds.registered_members.fields.time");
+                $yAxisText =  trans("cruds.registered_members.fields.count");
+                $labelText =  trans("cruds.registered_members.fields.graph");
+                $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+                return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
         }
 }
