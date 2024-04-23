@@ -68,13 +68,7 @@ class StatisticsController extends Controller
                                 $interval = 'hour';
                         }
 
-                        $totalDays = count($labels);
-                        $totalUsers = array_sum($data);
-                        $average = $totalDays > 0 ? $totalUsers / $totalDays : 0;
-
-
-                        $labels[] = 'Average';
-                        $data[] = $average;
+                        list($labels, $data) = $this->calculateAverage($labels, $data);
 
                         $pluginText = trans("cruds.registered_members.fields.num_graph");
                         $xAxisText =  trans("cruds.registered_members.fields.time");
@@ -113,12 +107,7 @@ class StatisticsController extends Controller
                         $data[] = $count;
                         $startDateCopy->add(1, $interval);
                 }
-                $totalDays = count($labels);
-                $totalUsers = array_sum($data);
-                $average = $totalDays > 0 ? $totalUsers / $totalDays : 0;
-
-                $labels[] = 'Average';
-                $data[] = $average;
+                list($labels, $data) = $this->calculateAverage($labels, $data);
 
                 $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
                 return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
@@ -168,8 +157,8 @@ class StatisticsController extends Controller
                                 foreach ($monthlyDateRanges as $month) {
                                         $startOfMonth = $month['start'];
                                         $endOfMonth = $month['end'];
-                                        $users = Poster::whereBetween('created_at', [$startOfMonth, $endOfMonth])->orderBy('created_at')->get();
-                                        $count = $users->count();
+                                        $numberOfPost = Poster::whereBetween('created_at', [$startOfMonth, $endOfMonth])->orderBy('created_at')->get();
+                                        $count = $numberOfPost->count();
                                         $data[] = $count;
                                         $labels[] = $endOfMonth->toDateString();
                                 }
@@ -177,12 +166,7 @@ class StatisticsController extends Controller
                         if ($range == 'day') {
                                 $interval = 'hour';
                         }
-                        $totalDays = count($labels);
-                        $totalUsers = array_sum($data);
-                        $average = $totalDays > 0 ? $totalUsers / $totalDays : 0;
-
-
-                        $labels[] = 'Average';
+                        list($labels, $data) = $this->calculateAverage($labels, $data);
                         $data[] = $average;
                         $pluginText = trans("cruds.number_of_posts.fields.num_graph");
                         $xAxisText =  trans("cruds.number_of_posts.fields.time");
@@ -227,12 +211,7 @@ class StatisticsController extends Controller
 
                         $startDateCopy->add(1, $interval);
                 }
-                $totalDays = count($labels);
-                $totalUsers = array_sum($data);
-                $average = $totalDays > 0 ? $totalUsers / $totalDays : 0;
-
-                $labels[] = 'Average';
-                $data[] = $average;
+                list($labels, $data) = $this->calculateAverage($labels, $data);
                 $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
                 return response()->json(['success' => 'Graph Find Your Data', 'html' => $html], 200);
@@ -282,8 +261,8 @@ class StatisticsController extends Controller
                                 foreach ($monthlyDateRanges as $month) {
                                         $startOfMonth = $month['start'];
                                         $endOfMonth = $month['end'];
-                                        $users = UniqueVisitor::whereBetween('created_at', [$startOfMonth, $endOfMonth])->orderBy('created_at')->get();
-                                        $count = $users->count();
+                                        $visitingUsers = UniqueVisitor::whereBetween('created_at', [$startOfMonth, $endOfMonth])->orderBy('created_at')->get();
+                                        $count = $visitingUsers->count();
                                         $data[] = $count;
                                         $labels[] = $endOfMonth->toDateString();
                                 }
@@ -291,13 +270,7 @@ class StatisticsController extends Controller
                         if ($range == 'day') {
                                 $interval = 'hour';
                         }
-                        $totalDays = count($labels);
-                        $totalUsers = array_sum($data);
-                        $average = $totalDays > 0 ? $totalUsers / $totalDays : 0;
-
-
-                        $labels[] = 'Average';
-                        $data[] = $average;
+                        list($labels, $data) = $this->calculateAverage($labels, $data);
                         $pluginText = trans("cruds.visiting_users.fields.num_graph");
                         $xAxisText =  trans("cruds.visiting_users.fields.time");
                         $yAxisText =  trans("cruds.visiting_users.fields.count");
@@ -340,7 +313,7 @@ class StatisticsController extends Controller
 
                         $startDateCopy->add(1, $interval);
                 }
-
+                list($labels, $data) = $this->calculateAverage($labels, $data);
                 $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
                 return response()->json(['success' => 'Graph Find Your Data', 'html' => $html], 200);
@@ -391,8 +364,8 @@ class StatisticsController extends Controller
                                 foreach ($monthlyDateRanges as $month) {
                                         $startOfMonth = $month['start'];
                                         $endOfMonth = $month['end'];
-                                        $users = PosterReadCount::whereBetween('created_at', [$startOfMonth, $endOfMonth])->orderBy('created_at')->get();
-                                        $count = $users->count();
+                                        $popularPosters = PosterReadCount::whereBetween('created_at', [$startOfMonth, $endOfMonth])->orderBy('created_at')->get();
+                                        $count = $popularPosters->count();
                                         $data[] = $count;
                                         $labels[] = $endOfMonth->toDateString();
                                 }
@@ -401,13 +374,7 @@ class StatisticsController extends Controller
                         if ($range == 'day') {
                                 $interval = 'hour';
                         }
-                        $totalDays = count($labels);
-                        $totalUsers = array_sum($data);
-                        $average = $totalDays > 0 ? $totalUsers / $totalDays : 0;
-
-
-                        $labels[] = 'Average';
-                        $data[] = $average;
+                        list($labels, $data) = $this->calculateAverage($labels, $data);
                         $pluginText = trans("cruds.most_popular_poster.fields.num_graph");
                         $xAxisText =  trans("cruds.most_popular_poster.fields.time");
                         $yAxisText =  trans("cruds.most_popular_poster.fields.count");
@@ -450,12 +417,7 @@ class StatisticsController extends Controller
                         $data[] = $count;
                         $startDateCopy->add(1, $interval);
                 }
-                $totalDays = count($labels);
-                $totalUsers = array_sum($data);
-                $average = $totalDays > 0 ? $totalUsers / $totalDays : 0;
-
-                $labels[] = 'Average';
-                $data[] = $average;
+                list($labels, $data) = $this->calculateAverage($labels, $data);
                 $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
                 return response()->json(['success' => 'Graph Find Your Data', 'html' => $html], 200);
@@ -508,8 +470,8 @@ class StatisticsController extends Controller
                                 foreach ($monthlyDateRanges as $month) {
                                         $startOfMonth = $month['start'];
                                         $endOfMonth = $month['end'];
-                                        $users = UniqueVisitor::whereBetween('created_at', [$startOfMonth, $endOfMonth])->where('device_name', 0)->orderBy('created_at')->get();
-                                        $count = $users->count();
+                                        $mobileAccess = UniqueVisitor::whereBetween('created_at', [$startOfMonth, $endOfMonth])->where('device_name', 0)->orderBy('created_at')->get();
+                                        $count = $mobileAccess->count();
                                         $data[] = $count;
                                         $labels[] = $endOfMonth->toDateString();
                                 }
@@ -517,13 +479,7 @@ class StatisticsController extends Controller
                         if ($range == 'day') {
                                 $interval = 'hour';
                         }
-                        $totalDays = count($labels);
-                        $totalUsers = array_sum($data);
-                        $average = $totalDays > 0 ? $totalUsers / $totalDays : 0;
-
-
-                        $labels[] = 'Average';
-                        $data[] = $average;
+                        list($labels, $data) = $this->calculateAverage($labels, $data);
                         $pluginText = trans("cruds.mobile_access.fields.num_graph");
                         $xAxisText =  trans("cruds.mobile_access.fields.time");
                         $yAxisText =  trans("cruds.mobile_access.fields.count");
@@ -567,12 +523,7 @@ class StatisticsController extends Controller
 
                         $startDateCopy->add(1, $interval);
                 }
-                $totalDays = count($labels);
-                $totalUsers = array_sum($data);
-                $average = $totalDays > 0 ? $totalUsers / $totalDays : 0;
-
-                $labels[] = 'Average';
-                $data[] = $average;
+                list($labels, $data) = $this->calculateAverage($labels, $data);
                 $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
                 return response()->json(['success' => 'Graph Find Your Data', 'html' => $html], 200);
@@ -616,57 +567,19 @@ class StatisticsController extends Controller
                 return $monthlyDateRanges;
         }
 
-        private function generateGraph($dateRanges, $rangeType)
-        {
-                $labels = [];
-                $data = [];
-                foreach ($dateRanges as $range) {
-                        $start = $range['start'];
-                        $end = $range['end'];
-                        if ($rangeType === 'week') {
-                                $posts = Poster::whereBetween('created_at', [$start, $end])->orderBy('created_at')->get();
-                        } else {
-                                $users = User::whereBetween('created_at', [$start, $end])->orderBy('created_at')->get();
-                        }
-                        $count = $posts->count() ?? $users->count();
-                        $data[] = $count;
-                        $labels[] = $end->toDateString();
-                }
-                $pluginText = trans("cruds.registered_members.fields.num_graph");
-                $xAxisText =  trans("cruds.registered_members.fields.time");
-                $yAxisText =  trans("cruds.registered_members.fields.count");
-                $labelText =  trans("cruds.registered_members.fields.graph");
-                $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
-                return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
-        }
+       
 
-        private function generate($dateRanges, $rangeType)
-        {
-                $labels = [];
-                $data = [];
-                foreach ($dateRanges as $range) {
-                        $start = $range['start'];
-                        $end = $range['end'];
-                        if ($rangeType === 'week') {
-                                $posts = Poster::whereBetween('created_at', [$start, $end])->orderBy('created_at')->get();
-                        } else {
-                                $users = User::whereBetween('created_at', [$start, $end])->orderBy('created_at')->get();
-                        }
-                        $count = $posts->count() ?? $users->count();
-                        $data[] = $count;
-                        $labels[] = $end->toDateString();
-                }
-
-                $totalDays = count($dateRanges);
+        private function calculateAverage($labels, $data)
+          {
+                $totalDays = count($labels);
                 $totalUsers = array_sum($data);
                 $average = $totalDays > 0 ? $totalUsers / $totalDays : 0;
-                $pluginText = trans("cruds.registered_members.fields.num_graph");
-                $xAxisText =  trans("cruds.registered_members.fields.time");
-                $yAxisText =  trans("cruds.registered_members.fields.count");
-                $labelText =  trans("cruds.registered_members.fields.graph");
+
                 $labels[] = 'Average';
                 $data[] = $average;
-                $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
-                return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
-        }
+
+                return [$labels, $data];
+           }
+
+        
 }
