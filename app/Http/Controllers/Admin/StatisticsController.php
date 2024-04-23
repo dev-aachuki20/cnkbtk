@@ -468,145 +468,140 @@ class StatisticsController extends Controller
      // weekly date-range filteration
 
      private function getWeeklyDateRanges($startDate, $endDate)
-     {
-             $weeklyDateRanges = [];
-             $currentDate = $startDate->copy();
-             while ($currentDate->lte($endDate)) {
-                     $endOfWeek = $currentDate->copy()->endOfWeek();
-                     if ($endOfWeek->gt($endDate)) {
-                             $endOfWeek = $endDate->copy();
-                     }
-                     $weeklyDateRanges[] = [
-                             'start' => $currentDate->copy()->startOfDay(),
-                             'end' => $endOfWeek->copy()->endOfDay()
-                     ];
-                     $currentDate->addWeek()->startOfWeek();
-             }
-             return $weeklyDateRanges;
-     }
+        {
+                $weeklyDateRanges = [];
+                $currentDate = $startDate->copy();
+                while ($currentDate->lte($endDate)) {
+                        $endOfWeek = $currentDate->copy()->endOfWeek();
+                        if ($endOfWeek->gt($endDate)) {
+                                $endOfWeek = $endDate->copy();
+                        }
+                        $weeklyDateRanges[] = [
+                                'start' => $currentDate->copy()->startOfDay(),
+                                'end' => $endOfWeek->copy()->endOfDay()
+                        ];
+                        $currentDate->addWeek()->startOfWeek();
+                }
+                return $weeklyDateRanges;
+        }
 
 
      // monthly date-range filteration
 
      private function getMonthlyDateRanges($startDate, $endDate)
      {
-             $monthlyDateRanges = [];
-             $currentDate = $startDate->copy()->startOfMonth();
-             while ($currentDate->lte($endDate)) {
-                     $endOfMonth = $currentDate->copy()->endOfMonth();
-                     if ($endOfMonth->gt($endDate)) {
-                             $endOfMonth = $endDate->copy();
-                     }
-                     $monthlyDateRanges[] = [
-                             'start' => $currentDate->copy()->startOfDay(),
-                             'end' => $endOfMonth->copy()->endOfDay()
-                     ];
-                     $currentDate->addMonth()->startOfMonth();
-             }
-             return $monthlyDateRanges;
-     }
+        $monthlyDateRanges = [];
+        $currentDate = $startDate->copy()->startOfMonth();
+           while ($currentDate->lte($endDate)) {
+        $endOfMonth = $currentDate->copy()->endOfMonth();
+           if ($endOfMonth->gt($endDate)) {
+                $endOfMonth = $endDate->copy();
+                }
+           $monthlyDateRanges[] = [
+                'start' => $currentDate->copy()->startOfDay(),
+                'end' => $endOfMonth->copy()->endOfDay()
+                ];
+           $currentDate->addMonth()->startOfMonth();
+        }
+        return $monthlyDateRanges;
+      }
 
   
-     //  Avarage Calculations
-
+     //  Avarage Calculations FILTERATION
      private function calculateAverage($labels, $data)
      {
-           $totalDays = count($labels);
-           $total = array_sum($data);
-           $average = $totalDays > 0 ? $total / $totalDays : 0;
+        $totalDays = count($labels);
+        $total = array_sum($data);
+        $average = $totalDays > 0 ? $total / $totalDays : 0;
 
-           $labels[] = 'Average';
-           $data[] = $average;
+        $labels[] = 'Average';
+        $data[] = $average;
 
-           return [$labels, $data];
+        return [$labels, $data];
       }   
 
 
      //  Members Registrations 
-
-     private function generateMembersRegistrationGraph($dateRanges, $startDate, $endDate, $rangeType)
+     private function generateMembersRegistrationGraph($dateRanges)
      {
-         $labels = [];
-         $data = [];
-         foreach ($dateRanges as $range) {
-                 $start = $range['start'];
-                 $end = $range['end'];
-                 $users = User::whereBetween('created_at', [$start, $end])->orderBy('created_at')->get();
-                 $count = $users->count();
-                 $data[] = $count;
-                 $labels[] = $end->toDateString();
-         }
-         return [$labels, $data];
+        $labels = [];
+        $data = [];
+        foreach ($dateRanges as $range) {
+                $start = $range['start'];
+                $end = $range['end'];
+                $users = User::whereBetween('created_at', [$start, $end])->orderBy('created_at')->get();
+                $count = $users->count();
+                $data[] = $count;
+                $labels[] = $end->toDateString();
+        }
+        return [$labels, $data];
       }  
 
       // Number Of Posts
 
-      private function generateNumberPostsGraph($dateRanges, $startDate, $endDate, $rangeType)
+      private function generateNumberPostsGraph($dateRanges)
       {
-          $labels = [];
-          $data = [];
-          foreach ($dateRanges as $range) {
-                  $start = $range['start'];
-                  $end = $range['end'];
-                  $numberPosts = Poster::whereBetween('created_at', [$start, $end])->orderBy('created_at')->get();
-                  $count = $numberPosts->count();
-                  $data[] = $count;
-                  $labels[] = $end->toDateString();
-          }
-          return [$labels, $data];
+        $labels = [];
+        $data = [];
+        foreach ($dateRanges as $range) {
+                $start = $range['start'];
+                $end = $range['end'];
+                $numberPosts = Poster::whereBetween('created_at', [$start, $end])->orderBy('created_at')->get();
+                $count = $numberPosts->count();
+                $data[] = $count;
+                $labels[] = $end->toDateString();
+        }
+        return [$labels, $data];
      }
 
 
-     //  Visiting Users 
-
-     private function generateVisitingUsersGraph($dateRanges, $startDate, $endDate, $rangeType)
+     //  Visiting Users
+     private function generateVisitingUsersGraph($dateRanges)
      {
-     $labels = [];
-     $data = [];
-     foreach ($dateRanges as $range) {
-             $start = $range['start'];
-             $end = $range['end'];
-             $VisitingUsers = UniqueVisitor::whereBetween('created_at', [$start, $end])->orderBy('created_at')->get();
-             $count = $VisitingUsers->count();
-             $data[] = $count;
-             $labels[] = $end->toDateString();
+        $labels = [];
+        $data = [];
+        foreach ($dateRanges as $range) {
+                $start = $range['start'];
+                $end = $range['end'];
+                $VisitingUsers = UniqueVisitor::whereBetween('created_at', [$start, $end])->orderBy('created_at')->get();
+                $count = $VisitingUsers->count();
+                $data[] = $count;
+                $labels[] = $end->toDateString();
+        }
+        return [$labels, $data];
      }
-     return [$labels, $data];
-     }
 
 
-     // Popular Posters 
-
-     private function generatePopularPostersGraph($dateRanges, $startDate, $endDate, $rangeType)
+     // Popular Posters
+     private function generatePopularPostersGraph($dateRanges)
      {
-     $labels = [];
-     $data = [];
-     foreach ($dateRanges as $range) {
-             $start = $range['start'];
-             $end = $range['end'];
-             $popularPosters = PosterReadCount::whereBetween('created_at', [$start, $end])->orderBy('created_at')->get();
-             $count = $popularPosters->count();
-             $data[] = $count;
-             $labels[] = $end->toDateString();
-     }
-     return [$labels, $data];
+        $labels = [];
+        $data = [];
+        foreach ($dateRanges as $range) {
+                $start = $range['start'];
+                $end = $range['end'];
+                $popularPosters = PosterReadCount::whereBetween('created_at', [$start, $end])->orderBy('created_at')->get();
+                $count = $popularPosters->count();
+                $data[] = $count;
+                $labels[] = $end->toDateString();
+        }
+        return [$labels, $data];
      }
 
 
      // Mobile Access 
-
-     private function generateMobileAccessGraph($dateRanges, $startDate, $endDate, $rangeType)
+     private function generateMobileAccessGraph($dateRanges,)
      {
-     $labels = [];
-     $data = [];
-     foreach ($dateRanges as $range) {
-             $start = $range['start'];
-             $end = $range['end'];
-             $mobileAccess = UniqueVisitor::whereBetween('created_at', [$start, $end])->orderBy('created_at')->get();
-             $count = $mobileAccess->count();
-             $data[] = $count;
-             $labels[] = $end->toDateString();
-     }
-     return [$labels, $data];
+        $labels = [];
+        $data = [];
+        foreach ($dateRanges as $range) {
+                $start = $range['start'];
+                $end = $range['end'];
+                $mobileAccess = UniqueVisitor::whereBetween('created_at', [$start, $end])->orderBy('created_at')->get();
+                $count = $mobileAccess->count();
+                $data[] = $count;
+                $labels[] = $end->toDateString();
+        }
+        return [$labels, $data];
      }
 }
