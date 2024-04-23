@@ -13,7 +13,25 @@ use DB;
 
 
 class StatisticsController extends Controller
-{
+{      
+//  Members Registrations 
+
+        private function generateMembersRegistrationGraph($dateRanges, $startDate, $endDate, $rangeType)
+            {
+                $labels = [];
+                $data = [];
+                foreach ($dateRanges as $range) {
+                        $start = $range['start'];
+                        $end = $range['end'];
+                        $users = User::whereBetween('created_at', [$start, $end])->orderBy('created_at')->get();
+                        $count = $users->count();
+                        $data[] = $count;
+                        $labels[] = $end->toDateString();
+                }
+                return [$labels, $data];
+             }
+
+
         public function membersRegistrationGraph(Request $request, $range)
         {
                 $startDate = $request->has('start_date') ? Carbon::parse($request->start_date) : Carbon::now();
@@ -44,25 +62,11 @@ class StatisticsController extends Controller
                         $range = $request->range;
                         if ($range == 'week') {
                                 $weeklyDateRanges = $this->getWeeklyDateRanges($startDate, $endDate);
-                                foreach ($weeklyDateRanges as $week) {
-                                        $startOfWeek = $week['start'];
-                                        $endOfWeek = $week['end'];
-                                        $users = User::whereBetween('created_at', [$startOfWeek, $endOfWeek])->orderBy('created_at')->get();
-                                        $count = $users->count();
-                                        $data[] = $count;
-                                        $labels[] = $endOfWeek->toDateString();
-                                }
+                                list($labels, $data) = $this->generateMembersRegistrationGraph($weeklyDateRanges, $startDate, $endDate, 'week');
                         }
                         if ($range == 'month') {
                                 $monthlyDateRanges = $this->getMonthlyDateRanges($startDate, $endDate);
-                                foreach ($monthlyDateRanges as $month) {
-                                        $startOfMonth = $month['start'];
-                                        $endOfMonth = $month['end'];
-                                        $users = User::whereBetween('created_at', [$startOfMonth, $endOfMonth])->orderBy('created_at')->get();
-                                        $count = $users->count();
-                                        $data[] = $count;
-                                        $labels[] = $endOfMonth->toDateString();
-                                }
+                                list($labels, $data) = $this->generateMembersRegistrationGraph($monthlyDateRanges, $startDate, $endDate, 'month');
                         }
                         if ($range == 'day') {
                                 $interval = 'hour';
@@ -75,7 +79,7 @@ class StatisticsController extends Controller
                         $yAxisText =  trans("cruds.registered_members.fields.count");
                         $labelText =  trans("cruds.registered_members.fields.graph");
                         $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
-                        return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
+                        return response()->json(['success' => true, 'html' => $html], 200);
                 }
 
                 $labels = [];
@@ -110,8 +114,27 @@ class StatisticsController extends Controller
                 list($labels, $data) = $this->calculateAverage($labels, $data);
 
                 $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
-                return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
-        }
+                return response()->json(['success' => true, 'html' => $html], 200);
+           }
+
+// Number Of Posts
+
+        private function generateNumberPostsGraph($dateRanges, $startDate, $endDate, $rangeType)
+            {
+                $labels = [];
+                $data = [];
+                foreach ($dateRanges as $range) {
+                        $start = $range['start'];
+                        $end = $range['end'];
+                        $numberPosts = Poster::whereBetween('created_at', [$start, $end])->orderBy('created_at')->get();
+                        $count = $numberPosts->count();
+                        $data[] = $count;
+                        $labels[] = $end->toDateString();
+                }
+                return [$labels, $data];
+           }
+
+
 
         public function numberPostsGraph(Request $request, $range)
         {
@@ -144,36 +167,21 @@ class StatisticsController extends Controller
                         $range = $request->range;
                         if ($range == 'week') {
                                 $weeklyDateRanges = $this->getWeeklyDateRanges($startDate, $endDate);
-                                foreach ($weeklyDateRanges as $week) {
-                                        $startOfWeek = $week['start'];
-                                        $endOfWeek = $week['end'];
-                                        $posts = Poster::whereBetween('created_at', [$startDate, $endDate])->orderBy('created_at')->get();
-                                        $count = $posts->count();
-                                        $data[] = $count;
-                                        $labels[] = $endOfWeek->toDateString();
-                                }
+                                list($labels, $data) = $this->generateNumberPostsGraph($weeklyDateRanges, $startDate, $endDate, 'week');
                         } else {
                                 $monthlyDateRanges = $this->getMonthlyDateRanges($startDate, $endDate);
-                                foreach ($monthlyDateRanges as $month) {
-                                        $startOfMonth = $month['start'];
-                                        $endOfMonth = $month['end'];
-                                        $numberOfPost = Poster::whereBetween('created_at', [$startOfMonth, $endOfMonth])->orderBy('created_at')->get();
-                                        $count = $numberOfPost->count();
-                                        $data[] = $count;
-                                        $labels[] = $endOfMonth->toDateString();
-                                }
+                                list($labels, $data) = $this->generateNumberPostsGraph($monthlyDateRanges, $startDate, $endDate, 'month');
                         }
                         if ($range == 'day') {
                                 $interval = 'hour';
                         }
                         list($labels, $data) = $this->calculateAverage($labels, $data);
-                        $data[] = $average;
                         $pluginText = trans("cruds.number_of_posts.fields.num_graph");
                         $xAxisText =  trans("cruds.number_of_posts.fields.time");
                         $yAxisText =  trans("cruds.number_of_posts.fields.count");
                         $labelText =  trans("cruds.number_of_posts.fields.graph");
                         $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
-                        return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
+                        return response()->json(['success' => true, 'html' => $html], 200);
                 }
 
                 $labels = [];
@@ -214,11 +222,30 @@ class StatisticsController extends Controller
                 list($labels, $data) = $this->calculateAverage($labels, $data);
                 $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
-                return response()->json(['success' => 'Graph Find Your Data', 'html' => $html], 200);
+                return response()->json(['success' => true, 'html' => $html], 200);
         }
 
+
+//  Visiting Users 
+
+        private function generateVisitingUsersGraph($dateRanges, $startDate, $endDate, $rangeType)
+                {
+                $labels = [];
+                $data = [];
+                foreach ($dateRanges as $range) {
+                        $start = $range['start'];
+                        $end = $range['end'];
+                        $VisitingUsers = UniqueVisitor::whereBetween('created_at', [$start, $end])->orderBy('created_at')->get();
+                        $count = $VisitingUsers->count();
+                        $data[] = $count;
+                        $labels[] = $end->toDateString();
+                }
+                return [$labels, $data];
+                }
+
+
         public function visitingUsersGraph(Request $request, $range)
-        {
+             {
                 $startDate = $request->has('start_date') ? Carbon::parse($request->start_date) : Carbon::now();
                 $endDate = $request->has('end_date') ? Carbon::parse($request->end_date) : Carbon::now();
 
@@ -248,24 +275,10 @@ class StatisticsController extends Controller
                         $range = $request->range;
                         if ($range == 'week') {
                                 $weeklyDateRanges = $this->getWeeklyDateRanges($startDate, $endDate);
-                                foreach ($weeklyDateRanges as $week) {
-                                        $startOfWeek = $week['start'];
-                                        $endOfWeek = $week['end'];
-                                        $visitingUsers = UniqueVisitor::whereBetween('created_at', [$startDate, $endDate])->orderBy('created_at')->get();
-                                        $count = $visitingUsers->count();
-                                        $data[] = $count;
-                                        $labels[] = $endOfWeek->toDateString();
-                                }
+                                list($labels, $data) = $this->generateVisitingUsersGraph($weeklyDateRanges, $startDate, $endDate, 'week');
                         } else {
                                 $monthlyDateRanges = $this->getMonthlyDateRanges($startDate, $endDate);
-                                foreach ($monthlyDateRanges as $month) {
-                                        $startOfMonth = $month['start'];
-                                        $endOfMonth = $month['end'];
-                                        $visitingUsers = UniqueVisitor::whereBetween('created_at', [$startOfMonth, $endOfMonth])->orderBy('created_at')->get();
-                                        $count = $visitingUsers->count();
-                                        $data[] = $count;
-                                        $labels[] = $endOfMonth->toDateString();
-                                }
+                                list($labels, $data) = $this->generateVisitingUsersGraph($monthlyDateRanges, $startDate, $endDate, 'month');
                         }
                         if ($range == 'day') {
                                 $interval = 'hour';
@@ -276,7 +289,7 @@ class StatisticsController extends Controller
                         $yAxisText =  trans("cruds.visiting_users.fields.count");
                         $labelText =  trans("cruds.visiting_users.fields.graph");
                         $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
-                        return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
+                        return response()->json(['success' => true, 'html' => $html], 200);
                 }
 
                 $labels = [];
@@ -316,11 +329,31 @@ class StatisticsController extends Controller
                 list($labels, $data) = $this->calculateAverage($labels, $data);
                 $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
-                return response()->json(['success' => 'Graph Find Your Data', 'html' => $html], 200);
+                return response()->json(['success' => true, 'html' => $html], 200);
         }
 
+
+
+// Popular Posters 
+
+        private function generatePopularPostersGraph($dateRanges, $startDate, $endDate, $rangeType)
+                {
+                $labels = [];
+                $data = [];
+                foreach ($dateRanges as $range) {
+                        $start = $range['start'];
+                        $end = $range['end'];
+                        $popularPosters = PosterReadCount::whereBetween('created_at', [$start, $end])->orderBy('created_at')->get();
+                        $count = $popularPosters->count();
+                        $data[] = $count;
+                        $labels[] = $end->toDateString();
+                }
+                return [$labels, $data];
+                }
+
+
         public function popularPostersGraph(Request $request, $range)
-        {
+               {
 
                 $startDate = $request->has('start_date') ? Carbon::parse($request->start_date) : Carbon::now();
                 $endDate = $request->has('end_date') ? Carbon::parse($request->end_date) : Carbon::now();
@@ -351,24 +384,10 @@ class StatisticsController extends Controller
                         $range = $request->range;
                         if ($range == 'week') {
                                 $weeklyDateRanges = $this->getWeeklyDateRanges($startDate, $endDate);
-                                foreach ($weeklyDateRanges as $week) {
-                                        $startOfWeek = $week['start'];
-                                        $endOfWeek = $week['end'];
-                                        $popularPosters = PosterReadCount::whereBetween('created_at', [$startDate, $endDate])->orderBy('created_at')->get();
-                                        $count = $popularPosters->count();
-                                        $data[] = $count;
-                                        $labels[] = $endOfWeek->toDateString();
-                                }
+                                list($labels, $data) = $this->generatePopularPostersGraph($weeklyDateRanges, $startDate, $endDate, 'week');
                         } else {
                                 $monthlyDateRanges = $this->getMonthlyDateRanges($startDate, $endDate);
-                                foreach ($monthlyDateRanges as $month) {
-                                        $startOfMonth = $month['start'];
-                                        $endOfMonth = $month['end'];
-                                        $popularPosters = PosterReadCount::whereBetween('created_at', [$startOfMonth, $endOfMonth])->orderBy('created_at')->get();
-                                        $count = $popularPosters->count();
-                                        $data[] = $count;
-                                        $labels[] = $endOfMonth->toDateString();
-                                }
+                                list($labels, $data) = $this->generatePopularPostersGraph($monthlyDateRanges, $startDate, $endDate, 'month');
                         }
 
                         if ($range == 'day') {
@@ -380,7 +399,7 @@ class StatisticsController extends Controller
                         $yAxisText =  trans("cruds.most_popular_poster.fields.count");
                         $labelText =  trans("cruds.most_popular_poster.fields.graph");
                         $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
-                        return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
+                        return response()->json(['success' => true, 'html' => $html], 200);
                 }
 
                 $labels = [];
@@ -420,8 +439,28 @@ class StatisticsController extends Controller
                 list($labels, $data) = $this->calculateAverage($labels, $data);
                 $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
-                return response()->json(['success' => 'Graph Find Your Data', 'html' => $html], 200);
+                return response()->json(['success' => true, 'html' => $html], 200);
         }
+
+
+
+// Mobile Access 
+
+        private function generateMobileAccessGraph($dateRanges, $startDate, $endDate, $rangeType)
+                {
+                $labels = [];
+                $data = [];
+                foreach ($dateRanges as $range) {
+                        $start = $range['start'];
+                        $end = $range['end'];
+                        $mobileAccess = UniqueVisitor::whereBetween('created_at', [$start, $end])->orderBy('created_at')->get();
+                        $count = $mobileAccess->count();
+                        $data[] = $count;
+                        $labels[] = $end->toDateString();
+                }
+                return [$labels, $data];
+                }
+
 
 
         public function mobileAccessGraph(Request $request, $range)
@@ -455,26 +494,11 @@ class StatisticsController extends Controller
                         $range = $request->range;
                         if ($range == 'week') {
                                 $weeklyDateRanges = $this->getWeeklyDateRanges($startDate, $endDate);
-
-                                foreach ($weeklyDateRanges as $week) {
-                                        $startOfWeek = $week['start'];
-                                        $endOfWeek = $week['end'];
-                                        $mobilesAccess = UniqueVisitor::whereBetween('created_at', [$startDate, $endDate])->where('device_name', 0)->orderBy('created_at')->get();
-                                        $count = $mobilesAccess->count();
-                                        $data[] = $count;
-                                        $labels[] = $endOfWeek->toDateString();
-                                }
+                                list($labels, $data) = $this->generateMobileAccessGraph($weeklyDateRanges, $startDate, $endDate, 'week');
                         }
                         if ($range == 'month') {
                                 $monthlyDateRanges = $this->getMonthlyDateRanges($startDate, $endDate);
-                                foreach ($monthlyDateRanges as $month) {
-                                        $startOfMonth = $month['start'];
-                                        $endOfMonth = $month['end'];
-                                        $mobileAccess = UniqueVisitor::whereBetween('created_at', [$startOfMonth, $endOfMonth])->where('device_name', 0)->orderBy('created_at')->get();
-                                        $count = $mobileAccess->count();
-                                        $data[] = $count;
-                                        $labels[] = $endOfMonth->toDateString();
-                                }
+                                list($labels, $data) = $this->generateMobileAccessGraph($monthlyDateRanges, $startDate, $endDate, 'month');
                         }
                         if ($range == 'day') {
                                 $interval = 'hour';
@@ -485,7 +509,7 @@ class StatisticsController extends Controller
                         $yAxisText =  trans("cruds.mobile_access.fields.count");
                         $labelText =  trans("cruds.mobile_access.fields.graph");
                         $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
-                        return response()->json(['success' => 'Data retrieved successfully', 'html' => $html], 200);
+                        return response()->json(['success' => true, 'html' => $html], 200);
                 }
 
                 $labels = [];
@@ -526,10 +550,11 @@ class StatisticsController extends Controller
                 list($labels, $data) = $this->calculateAverage($labels, $data);
                 $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
-                return response()->json(['success' => 'Graph Find Your Data', 'html' => $html], 200);
+                return response()->json(['success' => true, 'html' => $html], 200);
         }
 
-        // weekly date-range filteration
+// weekly date-range filteration
+
         private function getWeeklyDateRanges($startDate, $endDate)
         {
                 $weeklyDateRanges = [];
@@ -548,7 +573,8 @@ class StatisticsController extends Controller
                 return $weeklyDateRanges;
         }
 
-        // monthly date-range filteration
+// monthly date-range filteration
+
         private function getMonthlyDateRanges($startDate, $endDate)
         {
                 $monthlyDateRanges = [];
@@ -568,12 +594,13 @@ class StatisticsController extends Controller
         }
 
        
+//  Avarage Calculations
 
         private function calculateAverage($labels, $data)
           {
                 $totalDays = count($labels);
-                $totalUsers = array_sum($data);
-                $average = $totalDays > 0 ? $totalUsers / $totalDays : 0;
+                $total = array_sum($data);
+                $average = $totalDays > 0 ? $total / $totalDays : 0;
 
                 $labels[] = 'Average';
                 $data[] = $average;
@@ -581,5 +608,5 @@ class StatisticsController extends Controller
                 return [$labels, $data];
            }
 
-        
+       
 }
