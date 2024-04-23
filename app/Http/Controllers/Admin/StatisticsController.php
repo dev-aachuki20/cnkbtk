@@ -177,7 +177,13 @@ class StatisticsController extends Controller
                         if ($range == 'day') {
                                 $interval = 'hour';
                         }
+                        $totalDays = count($labels);
+                        $totalUsers = array_sum($data);
+                        $average = $totalDays > 0 ? $totalUsers / $totalDays : 0;
 
+
+                        $labels[] = 'Average';
+                        $data[] = $average;
                         $pluginText = trans("cruds.number_of_posts.fields.num_graph");
                         $xAxisText =  trans("cruds.number_of_posts.fields.time");
                         $yAxisText =  trans("cruds.number_of_posts.fields.count");
@@ -221,7 +227,12 @@ class StatisticsController extends Controller
 
                         $startDateCopy->add(1, $interval);
                 }
+                $totalDays = count($labels);
+                $totalUsers = array_sum($data);
+                $average = $totalDays > 0 ? $totalUsers / $totalDays : 0;
 
+                $labels[] = 'Average';
+                $data[] = $average;
                 $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
                 return response()->json(['success' => 'Graph Find Your Data', 'html' => $html], 200);
@@ -280,7 +291,13 @@ class StatisticsController extends Controller
                         if ($range == 'day') {
                                 $interval = 'hour';
                         }
+                        $totalDays = count($labels);
+                        $totalUsers = array_sum($data);
+                        $average = $totalDays > 0 ? $totalUsers / $totalDays : 0;
 
+
+                        $labels[] = 'Average';
+                        $data[] = $average;
                         $pluginText = trans("cruds.visiting_users.fields.num_graph");
                         $xAxisText =  trans("cruds.visiting_users.fields.time");
                         $yAxisText =  trans("cruds.visiting_users.fields.count");
@@ -384,7 +401,13 @@ class StatisticsController extends Controller
                         if ($range == 'day') {
                                 $interval = 'hour';
                         }
+                        $totalDays = count($labels);
+                        $totalUsers = array_sum($data);
+                        $average = $totalDays > 0 ? $totalUsers / $totalDays : 0;
 
+
+                        $labels[] = 'Average';
+                        $data[] = $average;
                         $pluginText = trans("cruds.most_popular_poster.fields.num_graph");
                         $xAxisText =  trans("cruds.most_popular_poster.fields.time");
                         $yAxisText =  trans("cruds.most_popular_poster.fields.count");
@@ -427,7 +450,12 @@ class StatisticsController extends Controller
                         $data[] = $count;
                         $startDateCopy->add(1, $interval);
                 }
+                $totalDays = count($labels);
+                $totalUsers = array_sum($data);
+                $average = $totalDays > 0 ? $totalUsers / $totalDays : 0;
 
+                $labels[] = 'Average';
+                $data[] = $average;
                 $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
                 return response()->json(['success' => 'Graph Find Your Data', 'html' => $html], 200);
@@ -489,7 +517,13 @@ class StatisticsController extends Controller
                         if ($range == 'day') {
                                 $interval = 'hour';
                         }
+                        $totalDays = count($labels);
+                        $totalUsers = array_sum($data);
+                        $average = $totalDays > 0 ? $totalUsers / $totalDays : 0;
 
+
+                        $labels[] = 'Average';
+                        $data[] = $average;
                         $pluginText = trans("cruds.mobile_access.fields.num_graph");
                         $xAxisText =  trans("cruds.mobile_access.fields.time");
                         $yAxisText =  trans("cruds.mobile_access.fields.count");
@@ -533,7 +567,12 @@ class StatisticsController extends Controller
 
                         $startDateCopy->add(1, $interval);
                 }
+                $totalDays = count($labels);
+                $totalUsers = array_sum($data);
+                $average = $totalDays > 0 ? $totalUsers / $totalDays : 0;
 
+                $labels[] = 'Average';
+                $data[] = $average;
                 $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
                 return response()->json(['success' => 'Graph Find Your Data', 'html' => $html], 200);
