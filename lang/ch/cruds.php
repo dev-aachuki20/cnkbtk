@@ -248,6 +248,7 @@ return [
         'statistics_filteration' => [
             'title' => '選擇過濾器：',
             'daterange_title' => '選擇日期範圍：',
+            'tag_type_title'    => '选择标签类型：',
             'day' => "天空",
             'week' => "星期",
             'month' => "月",

@@ -243,6 +243,7 @@ return [
         'statistics_filteration' => [
             'title'             => 'Select Filter:',
             'daterange_title'   => 'Select Date Range:',
+            'tag_type_title'    => 'Select Tag Type:',
             'day'               => "Day",
             'week'              => "Week",
             'month'             => "Month",

@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Poster;
 use App\Models\UniqueVisitor;
 use App\Models\PosterReadCount;
+use App\Models\Tag;
 use Carbon\Carbon;
 use DB;
 
@@ -92,12 +93,15 @@ class StatisticsController extends Controller
     {
         $startDate = $request->has('start_date') ? Carbon::parse($request->start_date) : Carbon::now();
         $endDate = $request->has('end_date') ? Carbon::parse($request->end_date) : Carbon::now();
+
+        $tagTypes = $request['tag_type'];
+        $interval = 'day';
         $labels = [];
         $data = [];
-        if (!$request->has(['start_date', 'end_date', 'range'])) {
-            if (!in_array($range, ['day', 'week', 'month'])) {
-                return response()->json(['error' => 'Invalid range'], 400);
-            }
+        if (!$request->has(['start_date', 'end_date', 'range']) || !$request->has('tag_type') || empty($tagTypes)) {
+            // if (!in_array($range, ['day', 'week', 'month'])) {
+            //     return response()->json(['error' => 'Invalid range'], 400);
+            // }
             if ($range == 'day') {
                 $startDate->startOfDay();
                 $endDate->endOfDay();
@@ -114,7 +118,19 @@ class StatisticsController extends Controller
                 $interval = 'day';
             }
 
-            $posts = Poster::whereBetween('created_at', [$startDate, $endDate])->orderBy('created_at')->get();
+            if ($tagTypes != null) {
+                $tagIds = Tag::whereIn('tag_type', $tagTypes)->pluck('id')->toArray();
+                $posts = Poster::whereIn('tags', $tagIds)->orderBy('created_at')->get();
+                // Group posts by tag type
+                $postsByTagType = $posts->groupBy('tags');
+
+                // Calculate count of posts per tag type
+                $postCountsByTagType = $postsByTagType->map(function ($group) {
+                    return $group->count();
+                });
+            } else {
+                $posts = Poster::whereBetween('created_at', [$startDate, $endDate])->orderBy('created_at')->get();
+            }
 
             $postCounts = $posts->groupBy(function ($post) use ($interval) {
                 if ($interval === 'hour') {

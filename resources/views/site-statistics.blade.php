@@ -84,10 +84,10 @@ $siteSettingData = getSiteSetting();
       <div class="col-12 col-md-8 col-lg-9 col-xl-9">
         @include('statistics.filteration')
         <div class="mb-4">
-        <div class="profile-content">
-          <div class="tab-content" id="myTabContent">
+          <div class="profile-content">
+            <div class="tab-content" id="myTabContent">
+            </div>
           </div>
-        </div>
         </div>
       </div>
     </div>
@@ -162,13 +162,15 @@ $siteSettingData = getSiteSetting();
         var url = $(this).data('id');
         loadData(url);
       });
-      
+
       $(".filter-tabs:first").trigger('click');
 
       $('#dateRangePicker').on('apply.daterangepicker', function(ev, picker) {
         var startDate = picker.startDate.format('YYYY-MM-DD');
         var endDate = picker.endDate.format('YYYY-MM-DD');
         var range = $('#filter').val();
+        // var tagTypes = $('#tagtype').val();
+        alert(tagTypes);
         var activeUrl = $('.filter-tabs.active').data('id');
         $.ajax({
           url: activeUrl,
@@ -177,6 +179,7 @@ $siteSettingData = getSiteSetting();
             start_date: startDate,
             end_date: endDate,
             range: range,
+            // tag_type: tagTypes,
           },
           success: function(response) {
             $(".profile-content").html(response.html);
@@ -210,6 +213,35 @@ $siteSettingData = getSiteSetting();
           }
         });
       });
+
+      // tag type selection filteration.
+      $(document).on('change', '#tagtype', function() {
+        var filter = $('#filter').value;
+        var tagTypes = $(this).val();
+
+        var activeRoute = $('.filter-tabs.active').data('route');
+
+        // Determine the route based on the active tab
+        var url = activeRoute + '/' + filter;
+
+        $.ajax({
+          url: url,
+          type: 'GET',
+          data: {
+            range: filter,
+            tag_type: tagTypes,
+          },
+          success: function(response) {
+            $(".profile-content").html(response.html);
+          },
+          error: function(xhr, status, error) {
+            console.error(error);
+          }
+        });
+      });
+
+
+
     });
   </script>
   @endsection
