@@ -4092,3 +4092,25 @@ li.page-item.disabled .page-link {
 .fa-eye:before {
   content: "\f06e" !important;
 }
+
+.static-inputs {
+  margin-bottom: 18px;
+}
+
+.static-inputs label {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.static-inputs input,
+.static-inputs select {
+  width: 100%;
+  height: 50px !important;
+  background-color: var(--color-white);
+  box-shadow: rgb(100 100 111 / 8%) 0px 7px 29px 0px;
+  display: block;
+  border: 1px solid #d9d9d9;
+  font-size: 14px;
+  font-weight: 500;
+}

@@ -83,9 +83,11 @@ $siteSettingData = getSiteSetting();
       </div>
       <div class="col-12 col-md-8 col-lg-9 col-xl-9">
         @include('statistics.filteration')
+        <div class="mb-4">
         <div class="profile-content">
           <div class="tab-content" id="myTabContent">
           </div>
+        </div>
         </div>
       </div>
     </div>
@@ -96,6 +98,7 @@ $siteSettingData = getSiteSetting();
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
   <script>
     $(document).ready(function() {
       $('#filter').val('week');
