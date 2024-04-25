@@ -1,5 +1,7 @@
 <div id="myChartContainer">
+<div style="position: relative; height:55vh;">
     <canvas id="myChart" width="400" height="400" style="display: block; width: 400px; height: 400px;"></canvas>
+</div>
 </div>
 
 <script>
@@ -39,6 +41,8 @@
         type: 'bar',
         data: data,
         options: {
+            responsive: true, 
+      		maintainAspectRatio: false, 
             plugins: {
                 title: {
                     display: true,
