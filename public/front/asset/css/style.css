@@ -4114,3 +4114,25 @@ li.page-item.disabled .page-link {
   font-size: 14px;
   font-weight: 500;
 }
+
+body .daterangepicker .ranges li.active {
+  background-color: #fa6157;
+}
+body .select2-container--default .select2-selection--multiple .select2-selection__rendered {
+  padding: 3px 19px 0;
+}
+body .select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color: #fa6157;
+}
+
+body .select2-container--default .select2-selection--multiple .select2-selection__rendered li.select2-selection__choice {
+  list-style: none;
+  background: #ff6359;
+  border: none;
+  padding: 0 7px;
+  height: 30px;
+  font-size: 14px;
+}
+body .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+  color: #fff;
+}
