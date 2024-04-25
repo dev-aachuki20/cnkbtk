@@ -101,6 +101,17 @@ $siteSettingData = getSiteSetting();
 
   <script>
     $(document).ready(function() {
+      // Function to show/hide tag type dropdown based on active menu
+      function toggleTagTypeDropdown(activeMenu) {
+        if (activeMenu === 'number-posters' || activeMenu === 'popular-posters') {
+          $('.tagtype-container').addClass('col-md-4').removeClass('col-md-6').css('display', 'block');
+          $('.duration-container, .date-range-container').removeClass('col-md-6').addClass('col-md-4');
+        } else {
+          $('.tagtype-container').removeClass('col-md-4').addClass('col-md-6').css('display', 'none');
+          $('.duration-container, .date-range-container').removeClass('col-md-4').addClass('col-md-6');
+        }
+      }
+
       $('#filter').val('week');
 
       $('.filter-tabs').click(function() {
@@ -159,6 +170,8 @@ $siteSettingData = getSiteSetting();
       $('.filter-tabs').click(function() {
         $('.nav-link').removeClass('active');
         $(this).addClass('active');
+        var activeMenu = $(this).attr('id');
+        toggleTagTypeDropdown(activeMenu);
         var url = $(this).data('id');
         loadData(url);
       });
@@ -169,8 +182,7 @@ $siteSettingData = getSiteSetting();
         var startDate = picker.startDate.format('YYYY-MM-DD');
         var endDate = picker.endDate.format('YYYY-MM-DD');
         var range = $('#filter').val();
-        // var tagTypes = $('#tagtype').val();
-        alert(tagTypes);
+        var tagTypes = $('#tagtype').val();
         var activeUrl = $('.filter-tabs.active').data('id');
         $.ajax({
           url: activeUrl,
@@ -179,7 +191,7 @@ $siteSettingData = getSiteSetting();
             start_date: startDate,
             end_date: endDate,
             range: range,
-            // tag_type: tagTypes,
+            tag_type: tagTypes,
           },
           success: function(response) {
             $(".profile-content").html(response.html);

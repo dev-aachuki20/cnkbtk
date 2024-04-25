@@ -98,10 +98,10 @@ class StatisticsController extends Controller
         $interval = 'day';
         $labels = [];
         $data = [];
-        if (!$request->has(['start_date', 'end_date', 'range']) || !$request->has('tag_type') || empty($tagTypes)) {
+        if (!$request->has(['start_date', 'end_date', 'range'])) {
             // if (!in_array($range, ['day', 'week', 'month'])) {
             //     return response()->json(['error' => 'Invalid range'], 400);
-            // }
+            // }    
             if ($range == 'day') {
                 $startDate->startOfDay();
                 $endDate->endOfDay();
@@ -117,20 +117,7 @@ class StatisticsController extends Controller
                 $endDate->endOfDay();
                 $interval = 'day';
             }
-
-            if ($tagTypes != null) {
-                $tagIds = Tag::whereIn('tag_type', $tagTypes)->pluck('id')->toArray();
-                $posts = Poster::whereIn('tags', $tagIds)->orderBy('created_at')->get();
-                // Group posts by tag type
-                $postsByTagType = $posts->groupBy('tags');
-
-                // Calculate count of posts per tag type
-                $postCountsByTagType = $postsByTagType->map(function ($group) {
-                    return $group->count();
-                });
-            } else {
-                $posts = Poster::whereBetween('created_at', [$startDate, $endDate])->orderBy('created_at')->get();
-            }
+            $posts = Poster::whereBetween('created_at', [$startDate, $endDate])->orderBy('created_at')->get();
 
             $postCounts = $posts->groupBy(function ($post) use ($interval) {
                 if ($interval === 'hour') {
@@ -148,8 +135,6 @@ class StatisticsController extends Controller
                 } else {
                     $date = $startDateCopy->format('Y-m-d');
                 }
-
-
                 $count = isset($postCounts[$date]) ? $postCounts[$date]->count() : 0;
 
                 $labels[] = $date;
@@ -170,6 +155,13 @@ class StatisticsController extends Controller
             if ($range == 'day') {
                 $interval = 'hour';
             }
+        }
+
+        if ($tagTypes != null) {
+            $tagIds = Tag::whereIn('tag_type', $tagTypes)->pluck('id')->toArray();
+            $tagTypeCount = Poster::whereIn('tags', $tagIds)->whereBetween('created_at', [$startDate, $endDate])->count();
+            $labels[] = 'Tag Type Post Count';
+            $data[] = $tagTypeCount;
         }
 
         $pluginText = trans("cruds.number_of_posts.fields.num_graph");
