@@ -22,7 +22,7 @@ class StatisticsController extends Controller
         $labels = [];
         $data = [];
         if (!$request->has(['start_date', 'end_date', 'range'])) {
-            if (!in_array($range, ['day', 'week', 'month'])) {
+            if (!in_array($range, ['day', 'week', 'month', 'custom range'])) {
                 return response()->json(['error' => 'Invalid range'], 400);
             }
             if ($range == 'day') {
@@ -42,7 +42,6 @@ class StatisticsController extends Controller
             }
 
             $users = User::whereBetween('created_at', [$startDate, $endDate])->orderBy('created_at')->get();
-
             $userCounts = $users->groupBy(function ($user) use ($interval) {
                 if ($interval === 'hour') {
                     return $user->created_at->format('h a');
@@ -65,16 +64,9 @@ class StatisticsController extends Controller
             }
         } else {
             $range = $request->range;
-            if ($range == 'week') {
-                $weeklyDateRanges = $this->getWeeklyDateRanges($startDate, $endDate);
-                list($labels, $data) = $this->generateMembersRegistrationGraph($weeklyDateRanges, $startDate, $endDate, 'week');
-            }
-            if ($range == 'month') {
+            if ($range == 'custom range') {
                 $monthlyDateRanges = $this->getMonthlyDateRanges($startDate, $endDate);
                 list($labels, $data) = $this->generateMembersRegistrationGraph($monthlyDateRanges, $startDate, $endDate, 'month');
-            }
-            if ($range == 'day') {
-                $interval = 'hour';
             }
         }
 
@@ -95,13 +87,13 @@ class StatisticsController extends Controller
         $endDate = $request->has('end_date') ? Carbon::parse($request->end_date) : Carbon::now();
 
         $tagTypes = $request['tag_type'];
-        $interval = 'day';
+        $interval = 'week';
         $labels = [];
         $data = [];
         if (!$request->has(['start_date', 'end_date', 'range'])) {
-            // if (!in_array($range, ['day', 'week', 'month'])) {
-            //     return response()->json(['error' => 'Invalid range'], 400);
-            // }    
+            if (!in_array($range, ['day', 'week', 'month', 'custom range'])) {
+                return response()->json(['error' => 'Invalid range'], 400);
+            }
             if ($range == 'day') {
                 $startDate->startOfDay();
                 $endDate->endOfDay();
@@ -144,23 +136,16 @@ class StatisticsController extends Controller
             }
         } else {
             $range = $request->range;
-            if ($range == 'week') {
-                $weeklyDateRanges = $this->getWeeklyDateRanges($startDate, $endDate);
-                list($labels, $data) = $this->generateNumberPostsGraph($weeklyDateRanges, $startDate, $endDate, 'week');
-            }
-            if ($range == 'month') {
+            if ($range == 'custom range') {
                 $monthlyDateRanges = $this->getMonthlyDateRanges($startDate, $endDate);
                 list($labels, $data) = $this->generateNumberPostsGraph($monthlyDateRanges, $startDate, $endDate, 'month');
-            }
-            if ($range == 'day') {
-                $interval = 'hour';
             }
         }
 
         if ($tagTypes != null) {
             $tagIds = Tag::whereIn('tag_type', $tagTypes)->pluck('id')->toArray();
             $tagTypeCount = Poster::whereIn('tags', $tagIds)->whereBetween('created_at', [$startDate, $endDate])->count();
-            $labels[] = 'Tag Type Post Count';
+            $labels[] = trans("messages.tag_type_based_post_count");
             $data[] = $tagTypeCount;
         }
 
@@ -182,7 +167,7 @@ class StatisticsController extends Controller
         $labels = [];
         $data = [];
         if (!$request->has(['start_date', 'end_date', 'range'])) {
-            if (!in_array($range, ['day', 'week', 'month'])) {
+            if (!in_array($range, ['day', 'week', 'month', 'custom range'])) {
                 return response()->json(['error' => 'Invalid range'], 400);
             }
             if ($range == 'day') {
@@ -229,16 +214,9 @@ class StatisticsController extends Controller
             }
         } else {
             $range = $request->range;
-            if ($range == 'week') {
-                $weeklyDateRanges = $this->getWeeklyDateRanges($startDate, $endDate);
-                list($labels, $data) = $this->generateVisitingUsersGraph($weeklyDateRanges, $startDate, $endDate, 'week');
-            }
-            if ($range == 'month') {
+            if ($range == 'custom range') {
                 $monthlyDateRanges = $this->getMonthlyDateRanges($startDate, $endDate);
                 list($labels, $data) = $this->generateVisitingUsersGraph($monthlyDateRanges, $startDate, $endDate, 'month');
-            }
-            if ($range == 'day') {
-                $interval = 'hour';
             }
         }
 
@@ -257,10 +235,11 @@ class StatisticsController extends Controller
     {
         $startDate = $request->has('start_date') ? Carbon::parse($request->start_date) : Carbon::now();
         $endDate = $request->has('end_date') ? Carbon::parse($request->end_date) : Carbon::now();
+        $tagTypes = $request['tag_type'];
         $data = [];
         $labels = [];
         if (!$request->has(['start_date', 'end_date', 'range'])) {
-            if (!in_array($range, ['day', 'week', 'month'])) {
+            if (!in_array($range, ['day', 'week', 'month', 'custom range'])) {
                 return response()->json(['error' => 'Invalid range'], 400);
             }
             if ($range == 'day') {
@@ -306,17 +285,18 @@ class StatisticsController extends Controller
             }
         } else {
             $range = $request->range;
-            if ($range == 'week') {
-                $weeklyDateRanges = $this->getWeeklyDateRanges($startDate, $endDate);
-                list($labels, $data) = $this->generatePopularPostersGraph($weeklyDateRanges, $startDate, $endDate, 'week');
-            }
-            if ($range == 'month') {
+            if ($range == 'custom range') {
                 $monthlyDateRanges = $this->getMonthlyDateRanges($startDate, $endDate);
                 list($labels, $data) = $this->generatePopularPostersGraph($monthlyDateRanges, $startDate, $endDate, 'month');
             }
-            if ($range == 'day') {
-                $interval = 'hour';
-            }
+        }
+
+        if ($tagTypes != null) {
+            $tagIds = Tag::whereIn('tag_type', $tagTypes)->pluck('id')->toArray();
+            $postersIds = Poster::whereIn('tags', $tagIds)->pluck('id')->toArray();
+            $tagTypeCount = PosterReadCount::whereIn('poster_id', $postersIds)->whereBetween('created_at', [$startDate, $endDate])->count();
+            $labels[] = trans("messages.most_popular_poster_count");
+            $data[] = $tagTypeCount;
         }
 
         $pluginText = trans("cruds.most_popular_poster.fields.num_graph");
@@ -337,7 +317,7 @@ class StatisticsController extends Controller
         $labels = [];
         $data = [];
         if (!$request->has(['start_date', 'end_date', 'range'])) {
-            if (!in_array($range, ['day', 'week', 'month'])) {
+            if (!in_array($range, ['day', 'week', 'month', 'custom range'])) {
                 return response()->json(['error' => 'Invalid range'], 400);
             }
             if ($range == 'day') {
@@ -384,19 +364,10 @@ class StatisticsController extends Controller
                 $startDateCopy->add(1, $interval);
             }
         } else {
-            $data = [];
-            $labels = [];
             $range = $request->range;
-            if ($range == 'week') {
-                $weeklyDateRanges = $this->getWeeklyDateRanges($startDate, $endDate);
-                list($labels, $data) = $this->generateMobileAccessGraph($weeklyDateRanges, $startDate, $endDate, 'week');
-            }
-            if ($range == 'month') {
+            if ($range == 'custom range') {
                 $monthlyDateRanges = $this->getMonthlyDateRanges($startDate, $endDate);
                 list($labels, $data) = $this->generateMobileAccessGraph($monthlyDateRanges, $startDate, $endDate, 'month');
-            }
-            if ($range == 'day') {
-                $interval = 'hour';
             }
         }
 
@@ -409,25 +380,6 @@ class StatisticsController extends Controller
         $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
         return response()->json(['success' => true, 'html' => $html], 200);
-    }
-
-    // weekly date-range filteration
-    private function getWeeklyDateRanges($startDate, $endDate)
-    {
-        $weeklyDateRanges = [];
-        $currentDate = $startDate->copy();
-        while ($currentDate->lte($endDate)) {
-            $endOfWeek = $currentDate->copy()->endOfWeek();
-            if ($endOfWeek->gt($endDate)) {
-                $endOfWeek = $endDate->copy();
-            }
-            $weeklyDateRanges[] = [
-                'start' => $currentDate->copy()->startOfDay(),
-                'end' => $endOfWeek->copy()->endOfDay()
-            ];
-            $currentDate->addWeek()->startOfWeek();
-        }
-        return $weeklyDateRanges;
     }
 
     // monthly date-range filteration

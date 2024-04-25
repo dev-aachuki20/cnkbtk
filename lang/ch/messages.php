@@ -1,12 +1,12 @@
 <?php
 return [
-    'add_success' => ':module 已添加成功！',  
-    'update_success' => ':module 已经更新成功！',  
-    'delete_success' => ':module 已删除成功！', 
-    'status_success' => ':module 已更改成功！', 
+    'add_success' => ':module 已添加成功！',
+    'update_success' => ':module 已经更新成功！',
+    'delete_success' => ':module 已删除成功！',
+    'status_success' => ':module 已更改成功！',
 
     // Global Error 
-    "something_went_wrong" => 'Something went wrong!', 
+    "something_went_wrong" => 'Something went wrong!',
     'error_occured' => '发生了错误!',
     "are_you_sure" => '你确定吗？',
     "delete_warning" => "该记录一旦删除将无法恢复",
@@ -40,11 +40,10 @@ return [
     "you_can_not_purchase_your_own_posters" => "您不能购买自己的海报",
     "user_inactivated" => "您的帐户已停用",
 
-     // Site statistics access
-     'logged_in_route_access' => '對不起！請先登入。',
-     'access_denied' => '對不起！您無權訪問。',
+    // Site statistics access
+    'logged_in_route_access' => '對不起！請先登入。',
+    'access_denied' => '對不起！您無權訪問。',
 
+    'most_popular_poster_count' => '最受欢迎的帖子数',
+    'tag_type_based_post_count' => '基于标签类型的帖子计数',
 ];
-
-
-?>

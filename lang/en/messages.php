@@ -42,6 +42,9 @@ return [
     'logged_in_route_access' => 'Sorry! Please Login First.',
     'access_denied' => 'Sorry! You not have access.',
 
+    'most_popular_poster_count' => 'Most Popular Post Count',
+    'tag_type_based_post_count' => 'Tag Type Based Post Count',
+
 
 ];
 ?>

@@ -252,6 +252,7 @@ return [
             'day' => "天空",
             'week' => "星期",
             'month' => "月",
+            'custom_range'      => "定制范围",
         ]
     ],
 

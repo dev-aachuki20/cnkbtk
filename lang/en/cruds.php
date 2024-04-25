@@ -247,6 +247,7 @@ return [
             'day'               => "Day",
             'week'              => "Week",
             'month'             => "Month",
+            'custom_range'      => "Custom Range",
         ]
     ],
 
