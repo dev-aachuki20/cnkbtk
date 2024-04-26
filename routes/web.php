@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\StatisticsController;
 use App\Models\TagType;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\StatisticsCreatorController;
 
 
 
@@ -91,15 +93,11 @@ Route::group(["namespace" => "App\Http\Controllers\Admin", 'as' => 'admin.', "pr
     Route::post('plan/update-status', 'PlanController@updateStatus')->name('plan.updateStatus');
 
 
-    // Site statistics Graph Filteration routes start
+    // Site statistics Graph Filteration Admin routes start
     Route::get('member-registration/{range?}', 'StatisticsController@membersRegistrationGraph')->name('statistics.members-registration');
-
     Route::get('number-of-posts/{range?}', 'StatisticsController@numberPostsGraph')->name('statistics.number-posters');
-
     Route::get('visit-users/{range?}', 'StatisticsController@visitingUsersGraph')->name('statistics.visiting-users');
-
     Route::get('popular-posters/{range?}', 'StatisticsController@popularPostersGraph')->name('statistics.popular-posters');
-
     Route::get('mobile-access/{range?}', 'StatisticsController@mobileAccessGraph')->name('statistics.mobile-access');
     // Site statistics Graph Filteration routes end
 
@@ -123,14 +121,14 @@ Route::group(["namespace" => "App\Http\Controllers\Admin", 'as' => 'admin.', "pr
     });
 });
 
-
-
-//  Shared Pages
-// Route::view('site-statistics', 'site-statistics')->name('site-statistics')->middleware('checkUserRole');
-
-Route::view('site-statistics', 'site-statistics', [
-    'tagTypes' => TagType::all()
-])->name('site-statistics')->middleware('checkUserRole');
+Route::get('site-statistics', [StatisticsController::class, 'index'])->name('site-statistics')->middleware('checkUserRole');
+// Site statistics Graph Filteration creator routes start
+Route::get('member-registration/{range?}', [StatisticsCreatorController::class, 'membersRegistrationGraph'])->name('statistics.members-registration');
+Route::get('number-of-posts/{range?}', [StatisticsCreatorController::class, 'numberPostsGraph'])->name('statistics.number-posters');
+Route::get('visit-users/{range?}', [StatisticsCreatorController::class, 'visitingUsersGraph'])->name('statistics.visiting-users');
+Route::get('popular-posters/{range?}', [StatisticsCreatorController::class, 'popularPostersGraph'])->name('statistics.popular-posters');
+Route::get('mobile-access/{range?}', [StatisticsCreatorController::class, 'mobileAccessGraph'])->name('statistics.mobile-access');
+// Site statistics Graph Filteration routes end
 
 // Login Registeres releted routes 
 Auth::routes();

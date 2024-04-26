@@ -9,26 +9,12 @@ use App\Models\Poster;
 use App\Models\UniqueVisitor;
 use App\Models\PosterReadCount;
 use App\Models\Tag;
-use App\Models\TagType;
 use Carbon\Carbon;
 use DB;
-use Illuminate\Support\Facades\Auth;
 
-class StatisticsController extends Controller
+
+class StatisticsCreatorController extends Controller
 {
-
-    public function index()
-    {
-        $tagTypes = TagType::all();
-        $user = Auth::user();
-        if ($user->role_id == 1) {
-            return view('site-statistics', compact('tagTypes'));
-        } elseif ($user->role_id == 2) {
-            return view('site-statistics-creator', compact('tagTypes'));
-        } else {
-            abort(403, 'Unauthorized');
-        }
-    }
     public function membersRegistrationGraph(Request $request, $range)
     {
         $startDate = $request->has('start_date') ? Carbon::parse($request->start_date) : Carbon::now();
@@ -92,7 +78,7 @@ class StatisticsController extends Controller
         $yAxisText =  trans("cruds.registered_members.fields.count");
         $labelText =  trans("cruds.registered_members.fields.graph");
 
-        $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+        $html = view('statistics.creator-graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
         return response()->json(['success' => true, 'html' => $html], 200);
     }
 
@@ -171,7 +157,7 @@ class StatisticsController extends Controller
 
         list($labels, $data) = $this->calculateAverage($labels, $data);
 
-        $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+        $html = view('statistics.creator-graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
         return response()->json(['success' => true, 'html' => $html], 200);
     }
 
@@ -241,7 +227,7 @@ class StatisticsController extends Controller
         $labelText =  trans("cruds.visiting_users.fields.graph");
 
         list($labels, $data) = $this->calculateAverage($labels, $data);
-        $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+        $html = view('statistics.creator-graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
         return response()->json(['success' => true, 'html' => $html], 200);
     }
@@ -320,7 +306,7 @@ class StatisticsController extends Controller
         $labelText =  trans("cruds.most_popular_poster.fields.graph");
 
         list($labels, $data) = $this->calculateAverage($labels, $data);
-        $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+        $html = view('statistics.creator-graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
         return response()->json(['success' => true, 'html' => $html], 200);
     }
@@ -392,7 +378,7 @@ class StatisticsController extends Controller
         $labelText =  trans("cruds.mobile_access.fields.graph");
 
         list($labels, $data) = $this->calculateAverage($labels, $data);
-        $html = view('statistics.graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+        $html = view('statistics.creator-graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
         return response()->json(['success' => true, 'html' => $html], 200);
     }
