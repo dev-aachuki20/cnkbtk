@@ -271,10 +271,10 @@ return [
         'title'            => '貼文數量',
         'title_singular'   => '貼文數量',
         'fields' => [
-            'num_graph'    => '點數圖',
-            'time'         => '點數 時間',
-            'count'        => '點數',
-            'graph'        => '點圖',
+            'num_graph'    => '帖子数量图',
+            'time'         => '帖子数量 时间',
+            'count'        => '帖子数',
+            'graph'        => '帖子图',
         ]
     ],
 
@@ -282,7 +282,7 @@ return [
         'title'             => '最受歡迎的海報',
         'title_singular'    => '最受歡迎海報',
         'fields' => [
-            'num_graph'     => '最受歡迎的海報圖',
+            'num_graph'     => '最受欢迎的海报图',
             'time'          => '熱門海報時間',
             'count'         => '熱門海報數量',
             'graph'         => '熱門海報圖',

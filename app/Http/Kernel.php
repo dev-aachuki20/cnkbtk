@@ -69,5 +69,6 @@ class Kernel extends HttpKernel
         'isuser' => \App\Http\Middleware\IsUser::class,
         'status' => \App\Http\Middleware\CheckUserStatus::class,
         'checkUserRole' => \App\Http\Middleware\CheckUserRole::class,
+        'iscreator' => \App\Http\Middleware\IsCreator::class,
     ];
 }

@@ -126,7 +126,7 @@ Route::group(["namespace" => "App\Http\Controllers\Admin", 'as' => 'admin.', "pr
 
 
 //  Shared Pages
-Route::view('site-statistics', 'site-statistics')->name('site-statistics')->middleware('checkUserRole');
+// Route::view('site-statistics', 'site-statistics')->name('site-statistics')->middleware('checkUserRole');
 
 Route::view('site-statistics', 'site-statistics', [
     'tagTypes' => TagType::all()

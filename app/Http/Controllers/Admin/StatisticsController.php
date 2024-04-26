@@ -73,7 +73,8 @@ class StatisticsController extends Controller
         list($labels, $data) = $this->calculateAverage($labels, $data);
 
         $pluginText = trans("cruds.registered_members.fields.num_graph");
-        $xAxisText =  trans("cruds.registered_members.fields.time");
+        // $xAxisText =  trans("cruds.registered_members.fields.time");
+        $xAxisText = '';
         $yAxisText =  trans("cruds.registered_members.fields.count");
         $labelText =  trans("cruds.registered_members.fields.graph");
 
@@ -150,7 +151,7 @@ class StatisticsController extends Controller
         }
 
         $pluginText = trans("cruds.number_of_posts.fields.num_graph");
-        $xAxisText =  trans("cruds.number_of_posts.fields.time");
+        $xAxisText =  '';
         $yAxisText =  trans("cruds.number_of_posts.fields.count");
         $labelText =  trans("cruds.number_of_posts.fields.graph");
 
@@ -221,7 +222,7 @@ class StatisticsController extends Controller
         }
 
         $pluginText = trans("cruds.visiting_users.fields.num_graph");
-        $xAxisText =  trans("cruds.visiting_users.fields.time");
+        $xAxisText =  '';
         $yAxisText =  trans("cruds.visiting_users.fields.count");
         $labelText =  trans("cruds.visiting_users.fields.graph");
 
@@ -300,7 +301,7 @@ class StatisticsController extends Controller
         }
 
         $pluginText = trans("cruds.most_popular_poster.fields.num_graph");
-        $xAxisText =  trans("cruds.most_popular_poster.fields.time");
+        $xAxisText =  '';
         $yAxisText =  trans("cruds.most_popular_poster.fields.count");
         $labelText =  trans("cruds.most_popular_poster.fields.graph");
 
@@ -372,7 +373,7 @@ class StatisticsController extends Controller
         }
 
         $pluginText = trans("cruds.mobile_access.fields.num_graph");
-        $xAxisText =  trans("cruds.mobile_access.fields.time");
+        $xAxisText =  '';
         $yAxisText =  trans("cruds.mobile_access.fields.count");
         $labelText =  trans("cruds.mobile_access.fields.graph");
 

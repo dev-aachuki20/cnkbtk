@@ -266,10 +266,10 @@ return [
         'title'            => 'Number Of Posts',
         'title_singular'   => 'Number Of Post',
         'fields' => [
-            'num_graph'    => 'Number Of Points Graph',
-            'time'         => 'Number Of Points Time',
-            'count'        => 'Points Count',
-            'graph'        => 'Points Graph',
+            'num_graph'    => 'Number Of Posts Graph',
+            'time'         => 'Number Of Posts Time',
+            'count'        => 'Posts Count',
+            'graph'        => 'Posts Graph',
         ]
     ],
 
@@ -277,7 +277,7 @@ return [
         'title'             => 'Most Popular Posters',
         'title_singular'    => 'Most Popular Poster',
         'fields' => [
-            'num_graph'     => 'Most Of Popular Posters Graph',
+            'num_graph'     => 'Most Popular Posters Graph',
             'time'          => 'Popular Posters Time',
             'count'         => 'Popular Posters Count',
             'graph'         => 'Popular Posters Graph',

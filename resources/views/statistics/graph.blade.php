@@ -9,7 +9,6 @@
     var ctx = document.getElementById('myChart').getContext('2d');
     var labels = @json($labels);
     var membersData = @json($data);
-    console.log(membersData);
     var pluginText = @json($pluginText);
     var xAxisText = @json($xAxisText);
     var yAxisText = @json($yAxisText);
@@ -58,7 +57,7 @@
                     display: true,
                     title: {
                         display: true,
-                        text: xAxisText
+                        // text: xAxisText
                     }
                 },
                 y: {
@@ -70,6 +69,7 @@
                 }
             }
         }
+        
     };
 
     var myChart = new Chart(ctx, config);

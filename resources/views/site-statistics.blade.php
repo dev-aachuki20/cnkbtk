@@ -49,29 +49,29 @@ $siteSettingData = getSiteSetting();
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
 
                   <li class="nav-item" role="presentation">
-                    <button data-id="{{ route('admin.statistics.members-registration',['range'=>'week'] ) }}" data-route="{{ route('admin.statistics.members-registration') }}" class="nav-link filter-tabs active" id="registered-members" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
+                    <button data-id="{{ route('admin.statistics.members-registration',['range'=>'week'] ) }}" data-route="{{ route('admin.statistics.members-registration') }}" class="nav-link filter-tabs aclink active" id="registered-members" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
                       {{trans("cruds.registered_members.title")}}
                     </button>
                   </li>
                   <li class="nav-item" role="presentation">
-                    <button data-id="{{ route('admin.statistics.number-posters',['range'=>'week'] ) }}" data-route="{{ route('admin.statistics.number-posters') }}" class="nav-link filter-tabs" id="number-posters" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
+                    <button data-id="{{ route('admin.statistics.number-posters',['range'=>'week'] ) }}" data-route="{{ route('admin.statistics.number-posters') }}" class="nav-link filter-tabs aclink" id="number-posters" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
                       {{trans("cruds.number_of_posts.title")}}
                     </button>
                   </li>
                   <li class="nav-item" role="presentation">
-                    <button data-id="{{ route('admin.statistics.popular-posters',['range'=>'week'] ) }}" data-route="{{ route('admin.statistics.popular-posters') }}" class="nav-link filter-tabs" id="popular-posters" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
+                    <button data-id="{{ route('admin.statistics.popular-posters',['range'=>'week'] ) }}" data-route="{{ route('admin.statistics.popular-posters') }}" class="nav-link filter-tabs aclink" id="popular-posters" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
                       {{trans("cruds.most_popular_poster.title")}}
                     </button>
                   </li>
 
                   <li class="nav-item" role="presentation">
-                    <button data-id="{{ route('admin.statistics.visiting-users',['range'=>'week'] ) }}" data-route="{{ route('admin.statistics.visiting-users') }}" class="nav-link filter-tabs" id="visit-users" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
+                    <button data-id="{{ route('admin.statistics.visiting-users',['range'=>'week'] ) }}" data-route="{{ route('admin.statistics.visiting-users') }}" class="nav-link filter-tabs aclink" id="visit-users" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
                       {{trans("cruds.visiting_users.title")}}
                     </button>
                   </li>
 
                   <li class="nav-item" role="presentation">
-                    <button data-id="{{ route('admin.statistics.mobile-access',['range'=>'week'] ) }}" data-route="{{ route('admin.statistics.mobile-access') }}" class="nav-link filter-tabs" id="mobile-access" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
+                    <button data-id="{{ route('admin.statistics.mobile-access',['range'=>'week'] ) }}" data-route="{{ route('admin.statistics.mobile-access') }}" class="nav-link filter-tabs aclink" id="mobile-access" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
                       {{trans("cruds.mobile_access.title")}}
                     </button>
                   </li>
@@ -109,7 +109,7 @@ $siteSettingData = getSiteSetting();
       });
 
       $('.filter-tabs').click(function() {
-        $('.nav-link').removeClass('active');
+        $('.aclink').removeClass('active');
         $(this).addClass('active');
         $('#tagtype').val(null).trigger('change');
         var activeMenu = $(this).attr('id');
