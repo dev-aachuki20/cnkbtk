@@ -66,7 +66,7 @@ class StatisticsCreatorController extends Controller
             $range = $request->range;
             if ($range == 'custom range') {
                 $monthlyDateRanges = $this->getMonthlyDateRanges($startDate, $endDate);
-                list($labels, $data) = $this->generateMembersRegistrationGraph($monthlyDateRanges, $startDate, $endDate, 'month');
+                list($labels, $data) = $this->generateMembersRegistrationGraph($monthlyDateRanges, $startDate, $endDate, 'day');
             }
         }
 
@@ -383,7 +383,6 @@ class StatisticsCreatorController extends Controller
         return response()->json(['success' => true, 'html' => $html], 200);
     }
 
-    // monthly date-range filteration
     private function getMonthlyDateRanges($startDate, $endDate)
     {
         $monthlyDateRanges = [];
@@ -393,14 +392,40 @@ class StatisticsCreatorController extends Controller
             if ($endOfMonth->gt($endDate)) {
                 $endOfMonth = $endDate->copy();
             }
-            $monthlyDateRanges[] = [
-                'start' => $currentDate->copy()->startOfDay(),
-                'end' => $endOfMonth->copy()->endOfDay()
-            ];
+
+            // Instead of adding only the end of the month, add each day of the month
+            $currentDay = $currentDate->copy();
+            while ($currentDay->lte($endOfMonth)) {
+                $monthlyDateRanges[] = [
+                    'start' => $currentDay->copy()->startOfDay(),
+                    'end' => $currentDay->copy()->endOfDay()
+                ];
+                $currentDay->addDay(); // Move to the next day
+            }
+
             $currentDate->addMonth()->startOfMonth();
         }
         return $monthlyDateRanges;
     }
+
+    // monthly date-range filteration
+    // private function getMonthlyDateRanges($startDate, $endDate)
+    // {
+    //     $monthlyDateRanges = [];
+    //     $currentDate = $startDate->copy()->startOfMonth();
+    //     while ($currentDate->lte($endDate)) {
+    //         $endOfMonth = $currentDate->copy()->endOfMonth();
+    //         if ($endOfMonth->gt($endDate)) {
+    //             $endOfMonth = $endDate->copy();
+    //         }
+    //         $monthlyDateRanges[] = [
+    //             'start' => $currentDate->copy()->startOfDay(),
+    //             'end' => $endOfMonth->copy()->endOfDay()
+    //         ];
+    //         $currentDate->addMonth()->startOfMonth();
+    //     }
+    //     return $monthlyDateRanges;
+    // }
 
     //  Avarage Calculations FILTERATION
     private function calculateAverage($labels, $data)

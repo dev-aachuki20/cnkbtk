@@ -80,7 +80,7 @@ class StatisticsController extends Controller
             $range = $request->range;
             if ($range == 'custom range') {
                 $monthlyDateRanges = $this->getMonthlyDateRanges($startDate, $endDate);
-                list($labels, $data) = $this->generateMembersRegistrationGraph($monthlyDateRanges, $startDate, $endDate, 'month');
+                list($labels, $data) = $this->generateMembersRegistrationGraph($monthlyDateRanges, $startDate, $endDate, 'day');
             }
         }
 
@@ -397,7 +397,6 @@ class StatisticsController extends Controller
         return response()->json(['success' => true, 'html' => $html], 200);
     }
 
-    // monthly date-range filteration
     private function getMonthlyDateRanges($startDate, $endDate)
     {
         $monthlyDateRanges = [];
@@ -407,14 +406,41 @@ class StatisticsController extends Controller
             if ($endOfMonth->gt($endDate)) {
                 $endOfMonth = $endDate->copy();
             }
-            $monthlyDateRanges[] = [
-                'start' => $currentDate->copy()->startOfDay(),
-                'end' => $endOfMonth->copy()->endOfDay()
-            ];
+
+            // Instead of adding only the end of the month, add each day of the month
+            $currentDay = $currentDate->copy();
+            while ($currentDay->lte($endOfMonth)) {
+                $monthlyDateRanges[] = [
+                    'start' => $currentDay->copy()->startOfDay(),
+                    'end' => $currentDay->copy()->endOfDay()
+                ];
+                $currentDay->addDay(); // Move to the next day
+            }
+
             $currentDate->addMonth()->startOfMonth();
         }
         return $monthlyDateRanges;
     }
+
+
+    // monthly date-range filteration
+    // private function getMonthlyDateRanges($startDate, $endDate)
+    // {
+    //     $monthlyDateRanges = [];
+    //     $currentDate = $startDate->copy()->startOfMonth();
+    //     while ($currentDate->lte($endDate)) {
+    //         $endOfMonth = $currentDate->copy()->endOfMonth();
+    //         if ($endOfMonth->gt($endDate)) {
+    //             $endOfMonth = $endDate->copy();
+    //         }
+    //         $monthlyDateRanges[] = [
+    //             'start' => $currentDate->copy()->startOfDay(),
+    //             'end' => $endOfMonth->copy()->endOfDay()
+    //         ];
+    //         $currentDate->addMonth()->startOfMonth();
+    //     }
+    //     return $monthlyDateRanges;
+    // }
 
     //  Avarage Calculations FILTERATION
     private function calculateAverage($labels, $data)
@@ -428,6 +454,46 @@ class StatisticsController extends Controller
 
         return [$labels, $data];
     }
+
+    // private function generateMembersRegistrationGraph($dateRanges)
+    // {
+    //     $labels = [];
+    //     $data = [];
+
+    //     foreach ($dateRanges as $range) {
+    //         $start = $range['start'];
+    //         $end = $range['end'];
+
+    //         // Calculate the total number of days in the range
+    //         $totalDays = $start->diffInDays($end);
+
+    //         // Calculate the number of days in the month
+    //         $daysInMonth = $start->copy()->endOfMonth()->day;
+
+    //         // Check if the total number of days in the range is less than 5 for this month
+    //         if ($totalDays < 5 && $totalDays < $daysInMonth) {
+    //             // Generate data for each day within the month
+    //             $currentDate = $start->copy();
+    //             while ($currentDate->lte($end)) {
+    //                 $users = User::whereDate('created_at', $currentDate)->get();
+    //                 $count = $users->count();
+    //                 $data[] = $count;
+    //                 $labels[] = $currentDate->format('Y-m-d');
+    //                 $currentDate->addDay();
+    //             }
+    //         } else {
+    //             // Generate data for the end date of the month
+    //             $users = User::whereBetween('created_at', [$start, $end])->orderBy('created_at')->get();
+    //             $count = $users->count();
+    //             $data[] = $count;
+    //             $labels[] = $end->format('Y-m-d');
+    //         }
+    //     }
+
+    //     return [$labels, $data];
+    // }
+
+
 
     //  Members Registrations 
     private function generateMembersRegistrationGraph($dateRanges)
