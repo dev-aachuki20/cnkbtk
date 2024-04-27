@@ -35,6 +35,7 @@ return [
     'search' => '搜索',
     'submit' => '提交',
     'chat'  => '聊天',
+    'blacklist_user' => '黑名单用户',
     // footer static
     "useful_links" => "有用的链接",
     "follow_us" => "跟着我们",

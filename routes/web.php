@@ -4,8 +4,8 @@ use App\Http\Controllers\Admin\StatisticsController;
 use App\Models\TagType;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\StatisticsCreatorController;
-
-
+use App\Http\Controllers\BlacklistUserController;
+use App\Http\Controllers\PosterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -130,6 +130,15 @@ Route::get('visit-users/{range?}', [StatisticsCreatorController::class, 'visitin
 Route::get('popular-posters/{range?}', [StatisticsCreatorController::class, 'popularPostersGraph'])->name('statistics.popular-posters');
 Route::get('mobile-access/{range?}', [StatisticsCreatorController::class, 'mobileAccessGraph'])->name('statistics.mobile-access');
 // Site statistics Graph Filteration routes end
+
+
+// Blacklist users routes start
+Route::get('blacklist/user', [BlacklistUserController::class, 'index'])->name('blacklist.user')->middleware(["auth", "verified", "status"]);
+Route::get('blacklist/user/create', [BlacklistUserController::class, 'create'])->name('blacklist.user.create')->middleware(["auth", "verified", "status"]);
+Route::post('blacklist/user/store', [BlacklistUserController::class, 'store'])->name('blacklist.user.store')->middleware("auth");
+Route::post('blacklist/user/import', [BlacklistUserController::class, 'import'])->name('blacklist.user.import');
+
+// Blacklist users routes start end
 
 // Login Registeres releted routes 
 Auth::routes();

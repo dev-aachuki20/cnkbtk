@@ -10,7 +10,7 @@ return [
         ],
         'contact' => [
             'get_in_touch' => '保持联系',
-            'contact_heading' =>'您可以使用以下选项联系我们。',
+            'contact_heading' => '您可以使用以下选项联系我们。',
             'field' => [
                 'email_address' => '电子邮件地址',
                 'subject' => '主题',
@@ -26,24 +26,24 @@ return [
 
             'fields' => [
                 'user' => '用户名/电子邮件地址',
-                'password' => '密码' 
+                'password' => '密码'
             ],
-        ],       
+        ],
     ],
 
-    'sign_up' =>[
+    'sign_up' => [
         'form' => [
             'form_title' => '报名',
             'fields' => [
                 'user_name' => '用户名',
                 'email_address' => '电子邮件地址',
                 'password' => '密码',
-                'confirm_password' => '确认密码', 
+                'confirm_password' => '确认密码',
             ],
         ]
     ],
 
-    'forget_password' =>[
+    'forget_password' => [
         'forget_password_q' => '忘记密码？',
         'send_instruction' => "不用担心，我们会向您发送重置说明.",
         'reset_password' => '重设密码',
@@ -55,30 +55,30 @@ return [
         ]
     ],
 
-    'reset_password' =>[
+    'reset_password' => [
         'reset_password' => '重设密码',
         'password_instruction' => '输入新密码，然后重复',
         'form' => [
             'fields' => [
                 'email_address' => '电子邮件地址',
                 'password' => '密码',
-                'confirm_password' => '确认密码', 
+                'confirm_password' => '确认密码',
             ],
         ]
     ],
 
-    'confirm_password' =>[
+    'confirm_password' => [
         'confirm_password' => '确认密码',
         'confirm_password_instruction' => '请先确认您的密码，然后再继续.',
         'forgot_password' => '忘记密码了吗？',
         'form' => [
-            'fields' => [  
+            'fields' => [
                 'password' => '密码',
             ],
         ]
     ],
 
-    'verify_page' =>[
+    'verify_page' => [
         'verify_your' => '验证您的',
         'email' => '电子邮件',
         'verify_your_email_address' => '确认你的邮件地址',
@@ -98,12 +98,12 @@ return [
                 'poster_cover_image' => '海报封面图片',
                 'tags' => '标签',
                 'status' => '地位',
-                'description' => '描述',  
+                'description' => '描述',
                 'episode_title' => '剧集标题',
                 'episode_cost' => '剧集费用',
                 'episode_description' => '剧集描述',
                 'allowed_file_type' => '（允许类型 jpg | png | jpeg | JPG | JPEG | PNG)',
-                
+
             ],
             'delete_message' => '该记录一旦删除，将无法恢复。此外，与此海报相关的所有剧集都将被删除',
             'add_episode' => '添加剧集',
@@ -121,7 +121,7 @@ return [
                 'poster_cover_image' => '海报封面图片',
                 'tags' => '标签',
                 'status' => '地位',
-                'description' => '描述',  
+                'description' => '描述',
                 'episode_title' => '剧集标题',
                 'episode_cost' => '剧集费用',
                 'episode_description' => '剧集描述',
@@ -207,19 +207,32 @@ return [
             "history" => "历史",
             "post_history" => "帖子历史",
             "posters_not_available" => "海报不可用",
+        ],
+
+        "blacklist_user_tab" => [
+            "blacklist" => "黑名单",
+            "user" => "用户",
+            "blacklist_users" => "黑名单用户",
+            "users_not_available" => "黑名单用户不可用",
         ]
 
-        
-        ],
 
-        'site_statistics' => [
-            'basic' => "基本的",
-            'profile' => '輪廓',
-            'site' => '網站統計'
-        ],
+    ],
 
-    
+    'site_statistics' => [
+        'basic' => "基本的",
+        'profile' => '輪廓',
+        'site' => '網站統計'
+    ],
+
+    'blacklist_user' => [
+        'form' => [
+            'fields' => [
+                'email' => '电子邮件',
+                'ip_address' => 'IP地址',
+            ],
+        ],
+    ],
+
+
 ];
-
-
-

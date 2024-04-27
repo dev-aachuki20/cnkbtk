@@ -189,6 +189,13 @@ return [
             "history" => "history",
             "post_history" => "Post history",
             "posters_not_available" => "Posters not available",
+        ],
+
+        "blacklist_user_tab" => [
+            "blacklist" => "Blacklist",
+            "user" => "User",
+            "blacklist_users" => "Blacklist User",
+            "users_not_available" => "Blacklist users not available",
         ]
 
         
@@ -199,6 +206,15 @@ return [
         'basic' => "Basic",
         'profile' => 'Profile',
         'site' => 'Site statistics'
+    ],
+
+    'blacklist_user' => [
+        'form' => [
+            'fields' => [
+                'email' => 'Email',
+                'ip_address' => 'IP Address',
+            ],
+        ],
     ],
 
     

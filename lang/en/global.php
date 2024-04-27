@@ -36,6 +36,7 @@ return [
     'search' => 'Search',
     'submit' => 'Submit',
     'chat'  => 'Chat',
+    'blacklist_user' => 'Blacklist Users',
     // footer static
     "useful_links" => "Useful links",
     "follow_us" => "Follow us",
