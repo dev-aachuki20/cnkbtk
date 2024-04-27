@@ -35,6 +35,7 @@ return [
     'points' => 'Points',
     'search' => 'Search',
     'submit' => 'Submit',
+    'chat'  => 'Chat',
     // footer static
     "useful_links" => "Useful links",
     "follow_us" => "Follow us",

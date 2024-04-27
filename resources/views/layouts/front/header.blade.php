@@ -123,6 +123,18 @@
                             </a>
                           </li>
                           <li>
+                            <a class="dropdown-item" href="{{route('chats.index')}}">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M13.5 21.5H2C1.45 21.5 1 21.05 1 20.5V7.5C1 3.5 3 1.5 7 1.5H15C19 1.5 21 3.5 21 7.5V12.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M11.91 7.34003L6.72004 12.53C6.52004 12.73 6.33004 13.12 6.29004 13.4L6.01004 15.38C5.91004 16.1 6.41004 16.6 7.13004 16.5L9.11004 16.22C9.39004 16.18 9.78004 15.99 9.98004 15.79L15.17 10.6C16.06 9.71003 16.49 8.67003 15.17 7.35003C13.85 6.02003 12.81 6.44003 11.91 7.34003Z" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M11.17 8.08002C11.3871 8.8552 11.8002 9.56141 12.3694 10.1306C12.9387 10.6999 13.6449 11.1129 14.42 11.33" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M23 18.5C23 19.25 22.79 19.96 22.42 20.56C22.0675 21.1525 21.5667 21.643 20.967 21.9831C20.3674 22.3233 19.6894 22.5014 19 22.5C18.3106 22.5014 17.6326 22.3233 17.033 21.9831C16.4333 21.643 15.9325 21.1525 15.58 20.56C15.1993 19.9404 14.9985 19.2272 15 18.5C15 16.29 16.79 14.5 19 14.5C21.21 14.5 23 16.29 23 18.5Z" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M20.561 19.49H18.431L18.5 17.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
+                              {{trans("global.chat")}}
+                            </a>
+                          </li>
+                          <li>
                             <form method="post" action="{{route('logout')}}">
 
                                           @csrf
@@ -342,6 +354,18 @@
                                 <path d="M20.561 19.49H18.431L18.5 17.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                               </svg>
                              {{trans("global.post_history")}}
+                            </a>
+                          </li>
+                          <li>
+                            <a class="dropdown-item {{Request::is('chats') ? 'active' : ''}}" href="{{route('chats.index')}}">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M13.5 21.5H2C1.45 21.5 1 21.05 1 20.5V7.5C1 3.5 3 1.5 7 1.5H15C19 1.5 21 3.5 21 7.5V12.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M11.91 7.34003L6.72004 12.53C6.52004 12.73 6.33004 13.12 6.29004 13.4L6.01004 15.38C5.91004 16.1 6.41004 16.6 7.13004 16.5L9.11004 16.22C9.39004 16.18 9.78004 15.99 9.98004 15.79L15.17 10.6C16.06 9.71003 16.49 8.67003 15.17 7.35003C13.85 6.02003 12.81 6.44003 11.91 7.34003Z" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M11.17 8.08002C11.3871 8.8552 11.8002 9.56141 12.3694 10.1306C12.9387 10.6999 13.6449 11.1129 14.42 11.33" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M23 18.5C23 19.25 22.79 19.96 22.42 20.56C22.0675 21.1525 21.5667 21.643 20.967 21.9831C20.3674 22.3233 19.6894 22.5014 19 22.5C18.3106 22.5014 17.6326 22.3233 17.033 21.9831C16.4333 21.643 15.9325 21.1525 15.58 20.56C15.1993 19.9404 14.9985 19.2272 15 18.5C15 16.29 16.79 14.5 19 14.5C21.21 14.5 23 16.29 23 18.5Z" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M20.561 19.49H18.431L18.5 17.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
+                              {{trans("global.chat")}}
                             </a>
                           </li>
                           <li>

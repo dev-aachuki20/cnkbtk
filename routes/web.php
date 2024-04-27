@@ -55,6 +55,7 @@ Route::group(["namespace" => "App\Http\Controllers"], function () {
 
 
 Route::resource('post', "App\Http\Controllers\PosterController")->middleware(["auth", "verified", "status"]);
+Route::resource('chats', "App\Http\Controllers\ChatController")->middleware(["auth", "verified", "status"]);
 // Route::get("post/edit/{param}","App\Http\Controllers\PosterController@edit")->name("post.edit")->middleware('auth');
 Route::post('post/update-status', 'App\Http\Controllers\PosterController@updateStatus')->name('post.updateStatus')->middleware(["auth", "verified"]);
 Route::post("post/remove-episode", "App\Http\Controllers\PosterController@removeEpisode")->name("post.remove-episode")->middleware(["auth", "verified"]);
