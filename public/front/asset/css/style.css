@@ -2256,6 +2256,18 @@ h5.categories-details-title {
   right: 1rem;
   transform: translateY(-50%);
 }
+.categories-details-head .edit-post {
+  position: unset;
+  transform: translateY(0%);
+}
+.categories-details-head .edit-post  a{
+  width: 40px;
+  height: 40px;
+}
+.categories-details-head .edit-post  a svg{
+  width: 25px;
+  height: 25px;
+}
 
 .edit-post a svg {
   width: 25px;
@@ -2479,6 +2491,8 @@ li.breadcrumb-item a{
   margin-top: 3px;
   justify-content: space-between;
 }
+
+
 
 /* end  */
 
@@ -4141,15 +4155,15 @@ body .select2-container--default .select2-selection--multiple .select2-selection
 }
 
 /* -========-----------================--------------==============----------==========--------- */
-
+form#excelForm{
+  max-width: 100%;
+}
 /* CHatBox Css */
-   /* Custom Styles */
    .overflow-y-auto {
     overflow-y: auto;
 }
 .chatboxGroup {
     height: calc(100vh - 270px);
-    /* height: 100%; */
     min-height: 400px;
 }
 .chatboxGroup .sidebar, .chatboxGroup .chatcard {
