@@ -208,6 +208,65 @@ button.navbar-toggler span.navbar-toggler-icon {
   margin-bottom: 1.5rem;
 }
 
+/* ChatBox Css */
+
+.chatboxGroup .list-group .list-group-item{
+  padding: 8px 10px;
+}
+.chatboxGroup textarea.form-control {
+  padding: 10px 15px;
+  min-height: 46px;
+}
+.chatboxGroup .file-label svg {
+  height: 100%;
+  width: 100%;
+}
+.chatboxGroup .btn-secondary {
+  height: 46px;
+  width: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.chatboxGroup .add_btn, .chatboxGroup .searchbar .btn, .chatboxGroup .file-label {
+  height: 46px;
+  width: 46px;
+}
+
+.chatboxGroup textarea.form-control, .chatboxGroup .searchbar {
+  height: 46px;
+}
+.chatboxGroup .searchbar input {
+  padding-right: 55px;
+}
+
+.chatboxGroup .message .message-content {
+  padding: 10px;
+  line-height: 18px;
+  border-radius: 10px 10px 10px 0px;
+}
+.chatboxGroup .message.outgoing .message-content{
+  border-radius: 10px 10px 0px 10px;
+}
+.chatboxGroup .message {
+  max-width: 70%;
+}
+
+.chatboxGroup .userporfile .userimage{
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.chatboxGroup .userporfile .activeuser{
+  font-size: 12px;
+}
+.chatboxGroup .list-group .list-group-item .useraccount{
+  width: calc(100% - 50px);
+}
+
 }
 
 @media(max-width:1024px){
@@ -855,6 +914,24 @@ section.edit-post-wrapper .col-md-6 {
 .episode-main-box .row .col-md-8 {
   width: 60%;
 }
+
+  /* ChatBox Css */
+  .chatboxGroup .chat-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    padding: 10px;
+    background: #0000009e;
+    transform: translateX(120%);
+    transition: var(--ease-transition);
+  }
+  .chatboxGroup.open .chat-panel{
+      transform: translateX(0%);
+  }
+  .chatboxGroup .chat-panel .userporfile{
+      width: calc(100% - 90px);
+  }
 }
 
 @media (max-width: 580px) {
