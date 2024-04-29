@@ -311,4 +311,13 @@ return [
         ]
     ],
 
+    'blacklist_tag' => [
+        'title'              => '黑名单标签',
+        'title_singular'     => '黑名单标签',
+        'fields' => [
+            'id' =>  'ID',
+            'title' => "标题",
+        ]
+    ],
+
 ];

@@ -34,7 +34,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $hidden = [
-        
+
         'remember_token',
     ];
 
@@ -58,11 +58,18 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasmany(Poster::class, 'user_id')->count();
     }
 
-    public function userIp() {
+    public function userIp()
+    {
         return $this->hasone(LoginLog::class)->latest()->first();
     }
 
-    public function userPoint() {
-        return $this->belongsTo(Points::class,"id","user_id");
+    public function userPoint()
+    {
+        return $this->belongsTo(Points::class, "id", "user_id");
+    }
+
+    public function blacklistUsers()
+    {
+        return $this->hasMany(BlacklistUser::class);
     }
 }

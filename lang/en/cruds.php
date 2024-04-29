@@ -305,4 +305,15 @@ return [
             'graph'         => 'Mobile Access Graph',
         ]
     ],
+
+    // Tag Type and Tag Cruds
+
+    'blacklist_tag' => [
+        'title'              => 'Blacklist Tags',
+        'title_singular'     => 'Blacklist Tag',
+        'fields' => [
+            'id' =>  'ID',
+            'title' => "Title",
+        ]
+    ],
 ];

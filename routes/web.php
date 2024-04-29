@@ -120,6 +120,10 @@ Route::group(["namespace" => "App\Http\Controllers\Admin", 'as' => 'admin.', "pr
         Route::resource('tag-type', "TagTypeController");
         Route::resource('tag', "TagsController");
     });
+
+    // Blacklist Tag management routes
+    Route::post('blacklist-tag/update-status', 'BlacklistTagController@updateStatus')->name('blacklist_tag.updateStatus');
+    Route::resource('blacklist-tag', "BlacklistTagController");
 });
 
 Route::get('site-statistics', [StatisticsController::class, 'index'])->name('site-statistics')->middleware('checkUserRole');
@@ -133,10 +137,12 @@ Route::get('mobile-access/{range?}', [StatisticsCreatorController::class, 'mobil
 
 
 // Blacklist users routes start
-Route::get('blacklist/user', [BlacklistUserController::class, 'index'])->name('blacklist.user')->middleware(["auth", "verified", "status"]);
-Route::post('blacklist/user/store', [BlacklistUserController::class, 'store'])->name('blacklist.user.store')->middleware("auth");
-Route::post('blacklist/user/import', [BlacklistUserController::class, 'importExcel'])->name('blacklist.user.import');
-
+Route::group(["middleware" => ["auth", "status"]], function () {
+    Route::get('blacklist/users', [BlacklistUserController::class, 'index'])->name('blacklist.user');
+    Route::post('blacklist/user/store', [BlacklistUserController::class, 'store'])->name('blacklist.user.store');
+    Route::get('blacklist/user/show/{id}', [BlacklistUserController::class, 'show'])->name('blacklist.user.show');
+    Route::post('blacklist/user/import', [BlacklistUserController::class, 'importExcel'])->name('blacklist.user.import');
+});
 // Blacklist users routes start end
 
 // Login Registeres releted routes 

@@ -213,6 +213,7 @@ return [
             'fields' => [
                 'email' => 'Email',
                 'ip_address' => 'IP Address',
+                'reason' => 'Reason',
             ],
         ],
     ],

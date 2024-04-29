@@ -11,6 +11,8 @@ class BlacklistUser extends Model
     protected $fillable = [
         'email',
         'ip_address',
+        'blacklist_tag_id',
+        'user_id',
         'created_at',
         'updated_at'
     ];
@@ -18,4 +20,13 @@ class BlacklistUser extends Model
         'created_at',
         'updated_at',
     ];
+
+    public function blacklistTag()
+    {
+        return $this->belongsTo(BlacklistTag::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

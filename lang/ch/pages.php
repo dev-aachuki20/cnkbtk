@@ -230,6 +230,7 @@ return [
             'fields' => [
                 'email' => '电子邮件',
                 'ip_address' => 'IP地址',
+                'reason' => '原因',
             ],
         ],
     ],
