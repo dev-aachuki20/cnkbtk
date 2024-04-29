@@ -18,10 +18,6 @@ class BlacklistUserController extends Controller
         return view("blacklist-user.index", compact('balcklistUsers'));
     }
 
-    public function create()
-    {
-        return view("blacklist-user.create");
-    }
     public function store(Request $request)
     {
         $rules = [
@@ -48,38 +44,28 @@ class BlacklistUserController extends Controller
         }
     }
 
-    // public function import(Request $request)
-    // {
-    //     $request->validate([
-    //         'file' => 'required|mimes:xlsx,csv,txt|max:2048',
-    //     ]);
 
-    //     try {
-    //         Excel::import(new BlacklistUsersImport, $request->file('file'));
-
-    //         return back()->with('success', 'Data imported successfully');
-    //     } catch (\Exception $e) {
-    //         return back()->with('error', 'Error importing data: ' . $e->getMessage());
-    //     }
-    // }
-
-    public function import(Request $request)
+    public function importExcel(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'excel_file' => 'required|file|mimes:xlsx,xls|max:2048',
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            return response()->json(['errors' => $validator->errors()], 422);
         }
-
-        if ($request->hasFile('excel_file')) {
-            $file = $request->file('excel_file');
-
-            Excel::import(new BlacklistUsersImport, $file);
-            return redirect()->back()->with('success', 'Excel file uploaded and processed successfully.');
+        try {
+            DB::beginTransaction();
+            if ($request->hasFile('excel_file')) {
+                $file = $request->file('excel_file');
+                Excel::import(new BlacklistUsersImport, $file);
+                DB::commit();
+                return response()->json(['message' => trans("messages.excel_uploaded")], 200);
+            }
+        } catch (\Exception $e) {
+            DB::rollback();
+            $message = 'Something went wrong';
+            return response()->json(['message' => $message], 400);
         }
-
-        return redirect()->back()->with('error', 'Please select an Excel file.');
     }
 }

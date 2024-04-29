@@ -45,6 +45,8 @@ return [
     'most_popular_poster_count' => 'Most Popular Post Count',
     'tag_type_based_post_count' => 'Tag Type Based Post Count',
 
+    'excel_uploaded'=> 'Excel file uploaded and processed successfully!',
+
 
 ];
 ?>

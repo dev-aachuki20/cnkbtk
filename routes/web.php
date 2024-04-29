@@ -134,9 +134,8 @@ Route::get('mobile-access/{range?}', [StatisticsCreatorController::class, 'mobil
 
 // Blacklist users routes start
 Route::get('blacklist/user', [BlacklistUserController::class, 'index'])->name('blacklist.user')->middleware(["auth", "verified", "status"]);
-Route::get('blacklist/user/create', [BlacklistUserController::class, 'create'])->name('blacklist.user.create')->middleware(["auth", "verified", "status"]);
 Route::post('blacklist/user/store', [BlacklistUserController::class, 'store'])->name('blacklist.user.store')->middleware("auth");
-Route::post('blacklist/user/import', [BlacklistUserController::class, 'import'])->name('blacklist.user.import');
+Route::post('blacklist/user/import', [BlacklistUserController::class, 'importExcel'])->name('blacklist.user.import');
 
 // Blacklist users routes start end
 

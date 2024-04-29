@@ -46,4 +46,6 @@ return [
 
     'most_popular_poster_count' => '最受欢迎的帖子数',
     'tag_type_based_post_count' => '基于标签类型的帖子计数',
+
+    'excel_uploaded' => 'Excel 文件上传并处理成功！',
 ];
