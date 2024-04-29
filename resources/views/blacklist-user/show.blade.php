@@ -24,24 +24,39 @@
   </div>
 </section>
 
-<section class="single-wrapper">
+<section class="single-wrapper ">
   <div class="container">
-    <div class="row">
-      <div class="col-sm-12 col-md-12 col-lg-12">
-        <div class="right-single-box">
-          <div class="main-title">
-            <h2><b>{{$blacklistUser->user->user_name}}</b></h2>
+    <div class="row g-3">
+      <div class="col-lg-6 col-md-10 col-12">
+        <div class="right-single-box blacklist_box_user">
+          <div class="row gx-3">
+            <div class="col-auto">
+              <div class="userimage me-2"><img src="https://devcnkbtk.hipl-staging2.com/storage/profileImage/SvziPV4M2AgSZ9NT9w6XC9gKumRrnQNXdWnGMlK2.jpg" alt="user"></div>
+            </div>
+            <div class="col">
+              <div class="main-title">
+                <h2>{{$blacklistUser->user->user_name}}</h2>
+              </div>
+              <ul>
+                <li>
+                  <div class="main-title">
+                    <h6> <span>Email:</span> {{$blacklistUser->email}}</h6>
+                  </div>
+                </li>
+                <li>
+                  <div class="description-text">
+                    <span>IP Address:</span> {{$blacklistUser->ip_address}}
+                  </div>
+                </li>
+                <li>
+                  <div class="description-text">
+                   <span>Reason:</span> {{$blacklistUser->blacklistTag->name_en}}
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
-          <div class="main-title">
-            <h2> Email: {{$blacklistUser->email}}</h2>
-          </div>
-          <div class="description-text">
-            IP Address: {{$blacklistUser->ip_address}}
-          </div>
-          <div class="description-text">
-            Reason: {{$blacklistUser->blacklistTag->name_en}}
-          </div>
-
+        
         </div>
       </div>
     </div>

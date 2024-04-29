@@ -4484,3 +4484,54 @@ form#excelForm{
   background: #eee
 }
 
+.blacklist_box_user {
+  padding: 20px !important;
+  border-radius: 20px;
+  background: #ffeceb;
+}
+.blacklist_box_user .main-title h2 {
+  margin: 15px 0;
+  font-size: 22px;
+  line-height: 30px;
+  font-weight: var(--fw-800);
+  padding-bottom: 15px;
+  border-bottom: 1px solid #fdd6d4;
+}
+.blacklist_box_user .userimage {
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #fdd6d4;
+}
+.blacklist_box_user .userimage img{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+.blacklist_box_user .description-text {
+  margin-top: 8px;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 25px;
+}
+.blacklist_box_user .main-title h6 {
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 25px;
+}
+.blacklist_box_user ul li span {
+  font-weight: 800;
+}
+.blacklist_box_user ul {
+  white-space: nowrap;
+}
+
+.dataTable  .btn {
+  min-width: unset;
+}
+.dataTable tbody tr td:last-child>div {
+ justify-content: center;
+ gap: 4px;
+}
