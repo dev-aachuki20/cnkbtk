@@ -1,0 +1,43 @@
+<?php
+
+namespace App\Http\Requests\BlacklistUser;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class StoreBlacklistUserRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, mixed>
+     */
+    public function rules()
+    {
+        return [
+            'email' => ['required', 'email'],
+            'ip_address' => ['required', 'ip'],
+            'blacklist_tag_id' => ['required'],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'email.required' => __('validation.required', ['attribute' => __('pages.blacklist_user.form.fields.email')]),
+            'email.email' =>  __('validation.email', ['attribute' => __('pages.blacklist_user.form.fields.email')]),
+            'ip_address.required' => __('validation.required', ['attribute' => __('pages.blacklist_user.form.fields.ip_address')]),
+            'ip_address.ip' =>  __('validation.ip', ['attribute' => __('pages.blacklist_user.form.fields.ip_address')]),
+            'blacklist_tag_id.required' => __('validation.required', ['attribute' => __('pages.blacklist_user.form.fields.reason')]),
+        ];
+    }
+}

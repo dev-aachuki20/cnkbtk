@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\BlacklistUserDataTable;
+use App\Http\Requests\BlacklistUser\StoreBlacklistUserRequest;
+use App\Http\Requests\BlacklistUser\UpdateBlacklistUserRequest;
 use App\Models\BlacklistUser;
 use Illuminate\Http\Request;
 use DB;
@@ -23,31 +25,25 @@ class BlacklistUserController extends Controller
         return $dataTable->render('blacklist-user.index', compact('balcklistTag'));
     }
 
-    public function store(Request $request)
+    public function store(StoreBlacklistUserRequest $request)
     {
-        $validatedData = $request->validate([
-            'email' => ['required', 'email'],
-            'ip_address' => ['required', 'ip'],
-            'blacklist_tag_id' => ['required'],
-        ], [], [
-            'email.required' => trans("pages.blacklist_user.form.fields.email"),
-            'email.email' =>  trans("pages.blacklist_user.form.fields.email"),
-            'ip_address.required' => trans("pages.blacklist_user.form.fields.ip_address"),
-            'ip_address.ip' => trans("pages.blacklist_user.form.fields.ip_address"),
-            'blacklist_tag_id.required' => trans("pages.blacklist_user.form.fields.reason"),
-        ]);
-
         try {
             DB::beginTransaction();
-            $user = User::where('email', $request->email)->first();
+            $validatedData = $request->all();
+            $user = User::where('email', $validatedData['email'])->first();
             $userId = $user ? $user->id : null;
             $validatedData['user_id'] = $userId;
+
             BlacklistUser::create($validatedData);
+
             DB::commit();
             return response()->json(['message' => trans("messages.add_success", ['module' => trans("global.blacklist_user")]), 'alert-type' =>  'success'], 200);
         } catch (\Exception $e) {
             DB::rollback();
-            return response()->json(['message' => trans("messages.something_went_wrong"), 'alert-type' =>  'error'], 500);
+            return response()->json([
+                'message' => trans("messages.something_went_wrong"),
+                'alert-type' => 'error'
+            ], 500);
         }
     }
 
@@ -102,27 +98,15 @@ class BlacklistUserController extends Controller
         }
     }
 
-    public function update(Request $request)
+    public function update(UpdateBlacklistUserRequest $request)
     {
         $id = $request->id;
-        $validatedData = $request->validate([
-            'email' => ['required', 'email', Rule::unique('blacklist_users')->ignore($id)],
-            'ip_address' => ['required', 'ip'],
-            'blacklist_tag_id' => ['required'],
-        ], [], [
-            'email.required' => trans("pages.blacklist_user.form.fields.email"),
-            'email.email' =>  trans("pages.blacklist_user.form.fields.email"),
-            'ip_address.required' => trans("pages.blacklist_user.form.fields.ip_address"),
-            'ip_address.ip' => trans("pages.blacklist_user.form.fields.ip_address"),
-            'blacklist_tag_id.required' => trans("pages.blacklist_user.form.fields.reason"),
-        ]);
-
         try {
             DB::beginTransaction();
+            $validatedData = $request->all();
             $user = User::where('email', $request->email)->first();
             $userId = $user ? $user->id : null;
             $validatedData['user_id'] = $userId;
-
             $blacklistUser = BlacklistUser::findOrFail($id);
             $blacklistUser->update($validatedData);
 

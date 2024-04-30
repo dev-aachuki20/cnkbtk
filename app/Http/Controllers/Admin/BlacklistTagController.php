@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\DataTables\BlacklistTagDataTable;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BlacklistTag\StoreBlacklistTagRequest;
+use App\Http\Requests\BlacklistTag\UpdateBlacklistTagRequest;
 use Illuminate\Http\Request;
 use App\Models\BlacklistTag;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Validator;
 use Illuminate\Validation\Rule;
 
@@ -38,24 +41,23 @@ class BlacklistTagController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreBlacklistTagRequest $request)
     {
-        $validatedData = $request->validate([
-            'name_en' => ['required', 'string', 'unique:blacklist_tags'],
-            'name_ch' => ['required', 'string', 'unique:blacklist_tags'],
-            'status' => ['required', 'in:0,1']
-        ], [], [
-            'name_en' => trans("cruds.blacklist_tag.fields.title"),
-            'name_ch'  => trans("cruds.blacklist_tag.fields.title"),
-            'status' => trans("cruds.global.status"),
-        ]);
+        try {
+            DB::beginTransaction();
+            $validatedData = $request->all();
+            $validatedData['created_by'] = Auth::user()->id;
 
-
-        $validatedData['created_by'] = Auth::user()->id;
-
-        BlacklistTag::create($validatedData);
-
-        return redirect()->back()->with(['message' => trans("messages.add_success", ['module' => trans("cruds.blacklist_tag.title_singular")]), 'alert-type' =>  'success']);
+            BlacklistTag::create($validatedData);
+            DB::commit();
+            return redirect()->back()->with(['message' => trans("messages.add_success", ['module' => trans("cruds.blacklist_tag.title_singular")]), 'alert-type' =>  'success']);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json([
+                'message' => trans("messages.something_went_wrong"),
+                'alert-type' => 'error'
+            ], 500);
+        }
     }
 
     /**
