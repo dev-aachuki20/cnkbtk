@@ -73,7 +73,7 @@ Route::group(["namespace" => "App\Http\Controllers\User", 'as' => 'user.', "pref
     //Point Related Routes
     Route::get('/self-top-up', "PointsController@selftopup")->name('self-top-up');
     Route::post('/self-top-up/submit', "PointsController@paymenttopup")->name('self-top-up.submit');
-    Route::get('/project', "ProjectController@index")->name('project');
+    Route::get('/project', "ProjectController@index")->name('project')->middleware('checkUserRole');
     Route::post('/project/store', 'ProjectController@store')->name('project.store');
 
     
