@@ -31,32 +31,45 @@
         <div class="right-single-box blacklist_box_user">
           <div class="row gx-3">
             <div class="col-auto">
-              <div class="userimage me-2"><img src="https://devcnkbtk.hipl-staging2.com/storage/profileImage/SvziPV4M2AgSZ9NT9w6XC9gKumRrnQNXdWnGMlK2.jpg" alt="user"></div>
+              <div class="userimage me-2">
+                @if($uploadPath)
+                <img src="{{ $uploadPath }}" alt="user">
+                @else
+                <img src="{{asset('front/asset/images/user.png')}}" alt="default user">
+                @endif
+              </div>
             </div>
+
             <div class="col">
               <div class="main-title">
-                <h2>{{$blacklistUser->user->user_name}}</h2>
+                <h2>{{$blacklistUser->user->user_name ?? ''}}</h2>
               </div>
               <ul>
                 <li>
                   <div class="main-title">
-                    <h6> <span>Email:</span> {{$blacklistUser->email}}</h6>
+                    <h6> <span>{{trans('pages.blacklist_user.form.fields.email')}} :</span> {{$blacklistUser->email ?? ''}}</h6>
                   </div>
                 </li>
                 <li>
                   <div class="description-text">
-                    <span>IP Address:</span> {{$blacklistUser->ip_address}}
+                    <span>{{trans('pages.blacklist_user.form.fields.ip_address')}} :</span> {{$blacklistUser->ip_address ?? ''}}
                   </div>
                 </li>
                 <li>
                   <div class="description-text">
-                   <span>Reason:</span> {{$blacklistUser->blacklistTag->name_en}}
+                    <span>{{ trans('pages.blacklist_user.form.fields.reason') }} :</span>
+                    @if(app()->getLocale() == 'en')
+                    {{ $blacklistUser->blacklistTag->name_en ?? '' }}
+                    @else
+                    {{ $blacklistUser->blacklistTag->name_ch ?? '' }}
+                    @endif
                   </div>
                 </li>
+
               </ul>
             </div>
           </div>
-        
+
         </div>
       </div>
     </div>

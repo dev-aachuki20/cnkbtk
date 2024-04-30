@@ -209,11 +209,16 @@ return [
     ],
 
     'blacklist_user' => [
+        'button_one' => 'Sample Excel File',
+        'button_two' => 'Import Excel',
+        'add' => 'Add Blacklist User',
+        'edit' => 'Edit Blacklist User',
         'form' => [
             'fields' => [
                 'email' => 'Email',
                 'ip_address' => 'IP Address',
                 'reason' => 'Reason',
+                'username' => 'Username',
             ],
         ],
     ],

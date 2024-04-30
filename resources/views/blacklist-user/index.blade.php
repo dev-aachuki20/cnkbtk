@@ -50,11 +50,9 @@
     </div>
 </section>
 
-
 <div class="profile-wrapper-cp">
     <div class="container">
         <div class="row">
-
             <div class="col-12 col-md-12 col-lg-12 col-xl-12">
                 <div class="categories-details">
                     <div class="categories-details-head p-3">
@@ -75,19 +73,19 @@
                                 <div class="row g-3">
                                     <div class="col-auto d-flex">
                                         <!-- View Sample Excel File -->
-                                        <button type="button" class="btn btn-primary px-3" id="openSampleFileBtn">Sample Excel File</button>
+                                        <button type="button" class="btn btn-primary px-3" id="openSampleFileBtn">{{__('pages.blacklist_user.button_one')}}</button>
                                     </div>
                                     <div class="col-auto d-flex">
                                         <!-- Excel import Form -->
                                         <form class="m-0 px-3" id="excelForm" action="{{ route('blacklist.user.import') }}" method="POST" enctype="multipart/form-data">
-                                            <label for="excel_file" class="btn btn-primary p-0 text-white">Import Excel</label>
+                                            <label for="excel_file" class="btn btn-primary p-0 text-white">{{__('pages.blacklist_user.button_two')}}</label>
                                             <input type="file" name="excel_file" id="excel_file" value="Import Excel" hidden>
                                         </form>
                                     </div>
                                     <div class="col-auto">
                                         {{--
-                                <div class="edit-post">
-                                    <a href="{{route('blacklist.user.create')}}" title="{{trans('global.add')}} {{trans('global.blacklist_user')}}">
+                                    <div class="edit-post">
+                                        <a href="{{route('blacklist.user.create')}}" title="{{trans('global.add')}} {{trans('global.blacklist_user')}}">
                                         <svg id="_x31__px" enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg">
                                             <path d="m9.02 21h-6.52c-1.378 0-2.5-1.121-2.5-2.5v-16c0-1.379 1.122-2.5 2.5-2.5h12c1.378 0 2.5 1.121 2.5 2.5v6.06c0 .276-.224.5-.5.5s-.5-.224-.5-.5v-6.06c0-.827-.673-1.5-1.5-1.5h-12c-.827 0-1.5.673-1.5 1.5v16c0 .827.673 1.5 1.5 1.5h6.52c.276 0 .5.224.5.5s-.224.5-.5.5z"></path>
                                             <path d="m13.5 9h-10c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h10c.276 0 .5.224.5.5s-.224.5-.5.5z"></path>
@@ -133,13 +131,12 @@
 </div>
 </div>
 
-
-<!-- Modal Start Blacklist user-->
+<!-- Modal Start Blacklist user store-->
 <div class="modal fade" id="blackListModal" tabindex="-1" aria-labelledby="blackListModalLabel" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="blackListModalLabel">Add Blacklist User</h5>
+                <h5 class="modal-title" id="blackListModalLabel">{{trans('pages.blacklist_user.add')}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -168,7 +165,7 @@
                                 <div class="form-group">
                                     <label for="">{{trans("pages.blacklist_user.form.fields.reason")}} <span class="text-danger">*</span></label>
                                     <select name="blacklist_tag_id" id="blacklist_tag_id" class="form-control">
-                                        <option value="">Select</option>
+                                        <option value="">{{trans('cruds.global.select')}}</option>
                                         @foreach($balcklistTag as $tag)
                                         <option value="{{$tag->id}}">{{app()->getLocale() == 'en' ? $tag->name_en : $tag->name_ch}}</option>
                                         @endforeach
@@ -180,8 +177,63 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" id="submitBtn">Save</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{trans('cruds.global.cancel')}}</button>
+                <button type="submit" class="btn btn-primary" id="submitBtn">{{trans('cruds.global.save')}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal End -->
+
+<!-- Modal Start Blacklist user edit-->
+<div class="modal fade" id="blackListEditModal" tabindex="-1" aria-labelledby="blackListEditModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="blackListEditModalLabel">{{trans('pages.blacklist_user.edit')}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form data-url="{{ route('blacklist.user.store') }}" id="editBlacklistForm">
+                    <div class="row">
+                        <input type="hidden" id="record_id">
+                        <div class="col-md-12">
+                            <div class="mb-4">
+                                <div class="form-group form-group-edit">
+                                    <label for="">{{trans("pages.blacklist_user.form.fields.email")}} <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="email" id="edit-email" placeholder="{{trans("global.enter")}} {{trans("pages.blacklist_user.form.fields.email")}}" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="mb-4">
+                                <div class="form-group form-group-edit">
+                                    <label for="">{{trans("pages.blacklist_user.form.fields.ip_address")}} <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="ip_address" id="edit-ip_address" placeholder="{{trans("global.enter")}} {{trans("pages.blacklist_user.form.fields.ip_address")}}" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="mb-4">
+                                <div class="form-group form-group-edit">
+                                    <label for="">{{trans("pages.blacklist_user.form.fields.reason")}} <span class="text-danger">*</span></label>
+                                    <select name="blacklist_tag_id" id="edit-blacklist_tag_id" class="form-control">
+                                        <option value="">{{trans('cruds.global.select')}}</option>
+                                        @foreach($balcklistTag as $tag)
+                                        <option value="{{$tag->id}}">{{app()->getLocale() == 'en' ? $tag->name_en : $tag->name_ch}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{trans('cruds.global.cancel')}}</button>
+                <button type="submit" class="btn btn-primary" id="updateBtn">{{trans('cruds.global.update')}}</button>
             </div>
         </div>
     </div>
@@ -246,12 +298,14 @@
         });
 
 
+        $('#blackListModal').on('hidden.bs.modal', function() {
+            $(".text-danger.errors").remove();
+        });
 
         // Add blacklist user data by form
         $('#submitBtn').click(function(e) {
             e.preventDefault();
             var formData = $('#addBlacklistForm').serialize();
-            console.log(formData);
             var url = "{{ route('blacklist.user.store') }}";
             $.ajax({
                 headers: {
@@ -283,7 +337,6 @@
                                 index = index.replace(/([.])+/g, '_');
                                 index.replace(".", '_');
                             }
-                            console.log(index);
                             $("#" + index).parents(".form-group").append("<span class='text-danger errors'>" + value + "</span>");
 
                         });
@@ -297,11 +350,76 @@
                 }
             });
         });
-    });
 
-    // View sample file
-    $('#openSampleFileBtn').click(function() {
-        window.open("{{ asset('sample_sheet_blacklist_user.xlsx') }}", '_blank');
+
+        // View sample file
+        $('#openSampleFileBtn').click(function() {
+            window.open("{{ asset('sample_sheet_blacklist_user.xlsx') }}", '_blank');
+        });
+
+
+        //edit form functionality
+        $(document).on('click', '.edit-blacklist-user', function(e) {
+            e.preventDefault();
+            var url = $(this).data('href');
+            $.ajax({
+                type: 'GET',
+                url: url,
+                dataType: 'json',
+                success: function(response) {
+                    $('#record_id').val(response.data.id);
+                    $('#edit-email').val(response.data.email);
+                    $('#edit-ip_address').val(response.data.ip_address);
+                    $('#edit-blacklist_tag_id').val(response.data.blacklist_tag_id);
+                    $(".text-danger.errors").remove();
+                    $('#blackListEditModal').modal('show');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('Error fetching user data:', errorThrown);
+                }
+            });
+        });
+
+        //update blacklist user form functionality
+        $('#updateBtn').click(function() {
+            var formData = $('#editBlacklistForm').serialize();
+            var id = $('#record_id').val();
+            formData += '&id=' + id;
+
+            var url = "{{route('blacklist.user.update')}}";
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $("meta[name=csrf-token]").attr('content')
+                },
+                type: 'POST',
+                url: url,
+                data: formData,
+                dataType: 'json',
+                beforeSend: function(response) {
+                    showLoader();
+                },
+                success: function(response) {
+                    $('#blackListEditModal').modal('hide');
+                    $('#blackListEditModal').trigger('reset');
+                    toastr.success(response.message);
+                },
+                error: function(jqXHR, exception) {
+                    if (jqXHR.status == 422) {
+                        $(".text-danger.errors").remove();
+                        $.each(jqXHR.responseJSON.errors, function(index, value) {
+                            $("#edit-" + index).parents(".form-group-edit").append("<span class='text-danger errors'>" + value[0] + "</span>");
+                        });
+                    } else {
+                        toastr.error(jqXHR.responseJSON.message, '{{ trans("global.alert.error") }}');
+                        location.reload();
+                    }
+                },
+                complete: function() {
+                    hideLoader();
+                }
+            });
+        });
+
     });
 </script>
 

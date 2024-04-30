@@ -141,6 +141,8 @@ Route::group(["middleware" => ["auth", "status"]], function () {
     Route::get('blacklist/users', [BlacklistUserController::class, 'index'])->name('blacklist.user');
     Route::post('blacklist/user/store', [BlacklistUserController::class, 'store'])->name('blacklist.user.store');
     Route::get('blacklist/user/show/{id}', [BlacklistUserController::class, 'show'])->name('blacklist.user.show');
+    Route::get('blacklist/user/edit/{id}', [BlacklistUserController::class, 'edit'])->name('blacklist.user.edit');
+    Route::post('blacklist/user/update', [BlacklistUserController::class, 'update'])->name('blacklist.user.update');
     Route::post('blacklist/user/import', [BlacklistUserController::class, 'importExcel'])->name('blacklist.user.import');
 });
 // Blacklist users routes start end

@@ -226,11 +226,16 @@ return [
     ],
 
     'blacklist_user' => [
+        'button_one' => 'Excel 文件示例',
+        'button_two' => '导入Excel',
+        'add' => '添加黑名单用户',
+        'edit' => '编辑黑名单用户',
         'form' => [
             'fields' => [
                 'email' => '电子邮件',
                 'ip_address' => 'IP地址',
                 'reason' => '原因',
+                'username' => '用户名',
             ],
         ],
     ],

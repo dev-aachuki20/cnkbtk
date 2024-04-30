@@ -36,12 +36,19 @@ class BlacklistUserDataTable extends DataTable
                 return '';
             })
 
+            ->filterColumn('blacklist_tag_id', function ($query, $keyword) {
+                $query->whereHas('blacklistTag', function ($query) use ($keyword) {
+                    $query->where('name_en', 'like', "%$keyword%")
+                        ->orWhere('name_ch', 'like', "%$keyword%");
+                });
+            })
+
             ->addColumn('action', function ($record) {
                 $action  = '<div class="d-flex">';
                 $action .= '<a class="btn btn-primary btn-sm" title="' . trans("cruds.global.view") . '" href="' . route('blacklist.user.show', $record->id) . '">
                 <i class="fas fa-eye"></i>
                             </a>';
-                $action .= '<a class="btn btn-info btn-sm" title="' . trans("cruds.global.edit") . '" href="' . route("admin.blacklist-tag.edit", $record->id) . '">
+                $action .= '<a class="btn btn-info btn-sm edit-blacklist-user" title="' . trans("cruds.global.edit") . '" data-href="' . route("blacklist.user.edit", $record->id) . '">
                 <i class="fas fa-pencil-alt"></i>
                 </a>';
                 $action .= '</div>';
@@ -98,7 +105,7 @@ class BlacklistUserDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex')->title('#')->orderable(false)->searchable(false),
-            Column::make('user.user_name')->title('Username')->orderable(false),
+            Column::make('user.user_name')->title(trans("pages.blacklist_user.form.fields.username"))->orderable(false),
             Column::make('email')->title(trans("pages.blacklist_user.form.fields.email")),
             Column::computed('ip_address')->title(trans("pages.blacklist_user.form.fields.ip_address"))->searchable(true),
             Column::make('blacklist_tag_id')->title(trans("pages.blacklist_user.form.fields.reason"))->searchable(true),
