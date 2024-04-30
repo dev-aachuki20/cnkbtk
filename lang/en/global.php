@@ -28,6 +28,7 @@ return [
     'credit_history' => 'Credit history',
     'post_history' => 'Post history',
     'create_post' => 'Create post',
+    'create_project' => 'Create Project',
     'logout' => 'Logout',
     'enter' => 'Enter',
     'post' => 'Post',

@@ -83,7 +83,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                   <div class="mb-4">
                     <label for="">Child category</label>
                     <select class="form-select select-subject" aria-label="Default select example">
@@ -94,7 +94,7 @@
                         <option value="Original novel">Original novel</option>
                     </select>
                   </div>
-                </div>
+                </div> -->
 
                 <div class="col-md-6">
                   <div class="mb-4">

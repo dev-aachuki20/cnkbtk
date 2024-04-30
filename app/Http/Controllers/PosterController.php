@@ -62,7 +62,7 @@ class PosterController extends Controller
             'title' => ['required','string'],
             'parent_section' => ['required','exists:sections,id'],
             'sub_section' => ['required','exists:sections,id'],
-            'child_section' => ['required','exists:sections,id'],
+            // 'child_section' => ['required','exists:sections,id'],
             'poster_image' => ['nullable','mimes:jpg,png,jpeg,JPG,JPEG,PNG','max:1024'],
             'tags' => ['required','exists:tags,id'],
             'description' => ['required','string'],
@@ -96,7 +96,7 @@ class PosterController extends Controller
             'title' => trans("pages.post.form.fields.title"),
             'parent_section' => trans("pages.post.form.fields.parent_section"),
             'sub_section' => trans("pages.post.form.fields.sub_section"),
-            'child_section' => trans("pages.post.form.fields.child_section"),
+            // 'child_section' => trans("pages.post.form.fields.child_section"),
             'poster_image' => trans("pages.post.form.fields.poster_cover_image"),
             'tags' => trans("pages.post.form.fields.tags"),
             'description' => trans("pages.post.form.fields.description"),
@@ -189,17 +189,17 @@ class PosterController extends Controller
         $poster = Poster::with(["episodes.uploads","uploads"])->where("id",Crypt::decrypt($id))->first();
         $parentSections = $this->sections->where("level", config("constant.sectionLevel.level1"));
         $subSections = $this->sections->where("level" , config("constant.sectionLevel.level2"))->where( "parent_id" , $poster->parent_section);  
-        $childSections = $this->sections->where("level" , config("constant.sectionLevel.level3"))->where( "parent_id" ,  $poster->sub_section);
+        // $childSections = $this->sections->where("level" , config("constant.sectionLevel.level3"))->where( "parent_id" ,  $poster->sub_section);
         $userRole  = auth()->user()->role_id;
         if($userRole != config("constant.role.admin") ) {
             if($userRole == config("constant.role.user")){
                 $parentSections->where("user_can_post",'1');
                 $subSections->where("user_can_post",'1');
-                $childSections->where("user_can_post",'1');
+                // $childSections->where("user_can_post",'1');
             }else{
                 $parentSections->where("creator_can_post",'1');
                 $subSections->where("creator_can_post",'1');
-                $childSections->where("creator_can_post",'1');
+                // $childSections->where("creator_can_post",'1');
             }
         }
         $tagTypes = $this->tagTypes;
@@ -225,7 +225,7 @@ class PosterController extends Controller
             'title' => ['required','string'],
             'parent_section' => ['required','exists:sections,id'],
             'sub_section' => ['required','exists:sections,id'],
-            'child_section' => ['required','exists:sections,id'],
+            // 'child_section' => ['required','exists:sections,id'],
             'poster_image' => ['nullable','mimes:jpg,png,jpeg,JPG,JPEG,PNG','max:1024'],
             'tags' => ['required','exists:tags,id'],
             'description' => ['required','string'],
@@ -261,7 +261,7 @@ class PosterController extends Controller
            'title' => trans("pages.post.form.fields.title"),
             'parent_section' => trans("pages.post.form.fields.parent_section"),
             'sub_section' => trans("pages.post.form.fields.sub_section"),
-            'child_section' => trans("pages.post.form.fields.child_section"),
+            // 'child_section' => trans("pages.post.form.fields.child_section"),
             'poster_image' => trans("pages.post.form.fields.poster_cover_image"),
             'tags' => trans("pages.post.form.fields.tags"),
             'description' => trans("pages.post.form.fields.description"),

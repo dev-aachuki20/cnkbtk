@@ -26,10 +26,10 @@ class SectionController extends Controller
             $section = Section::with(['subSectionPosters','parent_category.parent_category'])->where("slug",$slug)->first();
             $posters = Poster::with("userDetails")->withCount("reads")->where(["sub_section" => $section->id,"status" => "1"])->paginate(3);
                 break;
-            case 3:
-            $section = Section::with(['childSectionPosters'])->where("slug",$slug)->first();
-            $posters = Poster::with("userDetails")->withCount("reads")->where(["child_section" => $section->id,"status" => "1"])->paginate(3);
-                break;
+            // case 3:
+            // $section = Section::with(['childSectionPosters'])->where("slug",$slug)->first();
+            // $posters = Poster::with("userDetails")->withCount("reads")->where(["child_section" => $section->id,"status" => "1"])->paginate(3);
+            //     break;
             default:
                 return abort(404);
                 break;

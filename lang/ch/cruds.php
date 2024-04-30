@@ -95,25 +95,25 @@ return [
             'delete_message' => '如果您删除子部分，则所有子部分都将与其海报一起删除'
         ],
 
-        //Child Section 
-        'child_section' => [
-            'title'              => '子部分',
-            'title_singular'     => '儿童科',
-            'fields' => [
-                'id' =>  'ID',
-                'title' => "标题",
-                'description' => '描述',
-                'creator_can_post' => '创建者可以发布',
-                'user_can_post' => '用户可以发帖',
-                'show_in_header' => '在标题中显示',
-                'show_in_footer' => '在页脚中显示',
-                'position' => '位置',
-                'parent_section' => "家长部分",
-                'section_logo' => "部分标志",
-                'sub_section' => "子部分",
-            ],
-            'delete_message' => 'If you delete child section all the posters will delete.'
-        ]
+        // //Child Section 
+        // 'child_section' => [
+        //     'title'              => '子部分',
+        //     'title_singular'     => '儿童科',
+        //     'fields' => [
+        //         'id' =>  'ID',
+        //         'title' => "标题",
+        //         'description' => '描述',
+        //         'creator_can_post' => '创建者可以发布',
+        //         'user_can_post' => '用户可以发帖',
+        //         'show_in_header' => '在标题中显示',
+        //         'show_in_footer' => '在页脚中显示',
+        //         'position' => '位置',
+        //         'parent_section' => "家长部分",
+        //         'section_logo' => "部分标志",
+        //         'sub_section' => "子部分",
+        //     ],
+        //     'delete_message' => 'If you delete child section all the posters will delete.'
+        // ]
 
     ],
     // Tag Type and Tag Cruds
@@ -317,6 +317,29 @@ return [
         'fields' => [
             'id' =>  'ID',
             'title' => "标题",
+        ]
+    ],
+
+    'create_project' => [
+        'title'    => '創建專案',
+        'home'     => '家',
+        'create'    => '創造',
+        'project'  => '專案',
+        'post'  => '郵政',
+        'fields' => [
+            'type'     => '類型',
+            'tags'          => '標籤',
+            'creators'         => '創作者',
+            'budget'         => '預算',
+            'description'         => '描述',
+            'copyright'         => '版權',
+            'placeholder'         => '輸入預算',
+            'text'         => '勾選此方塊即表示您同意遵守我們的版權政策。',
+            'selected' => [
+                'type' => '選擇類型',
+                'tags' => '選擇標籤',
+                'creator' => '選擇創作者',
+            ],
         ]
     ],
 

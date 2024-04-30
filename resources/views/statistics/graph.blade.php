@@ -1,3 +1,5 @@
+
+
 <div id="myChartContainer">
 <div style="position: relative; height:55vh;">
     <canvas id="myChart" width="400" height="400" style="display: block; width: 400px; height: 400px;"></canvas>
@@ -6,6 +8,7 @@
 
 <script>
     
+   
     var ctx = document.getElementById('myChart').getContext('2d');
     var labels = @json($labels);
     var membersData = @json($data);
@@ -21,23 +24,23 @@
             data: membersData,
             backgroundColor: '#dee9f7',
             borderColor: '#ff6359',
-            borderWidth: 2,
+            borderWidth: 1,
             tension: 0.5,
             pointBorderColor: "#fd463b",
             pointBackgroundColor: "#fd463b",
-            pointBorderWidth: 8,
-            pointHoverRadius: 8,
+            pointBorderWidth: 6,
+            pointHoverRadius: 6,
             pointHoverBackgroundColor: "#000000",
             pointHoverBorderColor: "#000000",
-            pointHoverBorderWidth: 4,
+            pointHoverBorderWidth: 3,
             pointRadius: 1,
-            borderWidth: 4,
+            borderWidth: 3,
             pointHitRadius: 30
         }]
     };
-
+  
     var config = {
-        type: 'bar',
+        type: 'line',
         data: data,
         options: {
             responsive: true, 
@@ -72,5 +75,5 @@
         
     };
 
-    var myChart = new Chart(ctx, config);
+    var myChart = new Chart(ctx, config); 
 </script>

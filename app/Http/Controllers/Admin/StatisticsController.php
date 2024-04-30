@@ -83,7 +83,7 @@ class StatisticsController extends Controller
                 list($labels, $data) = $this->generateMembersRegistrationGraph($monthlyDateRanges, $startDate, $endDate, 'day');
             }
         }
-
+       
         list($labels, $data) = $this->calculateAverage($labels, $data);
 
         $pluginText = trans("cruds.registered_members.fields.num_graph");
@@ -160,8 +160,10 @@ class StatisticsController extends Controller
         if ($tagTypes != null) {
             $tagIds = Tag::whereIn('tag_type', $tagTypes)->pluck('id')->toArray();
             $tagTypeCount = Poster::whereIn('tags', $tagIds)->whereBetween('created_at', [$startDate, $endDate])->count();
+         
             $labels[] = trans("messages.tag_type_based_post_count");
             $data[] = $tagTypeCount;
+            dd($data);
         }
 
         $pluginText = trans("cruds.number_of_posts.fields.num_graph");
@@ -494,7 +496,7 @@ class StatisticsController extends Controller
     // }
 
 
-
+ 
     //  Members Registrations 
     private function generateMembersRegistrationGraph($dateRanges)
     {

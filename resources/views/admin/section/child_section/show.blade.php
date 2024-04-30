@@ -1,8 +1,8 @@
-@extends('layouts.admin')
-@section('content')
-<div class="content-wrapper faq-wrap">
+<!-- @extends('layouts.admin')
+@section('content') -->
+<!-- <div class="content-wrapper faq-wrap"> -->
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <!-- <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
@@ -16,15 +16,15 @@
             </ol>
           </div>
         </div>
-      </div><!-- /.container-fluid -->
-    </section>
+      </div> -->
+    <!-- </section> -->
 
     <!-- Main content -->
-    <section class="content">
+    <!-- <section class="content">
       <div class="container-fluid">
-        <div class="row">
+        <div class="row"> -->
           <!-- left column -->
-          <div class="col-md-8">
+          <!-- <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">{{trans("cruds.global.view")}} {{trans("cruds.section_management.child_section.title_singular")}}</h3>
@@ -146,16 +146,16 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- /.card-body -->
-                </div>
+                <!-- </div>
             
             </div>
           
-        </div>
+        </div> -->
         <!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </section>
+      <!-- </div> -->
+    <!-- </section> -->
     <!-- /.content -->
-  </div>
-@endsection
+  <!-- </div> -->
+<!-- @endsection -->

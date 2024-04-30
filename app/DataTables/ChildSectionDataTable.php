@@ -44,12 +44,12 @@ class ChildSectionDataTable extends DataTable
             })
             ->addColumn('action', function($record) {
                 $action  = '<div class="d-flex">';
-                $action .= '<a class="btn btn-primary btn-sm" title="'. trans("cruds.global.view") .'" href="'.route('admin.child-section.show', $record->id).'">
-                                <i class="fas fa-eye"></i>
-                            </a>';
-                $action .= '<a class="btn btn-info btn-sm" title="'. trans("cruds.global.edit") .'" href="'.route("admin.child-section.edit", $record->id).'">
-                    <i class="fas fa-pencil-alt"></i>
-                </a>';
+                // $action .= '<a class="btn btn-primary btn-sm" title="'. trans("cruds.global.view") .'" href="'.route('admin.child-section.show', $record->id).'">
+                //                 <i class="fas fa-eye"></i>
+                //             </a>';
+                // $action .= '<a class="btn btn-info btn-sm" title="'. trans("cruds.global.edit") .'" href="'.route("admin.child-section.edit", $record->id).'">
+                //     <i class="fas fa-pencil-alt"></i>
+                // </a>';
 
                 $action .= '<form action="'.route('admin.child-section.destroy', $record->id).'" method="POST" class="deleteForm">
                             <input type="hidden" name="_method" value="DELETE"> 
@@ -111,8 +111,8 @@ class ChildSectionDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex')->title('#')->orderable(false)->searchable(false),
-            Column::make('name_en')->title(trans("cruds.section_management.child_section.fields.title").' <small>('. trans('cruds.lang.english') .')</small>'),
-            Column::make('name_ch')->title(trans("cruds.section_management.child_section.fields.title").' <small>('. trans('cruds.lang.english') .')</small>'),
+            // Column::make('name_en')->title(trans("cruds.section_management.child_section.fields.title").' <small>('. trans('cruds.lang.english') .')</small>'),
+            // Column::make('name_ch')->title(trans("cruds.section_management.child_section.fields.title").' <small>('. trans('cruds.lang.english') .')</small>'),
             Column::computed('status')->title(trans("cruds.global.status"))->orderable(false)->searchable(false),
             Column::make('created_at')->title(trans("cruds.global.created_date"))->orderable(false)->searchable(false),
             Column::computed('action')->title(trans("cruds.global.action"))->orderable(false)->searchable(false)
@@ -126,6 +126,6 @@ class ChildSectionDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'ChildSection_' . date('YmdHis');
+        // return 'ChildSection_' . date('YmdHis');
     }
 }

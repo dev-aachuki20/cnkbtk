@@ -135,7 +135,7 @@
               var parentSection = $(this).val();
               if(parentSection == ''){
                 $("#sub_section").html("");
-                $("#child_section").html("");
+                // $("#child_section").html("");
                 return;
               }
               var url = '{{ route("get-sub-section", ":id") }}';
@@ -165,35 +165,7 @@
           });
 
 
-          $("#sub_section").on("change",function(){
-            var subSection = $(this).val();
-            if(subSection == ''){
-              $("#child_section").html("");
-              return;
-            }
-            var url = '{{ route("get-child-section", ":id") }}';
-            url = url.replace(':id', subSection);
-            $.ajax({
-                  url:url,
-                  method:'get',
-                  dataType:'json',
-                  beforeSend:function(response){
-                      showLoader()
-                  },
-                  success:function(response){ 
-                    $("#child_section").html(response.message);
-                  },
-                  error:function(response){
-                    $("#child_section").html("");
-                    toastr.error(response.responseJSON.message,'{{trans("global.alert.error")}}');
-                  },
-                  complete:function(){
-                      hideLoader();
-                  }
-              });
-            
-
-          });
+         
 
 
           $(document).on("click",".remove-btn",async function(e){

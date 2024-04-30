@@ -25,7 +25,7 @@ Route::group(["namespace" => "App\Http\Controllers"], function () {
     Route::view('terms-condition', "terms-condition")->name('terms-condition');
     //Common Function Route
     Route::get('get-subparent-section/{id}', "CommonFunctionController@getSubSections")->name('get-sub-section');
-    Route::get('get-child-section/{id}', "CommonFunctionController@getChildSections")->name('get-child-section');
+    // Route::get('get-child-section/{id}', "CommonFunctionController@getChildSections")->name('get-child-section');
     Route::get('get-tags/{id}', "CommonFunctionController@getTags")->name('get-tags');
     Route::get('section/{level}/{slug}', "SectionController@index")->name('section.page');
     Route::get('search', "HomeController@search")->name('search');
@@ -73,6 +73,10 @@ Route::group(["namespace" => "App\Http\Controllers\User", 'as' => 'user.', "pref
     //Point Related Routes
     Route::get('/self-top-up', "PointsController@selftopup")->name('self-top-up');
     Route::post('/self-top-up/submit', "PointsController@paymenttopup")->name('self-top-up.submit');
+    Route::get('/project', "ProjectController@index")->name('project');
+    Route::post('/project/store', 'ProjectController@store')->name('project.store');
+
+    
 });
 
 // Admin  routes
@@ -87,7 +91,7 @@ Route::group(["namespace" => "App\Http\Controllers\Admin", 'as' => 'admin.', "pr
     Route::post('user-update-status', 'UserController@updateStatus')->name('users.updateStatus');
     Route::post('parent-section/update-status', 'SectionController@updateStatus')->name('section.parent-section.updateStatus');
     Route::post('sub-section/update-status', 'SubSectionController@updateStatus')->name('section.sub-section.updateStatus');
-    Route::post('child-section/update-status', 'ChildSectionController@updateStatus')->name('section.child-section.updateStatus');
+    // Route::post('child-section/update-status', 'ChildSectionController@updateStatus')->name('section.child-section.updateStatus');
     Route::post('tag-type/update-status', 'TagTypeController@updateStatus')->name('tag-management.tag-type.updateStatus');
     Route::post('tag/update-status', 'TagsController@updateStatus')->name('tag-management.tag.updateStatus');
     Route::post('advertisement/update-status', 'AdvertisementController@updateStatus')->name('advertisement.updateStatus');
@@ -113,7 +117,7 @@ Route::group(["namespace" => "App\Http\Controllers\Admin", 'as' => 'admin.', "pr
     Route::group(["prefix" => "section"], function () {
         Route::resource('parent-section', "SectionController");
         Route::resource('sub-section', "SubSectionController");
-        Route::resource('child-section', "ChildSectionController");
+        // Route::resource('child-section', "ChildSectionController");
     });
     // Tag management routes
     Route::group(["prefix" => "tags"], function () {

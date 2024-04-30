@@ -27,12 +27,12 @@
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                     <div class="mb-4 form-group">
                       <label for="">Child section <span class="text-danger">*</span></label>
                       <select class="form-select" name="child_section" id="child_section"></select>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="col-md-6 ">
                   <div class="form-group mb-4">

@@ -27,6 +27,7 @@ return [
     'credit_history' => '信用记录',
     'post_history' => '帖子历史',
     'create_post' => '创建帖子',
+    'create_project' => '創建專案',
     'logout' => '登出',
     'enter' => "进入",
     'post' => '邮政',

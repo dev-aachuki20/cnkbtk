@@ -25,7 +25,7 @@
             <li class="breadcrumb-item"><a href="{{route("home")}}">{{trans("global.home")}}</a></li>
             <li class="breadcrumb-item"><a href="{{route("section.page",[$poster->parentSection->level,$poster->parentSection->slug])}}" >{{$poster->parentSection->name}}</a></li>
             <li class="breadcrumb-item active"><a href="{{route("section.page",[$poster->subSection->level,$poster->subSection->slug])}}">{{$poster->subSection->name}}</a></li>
-            <li class="breadcrumb-item active"><a href="{{route("section.page",[$poster->childSection->level,$poster->childSection->slug])}}">{{$poster->childSection->name}}</a></li>
+            <!-- <li class="breadcrumb-item active"><a href="{{route("section.page",[$poster->childSection->level,$poster->childSection->slug])}}">{{$poster->childSection->name}}</a></li> -->
             <li class="breadcrumb-item active">{{$poster->title}}</li>
           </ol>
         </nav>

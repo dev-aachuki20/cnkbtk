@@ -1,9 +1,9 @@
-@extends('layouts.admin')
+<!-- @extends('layouts.admin')
 
-@section('content')
-<div class="content-wrapper">
+@section('content') -->
+<!-- <div class="content-wrapper"> -->
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <!-- <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
@@ -17,12 +17,12 @@
             </ol>
           </div>
          
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
+        </div> -->
+      <!-- </div>   -->
+    <!-- </section> -->
 
     <!-- Main content -->
-    <section class="content">
+    <!-- <section class="content">
     
       <div class="container-fluid">
        
@@ -34,31 +34,31 @@
                 <h3 class="card-title">{{trans("cruds.section_management.child_section.title_singular")}}</h3>
                 <div class="pull-right">
                     <a class="btn btn-success" href="{{route('admin.child-section.create')}}" style="float:right">{{trans("cruds.global.add")}} {{trans("cruds.section_management.child_section.title_singular")}}</a>
-                </div>
-                </div>
+                </div> -->
+                <!-- </div> -->
                 <!-- /.card-header -->
-                <div class="card-body">
+                <!-- <div class="card-body">
                     <div class="table-responsive normal_width_table">
                         <div class="clearfix"></div>
                         {{$dataTable->table(['class' => 'table table-bordered table-striped', 'style' => 'width:100%;'])}}
                     </div>
-                </div>
+                </div> -->
               <!-- /.card-body -->
-            </div>
+            <!-- </div> -->
             <!-- /.card -->
-          </div>
+          <!-- </div> -->
           <!-- /.col -->
-        </div>
+        <!-- </div>
         
-      </div>
+      </div> -->
       <!-- /.container-fluid -->
-    </section>
+    <!-- </section> -->
     <!-- /.content -->
-  </div>
-@endsection
-@section('scripts')
-{!! $dataTable->scripts() !!}
-<script type="text/javascript">
+  <!-- </div> -->
+<!-- @endsection -->
+<!-- @section('scripts')
+{!! $dataTable->scripts() !!} -->
+<!-- <script type="text/javascript">
   $(document).ready( function(){
      $(document).on('submit', '.deleteForm', function(e){
         e.preventDefault();
@@ -98,58 +98,58 @@
             }
         });
     });
+ -->
 
+//     $(document).on('change click', '.user_status', function(event) {
+//       var id = $(this).attr("data-status-id");
+//       var status = $(this).val();
+//       Swal.fire({
+//           title: "{{trans('messages.are_you_sure')}}",
+//           text: "{{trans('messages.update_warning')}}",
+//           icon: "question",
+//           showCancelButton: true,
+//           confirmButtonText: `{{trans('cruds.global.update')}}`,
+//           cancelButtonText: `{{trans('cruds.global.cancel')}}`,
+//       })
+//       .then((result) => {
 
-    $(document).on('change click', '.user_status', function(event) {
-      var id = $(this).attr("data-status-id");
-      var status = $(this).val();
-      Swal.fire({
-          title: "{{trans('messages.are_you_sure')}}",
-          text: "{{trans('messages.update_warning')}}",
-          icon: "question",
-          showCancelButton: true,
-          confirmButtonText: `{{trans('cruds.global.update')}}`,
-          cancelButtonText: `{{trans('cruds.global.cancel')}}`,
-      })
-      .then((result) => {
-
-          if (!result.isDismissed) {
-              $.ajax({
-                  type: "POST",
-                  url: "{{route('admin.section.sub-section.updateStatus')}}",
-                  data: {
-                      _token: "{{csrf_token()}}",
-                      id: id,
-                      status: status,
-                  },
-                  headers: {
-                      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                  },
-                  success: function(response) {
-                      toastr.success(response.message, '{{trans("global.alert.success")}}');
-                      $('table').DataTable().ajax.reload(null, false);
-                  },
-                  error: function(response) {
-                      let errorMessages = '';
-                      $.each(response.responseJSON.errors, function(key, value) {
-                          $.each(value, function(i, message) {
-                              errorMessages += '<li>' + message + '</li>';
-                          });
-                      });
-                      toastr.error(errorMessages);
-                  },
-                  complete: function() {
-                      // $('#pageloader').css('display', 'none');
-                  }
-              });
-          } else {
-              // $('#pageloader').css('display', 'none');
-              $('table').DataTable().ajax.reload(null, false);
-              return false;
-          }
-      });
-    });
-  });
-</script>
-@endsection
+//           if (!result.isDismissed) {
+//               $.ajax({
+//                   type: "POST",
+//                   url: "{{route('admin.section.sub-section.updateStatus')}}",
+//                   data: {
+//                       _token: "{{csrf_token()}}",
+//                       id: id,
+//                       status: status,
+//                   },
+//                   headers: {
+//                       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//                   },
+//                   success: function(response) {
+//                       toastr.success(response.message, '{{trans("global.alert.success")}}');
+//                       $('table').DataTable().ajax.reload(null, false);
+//                   },
+//                   error: function(response) {
+//                       let errorMessages = '';
+//                       $.each(response.responseJSON.errors, function(key, value) {
+//                           $.each(value, function(i, message) {
+//                               errorMessages += '<li>' + message + '</li>';
+//                           });
+//                       });
+//                       toastr.error(errorMessages);
+//                   },
+//                   complete: function() {
+//                       // $('#pageloader').css('display', 'none');
+//                   }
+//               });
+//           } else {
+//               // $('#pageloader').css('display', 'none');
+//               $('table').DataTable().ajax.reload(null, false);
+//               return false;
+//           }
+//       });
+//     });
+//   });
+// </script>
+// @endsection
 

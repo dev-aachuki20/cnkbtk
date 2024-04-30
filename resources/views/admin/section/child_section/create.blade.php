@@ -1,9 +1,9 @@
-@extends('layouts.admin')
+<!-- @extends('layouts.admin')
 @section('content')
-<div class="content-wrapper">
+<div class="content-wrapper"> -->
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
+    <!--  --><section class="content-header">
+      <!-- <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1>{{trans("cruds.global.add")}} {{trans("cruds.section_management.child_section.title_singular")}}</h1>
@@ -16,36 +16,36 @@
             </ol>
           </div>
         </div>
-      </div><!-- /.container-fluid -->
-    </section>
+      </div>
+    </section> -->
 
     <!-- Main content -->
-    <section class="content">
+    <!-- <section class="content">
       <div class="container-fluid">
-        <div class="row">
+        <div class="row"> -->
           <!-- left column -->
-          <div class="col-md-12">
+          <!-- <div class="col-md-12"> -->
             <!-- general form elements -->
-            <div class="card">
+            <!-- <div class="card">
               <div class="card-header">
                 <h3 class="card-title">{{trans("cruds.global.add")}} {{trans("cruds.section_management.child_section.title_singular")}}</h3>
-              </div>
+              </div> -->
               <!-- /.card-header -->
               <!-- form start -->
-              <form method="POST" action="{{ route('admin.child-section.store') }}" id="addForm" enctype="multipart/form-data">
+              <!-- <form method="POST" action="{{ route('admin.child-section.store') }}" id="addForm" enctype="multipart/form-data">
                 @csrf
                 @include("admin.section.child_section._form")
               </form>
             </div>
-          </div>
+          </div> -->
           
-        </div>
+        <!-- </div> -->
         <!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </section>
+      <!-- </div>
+    </section> -->
     <!-- /.content -->
   </div>
-@endsection
+<!-- @endsection
 
 @section('scripts')
 <script src="{{ asset('admins/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
@@ -73,9 +73,9 @@ $(document).ready(function () {
               filesize: 1024000,
               required: false
             }
-          },
+          }, -->
           // Errors //
-          errorPlacement: function errorPlacement(error, element) {
+          <!-- errorPlacement: function errorPlacement(error, element) {
             var $parent = $(element).parents('.form-group');
     
             // Do not duplicate errors
@@ -96,10 +96,10 @@ $(document).ready(function () {
             $(element).parents('.selectBoxDiv').find('.is-invalid').removeClass('is-invalid');
           }
         });
-    });
+    }); -->
 
     
-    $('#section_logo').on('change', function () {
+    <!-- $('#section_logo').on('change', function () {
         var input = $(this)[0];
         if (input.files && input.files[0]) {
             var file = input.files[0];
@@ -125,9 +125,9 @@ $(document).ready(function () {
         } else {
             $('#preview').hide();
         }
-    });
+    }); -->
 
-    $("select[name=parent_id]").on("change",function(){
+    <!-- $("select[name=parent_id]").on("change",function(){
         var parentId =  $(this).val();
         var url = '{{ route("get-sub-section", ":id") }}';
         url = url.replace(':id', parentId);
@@ -136,9 +136,9 @@ $(document).ready(function () {
         }else{
           $("select[name=sub_parent_id]").html("");
         }
-    })
+    }) -->
 
-    $(document).on("submit","#addForm",function(e){
+    <!-- $(document).on("submit","#addForm",function(e){
       e.preventDefault();
        var url = $(this).attr('action');
        $.ajax({
@@ -181,7 +181,7 @@ $(document).ready(function () {
         });
     });
     
-});
-</script>
+}); -->
+<!-- </script>
 
-@endsection
+@endsection -->

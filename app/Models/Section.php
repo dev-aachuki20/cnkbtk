@@ -79,9 +79,9 @@ class Section extends Model
         return $this->hasMany('App\Models\Poster','sub_section','id');
     }
 
-    public function childSectionPosters(){
-        return $this->hasMany('App\Models\Poster','child_section','id');
-    }
+    // public function childSectionPosters(){
+    //     return $this->hasMany('App\Models\Poster','child_section','id');
+    // }
 
     
 

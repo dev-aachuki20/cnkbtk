@@ -35,7 +35,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                     <div class="mb-4 form-group">
                       <label for="">{{trans("pages.post.form.fields.child_section")}}  <span class="text-danger">*</span></label>
                       <select class="form-select" name="child_section" id="child_section">
@@ -47,7 +47,7 @@
                         @endif
                       </select>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="col-md-6 ">
                   <div class="form-group mb-4">

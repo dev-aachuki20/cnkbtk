@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string("title_ch")->nullable();
             $table->integer("parent_section")->nullable();
             $table->integer("sub_section")->nullable();
-            $table->integer("child_section")->nullable();
+            // $table->integer("child_section")->nullable();
             $table->string("tag_type")->nullable();
             $table->text("tags")->nullable();
             $table->longtext("description_en")->nullable();

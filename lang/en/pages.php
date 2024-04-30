@@ -95,7 +95,7 @@ return [
                 'title' => 'Title',
                 'parent_section' => 'Parent section',
                 'sub_section' => 'Sub section',
-                'child_section' => 'Child section',
+                // 'child_section' => 'Child section',
                 'poster_cover_image' => 'Poster cover image',
                 'tags' => 'Tags',
                 'status' => 'Status',

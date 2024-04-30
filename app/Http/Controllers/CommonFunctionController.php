@@ -33,26 +33,26 @@ class CommonFunctionController extends Controller
 
     }
 
-    public function getChildSections($id){
-        $userRole  = auth()->user()->role_id;
-        \DB::enableQueryLog();
-        $datas = Section::where(["parent_id" => $id, 'level' => config("constant.sectionLevel.level3") , 'status' => 1]);
-        if($userRole != config("constant.role.admin") ) {
-            if($userRole == config("constant.role.user")){
-                $datas  = $datas->where("user_can_post",'1');
-            }else{
-                $datas =  $datas->where("creator_can_post",'1');
-            }
-        }
+    // public function getChildSections($id){
+    //     $userRole  = auth()->user()->role_id;
+    //     \DB::enableQueryLog();
+    //     $datas = Section::where(["parent_id" => $id, 'level' => config("constant.sectionLevel.level3") , 'status' => 1]);
+    //     if($userRole != config("constant.role.admin") ) {
+    //         if($userRole == config("constant.role.user")){
+    //             $datas  = $datas->where("user_can_post",'1');
+    //         }else{
+    //             $datas =  $datas->where("creator_can_post",'1');
+    //         }
+    //     }
 
-        $datas = $datas->get();
-        if($datas->count() == 0){
-            return  response()->json(["message" => "Child secton  not available for the selected sub  section"],404);
-        }
-        $view = view("admin.render.common.subparent_section",compact("datas"))->render();
-        return response()->json(["message" => $view],200);
+    //     $datas = $datas->get();
+    //     if($datas->count() == 0){
+    //         return  response()->json(["message" => "Child secton  not available for the selected sub  section"],404);
+    //     }
+    //     $view = view("admin.render.common.subparent_section",compact("datas"))->render();
+    //     return response()->json(["message" => $view],200);
 
-    }
+    // }
 
     public function getTags($id){
         $datas = Tag::where("tag_type", $id)->get();

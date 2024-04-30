@@ -18,7 +18,7 @@ class Poster extends Model
         'title_ch',
         'parent_section',
         'sub_section',
-        'child_section',
+        // 'child_section',
         'tags',
         'description_en',
         'description_ch',
@@ -81,9 +81,9 @@ class Poster extends Model
         return $this->hasone("App\Models\Section","id","sub_section");
     }
 
-    public function childSection(){
-        return $this->hasone("App\Models\Section","id","child_section");
-    }
+    // public function childSection(){
+    //     return $this->hasone("App\Models\Section","id","child_section");
+    // }
 
     public function episodes(){
         return $this->hasmany("App\Models\Episode","poster_id","id");
