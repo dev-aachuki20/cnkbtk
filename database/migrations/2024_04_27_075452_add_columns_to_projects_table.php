@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('creator_id')->nullable();
             $table->decimal('budget', 10, 2)->nullable();
             $table->boolean('copyright')->default(0);
-            $table->tinyInteger("status", 4)->default(0)->nullable();
+            $table->tinyInteger("status")->default(0)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
