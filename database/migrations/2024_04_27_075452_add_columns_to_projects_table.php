@@ -15,13 +15,17 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->enum('type', ['Pictures', 'Video', 'Novel', 'Tutorial']);
-            $table->text('tags')->nullable();
+            $table->enum('type', ['Pictures', 'Video', 'Novel', 'Tutorial'])->nullable();
+            $table->unsignedBigInteger('tag_id')->nullable();
+            $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
+
             $table->text('comment')->nullable();
-            $table->string('creator_id');
-            $table->decimal('budget', 10, 2); 
+            $table->string('creator_id')->nullable();
+            $table->decimal('budget', 10, 2)->nullable();
             $table->boolean('copyright')->default(0);
+            $table->tinyInteger("status", 4)->default(0)->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

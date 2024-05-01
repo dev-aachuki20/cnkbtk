@@ -4,18 +4,35 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Project extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     protected $fillable = [
         "type",
-        "tags",
+        "tags_id",
         "comment",
+        "status",
         "user_id",
         "user_ip",
         "copyright",
-        "creator_id",
         "budget",
+        'deleted_at',
     ];
+
+    public function creators()
+    {
+        return $this->belongsToMany(User::class, 'project_creator', 'project_id', 'creator_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function tags()
+    {
+        return $this->belongsTo(Tag::class);
+    }
 }

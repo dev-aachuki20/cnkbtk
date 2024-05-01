@@ -38,6 +38,7 @@ return [
     'submit' => 'Submit',
     'chat'  => 'Chat',
     'blacklist_user' => 'Blacklist Users',
+    'project' => 'Project',
     // footer static
     "useful_links" => "Useful links",
     "follow_us" => "Follow us",

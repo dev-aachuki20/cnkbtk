@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\DataTables\BlacklistTagDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BlacklistTag\StoreBlacklistTagRequest;
-use App\Http\Requests\BlacklistTag\UpdateBlacklistTagRequest;
 use Illuminate\Http\Request;
 use App\Models\BlacklistTag;
 use Illuminate\Support\Facades\Auth;

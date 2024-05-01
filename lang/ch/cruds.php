@@ -325,13 +325,18 @@ return [
         'home'     => '家',
         'create'    => '創造',
         'project'  => '專案',
+        'projects'  => '项目',
+        'project_details'  => '项目详情',
         'post'  => '郵政',
+        'list' => '列表',
         'fields' => [
             'type'     => '類型',
             'tags'          => '標籤',
             'creators'         => '創作者',
             'budget'         => '預算',
             'description'         => '描述',
+            'user_name'         => '用户名',
+            'user_ip'         => 'IP地址',
             'copyright'         => '版權',
             'placeholder'         => '輸入預算',
             'text'         => '勾選此方塊即表示您同意遵守我們的版權政策。',
@@ -342,5 +347,14 @@ return [
             ],
         ]
     ],
+
+    'project' => [
+        'project_type' => [
+            'pictures'  => '图片',
+            'video'     => '视频',
+            'novel'     => '小说',
+            'tutorial'  => '教程',
+        ]
+    ]
 
 ];

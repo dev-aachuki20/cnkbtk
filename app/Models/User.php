@@ -72,4 +72,14 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(BlacklistUser::class);
     }
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class, 'project_creator', 'creator_id', 'project_id');
+    }
+
+    public function project()
+    {
+        return $this->hasMany(Project::class);
+    }
 }

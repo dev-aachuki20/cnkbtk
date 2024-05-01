@@ -9,7 +9,8 @@ class CheckUserRole
 {
     /**
      * Handle an incoming request.
-     
+     *
+         
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
@@ -21,23 +22,20 @@ class CheckUserRole
             $roleId = $user->role_id;
 
             if ($roleId == 3) {
-                
                 if ($request->is('user/project')) {
-                    return $next($request); 
+                    return $next($request);
+                } else {
+                    return redirect()->route("home")->with(["alert-type" => "error", "message" => trans("messages.access_denied")]);
+                }
             }
 
-    
             if ($roleId == 1 || $roleId == 2) {
                 return redirect()->route("home")->with(["alert-type" => "error", "message" => trans("messages.access_denied")]);
             }
 
-
             return $next($request);
         }
 
-
         return redirect()->route("home")->with(["alert-type" => "error", "message" => trans("messages.logged_in_route_access")]);
-        }
-
     }
 }

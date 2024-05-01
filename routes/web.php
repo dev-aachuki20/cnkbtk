@@ -1,12 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\StatisticsController;
-use App\Models\TagType;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\StatisticsCreatorController;
 use App\Http\Controllers\BlacklistUserController;
-use App\Http\Controllers\PosterController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -73,10 +70,9 @@ Route::group(["namespace" => "App\Http\Controllers\User", 'as' => 'user.', "pref
     //Point Related Routes
     Route::get('/self-top-up', "PointsController@selftopup")->name('self-top-up');
     Route::post('/self-top-up/submit', "PointsController@paymenttopup")->name('self-top-up.submit');
-    Route::get('/project', "ProjectController@index")->name('project')->middleware('checkUserRole');
-    Route::post('/project/store', 'ProjectController@store')->name('project.store');
 
-    
+    // Project Controller
+    Route::resource('project', "ProjectController");
 });
 
 // Admin  routes
@@ -114,6 +110,7 @@ Route::group(["namespace" => "App\Http\Controllers\Admin", 'as' => 'admin.', "pr
     Route::resource('plan', "PlanController");
     Route::resource('query', "QueriesController");
     Route::resource('report', "ReportController");
+    Route::resource('projects', "ProjectAdminController");
     Route::group(["prefix" => "section"], function () {
         Route::resource('parent-section', "SectionController");
         Route::resource('sub-section', "SubSectionController");
@@ -150,6 +147,9 @@ Route::group(["middleware" => ["auth", "status"]], function () {
     Route::post('blacklist/user/import', [BlacklistUserController::class, 'importExcel'])->name('blacklist.user.import');
 });
 // Blacklist users routes start end
+
+
+
 
 // Login Registeres releted routes 
 Auth::routes();

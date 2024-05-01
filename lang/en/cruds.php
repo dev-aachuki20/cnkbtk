@@ -317,19 +317,24 @@ return [
         ]
     ],
 
-    
+
     'create_project' => [
         'title'    => 'Create Project',
         'home'     => 'Home',
-        'create'    => 'Create ',
-        'project'  => 'Project ',
-        'post'  => 'Post ',
+        'create'    => 'Create',
+        'project'  => 'Project',
+        'projects'  => 'Projects',
+        'project_details'  => 'Project Details',
+        'post'  => 'Post',
+        'list' => 'List',
         'fields' => [
             'type'     => 'Type',
-            'tags'          => 'Tags',
+            'tags'          => 'Tag',
             'creators'         => 'Creators',
             'budget'         => 'Budget',
             'description'         => 'Description',
+            'user_name'         => 'Username',
+            'user_ip'         => 'IP Address',
             'copyright'         => 'Copyright',
             'placeholder'         => 'Enter Budget',
             'text'         => 'By checking this box, you agree to abide by our copyright policies.',
@@ -340,5 +345,15 @@ return [
             ],
         ],
     ],
+
+    'project' => [
+        'project_type' => [
+            'pictures'  => 'Pictures',
+            'video'     => 'Video',
+            'novel'     => 'Novel',
+            'tutorial'  => 'Tutorial',
+        ]
+    ]
+
 
 ];

@@ -2,56 +2,86 @@
 
 namespace App\Http\Controllers\User;
 
+use App\DataTables\ProjectUserDataTable;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\Project\StoreProjectRequest;
 use App\Models\Project;
 use App\Models\TagType;
 use App\Models\User;
-use App\Models\ProjectCreators;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Http\Request;
+
+
 class ProjectController extends Controller
 {
-    public function index()
-  
-    {   
-        $tagTypes = TagType::all(); 
-        $creators = User::where('role_id', 2)->get();
-        return view("user.project", compact('tagTypes','creators')); 
+    public function index(ProjectUserDataTable $dataTable)
+    {
+        return $dataTable->render('project.index');
     }
 
-    public function store(Request $request)
-     {
-        try{
-            $userId = auth()->user()->id;
-            $userIp = $request->ip();
-            $validatedData = $request->validate([
-                'type' => 'required|string',
-                'tags' => 'required',
-                'creator_id' => 'required',
-                'budget' => 'nullable|numeric',
-                'comment' => 'nullable|string',
-        ]);
-    
-        
-            $project = new Project();
-            $project->type = $validatedData['type'];
-            $project->tags = $validatedData['tags'];
-            $project->user_id = $userId;
-            $project->user_ip = $userIp;
-            $project->creator_id = $validatedData['creator_id'];
-            $project->budget = $validatedData['budget'];
-            $project->comment = $validatedData['comment'];
-            $project->copyright = $request->has('copyright') ? 1 : 0;
-            $project->save();
-    
-            $projectCreators = new ProjectCreators();
-            $projectCreators->project_id = $project->id; 
-            $projectCreators->creator_id = $validatedData['creator_id'];
-            $projectCreators->save();
-    
-             return response()->json(['message' => 'Project created successfully'], 200);
-            } catch (\Exception $e) {
-                
-                return response()->json(['error' => $e->getMessage()], 500);
+    public function create()
+    {
+        $tagTypes = TagType::all();
+        $creators = User::where('role_id', 2)->get();
+        return view("project.create", compact('tagTypes', 'creators'));
+    }
+
+    public function store(StoreProjectRequest $request)
+    {
+        try {
+            DB::beginTransaction();
+            $validatedData = $request->all();
+            $validatedData['user_id'] = auth()->user()->id;
+            $validatedData['user_ip'] = $request->ip();
+            $validatedData['copyright'] = $request->has('copyright') ? 1 : 0;
+
+            $project = Project::create($validatedData);
+
+            // Attach creators to the project
+            if ($request->has('creator_id')) {
+                $project->creators()->attach($request->input('creator_id'));
             }
+            DB::commit();
+            $routeUrl = URL::route('user.project.create');
+            return response()->json(['reloadUrl' => $routeUrl, 'message' => trans("messages.add_success", ['module' => trans("global.project")]), 'alert-type' =>  'success'], 200);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json([
+                'message' => trans("messages.something_went_wrong"),
+                'alert-type' => 'error'
+            ], 500);
+        }
+    }
+
+    public function show($id)
+    {
+        $project = Project::findOrFail($id);
+        return view("project.show", compact('project'));
+    }
+
+    public function edit($id)
+    {
+    }
+
+    public function update(Request $request, $id)
+    {
+    }
+
+    public function destroy(Request $request, Project $project)
+    {
+        if ($request->ajax()) {
+            try {
+                $project = Project::findOrFail($project->id);
+                $project->creators()->detach();
+                $project->delete();
+                return response()->json(['message' => trans("messages.delete_success", ['module' => trans("global.project")]), 'alert-type' =>  'success'], 200);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'success' => false,
+                    'message' => trans("messages.delete_error", ['module' => trans("cruds.global.project")]),
+                ]);
+            }
+        }
     }
 }

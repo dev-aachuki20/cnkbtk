@@ -14,8 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->string('user_id')->after('comment');
-            $table->string('user_ip')->after('user_id'); 
+            $table->unsignedBigInteger('user_id')->after('comment')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->string('user_ip')->after('user_id')->nullable();
         });
     }
 
@@ -27,6 +29,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('projects', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
             $table->dropColumn('user_id');
             $table->dropColumn('user_ip');
         });

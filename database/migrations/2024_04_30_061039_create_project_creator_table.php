@@ -13,15 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('project_creator')) {
-            Schema::create('project_creator', function (Blueprint $table) {
-                $table->bigInteger('project_id')->unsigned();
-                $table->bigInteger('creator_id')->unsigned();
+        Schema::create('project_creator', function (Blueprint $table) {
+            $table->bigInteger('project_id')->unsigned();
+            $table->bigInteger('creator_id')->unsigned();
 
-                $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
-                $table->foreign('creator_id')->references('id')->on('users')->onDelete('cascade');
-            });
-        }
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
+            $table->foreign('creator_id')->references('id')->on('users')->onDelete('cascade');
+        });
     }
 
     /**
@@ -31,9 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        $table->dropForign(['project_id']);
-        $table->dropColumn('project_id');
-        $table->dropForign(['creator_id']);
-        $table->dropColumn('creator_id');
+        Schema::dropIfExists('project_creator');
     }
 };
