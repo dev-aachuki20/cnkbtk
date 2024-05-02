@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->enum('type', ['Pictures', 'Video', 'Novel', 'Tutorial'])->nullable();
             $table->unsignedBigInteger('tag_id')->nullable();
-            $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
+            $table->foreign('tags_id')->references('id')->on('tags')->onDelete('cascade');
 
             $table->text('comment')->nullable();
             $table->string('creator_id')->nullable();
