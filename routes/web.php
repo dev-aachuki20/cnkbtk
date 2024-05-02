@@ -72,7 +72,7 @@ Route::group(["namespace" => "App\Http\Controllers\User", 'as' => 'user.', "pref
     Route::post('/self-top-up/submit', "PointsController@paymenttopup")->name('self-top-up.submit');
 
     // Project Controller
-    Route::resource('project', "ProjectController");
+    Route::resource('project', "ProjectController")->middleware('checkProjectAccess');
 });
 
 // Admin  routes

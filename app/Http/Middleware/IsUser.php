@@ -20,7 +20,7 @@ class IsUser
         if (Auth::check()) {
             $user = Auth()->user();
             
-            if (Auth()->user()->role_id == config("constant.role.admin")) {     
+            if (Auth()->user()->role_id == config("constant.role.user")) {     
                 abort(403,'You are not authorized to access');
             } 
         }
