@@ -46,10 +46,10 @@ class BlacklistUserDataTable extends DataTable
             ->addColumn('action', function ($record) {
                 $action  = '<div class="d-flex">';
                 $action .= '<a class="btn btn-primary btn-sm" title="' . trans("cruds.global.view") . '" href="' . route('blacklist.user.show', $record->id) . '">
-                <i class="fas fa-eye"></i>
+                <i class="fa fa-eye"></i>
                             </a>';
                 $action .= '<a class="btn btn-info btn-sm edit-blacklist-user" title="' . trans("cruds.global.edit") . '" data-href="' . route("blacklist.user.edit", $record->id) . '">
-                <i class="fas fa-pencil-alt"></i>
+                <i class="fa fa-pencil"></i>
                 </a>';
                 $action .= '</div>';
                 return $action;

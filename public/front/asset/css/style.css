@@ -4550,20 +4550,23 @@ form#excelForm{
 .project_details_card ul {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 .project_details_card ul li .description-text, .project_details_card ul li p{
   margin: 0px;
+  font-size: 15px;
 }
 .project_details_card ul li .main-title h6 {
   display: flex;
   flex-wrap: wrap;
   column-gap: 10px;
   row-gap: 5px;
+  font-size: 15px;
 }
 .project_details_card ul li span {
   font-weight: 800;
   min-width: 130px;
+  font-size: 16px;
   display: inline-block;
 }
 .project_details_card ul li .badge {
@@ -4578,7 +4581,3 @@ form#excelForm{
   background: #ff6359;
 }
 
-
-.breadcrumb-wrap nav .btn  {
-  display: none;
-}

@@ -41,12 +41,12 @@ class ProjectUserDataTable extends DataTable
             ->addColumn('action', function ($record) {
                 $action  = '<div class="d-flex">';
                 $action .= '<a class="btn btn-primary btn-sm" title="' . trans("cruds.global.view") . '" href="' . route('user.project.show', $record->id) . '">
-                <i class="fas fa-eye"></i>
+                <i class="fa fa-eye"></i>
             </a>';
                 $action .= '<form action="' . route('user.project.destroy', $record->id) . '" method="POST" class="deleteProject">
             <input type="hidden" name="_method" value="DELETE"> 
             <input type="hidden" name="_token" value="' . csrf_token() . '">
-            <button class="btn btn-danger record_delete_btn btn-sm" title="' . trans("cruds.global.delete") . '"><i class="fas fa-trash-alt"></i></button></form>';
+            <button class="btn btn-danger record_delete_btn btn-sm" title="' . trans("cruds.global.delete") . '"><i class="fa fa-trash-o"></i></button></form>';
                 $action .= '</div>';
                 $action .= '</div>';
                 return $action;
