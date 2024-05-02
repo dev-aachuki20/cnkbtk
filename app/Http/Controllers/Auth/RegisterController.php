@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\BlacklistUser;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\JsonResponse;
 
 class RegisterController extends Controller
 {
@@ -83,6 +85,13 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
         $this->validator($request->all())->validate();
+
+        if (BlacklistUser::where('email', $request->email)->exists()) {
+            return $request->wantsJson()
+                ? new JsonResponse(['message' =>  trans("messages.registration_failed")], 422)
+                : redirect()->back()->withErrors(['email' => trans("messages.registration_failed")]);
+        }
+
         $data = array();
         $data = $request->all(); 
         $data['registration_ip'] = $request->ip();

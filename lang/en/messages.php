@@ -47,6 +47,8 @@ return [
 
     'excel_uploaded'=> 'Excel file uploaded and processed successfully!',
 
+    'registration_failed'=>'Registration failed. The provided email is blacklisted',
+
 
 ];
 ?>
