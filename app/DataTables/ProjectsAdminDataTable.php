@@ -21,7 +21,7 @@ class ProjectsAdminDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables()
-            ->eloquent($query->with('user', 'tags'))
+            ->eloquent($query->with('user', 'tags')->select('projects.*'))
             ->addIndexColumn()
             ->editColumn('created_at', function ($record) {
                 return $record->created_at->format(config('app.date_format'));
