@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\DataTables\ProjectUserDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Project\StoreProjectRequest;
+use App\Models\BlacklistUser;
 use App\Models\Project;
 use App\Models\TagType;
 use App\Models\User;
@@ -30,6 +31,10 @@ class ProjectController extends Controller
     public function store(StoreProjectRequest $request)
     {
         try {
+            if (BlacklistUser::where('email', auth()->user()->email)->exists()) {
+                return response()->json(['message' => trans("messages.project_request_failed"),'alert-type' =>'error'], 403);
+            }
+
             DB::beginTransaction();
             $validatedData = $request->all();
             $validatedData['user_id'] = auth()->user()->id;

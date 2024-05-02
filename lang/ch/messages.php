@@ -50,4 +50,5 @@ return [
     'excel_uploaded' => 'Excel 文件上传并处理成功！',
 
     'registration_failed' => '注册失败。提供的电子邮件已被列入黑名单',
+    'project_request_failed' => '对不起！！由于您已被列入黑名单，您的请求失败',
 ];
