@@ -1139,6 +1139,10 @@ section.edit-post-wrapper .col-md-6 {
     display: inline-table !important;
   }
 
+  .project_details_card ul li span {
+    min-width: 110px;
+  }
+
 }
 
 @media(max-width:480px){

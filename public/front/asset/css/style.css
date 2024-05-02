@@ -2146,6 +2146,13 @@ section.breadcrumb-wrap {
   color: var(--color-white);
 }
 
+.breadcrumb-wrap nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
 /* li.breadcrumb-item{
   text-transform: capitalize;
 } */
@@ -3012,7 +3019,7 @@ span.select2-selection {
   line-height: 50px;
   min-height: 50px;
   font-size: 14px;
-  padding: 0 12px;
+  padding: 0 40px 0px 12px;
 }
 
 .select2-container--default
@@ -4157,6 +4164,9 @@ body .select2-container--default .select2-selection--multiple .select2-selection
 /* -========-----------================--------------==============----------==========--------- */
 form#excelForm{
   max-width: 100%;
+  display: flex;
+  background-color: transparent !important;
+  padding: 0px !important;
 }
 /* CHatBox Css */
    .overflow-y-auto {
@@ -4485,7 +4495,7 @@ form#excelForm{
 }
 
 .blacklist_box_user {
-  padding: 20px !important;
+  padding: 30px 25px!important;
   border-radius: 20px;
   background: #ffeceb;
 }
@@ -4517,7 +4527,7 @@ form#excelForm{
   line-height: 25px;
 }
 .blacklist_box_user .main-title h6 {
-  font-weight: 600;
+  font-weight: 500;
   font-size: 17px;
   line-height: 25px;
 }
@@ -4534,4 +4544,41 @@ form#excelForm{
 .dataTable tbody tr td:last-child>div {
  justify-content: center;
  gap: 4px;
+}
+
+
+.project_details_card ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.project_details_card ul li .description-text, .project_details_card ul li p{
+  margin: 0px;
+}
+.project_details_card ul li .main-title h6 {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 10px;
+  row-gap: 5px;
+}
+.project_details_card ul li span {
+  font-weight: 800;
+  min-width: 130px;
+  display: inline-block;
+}
+.project_details_card ul li .badge {
+  display: flex;
+  align-items: center;
+  background: #20cf03;
+  font-size: 14px;
+  line-height: 1;
+  font-weight: 500;
+}
+.project_details_card ul li .badge.badge-danger {
+  background: #ff6359;
+}
+
+
+.breadcrumb-wrap nav .btn  {
+  display: none;
 }
