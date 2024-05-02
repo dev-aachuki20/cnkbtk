@@ -66,7 +66,7 @@ class ProjectsAdminDataTable extends DataTable
      */
     public function query(Project $model)
     {
-        return $model->newQuery();
+        return $model->where('projects.status', 1)->newQuery();
     }
 
     /**

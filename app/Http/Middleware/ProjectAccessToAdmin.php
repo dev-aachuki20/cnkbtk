@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class CheckProjectAccess
+class ProjectAccessToAdmin
 {
     // project module access
     public function handle(Request $request, Closure $next)
@@ -14,7 +14,7 @@ class CheckProjectAccess
             $user = auth()->user();
             $roleId = $user->role_id;
 
-            if ($roleId == 3) {
+            if ($roleId == 1) {
                 return $next($request);
             } else {
                 return redirect()->route("home")->with(["alert-type" => "error", "message" => trans("messages.access_denied")]);

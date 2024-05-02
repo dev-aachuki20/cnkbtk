@@ -93,8 +93,8 @@ class BlacklistTagController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'name_en' => ['required', 'string', Rule::unique('blacklist_tags')->ignore($id)],
-            'name_ch' => ['required', 'string', Rule::unique('blacklist_tags')->ignore($id)],
+            'name_en' => ['required', 'string', Rule::unique('blacklist_tags')->whereNull('deleted_at')->ignore($id)],
+            'name_ch' => ['required', 'string', Rule::unique('blacklist_tags')->whereNull('deleted_at')->ignore($id)],
             'status' => ['required', 'in:0,1']
         ], [], [
             'name_en' => trans("cruds.blacklist_tag.fields.title"),

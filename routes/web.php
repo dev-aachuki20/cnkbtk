@@ -110,7 +110,7 @@ Route::group(["namespace" => "App\Http\Controllers\Admin", 'as' => 'admin.', "pr
     Route::resource('plan', "PlanController");
     Route::resource('query', "QueriesController");
     Route::resource('report', "ReportController");
-    Route::resource('projects', "ProjectAdminController");
+    Route::resource('projects', "ProjectAdminController")->middleware('projectAccessToAdmin');
     Route::group(["prefix" => "section"], function () {
         Route::resource('parent-section', "SectionController");
         Route::resource('sub-section', "SubSectionController");

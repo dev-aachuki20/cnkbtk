@@ -3,6 +3,7 @@
 namespace App\Http\Requests\BlacklistTag;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreBlacklistTagRequest extends FormRequest
 {
@@ -24,8 +25,8 @@ class StoreBlacklistTagRequest extends FormRequest
     public function rules()
     {
         return [
-            'name_en' => ['required', 'string', 'unique:blacklist_tags'],
-            'name_ch' => ['required', 'string', 'unique:blacklist_tags'],
+            'name_en' => ['required', 'string', Rule::unique('blacklist_tags')->whereNull('deleted_at')],
+            'name_ch' => ['required', 'string', Rule::unique('blacklist_tags')->whereNull('deleted_at')],
             'status' => ['required', 'in:0,1']
         ];
     }
