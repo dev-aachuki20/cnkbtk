@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->enum('type', ['Pictures', 'Video', 'Novel', 'Tutorial'])->nullable();
-            $table->unsignedBigInteger('tag_id')->nullable();
+            $table->unsignedBigInteger('tags_id')->nullable();
             $table->foreign('tags_id')->references('id')->on('tags')->onDelete('cascade');
 
             $table->text('comment')->nullable();
