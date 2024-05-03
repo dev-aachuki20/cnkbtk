@@ -21,9 +21,9 @@ class StatisticsController extends Controller
     {
         $tagTypes = TagType::all();
         $user = Auth::user();
-        if ($user->role_id == 1) {
+        if ($user->role_id == config("constant.role.admin")) {
             return view('site-statistics', compact('tagTypes'));
-        } elseif ($user->role_id == 2) {
+        } elseif ($user->role_id == config("constant.role.creator")) {
             return view('site-statistics-creator', compact('tagTypes'));
         } else {
             abort(403, 'Unauthorized');

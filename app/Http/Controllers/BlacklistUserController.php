@@ -14,7 +14,6 @@ use App\Models\BlacklistTag;
 use App\Models\Uploads;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
 class BlacklistUserController extends Controller
 {

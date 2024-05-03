@@ -21,7 +21,7 @@ class CheckUserRole
             $user = auth()->user();
             $roleId = $user->role_id;
 
-            if ($roleId == 1 || $roleId == 2) {
+            if ($roleId == config("constant.role.admin") || $roleId == config("constant.role.creator")) {
                 return $next($request);
             } else {
                 return redirect()->route("home")->with(["alert-type" => "error", "message" => trans("messages.access_denied")]);

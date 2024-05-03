@@ -14,7 +14,7 @@ class CheckProjectAccess
             $user = auth()->user();
             $roleId = $user->role_id;
 
-            if ($roleId == 3) {
+            if ($roleId ==  config("constant.role.user")) {
                 return $next($request);
             } else {
                 return redirect()->route("home")->with(["alert-type" => "error", "message" => trans("messages.access_denied")]);

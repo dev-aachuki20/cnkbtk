@@ -36,7 +36,7 @@
     <div class="mb-4">
       <div class="form-group">
         <label for="creator_id">{{__('cruds.create_project.fields.creators')}}</label>
-        <select class="form-select select-subject" aria-label="Default select example" name="creator_id" multiple id="creator_id">
+        <select class="form-select select-subject" aria-label="Default select example" name="creator_id[]" multiple id="creator_id">
           @foreach($creators as $creator)
           <option value="{{ $creator->id }}">{{ $creator->user_name }}</option>
           @endforeach

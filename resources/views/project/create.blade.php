@@ -98,7 +98,10 @@
             });
           } else {
             toastr.error(jqXHR.responseJSON.message, '{{trans("global.alert.error")}}');
-            location.reload();
+            setTimeout(function() {
+              location.reload();
+            }, 4000);
+
           }
         },
         complete: function() {
