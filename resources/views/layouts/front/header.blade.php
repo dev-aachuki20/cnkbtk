@@ -373,7 +373,7 @@
                         </li>
                         @endif
 
-                        @if(auth()->user()->role_id == config("constant.role.creator"))
+                        {{-- @if(auth()->user()->role_id == config("constant.role.creator"))
                         <li>
                           <a class="dropdown-item {{Route::currentRouteName() === 'user.project.request' ? 'active' : ''}}" href="{{route('user.project.request')}}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -389,7 +389,7 @@
                             Project Request
                           </a>
                         </li>
-                        @endif
+                        @endif --}}
 
 
                         <li>
