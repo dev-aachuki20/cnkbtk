@@ -72,9 +72,11 @@ Route::group(["namespace" => "App\Http\Controllers\User", 'as' => 'user.', "pref
     Route::post('/self-top-up/submit', "PointsController@paymenttopup")->name('self-top-up.submit');
 
     // Project Controller
-    Route::get('/project-request/{id}', "ProjectController@getProjectRequest")->name('project.request');
+    Route::get('/project/request/{creator_id}/{project_id}', "ProjectController@getProjectRequest")->name('project.request');
+    Route::post('/add-project-bid', "ProjectController@addBidByCreator")->name('add.project.bid');
     Route::resource('project', "ProjectController")->middleware('checkProjectAccess');
 });
+
 
 // Admin  routes
 Route::group(["namespace" => "App\Http\Controllers\Admin", 'as' => 'admin.', "prefix" => "admin", "middleware" => ["auth", "isadmin", "status"]], function () {

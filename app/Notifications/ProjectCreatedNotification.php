@@ -3,8 +3,8 @@
 namespace App\Notifications;
 
 use App\Models\Project;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -12,14 +12,16 @@ class ProjectCreatedNotification extends Notification
 {
     use Queueable;
     protected $project;
+    protected $creator;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Project $project)
+    public function __construct($project, $creator)
     {
         $this->project = $project;
+        $this->creator = $creator;
     }
 
     /**
@@ -41,8 +43,27 @@ class ProjectCreatedNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
-            ->markdown('mail.new_project_notification', ['project' => $this->project]);
+        if ($this->creator->id) {
+            return (new MailMessage)
+                ->markdown('mail.new_project_notification', ['project' => $this->project, 'creator' => $this->creator]);
+        }
+
+
+        // if ($notifiable->id === $this->creator->id) {
+        //     // Customize email content for the creator
+        //     return (new MailMessage)
+        //         ->line('Hello ' . $notifiable->name . ',')
+        //         ->line('A new project has been created by you.')
+        //         ->action('View Project', url('/projects/' . $this->project->id))
+        //         ->line('Thank you for using our application!');
+        // } else {
+        //     // Customize email content for other users
+        //     return (new MailMessage)
+        //         ->line('Hello ' . $notifiable->name . ',')
+        //         ->line('A new project has been created by ' . $this->creator->name . '.')
+        //         ->action('View Project', url('/projects/' . $this->project->id))
+        //         ->line('Thank you for using our application!');
+        // }
     }
 
     /**

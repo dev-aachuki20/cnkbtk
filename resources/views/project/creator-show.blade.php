@@ -26,8 +26,6 @@
                     <svg width="21" height="11" viewBox="0 0 21 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M2.70207e-09 5.25304C0.00151059 5.44731 0.0784183 5.63339 0.2145 5.77204L0.219 5.78104L4.719 10.281C4.86045 10.4177 5.0499 10.4933 5.24655 10.4915C5.4432 10.4898 5.63131 10.411 5.77036 10.2719C5.90942 10.1329 5.9883 9.94474 5.99001 9.74809C5.99171 9.55145 5.91612 9.362 5.7795 9.22054L2.5605 6.00004H17.25C17.4489 6.00004 17.6397 5.92103 17.7803 5.78037C17.921 5.63972 18 5.44896 18 5.25004C18 5.05113 17.921 4.86037 17.7803 4.71971C17.6397 4.57906 17.4489 4.50004 17.25 4.50004H2.5605L5.7795 1.28104C5.91612 1.13959 5.99171 0.95014 5.99001 0.753493C5.9883 0.556845 5.90942 0.368736 5.77036 0.22968C5.63131 0.0906235 5.4432 0.0117469 5.24655 0.0100381C5.0499 0.0083293 4.86045 0.083925 4.719 0.220544L0.219 4.72054L0.2145 4.72804C0.147732 4.79569 0.0947503 4.87568 0.0585001 4.96354C0.0198902 5.05412 -8.46608e-06 5.15158 2.70207e-09 5.25004V5.25304Z" fill="white" />
                     </svg>
-
-
                 </span>
                 Back To Home</a>
         </nav>
@@ -43,7 +41,12 @@
                             <ul>
                                 <li>
                                     <div class="main-title">
-                                        <h6> <span>{{trans("cruds.create_project.fields.type")}} :</span> {{ $requestProject->type  ?? ''}}</h6>
+                                        <h6> <span>{{trans("cruds.create_project.fields.user_name")}} :</span> {{ $requestProject->user->user_name  ?? ''}}</h6>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="main-title">
+                                        <h6> <span>{{trans("cruds.create_project.project")}} {{trans("cruds.create_project.fields.type")}} :</span> {{ $requestProject->type  ?? ''}}</h6>
                                     </div>
                                 </li>
                                 <li>
@@ -64,39 +67,121 @@
                                     </div>
                                 </li>
 
-
                                 <li>
                                     <div class="main-title">
-                                        <h6> <span>{{trans("cruds.create_project.fields.creators")}} :</span> @foreach ($requestProject->creators as $creator)
-                                            {{ $creator->user_name }}
-                                            @endforeach
-                                        </h6>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="main-title">
-                                        <h6> <span>{{trans("cruds.create_project.fields.description")}} :</span> {!! $requestProject->comment ?? '' !!}</h6>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="main-title">
-                                        <h6> <span>{{trans("cruds.global.status")}}:</span> @if($requestProject->status == 1)
-                                            <small class="badge badge-info mr-1">{{trans("cruds.global.active")}}</small>
-                                            @else
-                                            <small class="badge badge-danger mr-1">{{trans("cruds.global.in_active")}}</small>
-                                            @endif
-                                        </h6>
+                                        <h6> <span>{{trans("cruds.create_project.project")}} {{trans("cruds.create_project.fields.description")}} :</span> {!! $requestProject->comment ?? '' !!}</h6>
                                     </div>
                                 </li>
                             </ul>
                         </div>
+
+                        <button type="button" class="btn btn-primary" id="addBidModal">
+                            Add Your Bid
+                        </button>
                     </div>
 
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Bid Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Bid Form</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- form start -->
+                <form action="{{route('user.add.project.bid')}}" method="post" id="addBidForm">
+                    <div class="modal-body">
+                        <input type="hidden" id="auth_id" value="{{auth()->user()->id}}">
+                        <input type="hidden" id="project_id" value="{{$requestProject->id}}">
+                        <input type="hidden" id="user_id" value="{{$requestProject->user_id}}">
+                        <div class="mb-4">
+                            <div class="form-group">
+                                <label for="budget">{{__('cruds.create_project.fields.budget')}} <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="bid" id="budget" placeholder="{{trans("global.enter")}} {{__('cruds.create_project.fields.budget')}}" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </form>
+                <!-- form end -->
+            </div>
+        </div>
+    </div>
 </section>
+@endsection
+
+@section("scripts")
+<script>
+    $(document).ready(function() {
+        $('#addBidModal').click(function() {
+            $('#exampleModal').modal('show');
+        });
+
+        $(document).on("submit", "#addBidForm", function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            var project_id = $('#project_id').val();
+            var auth_id = $('#auth_id').val();
+            var user_id = $('#user_id').val();
+
+            formData.append("auth_id", auth_id);
+            formData.append("project_id", project_id);
+            formData.append("user_id", user_id);
+
+            var url = $(this).attr('action');
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $("meta[name=csrf-token]").attr('content')
+                },
+                type: 'POST',
+                url: url,
+                data: formData,
+                processData: false,
+                contentType: false,
+                beforeSend: function(response) {
+                    showLoader();
+                    $(".text-danger.errors").remove();
+                },
+                success: function(response) {
+                    toastr.success(response.message);
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+
+                },
+                error: function(jqXHR, exception) {
+                    if (jqXHR.status == 422) {
+                        $(".errors").remove();
+                        // alert(jqXHR.responseJSON.errors);
+                        // $.each(jqXHR.responseJSON.errors, function(index, value) {
+                        //     alert(index);
+                        //     if (index.indexOf(".") != -1) {
+                        //         index = index.replace(/([.])+/g, '_');
+                        //         index.replace(".", '_');
+                        //     }
+                        $("#" + index).parents(".form-group").append("<span class='text-danger errors'>" + message + "</span>");
+
+                        // });
+                    } else {
+                        toastr.error(jqXHR.responseJSON.message, '{{trans("global.alert.error")}}');
+                        location.reload();
+                    }
+                    // alert('end')
+                },
+                complete: function() {
+                    hideLoader();
+                }
+            });
+        });
+    });
+</script>
 @endsection

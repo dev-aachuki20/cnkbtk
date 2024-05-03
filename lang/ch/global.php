@@ -38,6 +38,7 @@ return [
     'chat'  => '聊天',
     'blacklist_user' => '黑名单用户',
     'project' => '项目',
+    'bid' => '出价',
     // footer static
     "useful_links" => "有用的链接",
     "follow_us" => "跟着我们",

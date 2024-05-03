@@ -56,6 +56,10 @@ return [
     "point_type" => [
         'general' => 1,
         'integral' => 2
+    ],
+
+    "currency" =>[
+        'rmb' => ' CN¥',
     ]
 
 ];

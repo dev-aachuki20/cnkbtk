@@ -8,8 +8,14 @@
 </head>
 
 <body>
-    <h1>New Project Created</h1>
-    <a class="btn btn-primary" href="{{route('user.project.request', $project->id)}}">View Project</a>
+    <h1>Hello!! {{$creator->user_name}}</h1>
+    <h2>New Project Created</h2>
+    @if($creator->id != null)
+    <a class="btn btn-primary" href="{{route('user.project.request', ['creator_id' => $creator->id, 'project_id' => $project->id])}}">View Project</a>
+    @else
+    <h1>dff</h1>
+    @endif
+
     <h1>Thank you!</h1>
 </body>
 

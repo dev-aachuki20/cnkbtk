@@ -29,7 +29,7 @@ class ProjectUserDataTable extends DataTable
             })
 
             ->editColumn('budget', function ($record) {
-                return $record->budget . ' CN¥' ?? '0.00';
+                return $record->budget . config("constant.currency.rmb") ?? '0.00';
             })
 
             ->filterColumn('tags_id', function ($query, $keyword) {

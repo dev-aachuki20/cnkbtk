@@ -39,6 +39,7 @@ return [
     'chat'  => 'Chat',
     'blacklist_user' => 'Blacklist Users',
     'project' => 'Project',
+    'bid'=>'Bid',
     // footer static
     "useful_links" => "Useful links",
     "follow_us" => "Follow us",

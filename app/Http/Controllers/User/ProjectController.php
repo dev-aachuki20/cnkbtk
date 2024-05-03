@@ -9,12 +9,14 @@ use App\Models\BlacklistUser;
 use App\Models\Project;
 use App\Models\TagType;
 use App\Models\User;
+use App\Notifications\BidUpdatedNotification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
 use App\Notifications\ProjectCreatedNotification;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
-
+use Illuminate\Validation\ValidationException;
 
 class ProjectController extends Controller
 {
@@ -44,19 +46,25 @@ class ProjectController extends Controller
 
             $project = Project::create($validatedData);
 
-            // Attach creators to the project
             if ($request->has('creator_id')) {
                 $project->creators()->attach($request->input('creator_id'));
             }
-            // Get selected creators
+
             $creatorIds = $request->input('creator_id');
-            // If creators are selected, send notifications to them
+
             if ($creatorIds) {
-                $creators = User::whereIn('id', $creatorIds)->get();
-                Notification::send($creators, new ProjectCreatedNotification($project));
+                foreach ($creatorIds as $creatorId) {
+                    $creator = User::find($creatorId);
+                    Notification::send($creator, new ProjectCreatedNotification($project, $creator));
+                }
             } else {
-                $users = User::where('role_id', config("constant.role.creator"))->get();
-                Notification::send($users, new ProjectCreatedNotification($project));
+                $creator = User::where('role_id', config("constant.role.creator"))->get();
+                if ($creator) {
+                    foreach ($creator as $creatorId) {
+                        $creator = User::find($creatorId->id);
+                        Notification::send($creator, new ProjectCreatedNotification($project, $creator));
+                    }
+                }
             }
 
             DB::commit();
@@ -64,10 +72,7 @@ class ProjectController extends Controller
             return response()->json(['reloadUrl' => $routeUrl, 'message' => trans("messages.add_success", ['module' => trans("global.project")]), 'alert-type' =>  'success'], 200);
         } catch (\Exception $e) {
             DB::rollback();
-            return response()->json([
-                'message' => trans("messages.something_went_wrong"),
-                'alert-type' => 'error'
-            ], 500);
+            return response()->json(['message' => $e->getMessage(), 'alert-type' => 'error'], 500);
         }
     }
 
@@ -102,9 +107,48 @@ class ProjectController extends Controller
         }
     }
 
-    public function getProjectRequest($id)
+    public function getProjectRequest($creator_id, $project_id)
     {
-        $requestProject = Project::findorFail($id);
-        return view('project.creator-show', compact('requestProject'));
+        $creator = User::findorFail($creator_id);
+        if (Auth()->user()->id == $creator_id) {
+            $requestProject = Project::findorFail($project_id);
+            return view('project.creator-show', compact('creator', 'requestProject'));
+        } else {
+            return redirect()->route('login')->with(['message' => trans("messages.logged_in_route_access"), 'alert-type' =>  'success']);
+        }
+    }
+
+    public function addBidByCreator(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $validatedData = $request->validate([
+                'bid' => ['required', 'numeric'],
+            ]);
+
+            $creator = User::find($request->auth_id);
+            if (!$creator) {
+                throw ValidationException::withMessages(['message' => 'Creator not found.']);
+            }
+
+            $projectCreator = DB::table('project_creator')->where('project_id', $request->project_id)->where('creator_id', $request->auth_id)->first();
+            if (!$projectCreator) {
+                throw ValidationException::withMessages(['message' => 'Project creator relationship not found.']);
+            }
+            DB::table('project_creator')->where('project_id', $request->project_id)->where('creator_id', $request->auth_id)->update(['bid' => $validatedData['bid']]);
+
+            // now send response notification to user with creator information and creator bid 
+            $user = User::find($request->user_id);
+            $user->notify(new BidUpdatedNotification($creator, $validatedData['bid']));
+
+
+            DB::commit();
+            return response()->json(['message' => trans("messages.add_success", ['module' => trans("global.bid")]), 'alert-type' =>  'success'], 200);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json(['message' => $e->getMessage(), 'alert-type' => 'error'], 422);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(['message' => trans("messages.something_went_wrong"), 'alert-type' => 'error'], 500);
+        }
     }
 }
