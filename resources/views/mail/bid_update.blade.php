@@ -24,13 +24,14 @@
 </head>
 
 <body style="margin:0;padding:0;">
+
     <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;">
         <tr>
             <td align="center" style="padding:0;">
                 <table role="presentation" style="width: 100%; max-width:602px;border-collapse:collapse;border-spacing:0;text-align:left;">
                     <tr>
                         <td align="center" style="padding:20px 0;background:#00235d;">
-                            <img src="logo.png" alt="" width="300" style="height:auto;display:block;" />
+                            <img src="" alt="" width="300" style="height:auto;display:block;" />
                         </td>
                     </tr>
                     <tr>
@@ -38,21 +39,26 @@
                             <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
                                 <tr>
                                     <td style="padding:0 0 36px 0;color:#153643;">
-                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">Hello!! {{$creator->user_name}},</p>
-                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">Welcome to CNKBTK</p>
-                                        <p style="margin:0;font-size:16px;line-height:24px;">New Project Created</p>
-                                        <p style="margin:0;font-size:16px;line-height:24px;">Please use the below link to view project details</p>
+                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">The bid for the project has been updated.</p>
+                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">Creator: {{$creator->user_name}}</p>
+                                        <p style="margin:0;font-size:16px;line-height:24px;">Bid: {{$bid . config("constant.currency.rmb")}}</p>
+                                        <p style="margin:0;font-size:16px;line-height:24px;">Please use the below link to perfom action.</p>
 
                                     </td>
                                 </tr>
 
-                                @if($creator->id != null)
                                 <tr>
                                     <td style="padding:0 0 36px 0;color:#153643;">
-                                        <p style="margin:0;font-size:16px;line-height:24px;"><a href="{{route('user.project.detail', ['creator_id' => $creator->id, 'project_id' => $project->id])}}" style="display: block; padding: 10px; background: #00255b; width: fit-content; color: #fff; text-decoration: none; font-size: 14px;">View Project</a></p>
+                                        <p style="margin:0;font-size:16px;line-height:24px;">
+                                            <a href="" style="display: block; padding: 10px; background: #00255b; width: fit-content; color: #fff; text-decoration: none; font-size: 14px;">
+                                                Confirm
+                                            </a>
+                                            <a href="" style="display: block; padding: 10px; background: #00255b; width: fit-content; color: #fff; text-decoration: none; font-size: 14px;">
+                                                Cancel
+                                            </a>
+                                        </p>
                                     </td>
                                 </tr>
-                                @endif
 
                                 <tr>
                                     <td style="color:#153643;">

@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ProjectCreatedNotification extends Notification
+class ProjectConfirmedNotification extends Notification
 {
     use Queueable;
     protected $project;
@@ -43,7 +43,7 @@ class ProjectCreatedNotification extends Notification
     {
         if ($this->creator->id) {
             return (new MailMessage)
-                ->markdown('mail.new_project_notification', ['project' => $this->project, 'creator' => $this->creator]);
+                ->markdown('mail.confirm_project', ['project' => $this->project, 'creator' => $this->creator]);
         }
     }
 

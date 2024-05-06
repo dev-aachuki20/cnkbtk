@@ -3,7 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -43,11 +42,8 @@ class BidUpdatedNotification extends Notification
      */
     public function toMail($notifiable)
     {
-
         return (new MailMessage)
-            ->line('The bid for the project has been updated.')
-            ->line('Creator: ' . $this->creator->user_name)
-            ->line('Bid: ' . $this->bid . config("constant.currency.rmb"));
+            ->markdown('mail.bid_update', ['creator' => $this->creator, 'bid' => $this->bid]);
     }
 
     /**

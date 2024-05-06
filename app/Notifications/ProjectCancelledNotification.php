@@ -2,11 +2,13 @@
 
 namespace App\Notifications;
 
+use App\Models\Project;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ProjectCreatedNotification extends Notification
+class ProjectCancelledNotification extends Notification
 {
     use Queueable;
     protected $project;
@@ -43,7 +45,7 @@ class ProjectCreatedNotification extends Notification
     {
         if ($this->creator->id) {
             return (new MailMessage)
-                ->markdown('mail.new_project_notification', ['project' => $this->project, 'creator' => $this->creator]);
+                ->markdown('mail.cancel_project', ['project' => $this->project, 'creator' => $this->creator]);
         }
     }
 

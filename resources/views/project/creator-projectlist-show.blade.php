@@ -21,41 +21,36 @@
                     {{trans('cruds.create_project.project_details')}}
                 </li>
             </ol>
-            <a href="javascript:;" type="button" class="btn btn-dark px-3 btn-sm">
-                <span>
-                    <svg width="21" height="11" viewBox="0 0 21 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2.70207e-09 5.25304C0.00151059 5.44731 0.0784183 5.63339 0.2145 5.77204L0.219 5.78104L4.719 10.281C4.86045 10.4177 5.0499 10.4933 5.24655 10.4915C5.4432 10.4898 5.63131 10.411 5.77036 10.2719C5.90942 10.1329 5.9883 9.94474 5.99001 9.74809C5.99171 9.55145 5.91612 9.362 5.7795 9.22054L2.5605 6.00004H17.25C17.4489 6.00004 17.6397 5.92103 17.7803 5.78037C17.921 5.63972 18 5.44896 18 5.25004C18 5.05113 17.921 4.86037 17.7803 4.71971C17.6397 4.57906 17.4489 4.50004 17.25 4.50004H2.5605L5.7795 1.28104C5.91612 1.13959 5.99171 0.95014 5.99001 0.753493C5.9883 0.556845 5.90942 0.368736 5.77036 0.22968C5.63131 0.0906235 5.4432 0.0117469 5.24655 0.0100381C5.0499 0.0083293 4.86045 0.083925 4.719 0.220544L0.219 4.72054L0.2145 4.72804C0.147732 4.79569 0.0947503 4.87568 0.0585001 4.96354C0.0198902 5.05412 -8.46608e-06 5.15158 2.70207e-09 5.25004V5.25304Z" fill="white" />
-                    </svg>
-                </span>
-                Back To Home</a>
         </nav>
     </div>
 </section>
 <section class="single-wrapper ">
     <div class="container">
         <div class="row g-3">
+            @foreach($allRequestProjects as $item)
             <div class="col-lg-6 col-md-10 col-12">
                 <div class="right-single-box blacklist_box_user project_details_card">
                     <div class="row gx-3">
+
                         <div class="col">
                             <ul>
                                 <li>
                                     <div class="main-title">
-                                        <h6> <span>{{trans("cruds.create_project.fields.user_name")}} :</span> {{ $requestProject->user->user_name  ?? ''}}</h6>
+                                        <h6> <span>{{trans("cruds.create_project.fields.user_name")}} :</span> {{ $item['project']->user->user_name  ?? ''}}</h6>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="main-title">
-                                        <h6> <span>{{trans("cruds.create_project.project")}} {{trans("cruds.create_project.fields.type")}} :</span> {{ $requestProject->type  ?? ''}}</h6>
+                                        <h6> <span>{{trans("cruds.create_project.project")}} {{trans("cruds.create_project.fields.type")}} :</span> {{ $item['project']->type  ?? ''}}</h6>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="description-text main-title">
                                         <h6> <span>{{trans("cruds.create_project.fields.tags")}} :</span>
                                             @if(app()->getLocale() == 'en')
-                                            {{ $requestProject->tags->name_en ?? '' }}
+                                            {{ $item['project']->tags->name_en ?? '' }}
                                             @else
-                                            {{ $requestProject->tags->name_ch ?? '' }}
+                                            {{ $item['project']->tags->name_ch ?? '' }}
                                             @endif
                                         </h6>
                                     </div>
@@ -63,68 +58,66 @@
 
                                 <li>
                                     <div class="main-title">
-                                        <h6> <span>{{trans("cruds.create_project.fields.budget")}} :</span>{{ $requestProject->budget  ?? ''}} CN¥</h6>
+                                        <h6> <span>{{trans("cruds.create_project.fields.budget")}} :</span>{{ $item['project']->budget  ?? ''}} CN¥</h6>
                                     </div>
                                 </li>
 
                                 <li>
                                     <div class="main-title">
-                                        <h6> <span>{{trans("cruds.create_project.project")}} {{trans("cruds.create_project.fields.description")}} :</span> {!! $requestProject->comment ?? '' !!}</h6>
+                                        <h6> <span>{{trans("cruds.create_project.project")}} {{trans("cruds.create_project.fields.description")}} :</span> {!! $item['project']->comment ?? '' !!}</h6>
                                     </div>
                                 </li>
                             </ul>
                         </div>
 
-
-
-                        @if(isset($status) && $status == 0)
+                        @if(isset($item['status']) && $item['status'] == 0)
                         <div class="row">
                             <div class="col-3">
-                                <button type="button" class="btn btn-primary ml-3 cancel-btn" id="cancel" {{ $status == 0 ? 'disabled' : '' }}>
-                                    {{ $status == 0 ? 'Cancelled Project' : 'Cancel Project' }}
+                                <button type="button" class="btn btn-primary ml-3 cancel-btn" id="cancel" data-project-id="{{$item['project']->id}}" data-user-id="{{$item['project']->user_id}}" data-creator-id="{{Auth::user()->id}}" {{ $item['status'] == 0 ? 'disabled' : '' }}>
+                                    {{ $item['status'] == 0 ? 'Cancelled Project' : 'Cancel Project' }}
                                 </button>
                             </div>
                         </div>
-                        @elseif($status == 1)
+                        @elseif($item['status'] == 1)
                         <div class="row">
                             <div class="col-3">
-                                <button type="button" class="btn btn-success ml-3 confirm-btn" id="confirm" {{ $status == 1 ? 'disabled' : '' }}>
-                                    {{ $status == 1 ? 'Confirmed Project' : 'Confirm Project' }}
+                                <button type="button" class="btn btn-success ml-3 confirm-btn" id="confirm" data-project-id="{{$item['project']->id}}" data-user-id="{{$item['project']->user_id}}" data-creator-id="{{Auth::user()->id}}" {{ $item['status'] == 1 ? 'disabled' : '' }}>
+                                    {{ $item['status'] == 1 ? 'Confirmed Project' : 'Confirm Project' }}
                                 </button>
                             </div>
                         </div>
-
-                        @elseif($status == 2)
+                        @elseif($item['status'] == 2)
                         <div class="row">
                             <div class="col-3">
-                                <button type="button" class="btn btn-secondary add-bid-btn" id="addBidModal" {{ $status == 2 ? 'disabled' : '' }}>
-                                    {{ $status == 2 ? 'Project Bid Added' : 'Add Your Bid' }}
+                                <button type="button" class="btn btn-secondary add-bid-btn" id="addBidModal" data-project-id="{{$item['project']->id}}" data-user-id="{{$item['project']->user_id}}" data-creator-id="{{Auth::user()->id}}" {{ $item['status'] == 2 ? 'disabled' : '' }}>
+                                    {{ $item['status'] == 2 ? 'Project Bid Added' : 'Add Your Bid' }}
                                 </button>
                             </div>
                         </div>
                         @else
                         <div class="row">
                             <div class="col-3">
-                                <button type="button" class="btn btn-secondary add-bid-btn" id="addBidModal">
+                                <button type="button" class="btn btn-secondary add-bid-btn" id="addBidModal" data-project-id="{{$item['project']->id}}" data-user-id="{{$item['project']->user_id}}" data-creator-id="{{Auth::user()->id}}">
                                     Add Your Bid
                                 </button>
                             </div>
                             <div class="col-3">
-                                <button type="button" class="btn btn-success ml-3 confirm-btn" id="confirm">
+                                <button type="button" class="btn btn-success ml-3 confirm-btn" id="confirm" data-project-id="{{$item['project']->id}}" data-user-id="{{$item['project']->user_id}}" data-creator-id="{{Auth::user()->id}}">
                                     Confirm Project
                                 </button>
                             </div>
                             <div class="col-3">
-                                <button type="button" class="btn btn-primary ml-3 cancel-btn" id="cancel">
+                                <button type="button" class="btn btn-primary ml-3 cancel-btn" id="cancel" data-project-id="{{$item['project']->id}}" data-user-id="{{$item['project']->user_id}}" data-creator-id="{{Auth::user()->id}}">
                                     Cancel Project
                                 </button>
                             </div>
                         </div>
                         @endif
                     </div>
-
                 </div>
             </div>
+            @endforeach
+
         </div>
     </div>
 
@@ -139,9 +132,9 @@
                 <!-- form start -->
                 <form action="{{route('user.add.project.bid')}}" method="post" id="addBidForm">
                     <div class="modal-body">
-                        <input type="hidden" id="auth_id" value="{{auth()->user()->id}}">
-                        <input type="hidden" id="project_id" value="{{$requestProject->id}}">
-                        <input type="hidden" id="user_id" value="{{$requestProject->user_id}}">
+                        <input type="hidden" id="auth_id" value="">
+                        <input type="hidden" id="project_id" value="">
+                        <input type="hidden" id="user_id" value="">
                         <div class="mb-4">
                             <div class="form-group">
                                 <label for="budget">{{__('cruds.create_project.fields.budget')}} <span class="text-danger">*</span></label>
@@ -164,12 +157,22 @@
 @section("scripts")
 <script>
     $(document).ready(function() {
-        $('#addBidModal').click(function() {
+        $(document).on("click", "#addBidModal", function(e) {
+            var projectId = $(this).data('project-id');
+            var userId = $(this).data('user-id');
+            var creatorId = $(this).data('creator-id');
+
+            $('#project_id').val(projectId);
+            $('#user_id').val(userId);
+            $('#auth_id').val(creatorId);
+
             $('#exampleModal').modal('show');
         });
 
         $(document).on("submit", "#addBidForm", function(e) {
             e.preventDefault();
+            $('#cancel').hide();
+            $('#confirm').hide();
             var formData = new FormData(this);
             var project_id = $('#project_id').val();
             var auth_id = $('#auth_id').val();
@@ -196,19 +199,19 @@
                 },
                 success: function(response) {
                     toastr.success(response.message);
-                    location.reload();
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
 
                 },
                 error: function(jqXHR, exception) {
                     if (jqXHR.status == 422) {
-                        console.log('validation error');
-                        // $(".errors").remove();
-                        // $("#" + index).parents(".form-group").append("<span class='text-danger errors'>" + message + "</span>");
+                        $(".errors").remove();
+                        $("#" + index).parents(".form-group").append("<span class='text-danger errors'>" + message + "</span>");
                     } else {
                         toastr.error(jqXHR.responseJSON.message, '{{trans("global.alert.error")}}');
-                        // location.reload();
+                        location.reload();
                     }
-                    // alert('end')
                 },
                 complete: function() {
                     hideLoader();
@@ -220,11 +223,12 @@
         $(document).on("click", "#confirm", function(e) {
             e.preventDefault();
 
-            var projectId = $('#project_id').val();
-            var creatorId = $('#auth_id').val();
-            var userId = $('#user_id').val();
+            var projectId = $(this).data('project-id');
+            var userId = $(this).data('user-id');
+            var creatorId = $(this).data('creator-id');
 
             var url = "{{ route('user.project.confirm') }}";
+            var confirmButton = $(this);
 
             $.ajax({
                 headers: {
@@ -244,7 +248,6 @@
                 success: function(response) {
                     toastr.success(response.message);
                     location.reload();
-
                 },
                 error: function(xhr, status, error) {
                     toastr.error("Error occurred while confirming project: " + error);
@@ -259,11 +262,12 @@
         $(document).on("click", "#cancel", function(e) {
             e.preventDefault();
 
-            var projectId = $('#project_id').val();
-            var creatorId = $('#auth_id').val();
-            var userId = $('#user_id').val();
+            var projectId = $(this).data('project-id');
+            var userId = $(this).data('user-id');
+            var creatorId = $(this).data('creator-id');
 
             var url = "{{ route('user.project.cancel') }}";
+            var confirmButton = $(this);
 
             $.ajax({
                 headers: {

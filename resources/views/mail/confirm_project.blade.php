@@ -38,21 +38,10 @@
                             <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
                                 <tr>
                                     <td style="padding:0 0 36px 0;color:#153643;">
-                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">Hello!! {{$creator->user_name}},</p>
-                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">Welcome to CNKBTK</p>
-                                        <p style="margin:0;font-size:16px;line-height:24px;">New Project Created</p>
-                                        <p style="margin:0;font-size:16px;line-height:24px;">Please use the below link to view project details</p>
-
+                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">Project Confirmed</p>
+                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">Your project has been confirmed by {{$creator->user_name}} </p>
                                     </td>
                                 </tr>
-
-                                @if($creator->id != null)
-                                <tr>
-                                    <td style="padding:0 0 36px 0;color:#153643;">
-                                        <p style="margin:0;font-size:16px;line-height:24px;"><a href="{{route('user.project.detail', ['creator_id' => $creator->id, 'project_id' => $project->id])}}" style="display: block; padding: 10px; background: #00255b; width: fit-content; color: #fff; text-decoration: none; font-size: 14px;">View Project</a></p>
-                                    </td>
-                                </tr>
-                                @endif
 
                                 <tr>
                                     <td style="color:#153643;">

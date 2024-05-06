@@ -72,7 +72,10 @@ Route::group(["namespace" => "App\Http\Controllers\User", 'as' => 'user.', "pref
     Route::post('/self-top-up/submit', "PointsController@paymenttopup")->name('self-top-up.submit');
 
     // Project Controller
-    Route::get('/project/request/{creator_id}/{project_id}', "ProjectController@getProjectRequest")->name('project.request');
+    Route::get('/project/detail/{creator_id}/{project_id}', "ProjectController@getProjectDetail")->name('project.detail');
+    Route::get('/project/confirm', "ProjectController@confirmProject")->name('project.confirm');
+    Route::get('/project/cancel', "ProjectController@cancelProject")->name('project.cancel');
+    Route::get('/project/request', "ProjectController@getAllProjectRequest")->name('project.request');
     Route::post('/add-project-bid', "ProjectController@addBidByCreator")->name('add.project.bid');
     Route::resource('project', "ProjectController")->middleware('checkProjectAccess');
 });
