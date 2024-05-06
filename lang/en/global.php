@@ -40,6 +40,7 @@ return [
     'blacklist_user' => 'Blacklist Users',
     'project' => 'Project',
     'bid'=>'Bid',
+    'project_request' => 'Project Request',
     // footer static
     "useful_links" => "Useful links",
     "follow_us" => "Follow us",

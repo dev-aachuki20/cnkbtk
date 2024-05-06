@@ -344,6 +344,16 @@ return [
                 'creator' => 'Select Creator',
             ],
         ],
+        'headings' => [
+            'cancelled_project'     => 'Cancelled Project',
+            'cancel_project'        => 'Cancel Project',
+            'confirmed_project'         => 'Confirmed Project',
+            'confirm_project'        => 'Confirm Project',
+            'bid_added'        => 'Project Bid Added',
+            'add_bid'        => 'Add Your Bid',
+            'add_bid_form'        => 'Add Bid Form',
+
+        ],
     ],
 
     'project' => [

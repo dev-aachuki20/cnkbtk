@@ -39,6 +39,7 @@ return [
     'blacklist_user' => '黑名单用户',
     'project' => '项目',
     'bid' => '出价',
+    'project_request' => '项目要求',
     // footer static
     "useful_links" => "有用的链接",
     "follow_us" => "跟着我们",

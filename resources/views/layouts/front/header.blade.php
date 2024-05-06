@@ -386,7 +386,7 @@
                                 </clipPath>
                               </defs>
                             </svg>
-                            Project Request
+                            {{trans("global.project_request")}}
                           </a>
                         </li>
                         @endif

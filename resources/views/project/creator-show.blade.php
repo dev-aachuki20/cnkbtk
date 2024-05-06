@@ -75,13 +75,11 @@
                             </ul>
                         </div>
 
-
-
                         @if(isset($creatorStatus) && $creatorStatus == 0)
                         <div class="row">
                             <div class="col-3">
                                 <button type="button" class="btn btn-primary ml-3 cancel-btn" id="cancel" {{ $creatorStatus == 0 ? 'disabled' : '' }}>
-                                    {{ $creatorStatus == 0 ? 'Cancelled Project' : 'Cancel Project' }}
+                                    {{ $creatorStatus == 0 ? __('cruds.create_project.headings.cancelled_project') : __('cruds.create_project.headings.cancel_project') }}
                                 </button>
                             </div>
                         </div>
@@ -89,16 +87,15 @@
                         <div class="row">
                             <div class="col-3">
                                 <button type="button" class="btn btn-success ml-3 confirm-btn" id="confirm" {{ $creatorStatus == 1 ? 'disabled' : '' }}>
-                                    {{ $creatorStatus == 1 ? 'Confirmed Project' : 'Confirm Project' }}
+                                    {{ $creatorStatus == 1 ? __('cruds.create_project.headings.confirmed_project') : __('cruds.create_project.headings.confirm_project') }}
                                 </button>
                             </div>
                         </div>
-
                         @elseif($creatorStatus == 2)
                         <div class="row">
                             <div class="col-3">
                                 <button type="button" class="btn btn-secondary add-bid-btn" id="addBidModal">
-                                    {{ $creatorStatus == 2 ? 'Project Bid Added' : 'Add Your Bid' }}
+                                    {{ $creatorStatus == 2 ? __('cruds.create_project.headings.bid_added') : __('cruds.create_project.headings.add_bid') }}
                                 </button>
                             </div>
                         </div>
@@ -106,23 +103,22 @@
                         <div class="row">
                             <div class="col-3">
                                 <button type="button" class="btn btn-secondary add-bid-btn" id="addBidModal">
-                                    Add Your Bid
+                                    {{__('cruds.create_project.headings.add_bid')}}
                                 </button>
                             </div>
                             <div class="col-3">
                                 <button type="button" class="btn btn-success ml-3 confirm-btn" id="confirm">
-                                    Confirm Project
+                                    {{__('cruds.create_project.headings.confirm_project')}}
                                 </button>
                             </div>
                             <div class="col-3">
                                 <button type="button" class="btn btn-primary ml-3 cancel-btn" id="cancel">
-                                    Cancel Project
+                                    {{__('cruds.create_project.headings.cancel_project')}}
                                 </button>
                             </div>
                         </div>
                         @endif
                     </div>
-
                 </div>
             </div>
         </div>
@@ -133,7 +129,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Bid Form</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{__('cruds.create_project.headings.add_bid_form')}}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <!-- form start -->
@@ -150,8 +146,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Add</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('cruds.global.cancel')}}</button>
+                        <button type="submit" class="btn btn-primary">{{__('cruds.global.add')}}</button>
                     </div>
                 </form>
                 <!-- form end -->
@@ -202,13 +198,9 @@
                 error: function(jqXHR, exception) {
                     if (jqXHR.status == 422) {
                         console.log('validation error');
-                        // $(".errors").remove();
-                        // $("#" + index).parents(".form-group").append("<span class='text-danger errors'>" + message + "</span>");
                     } else {
                         toastr.error(jqXHR.responseJSON.message, '{{trans("global.alert.error")}}');
-                        // location.reload();
                     }
-                    // alert('end')
                 },
                 complete: function() {
                     hideLoader();

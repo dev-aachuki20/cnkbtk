@@ -345,7 +345,17 @@ return [
                 'tags' => '選擇標籤',
                 'creator' => '選擇創作者',
             ],
-        ]
+        ],
+        'headings' => [
+            'cancelled_project'     => '取消的项目',
+            'cancel_project'        => '取消项目',
+            'confirmed_project'         => '已确认项目',
+            'confirm_project'        => '确认项目',
+            'bid_added'        => '项目投标已添加',
+            'add_bid'        => '添加您的出价',
+            'add_bid_form'        => '添加投标表格',
+
+        ],
     ],
 
     'project' => [
