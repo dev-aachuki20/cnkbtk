@@ -49,5 +49,6 @@ return [
 
     'registration_failed'=>'Registration failed. The provided email is blacklisted',
     'project_request_failed'=>'Sorry!! Your request is failed as you are blacklisted',
+    'project_locked_successfully'=>'Project is locked successfully',
 ];
 ?>

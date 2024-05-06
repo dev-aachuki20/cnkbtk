@@ -77,28 +77,28 @@
 
 
 
-                        @if(isset($status) && $status == 0)
+                        @if(isset($creatorStatus) && $creatorStatus == 0)
                         <div class="row">
                             <div class="col-3">
-                                <button type="button" class="btn btn-primary ml-3 cancel-btn" id="cancel" {{ $status == 0 ? 'disabled' : '' }}>
-                                    {{ $status == 0 ? 'Cancelled Project' : 'Cancel Project' }}
+                                <button type="button" class="btn btn-primary ml-3 cancel-btn" id="cancel" {{ $creatorStatus == 0 ? 'disabled' : '' }}>
+                                    {{ $creatorStatus == 0 ? 'Cancelled Project' : 'Cancel Project' }}
                                 </button>
                             </div>
                         </div>
-                        @elseif($status == 1)
+                        @elseif($creatorStatus == 1)
                         <div class="row">
                             <div class="col-3">
-                                <button type="button" class="btn btn-success ml-3 confirm-btn" id="confirm" {{ $status == 1 ? 'disabled' : '' }}>
-                                    {{ $status == 1 ? 'Confirmed Project' : 'Confirm Project' }}
+                                <button type="button" class="btn btn-success ml-3 confirm-btn" id="confirm" {{ $creatorStatus == 1 ? 'disabled' : '' }}>
+                                    {{ $creatorStatus == 1 ? 'Confirmed Project' : 'Confirm Project' }}
                                 </button>
                             </div>
                         </div>
 
-                        @elseif($status == 2)
+                        @elseif($creatorStatus == 2)
                         <div class="row">
                             <div class="col-3">
-                                <button type="button" class="btn btn-secondary add-bid-btn" id="addBidModal" {{ $status == 2 ? 'disabled' : '' }}>
-                                    {{ $status == 2 ? 'Project Bid Added' : 'Add Your Bid' }}
+                                <button type="button" class="btn btn-secondary add-bid-btn" id="addBidModal">
+                                    {{ $creatorStatus == 2 ? 'Project Bid Added' : 'Add Your Bid' }}
                                 </button>
                             </div>
                         </div>
@@ -224,7 +224,7 @@
             var creatorId = $('#auth_id').val();
             var userId = $('#user_id').val();
 
-            var url = "{{ route('user.project.confirm') }}";
+            var url = "{{ route('user.creator.project.confirm') }}";
 
             $.ajax({
                 headers: {

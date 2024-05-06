@@ -38,27 +38,7 @@
                             <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
                                 <tr>
                                     <td style="padding:0 0 36px 0;color:#153643;">
-                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">Project Confirmed</p>
-                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">Your project has been confirmed by {{$creator->user_name}} </p>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td style="padding:0 0 36px 0;color:#153643;">
-                                        <p style="margin:0;font-size:16px;line-height:24px;">
-                                            <a href="{{route('user.project.confirm',['project_id' => $project->id, 'creator_id' => $creator->id])}}" style="display: block; padding: 10px; background: #00255b; width: fit-content; color: #fff; text-decoration: none; font-size: 14px;">
-                                                Confirm
-                                            </a>
-
-                                        </p>
-                                    </td>
-
-                                    <td style="padding:0 0 36px 0;color:#153643;">
-                                        <p style="margin:0;font-size:16px;line-height:24px;">
-                                            <a href="" style="display: block; padding: 10px; background: #00255b; width: fit-content; color: #fff; text-decoration: none; font-size: 14px;">
-                                                Cancel
-                                            </a>
-                                        </p>
+                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">This project is locked successfully.</p>
                                     </td>
                                 </tr>
 

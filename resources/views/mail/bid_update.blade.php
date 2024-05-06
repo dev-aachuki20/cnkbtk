@@ -53,6 +53,12 @@
                                             <a href="" style="display: block; padding: 10px; background: #00255b; width: fit-content; color: #fff; text-decoration: none; font-size: 14px;">
                                                 Confirm
                                             </a>
+
+                                        </p>
+                                    </td>
+
+                                    <td style="padding:0 0 36px 0;color:#153643;">
+                                        <p style="margin:0;font-size:16px;line-height:24px;">
                                             <a href="" style="display: block; padding: 10px; background: #00255b; width: fit-content; color: #fff; text-decoration: none; font-size: 14px;">
                                                 Cancel
                                             </a>

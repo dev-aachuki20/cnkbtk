@@ -14,6 +14,7 @@ class Project extends Model
         "tags_id",
         "comment",
         "status",
+        'project_status',
         "user_id",
         "user_ip",
         "copyright",

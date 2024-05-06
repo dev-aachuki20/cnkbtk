@@ -51,4 +51,6 @@ return [
 
     'registration_failed' => '注册失败。提供的电子邮件已被列入黑名单',
     'project_request_failed' => '对不起！！由于您已被列入黑名单，您的请求失败',
+    'project_locked_successfully' => '项目锁定成功',
+
 ];

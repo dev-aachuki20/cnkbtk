@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('project_creator', function (Blueprint $table) {
-            $table->tinyInteger('status')->nullable()->after('bid')->comment('0 =>,cancel, 1 => confirm, 2 => bid');
+            $table->tinyInteger('creator_status')->nullable()->after('bid')->comment('0 =>,cancel, 1 => confirm, 2 => bid');
+            $table->tinyInteger('user_status')->nullable()->after('bid')->comment('0 =>,cancel, 1 => confirm');
         });
     }
 
@@ -26,7 +27,8 @@ return new class extends Migration
     public function down()
     {
         Schema::table('project_creator', function (Blueprint $table) {
-            $table->dropColumn('status');
+            $table->dropColumn('creator_status');
+            $table->dropColumn('user_status');
         });
     }
 };

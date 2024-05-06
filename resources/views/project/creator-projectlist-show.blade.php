@@ -70,27 +70,27 @@
                             </ul>
                         </div>
 
-                        @if(isset($item['status']) && $item['status'] == 0)
+                        @if(isset($item['creatorStatus']) && $item['creatorStatus'] == 0)
                         <div class="row">
                             <div class="col-3">
-                                <button type="button" class="btn btn-primary ml-3 cancel-btn" id="cancel" data-project-id="{{$item['project']->id}}" data-user-id="{{$item['project']->user_id}}" data-creator-id="{{Auth::user()->id}}" {{ $item['status'] == 0 ? 'disabled' : '' }}>
-                                    {{ $item['status'] == 0 ? 'Cancelled Project' : 'Cancel Project' }}
+                                <button type="button" class="btn btn-primary ml-3 cancel-btn" id="cancel" data-project-id="{{$item['project']->id}}" data-user-id="{{$item['project']->user_id}}" data-creator-id="{{Auth::user()->id}}" {{ $item['creatorStatus'] == 0 ? 'disabled' : '' }}>
+                                    {{ $item['creatorStatus'] == 0 ? 'Cancelled Project' : 'Cancel Project' }}
                                 </button>
                             </div>
                         </div>
-                        @elseif($item['status'] == 1)
+                        @elseif($item['creatorStatus'] == 1)
                         <div class="row">
                             <div class="col-3">
-                                <button type="button" class="btn btn-success ml-3 confirm-btn" id="confirm" data-project-id="{{$item['project']->id}}" data-user-id="{{$item['project']->user_id}}" data-creator-id="{{Auth::user()->id}}" {{ $item['status'] == 1 ? 'disabled' : '' }}>
-                                    {{ $item['status'] == 1 ? 'Confirmed Project' : 'Confirm Project' }}
+                                <button type="button" class="btn btn-success ml-3 confirm-btn" id="confirm" data-project-id="{{$item['project']->id}}" data-user-id="{{$item['project']->user_id}}" data-creator-id="{{Auth::user()->id}}" {{ $item['creatorStatus'] == 1 ? 'disabled' : '' }}>
+                                    {{ $item['creatorStatus'] == 1 ? 'Confirmed Project' : 'Confirm Project' }}
                                 </button>
                             </div>
                         </div>
-                        @elseif($item['status'] == 2)
+                        @elseif($item['creatorStatus'] == 2)
                         <div class="row">
                             <div class="col-3">
-                                <button type="button" class="btn btn-secondary add-bid-btn" id="addBidModal" data-project-id="{{$item['project']->id}}" data-user-id="{{$item['project']->user_id}}" data-creator-id="{{Auth::user()->id}}" {{ $item['status'] == 2 ? 'disabled' : '' }}>
-                                    {{ $item['status'] == 2 ? 'Project Bid Added' : 'Add Your Bid' }}
+                                <button type="button" class="btn btn-secondary add-bid-btn" id="addBidModal" data-project-id="{{$item['project']->id}}" data-user-id="{{$item['project']->user_id}}" data-creator-id="{{Auth::user()->id}}">
+                                    {{ $item['creatorStatus'] == 2 ? 'Project Bid Added' : 'Add Your Bid' }}
                                 </button>
                             </div>
                         </div>
@@ -205,7 +205,7 @@
 
                 },
                 error: function(jqXHR, exception) {
-                    if (jqXHR.status == 422) {
+                    if (jqXHR.creatorStatus == 422) {
                         $(".errors").remove();
                         $("#" + index).parents(".form-group").append("<span class='text-danger errors'>" + message + "</span>");
                     } else {
@@ -227,7 +227,7 @@
             var userId = $(this).data('user-id');
             var creatorId = $(this).data('creator-id');
 
-            var url = "{{ route('user.project.confirm') }}";
+            var url = "{{ route('user.creator.project.confirm') }}";
             var confirmButton = $(this);
 
             $.ajax({
@@ -249,7 +249,7 @@
                     toastr.success(response.message);
                     location.reload();
                 },
-                error: function(xhr, status, error) {
+                error: function(xhr, creatorStatus, error) {
                     toastr.error("Error occurred while confirming project: " + error);
                 },
                 complete: function() {
@@ -288,7 +288,7 @@
                     toastr.success(response.message);
                     location.reload();
                 },
-                error: function(xhr, status, error) {
+                error: function(xhr, creatorStatus, error) {
                     toastr.error("Error occurred while confirming project: " + error);
                 },
                 complete: function() {
