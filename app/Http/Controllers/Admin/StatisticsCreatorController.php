@@ -9,6 +9,7 @@ use App\Models\Poster;
 use App\Models\UniqueVisitor;
 use App\Models\PosterReadCount;
 use App\Models\Tag;
+use App\Models\TagType;
 use Carbon\Carbon;
 use DB;
 
@@ -21,6 +22,7 @@ class StatisticsCreatorController extends Controller
         $endDate = $request->has('end_date') ? Carbon::parse($request->end_date) : Carbon::now();
         $labels = [];
         $data = [];
+        $datasets = [];
         if (!$request->has(['start_date', 'end_date', 'range'])) {
             if (!in_array($range, ['day', 'week', 'month', 'custom range'])) {
                 return response()->json(['error' => 'Invalid range'], 400);
@@ -60,6 +62,25 @@ class StatisticsCreatorController extends Controller
                 $count = isset($userCounts[$date]) ? $userCounts[$date]->count() : 0;
                 $labels[] = $date;
                 $data[] = $count;
+                $datasets[0] = [
+                    'label' => trans("cruds.registered_members.fields.count"),
+                    'data' => $data,
+                    'backgroundColor' => '#ff6359',
+                    'borderColor' => '#ff6359',
+                    'fill' => false,
+                    'borderWidth' => 0.5,
+                    'tension' => 0.5,
+                    'pointBorderColor' => "#fd463b",
+                    'pointBackgroundColor' => "#fd463b",
+                    'pointBorderWidth' => 6,
+                    'pointHoverRadius' => 6,
+                    'pointHoverBackgroundColor' => "#000000",
+                    'pointHoverBorderColor' => "#000000",
+                    'pointHoverBorderWidth' => 3,
+                    'pointRadius' => 1,
+                    'borderWidth' => 3,
+                    'pointHitRadius' => 30
+                ];
                 $startDateCopy->add(1, $interval);
             }
         } else {
@@ -78,7 +99,7 @@ class StatisticsCreatorController extends Controller
         $yAxisText =  trans("cruds.registered_members.fields.count");
         $labelText =  trans("cruds.registered_members.fields.graph");
 
-        $html = view('statistics.creator-graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+        $html = view('statistics.creator-graph', compact('labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
         return response()->json(['success' => true, 'html' => $html], 200);
     }
 
@@ -91,6 +112,9 @@ class StatisticsCreatorController extends Controller
         $interval = 'week';
         $labels = [];
         $data = [];
+        $datasets = [];
+        // $colors = $this->generateColors(count($tagTypes));
+        $colors = ['#ff0000', '#00ff00', '#0000ff'];
         if (!$request->has(['start_date', 'end_date', 'range'])) {
             if (!in_array($range, ['day', 'week', 'month', 'custom range'])) {
                 return response()->json(['error' => 'Invalid range'], 400);
@@ -133,6 +157,26 @@ class StatisticsCreatorController extends Controller
                 $labels[] = $date;
                 $data[] = $count;
 
+                $datasets[0] = [
+                    'label' => trans("cruds.number_of_posts.fields.count"),
+                    'data' => $data,
+                    'backgroundColor' => '#ff6359',
+                    'borderColor' => '#ff6359',
+                    'fill' => false,
+                    'borderWidth' => 0.5,
+                    'tension' => 0.5,
+                    'pointBorderColor' => "#fd463b",
+                    'pointBackgroundColor' => "#fd463b",
+                    'pointBorderWidth' => 6,
+                    'pointHoverRadius' => 6,
+                    'pointHoverBackgroundColor' => "#000000",
+                    'pointHoverBorderColor' => "#000000",
+                    'pointHoverBorderWidth' => 3,
+                    'pointRadius' => 1,
+                    'borderWidth' => 3,
+                    'pointHitRadius' => 30
+                ];
+
                 $startDateCopy->add(1, $interval);
             }
         } else {
@@ -143,11 +187,55 @@ class StatisticsCreatorController extends Controller
             }
         }
 
+        // if ($tagTypes != null) {
+        //     $tagIds = Tag::whereIn('tag_type', $tagTypes)->pluck('id')->toArray();
+        //     $tagTypeCount = Poster::whereIn('tags', $tagIds)->whereBetween('created_at', [$startDate, $endDate])->count();
+        //     $labels[] = trans("messages.tag_type_based_post_count");
+        //     $data[] = $tagTypeCount;
+        // }
+
+        $dataCount = [];
         if ($tagTypes != null) {
-            $tagIds = Tag::whereIn('tag_type', $tagTypes)->pluck('id')->toArray();
-            $tagTypeCount = Poster::whereIn('tags', $tagIds)->whereBetween('created_at', [$startDate, $endDate])->count();
-            $labels[] = trans("messages.tag_type_based_post_count");
-            $data[] = $tagTypeCount;
+            $colorIndex = 0;
+            foreach ($tagTypes as $key => $tagType) {
+                $tagIds = Tag::where('tag_type', $tagType)->pluck('id')->toArray();
+                // $postersIds = Poster::whereIn('tags', $tagIds)->pluck('id')->toArray();
+                $tagTypeCount = Poster::whereIn('tags', $tagIds)->whereBetween('created_at', [$startDate, $endDate])->get();
+
+                foreach ($tagTypeCount as $tagCount) {
+                    $dataCount[] = $tagTypeCount->count();
+                }
+                // Get the name of the tag type based on locale
+                $getName = TagType::where('id', $tagType)->first();
+
+                if (app()->getLocale() == 'en') {
+                    $tagTypeName = $getName->name_en;
+                } else {
+                    $tagTypeName = $getName->name_ch;
+                }
+
+                // Create a dataset for the current tag type
+                $datasets[$key + 1] = [
+                    'label' => $tagTypeName,
+                    'data' => $dataCount,
+                    'backgroundColor' => $colors[$colorIndex],
+                    'borderColor' => $colors[$colorIndex],
+                    'fill' => false,
+                    'borderWidth' => 1,
+                    'tension' => 0.5,
+                    'pointBorderColor' => "#fd463b",
+                    'pointBackgroundColor' => "#fd463b",
+                    'pointBorderWidth' => 6,
+                    'pointHoverRadius' => 6,
+                    'pointHoverBackgroundColor' => "#000000",
+                    'pointHoverBorderColor' => "#000000",
+                    'pointHoverBorderWidth' => 3,
+                    'pointRadius' => 1,
+                    'borderWidth' => 3,
+                    'pointHitRadius' => 30
+                ];
+                $colorIndex++;
+            }
         }
 
         $pluginText = trans("cruds.number_of_posts.fields.num_graph");
@@ -157,7 +245,7 @@ class StatisticsCreatorController extends Controller
 
         list($labels, $data) = $this->calculateAverage($labels, $data);
 
-        $html = view('statistics.creator-graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+        $html = view('statistics.creator-graph', compact('labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
         return response()->json(['success' => true, 'html' => $html], 200);
     }
 
@@ -167,6 +255,7 @@ class StatisticsCreatorController extends Controller
         $endDate = $request->has('end_date') ? Carbon::parse($request->end_date) : Carbon::now();
         $labels = [];
         $data = [];
+        $datasets = [];
         if (!$request->has(['start_date', 'end_date', 'range'])) {
             if (!in_array($range, ['day', 'week', 'month', 'custom range'])) {
                 return response()->json(['error' => 'Invalid range'], 400);
@@ -211,6 +300,26 @@ class StatisticsCreatorController extends Controller
                 $labels[] = $date;
                 $data[] = $count;
 
+                $datasets[0] = [
+                    'label' => trans("cruds.visiting_users.fields.count"),
+                    'data' => $data,
+                    'backgroundColor' => '#ff6359',
+                    'borderColor' => '#ff6359',
+                    'fill' => false,
+                    'borderWidth' => 0.5,
+                    'tension' => 0.5,
+                    'pointBorderColor' => "#fd463b",
+                    'pointBackgroundColor' => "#fd463b",
+                    'pointBorderWidth' => 6,
+                    'pointHoverRadius' => 6,
+                    'pointHoverBackgroundColor' => "#000000",
+                    'pointHoverBorderColor' => "#000000",
+                    'pointHoverBorderWidth' => 3,
+                    'pointRadius' => 1,
+                    'borderWidth' => 3,
+                    'pointHitRadius' => 30
+                ];
+
                 $startDateCopy->add(1, $interval);
             }
         } else {
@@ -227,7 +336,7 @@ class StatisticsCreatorController extends Controller
         $labelText =  trans("cruds.visiting_users.fields.graph");
 
         list($labels, $data) = $this->calculateAverage($labels, $data);
-        $html = view('statistics.creator-graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+        $html = view('statistics.creator-graph', compact('labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
         return response()->json(['success' => true, 'html' => $html], 200);
     }
@@ -239,6 +348,9 @@ class StatisticsCreatorController extends Controller
         $tagTypes = $request['tag_type'];
         $data = [];
         $labels = [];
+        $datasets = [];
+        // $colors = $this->generateColors(count($tagTypes));
+        $colors = ['#ff0000', '#00ff00', '#0000ff'];
         if (!$request->has(['start_date', 'end_date', 'range'])) {
             if (!in_array($range, ['day', 'week', 'month', 'custom range'])) {
                 return response()->json(['error' => 'Invalid range'], 400);
@@ -268,6 +380,26 @@ class StatisticsCreatorController extends Controller
                 }
             });
 
+            $datasets[0] = [
+                'label' =>  trans("cruds.most_popular_poster.fields.count"),
+                'data' => $data,
+                'backgroundColor' => '#ff6359',
+                'borderColor' => '#ff6359',
+                'fill' => false,
+                'borderWidth' => 0.5,
+                'tension' => 0.5,
+                'pointBorderColor' => "#fd463b",
+                'pointBackgroundColor' => "#fd463b",
+                'pointBorderWidth' => 6,
+                'pointHoverRadius' => 6,
+                'pointHoverBackgroundColor' => "#000000",
+                'pointHoverBorderColor' => "#000000",
+                'pointHoverBorderWidth' => 3,
+                'pointRadius' => 1,
+                'borderWidth' => 3,
+                'pointHitRadius' => 30
+            ];
+
             $startDateCopy = $startDate->copy();
 
             while ($startDateCopy->lte($endDate)) {
@@ -292,12 +424,56 @@ class StatisticsCreatorController extends Controller
             }
         }
 
+        // if ($tagTypes != null) {
+        //     $tagIds = Tag::whereIn('tag_type', $tagTypes)->pluck('id')->toArray();
+        //     $postersIds = Poster::whereIn('tags', $tagIds)->pluck('id')->toArray();
+        //     $tagTypeCount = PosterReadCount::whereIn('poster_id', $postersIds)->whereBetween('created_at', [$startDate, $endDate])->count();
+        //     $labels[] = trans("messages.most_popular_poster_count");
+        //     $data[] = $tagTypeCount;
+        // }
+
+        $dataCount = [];
         if ($tagTypes != null) {
-            $tagIds = Tag::whereIn('tag_type', $tagTypes)->pluck('id')->toArray();
-            $postersIds = Poster::whereIn('tags', $tagIds)->pluck('id')->toArray();
-            $tagTypeCount = PosterReadCount::whereIn('poster_id', $postersIds)->whereBetween('created_at', [$startDate, $endDate])->count();
-            $labels[] = trans("messages.most_popular_poster_count");
-            $data[] = $tagTypeCount;
+            $colorIndex = 0;
+            foreach ($tagTypes as $key => $tagType) {
+                $tagIds = Tag::where('tag_type', $tagType)->pluck('id')->toArray();
+                $postersIds = Poster::whereIn('tags', $tagIds)->pluck('id')->toArray();
+                $tagTypeCount = PosterReadCount::whereIn('poster_id', $postersIds)->whereBetween('created_at', [$startDate, $endDate])->get();
+
+                foreach ($tagTypeCount as $tagCount) {
+                    $dataCount[] = $tagTypeCount->count();
+                }
+                // Get the name of the tag type based on locale
+                $getName = TagType::where('id', $tagType)->first();
+
+                if (app()->getLocale() == 'en') {
+                    $tagTypeName = $getName->name_en;
+                } else {
+                    $tagTypeName = $getName->name_ch;
+                }
+
+                // Create a dataset for the current tag type
+                $datasets[$key + 1] = [
+                    'label' => $tagTypeName,
+                    'data' => $dataCount,
+                    'backgroundColor' => $colors[$colorIndex],
+                    'borderColor' => $colors[$colorIndex],
+                    'fill' => false,
+                    'borderWidth' => 1,
+                    'tension' => 0.5,
+                    'pointBorderColor' => "#fd463b",
+                    'pointBackgroundColor' => "#fd463b",
+                    'pointBorderWidth' => 6,
+                    'pointHoverRadius' => 6,
+                    'pointHoverBackgroundColor' => "#000000",
+                    'pointHoverBorderColor' => "#000000",
+                    'pointHoverBorderWidth' => 3,
+                    'pointRadius' => 1,
+                    'borderWidth' => 3,
+                    'pointHitRadius' => 30
+                ];
+                $colorIndex++;
+            }
         }
 
         $pluginText = trans("cruds.most_popular_poster.fields.num_graph");
@@ -306,7 +482,7 @@ class StatisticsCreatorController extends Controller
         $labelText =  trans("cruds.most_popular_poster.fields.graph");
 
         list($labels, $data) = $this->calculateAverage($labels, $data);
-        $html = view('statistics.creator-graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+        $html = view('statistics.creator-graph', compact('labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
         return response()->json(['success' => true, 'html' => $html], 200);
     }
@@ -317,6 +493,7 @@ class StatisticsCreatorController extends Controller
         $endDate = $request->has('end_date') ? Carbon::parse($request->end_date) : Carbon::now();
         $labels = [];
         $data = [];
+        $datasets = [];
         if (!$request->has(['start_date', 'end_date', 'range'])) {
             if (!in_array($range, ['day', 'week', 'month', 'custom range'])) {
                 return response()->json(['error' => 'Invalid range'], 400);
@@ -362,6 +539,26 @@ class StatisticsCreatorController extends Controller
                 $labels[] = $date;
                 $data[] = $count;
 
+                $datasets[0] = [
+                    'label' =>  trans("cruds.mobile_access.fields.count"),
+                    'data' => $data,
+                    'backgroundColor' => '#ff6359',
+                    'borderColor' => '#ff6359',
+                    'fill' => false,
+                    'borderWidth' => 0.5,
+                    'tension' => 0.5,
+                    'pointBorderColor' => "#fd463b",
+                    'pointBackgroundColor' => "#fd463b",
+                    'pointBorderWidth' => 6,
+                    'pointHoverRadius' => 6,
+                    'pointHoverBackgroundColor' => "#000000",
+                    'pointHoverBorderColor' => "#000000",
+                    'pointHoverBorderWidth' => 3,
+                    'pointRadius' => 1,
+                    'borderWidth' => 3,
+                    'pointHitRadius' => 30
+                ];
+
                 $startDateCopy->add(1, $interval);
             }
         } else {
@@ -378,7 +575,7 @@ class StatisticsCreatorController extends Controller
         $labelText =  trans("cruds.mobile_access.fields.graph");
 
         list($labels, $data) = $this->calculateAverage($labels, $data);
-        $html = view('statistics.creator-graph', compact('labels', 'data', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+        $html = view('statistics.creator-graph', compact('labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
         return response()->json(['success' => true, 'html' => $html], 200);
     }
@@ -519,4 +716,14 @@ class StatisticsCreatorController extends Controller
         }
         return [$labels, $data];
     }
+
+    // private function generateColors($count)
+    // {
+    //     $colors = [];
+    //     for ($i = 0; $i < $count; $i++) {
+    //         // Generate random RGB colors
+    //         $colors[] = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+    //     }
+    //     return $colors;
+    // }
 }

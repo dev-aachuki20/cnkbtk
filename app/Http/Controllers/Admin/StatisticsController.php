@@ -77,7 +77,7 @@ class StatisticsController extends Controller
                 $data[] = $count;
 
                 $datasets[0] = [
-                    'label' => 'Member Registration Count',
+                    'label' => trans("cruds.registered_members.fields.count"),
                     'data' => $data,
                     'backgroundColor' => '#ff6359',
                     'borderColor' => '#ff6359',
@@ -128,7 +128,8 @@ class StatisticsController extends Controller
         $labels = [];
         $data = [];
         $datasets = [];
-        $colors = $this->generateColors(count($tagTypes));
+        // $colors = $this->generateColors(count($tagTypes));
+        $colors = ['#ff0000', '#00ff00', '#0000ff'];
         if (!$request->has(['start_date', 'end_date', 'range'])) {
             if (!in_array($range, ['day', 'week', 'month', 'custom range'])) {
                 return response()->json(['error' => 'Invalid range'], 400);
@@ -172,7 +173,7 @@ class StatisticsController extends Controller
                 $data[] = $count;
 
                 $datasets[0] = [
-                    'label' => 'Number Of Post Count',
+                    'label' => trans("cruds.number_of_posts.fields.count"),
                     'data' => $data,
                     'backgroundColor' => '#ff6359',
                     'borderColor' => '#ff6359',
@@ -316,7 +317,7 @@ class StatisticsController extends Controller
                 $labels[] = $date;
                 $data[] = $count;
                 $datasets[0] = [
-                    'label' => 'visiting Users Count',
+                    'label' => trans("cruds.visiting_users.fields.count"),
                     'data' => $data,
                     'backgroundColor' => '#ff6359',
                     'borderColor' => '#ff6359',
@@ -363,7 +364,8 @@ class StatisticsController extends Controller
         $data = [];
         $labels = [];
         $datasets = [];
-        $colors = $this->generateColors(count($tagTypes));
+        // $colors = $this->generateColors(count($tagTypes));
+        $colors = ['#ff0000', '#00ff00', '#0000ff'];
 
         if (!$request->has(['start_date', 'end_date', 'range'])) {
             if (!in_array($range, ['day', 'week', 'month', 'custom range'])) {
@@ -410,7 +412,7 @@ class StatisticsController extends Controller
                 $data[] = $count;
 
                 $datasets[0] = [
-                    'label' => 'Popular Post Count',
+                    'label' => trans("cruds.most_popular_poster.fields.count"),
                     'data' => $data,
                     'backgroundColor' => '#ff6359',
                     'borderColor' => '#ff6359',
@@ -553,7 +555,7 @@ class StatisticsController extends Controller
                 $data[] = $count;
 
                 $datasets[0] = [
-                    'label' => 'Mobile Access Users Count',
+                    'label' => trans("cruds.mobile_access.fields.count"),
                     'data' => $data,
                     'backgroundColor' => '#ff6359',
                     'borderColor' => '#ff6359',
@@ -772,13 +774,13 @@ class StatisticsController extends Controller
     }
 
 
-    private function generateColors($count)
-    {
-        $colors = [];
-        for ($i = 0; $i < $count; $i++) {
-            // Generate random RGB colors
-            $colors[] = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
-        }
-        return $colors;
-    }
+    // private function generateColors($count)
+    // {
+    //     $colors = [];
+    //     for ($i = 0; $i < $count; $i++) {
+    //         // Generate random RGB colors
+    //         $colors[] = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+    //     }
+    //     return $colors;
+    // }
 }

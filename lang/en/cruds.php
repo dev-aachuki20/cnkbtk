@@ -257,7 +257,7 @@ return [
         'fields' => [
             'num_graph'  => 'Members Registration Graph',
             'time'       => 'Members Registration Time',
-            'count'      => 'Members Count',
+            'count'      => 'Members Registration Count',
             'graph'      => 'Members Graph',
         ]
     ],
@@ -268,7 +268,7 @@ return [
         'fields' => [
             'num_graph'    => 'Number Of Posts Graph',
             'time'         => 'Number Of Posts Time',
-            'count'        => 'Posts Count',
+            'count'        => 'Number Of Posts Count',
             'graph'        => 'Posts Graph',
         ]
     ],
@@ -301,7 +301,7 @@ return [
         'fields' => [
             'num_graph'     => 'Mobile Access Users Graph',
             'time'          => 'Mobile Access Time',
-            'count'         => 'Mobile Access Count',
+            'count'         => 'Mobile Access USer Count',
             'graph'         => 'Mobile Access Graph',
         ]
     ],
