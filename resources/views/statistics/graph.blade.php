@@ -1,17 +1,12 @@
-
-
 <div id="myChartContainer">
-<div style="position: relative; height:55vh;">
-    <canvas id="myChart" width="400" height="400" style="display: block; width: 400px; height: 400px;"></canvas>
+    <div style="position: relative; height:55vh;">
+        <canvas id="myChart" width="400" height="400" style="display: block; width: 400px; height: 400px;"></canvas>
+    </div>
 </div>
-</div>
-
 <script>
-    
-   
     var ctx = document.getElementById('myChart').getContext('2d');
     var labels = @json($labels);
-    var membersData = @json($data);
+    var membersData = @json($datasets);
     var pluginText = @json($pluginText);
     var xAxisText = @json($xAxisText);
     var yAxisText = @json($yAxisText);
@@ -19,32 +14,36 @@
 
     var data = {
         labels: labels,
-        datasets: [{
-            label: labelText,
-            data: membersData,
-            backgroundColor: '#dee9f7',
-            borderColor: '#ff6359',
-            borderWidth: 1,
-            tension: 0.5,
-            pointBorderColor: "#fd463b",
-            pointBackgroundColor: "#fd463b",
-            pointBorderWidth: 6,
-            pointHoverRadius: 6,
-            pointHoverBackgroundColor: "#000000",
-            pointHoverBorderColor: "#000000",
-            pointHoverBorderWidth: 3,
-            pointRadius: 1,
-            borderWidth: 3,
-            pointHitRadius: 30
-        }]
-    };
-  
+        datasets: membersData,
+    }
+    // var data = {
+    //     labels: labels,
+    //     datasets: [{
+    //         label: labelText,
+    //         data: membersData,
+    //         backgroundColor: '#dee9f7',
+    //         borderColor: '#ff6359',
+    //         borderWidth: 1,
+    //         tension: 0.5,
+    //         pointBorderColor: "#fd463b",
+    //         pointBackgroundColor: "#fd463b",
+    //         pointBorderWidth: 6,
+    //         pointHoverRadius: 6,
+    //         pointHoverBackgroundColor: "#000000",
+    //         pointHoverBorderColor: "#000000",
+    //         pointHoverBorderWidth: 3,
+    //         pointRadius: 1,
+    //         borderWidth: 3,
+    //         pointHitRadius: 30
+    //     }]
+    // };
+
     var config = {
         type: 'line',
         data: data,
         options: {
-            responsive: true, 
-      		maintainAspectRatio: false, 
+            responsive: true,
+            maintainAspectRatio: false,
             plugins: {
                 title: {
                     display: true,
@@ -64,6 +63,7 @@
                     }
                 },
                 y: {
+                    min: 0,
                     display: true,
                     title: {
                         display: true,
@@ -72,8 +72,8 @@
                 }
             }
         }
-        
+
     };
 
-    var myChart = new Chart(ctx, config); 
+    var myChart = new Chart(ctx, config);
 </script>

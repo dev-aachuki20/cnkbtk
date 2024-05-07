@@ -107,7 +107,7 @@ return [
                 
             ],
             'delete_message' => 'Once deleted, this record cannot be restored. Also all the episode will be deleted associated with this poster.',
-            'add_episode' => 'Add Eposide',
+            'add_episode' => 'Add Episode',
         ],
     ],
 
@@ -181,7 +181,7 @@ return [
             "type" => "Type",
             "points" => "Points",
             "date_time" => "Date & Time",
-            "Transection_not_find" => "Transection not find"
+            "Transection_not_find" => "Transition not find"
         ],
 
         "post_history_tab" => [

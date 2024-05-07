@@ -24,7 +24,7 @@ return [
     'english' => 'English',
     'profile' => 'Profile',
     'basic_information' => 'Basic information',
-    'change_password' => 'Change Pasword',
+    'change_password' => 'Change Password',
     'credit_history' => 'Credit history',
     'post_history' => 'Post history',
     'create_post' => 'Create post',
