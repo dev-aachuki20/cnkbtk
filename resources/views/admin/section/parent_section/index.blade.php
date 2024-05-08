@@ -31,7 +31,7 @@
            
             <div class="card">
                 <div class="card-header">
-                <h3 class="card-title">{{trans("cruds.section_management.parent_section.title_singular")}}</h3>
+                <h3 class="card-title">{{trans("cruds.section_management.parent_section.title")}}</h3>
                 <div class="pull-right">
                     <a class="btn btn-success" href="{{route('admin.parent-section.create')}}" style="float:right">{{trans("cruds.global.add")}}  {{trans("cruds.section_management.parent_section.title_singular")}}</a>
                 </div>
