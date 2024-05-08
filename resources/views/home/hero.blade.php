@@ -11,7 +11,7 @@
                 <div class="post-item">
                   <div class="post-card">
                     <div class="post-head-box">
-                    <a href="{{route('post.details',$poster->slug)}}">
+                    <a href="{{route('post.details', ['slug' => $poster->slug])}}">
                       <div class="post-img">
                         @php 
                           $posterImage = asset('front/asset/images/no_image.png');

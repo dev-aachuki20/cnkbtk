@@ -37,6 +37,11 @@
             <div class="col-lg-6 col-md-10 col-12">
                 <div class="right-single-box blacklist_box_user project_details_card">
                     <div class="row gx-3">
+                    <div class="col-12 text-end">
+                            <button type="button" class="btn btn-primary ml-auto cancel-btn">
+                                Chat
+                            </button>
+                        </div>
                         <div class="col">
                             <ul>
                                 <li>
@@ -69,52 +74,48 @@
 
                                 <li>
                                     <div class="main-title">
-                                        <h6> <span>{{trans("cruds.create_project.project")}} {{trans("cruds.create_project.fields.description")}} :</span> {!! $requestProject->comment ?? '' !!}</h6>
+                                        <h6> <span>{{trans("cruds.create_project.fields.description")}} :</span> {!! $requestProject->comment ?? '' !!}</h6>
                                     </div>
                                 </li>
                             </ul>
                         </div>
 
                         @if(isset($creatorStatus) && $creatorStatus == 0)
-                        <div class="row">
-                            <div class="col-3">
+                            <div class="col-12">
                                 <button type="button" class="btn btn-primary ml-3 cancel-btn" id="cancel" {{ $creatorStatus == 0 ? 'disabled' : '' }}>
                                     {{ $creatorStatus == 0 ? __('cruds.create_project.headings.cancelled_project') : __('cruds.create_project.headings.cancel_project') }}
                                 </button>
                             </div>
-                        </div>
                         @elseif($creatorStatus == 1)
-                        <div class="row">
-                            <div class="col-3">
+                            <div class="col-12">
                                 <button type="button" class="btn btn-success ml-3 confirm-btn" id="confirm" {{ $creatorStatus == 1 ? 'disabled' : '' }}>
                                     {{ $creatorStatus == 1 ? __('cruds.create_project.headings.confirmed_project') : __('cruds.create_project.headings.confirm_project') }}
                                 </button>
                             </div>
-                        </div>
                         @elseif($creatorStatus == 2)
-                        <div class="row">
-                            <div class="col-3">
+                            <div class="col-12">
                                 <button type="button" class="btn btn-secondary add-bid-btn" id="addBidModal">
                                     {{ $creatorStatus == 2 ? __('cruds.create_project.headings.bid_added') : __('cruds.create_project.headings.add_bid') }}
                                 </button>
                             </div>
-                        </div>
                         @else
-                        <div class="row">
-                            <div class="col-3">
-                                <button type="button" class="btn btn-secondary add-bid-btn" id="addBidModal">
-                                    {{__('cruds.create_project.headings.add_bid')}}
-                                </button>
-                            </div>
-                            <div class="col-3">
-                                <button type="button" class="btn btn-success ml-3 confirm-btn" id="confirm">
-                                    {{__('cruds.create_project.headings.confirm_project')}}
-                                </button>
-                            </div>
-                            <div class="col-3">
-                                <button type="button" class="btn btn-primary ml-3 cancel-btn" id="cancel">
-                                    {{__('cruds.create_project.headings.cancel_project')}}
-                                </button>
+                        <div class="col-12">
+                            <div class="row g-3">
+                                <div class="col-auto">
+                                    <button type="button" class="btn btn-secondary add-bid-btn" id="addBidModal">
+                                        {{__('cruds.create_project.headings.add_bid')}}
+                                    </button>
+                                </div>
+                                <div class="col-auto">
+                                    <button type="button" class="btn btn-success ml-3 confirm-btn" id="confirm">
+                                        {{__('cruds.create_project.headings.confirm_project')}}
+                                    </button>
+                                </div>
+                                <div class="col-auto">
+                                    <button type="button" class="btn btn-primary ml-3 cancel-btn" id="cancel">
+                                        {{__('cruds.create_project.headings.cancel_project')}}
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         @endif

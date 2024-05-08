@@ -4551,6 +4551,7 @@ form#excelForm{
   display: flex;
   flex-direction: column;
   gap: 8px;
+  margin-bottom: 12px;
 }
 .project_details_card ul li .description-text, .project_details_card ul li p{
   margin: 0px;

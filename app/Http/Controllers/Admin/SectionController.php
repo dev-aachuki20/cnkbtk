@@ -11,11 +11,11 @@ use Validator;
 use Illuminate\Validation\Rule;
 
 class SectionController extends Controller
-{   
+{
     public $folder;
 
     function __construct()
-    {   
+    {
         $this->folder =  'profileImage';
     }
 
@@ -47,23 +47,23 @@ class SectionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
+    {
         $validateData = $request->validate([
-            'name_en' => ['required','string',Rule::unique('sections')->where(function ($query) use ($request) {
+            'name_en' => ['required', 'string', Rule::unique('sections')->where(function ($query) use ($request) {
                 return $query->where('level', config("constant.sectionLevel.level1"));
-             })],
-            'name_ch' => ['required','string',Rule::unique('sections')->where(function ($query) use ($request) {
+            })],
+            'name_ch' => ['required', 'string', Rule::unique('sections')->where(function ($query) use ($request) {
                 return $query->where('level', config("constant.sectionLevel.level1"));
-             })],
-            'description_en' => ['required','string','max:1000'],
-            'description_ch' => ['required','string','max:1000'],
-            'creator_can_post' => ['required','in:0,1'],
-            'user_can_post' => ['required','in:0,1'],
-            'show_in_header' => ['required','in:0,1'],
-            'show_in_footer' => ['required','in:0,1'],
-            'status' => ['required','in:0,1'],
+            })],
+            'description_en' => ['required', 'string', 'max:1000'],
+            'description_ch' => ['required', 'string', 'max:1000'],
+            'creator_can_post' => ['required', 'in:0,1'],
+            'user_can_post' => ['required', 'in:0,1'],
+            'show_in_header' => ['required', 'in:0,1'],
+            'show_in_footer' => ['required', 'in:0,1'],
+            'status' => ['required', 'in:0,1'],
             'position' => ['required']
-            ],[],[
+        ], [], [
             'name_en' => trans("cruds.section_management.parent_section.fields.title"),
             'name_ch'  => trans("cruds.section_management.parent_section.fields.title"),
             'description_en' => trans("cruds.section_management.parent_section.fields.description"),
@@ -75,7 +75,7 @@ class SectionController extends Controller
             'position' => trans("cruds.section_management.parent_section.fields.position"),
             'status' => trans("cruds.global.status"),
         ]);
-        
+
         $section = new Section;
         $section->name_en = $request->name_en;
         $section->name_ch = $request->name_ch;
@@ -89,7 +89,7 @@ class SectionController extends Controller
         $section->position = $request->position;
         $section->level = config("constant.sectionLevel.level1");
         $section->save();
-        return redirect()->back()->with(['message' => trans("messages.add_success",['module' => trans("cruds.section_management.parent_section.title_singular")]),'alert-type' =>  'success']);
+        return redirect()->back()->with(['message' => trans("messages.add_success", ['module' => trans("cruds.section_management.parent_section.title_singular")]), 'alert-type' =>  'success']);
     }
 
     /**
@@ -101,7 +101,7 @@ class SectionController extends Controller
     public function show($id)
     {
         $section = Section::findOrFail($id);
-        return view("admin.section.parent_section.show",compact('section'));
+        return view("admin.section.parent_section.show", compact('section'));
     }
 
     /**
@@ -113,7 +113,7 @@ class SectionController extends Controller
     public function edit($id)
     {
         $section = Section::findOrFail($id);
-        return view("admin.section.parent_section.edit",compact('section'));
+        return view("admin.section.parent_section.edit", compact('section'));
     }
 
     /**
@@ -124,23 +124,23 @@ class SectionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {   
+    {
         $validateData = $request->validate([
-            'name_en' => ['required','string',Rule::unique('sections')->where(function ($query) use ($request) {
+            'name_en' => ['required', 'string', Rule::unique('sections')->where(function ($query) use ($request) {
                 return $query->where('level', config("constant.sectionLevel.level1"));
-             })->ignore($id)],
-            'name_ch' => ['required','string',Rule::unique('sections')->where(function ($query) use ($request) {
+            })->ignore($id)],
+            'name_ch' => ['required', 'string', Rule::unique('sections')->where(function ($query) use ($request) {
                 return $query->where('level', config("constant.sectionLevel.level1"));
-             })->ignore($id)],
-            'description_en' => ['required','string','max:1000'],
-            'description_ch' => ['required','string','max:1000'],
-            'creator_can_post' => ['required','in:0,1'],
-            'user_can_post' => ['required','in:0,1'],
-            'show_in_header' => ['required','in:0,1'],
-            'show_in_footer' => ['required','in:0,1'],
+            })->ignore($id)],
+            'description_en' => ['required', 'string', 'max:1000'],
+            'description_ch' => ['required', 'string', 'max:1000'],
+            'creator_can_post' => ['required', 'in:0,1'],
+            'user_can_post' => ['required', 'in:0,1'],
+            'show_in_header' => ['required', 'in:0,1'],
+            'show_in_footer' => ['required', 'in:0,1'],
             'position' => ['required'],
-            'status' => ['required','in:0,1']
-        ],[],[
+            'status' => ['required', 'in:0,1']
+        ], [], [
             'name_en' => trans("cruds.section_management.parent_section.fields.title"),
             'name_ch'  => trans("cruds.section_management.parent_section.fields.title"),
             'description_en' => trans("cruds.section_management.parent_section.fields.description"),
@@ -152,7 +152,7 @@ class SectionController extends Controller
             'position' => trans("cruds.section_management.parent_section.fields.position"),
             'status' => trans("cruds.global.status"),
         ]);
-        
+
 
         $section = Section::findOrFail($id);
         $section->name_en = $request->name_en;
@@ -167,7 +167,7 @@ class SectionController extends Controller
         $section->position = $request->position;
         $section->level = config("constant.sectionLevel.level1");
         $section->save();
-        return redirect()->back()->with(['message' => trans("messages.update_success",['module' => trans("cruds.section_management.parent_section.title_singular")]),'alert-type' =>  'success']);
+        return redirect()->back()->with(['message' => trans("messages.update_success", ['module' => trans("cruds.section_management.parent_section.title_singular")]), 'alert-type' =>  'success']);
     }
 
     /**
@@ -176,27 +176,27 @@ class SectionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request,$id)
+    public function destroy(Request $request, $id)
     {
-        if ($request->ajax()) { 
+        if ($request->ajax()) {
 
-           
+
             $section = Section::findOrFail($id);
-            if($section){
-               
-                $subsections =  Section::where('parent_id',$section->id)->get();    
-               
-                if($subsections->count() > 0){
+            if ($section) {
+
+                $subsections =  Section::where('parent_id', $section->id)->get();
+
+                if ($subsections->count() > 0) {
                     foreach ($subsections as $key => $value) {
-                        $childSection  = Section::where("parent_id",$value->id)->delete();
+                        $childSection  = Section::where("parent_id", $value->id)->delete();
                     }
                 }
-               
-                $subsections =  Section::where('parent_id',$section->id)->delete();
+
+                $subsections =  Section::where('parent_id', $section->id)->delete();
                 $section->delete();
                 $notification = array(
-                    'message' => trans("messages.delete_success",['module' => trans("cruds.parent_management.child_section.title_singular")]),
-                    'alert-type' =>'success' 
+                    'message' => trans("messages.delete_success", ['module' => trans("cruds.parent_management.child_section.title_singular")]),
+                    'alert-type' => 'success'
                 );
                 return $response = response()->json([
                     'success' => true,
@@ -217,15 +217,18 @@ class SectionController extends Controller
         if ($validator->passes()) {
             $section = Section::find($request->id);
             if ($section) {
-                $posters = Poster::where("parent_section",$request->id)->delete();
+                // update status of parent section
                 $section->status = $request->status;
                 $section->save();
+
+                // update status of posters which associatated with parent section
+                $posterStatus = $request->status == 1 ? 1 : 0;
+
+                $section->parentSectionPosters()->update(['status' => $posterStatus]);
                 return response()->json(['success' => true, 'message' => trans("messages.status_success")], 200);
             }
         } else {
             return response()->json(['success' => false, 'errors' => $validator->getMessageBag()->toArray(), 'message' => trans("messages.error_occured")], 400);
         }
     }
-
-
 }

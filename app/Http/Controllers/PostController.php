@@ -14,12 +14,11 @@ use Illuminate\Support\Facades\Crypt;
 
 class PostController extends Controller
 {
-    public function index(Request $request){
-
-     
+    public function index(Request $request)
+    {
       try {
         $slug = $request->slug;
-        $poster  = Poster::with(["parentSection" ,"subSection" ,"childSection","episodes.uploads","userDetails"])->withCount("reads")->where(["slug" => $slug, "status" => "1"])->first();
+        $poster  = Poster::with(["parentSection" ,"subSection" ,"episodes.uploads","userDetails"])->withCount("reads")->where(["slug" => $slug, "status" => "1"])->first();
         if(empty($poster)){
             return redirect()->route("home")->with(["alert-type" => "info" , "message" => trans("messages.poster_not_found")]);
         }
