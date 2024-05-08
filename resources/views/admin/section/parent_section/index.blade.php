@@ -7,13 +7,13 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>{{trans("cruds.section_management.parent_section.title_singular")}}</h1>
+            <h1>{{trans("cruds.section_management.parent_section.title")}}</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">{{trans("global.dashboard")}}</a></li>
               <li class="breadcrumb-item">{{trans("cruds.section_management.title_singular")}}</li>
-              <li class="breadcrumb-item active">{{trans("cruds.section_management.parent_section.title_singular")}}</li>
+              <li class="breadcrumb-item active">{{trans("cruds.section_management.parent_section.title")}}</li>
             </ol>
           </div>
          

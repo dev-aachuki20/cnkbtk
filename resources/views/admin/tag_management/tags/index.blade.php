@@ -7,13 +7,13 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>{{trans("cruds.tag_management.tag_type.title_singular")}}</h1>
+            <h1>{{trans("cruds.tag_management.tag.title")}}</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">{{trans("global.dashboard")}}</a></li>
               <li class="breadcrumb-item">{{trans("cruds.tag_management.title_singular")}}</li>
-              <li class="breadcrumb-item active">{{trans("cruds.tag_management.tag_type.title")}}</li>
+              <li class="breadcrumb-item active">{{trans("cruds.tag_management.tag.title")}}</li>
             </ol>
           </div>
          
@@ -31,9 +31,9 @@
            
             <div class="card">
                 <div class="card-header">
-                <h3 class="card-title">{{trans("cruds.tag_management.tag_type.title_singular")}}</h3>
+                <h3 class="card-title">{{trans("cruds.tag_management.tag.title")}}</h3>
                 <div class="pull-right">
-                    <a class="btn btn-success" href="{{route('admin.tag.create')}}" style="float:right">{{trans("cruds.global.add")}} {{trans("cruds.tag_management.tag_type.title_singular")}}</a>
+                    <a class="btn btn-success" href="{{route('admin.tag.create')}}" style="float:right">{{trans("cruds.global.add")}} {{trans("cruds.tag_management.tag.title_singular")}}</a>
                 </div>
                 </div>
                 <!-- /.card-header -->

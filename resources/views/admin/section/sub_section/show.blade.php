@@ -107,7 +107,7 @@
                                         <th>{{trans("cruds.section_management.sub_section.fields.show_in_header")}} </th>
                                         <td>
                                             @if($section->show_in_header == 1)
-                                                <span class="badge badge-info mr-1">Y{{trans("cruds.global.yes")}}</span>
+                                                <span class="badge badge-info mr-1">{{trans("cruds.global.yes")}}</span>
                                             @else 
                                                 <span class="badge badge-danger mr-1">{{trans("cruds.global.no")}}</span>
                                             @endif
