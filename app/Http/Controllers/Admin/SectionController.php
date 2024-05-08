@@ -162,7 +162,7 @@ class SectionController extends Controller
         $section->creator_can_post = $request->creator_can_post;
         $section->user_can_post = $request->user_can_post;
         $section->show_in_header = $request->show_in_header;
-        $section->show_in_footer = $request->show_in_header;
+        $section->show_in_footer = $request->show_in_footer;
         $section->status = $request->status;
         $section->position = $request->position;
         $section->level = config("constant.sectionLevel.level1");
