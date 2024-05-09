@@ -4534,9 +4534,9 @@ form#excelForm{
 .blacklist_box_user ul li span {
   font-weight: 800;
 }
-.blacklist_box_user ul {
+/* .blacklist_box_user ul {
   white-space: nowrap;
-}
+} */
 
 .dataTable  .btn {
   min-width: unset;

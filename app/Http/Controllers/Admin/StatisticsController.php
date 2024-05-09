@@ -211,10 +211,10 @@ class StatisticsController extends Controller
         //     $data[] = $tagTypeCount;
         //     // dd($data);
         // }
-        $dataCount = [];
         if ($tagTypes != null) {
             $colorIndex = 0;
             foreach ($tagTypes as $key => $tagType) {
+                $dataCount = [];
                 $tagIds = Tag::where('tag_type', $tagType)->pluck('id')->toArray();
                 // $postersIds = Poster::whereIn('tags', $tagIds)->pluck('id')->toArray();
                 $tagTypeCount = Poster::whereIn('tags', $tagIds)->whereBetween('created_at', [$startDate, $endDate])->get();
@@ -439,10 +439,11 @@ class StatisticsController extends Controller
                 list($labels, $data) = $this->generatePopularPostersGraph($monthlyDateRanges, $startDate, $endDate, 'month');
             }
         }
-        $dataCount = [];
+
         if ($tagTypes != null) {
             $colorIndex = 0;
             foreach ($tagTypes as $key => $tagType) {
+                $dataCount = [];
                 $tagIds = Tag::where('tag_type', $tagType)->pluck('id')->toArray();
                 $postersIds = Poster::whereIn('tags', $tagIds)->pluck('id')->toArray();
                 $tagTypeCount = PosterReadCount::whereIn('poster_id', $postersIds)->whereBetween('created_at', [$startDate, $endDate])->get();
