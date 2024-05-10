@@ -4,6 +4,9 @@ use App\Http\Controllers\Admin\StatisticsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\StatisticsCreatorController;
 use App\Http\Controllers\BlacklistUserController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\MessageController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -52,7 +55,19 @@ Route::group(["namespace" => "App\Http\Controllers"], function () {
 
 
 Route::resource('post', "App\Http\Controllers\PosterController")->middleware(["auth", "verified", "status"]);
+
+Route::get('chat/screen', [ChatController::class, 'chatScreen'])->name('chat.screen');
 Route::resource('chats', "App\Http\Controllers\ChatController")->middleware(["auth", "verified", "status"]);
+
+
+
+Route::post('/message/send', [MessageController::class, 'sendMessage'])->name('message.send');
+
+
+// Message routes 
+Route::get('/message/{projectId}/{userId}', [MessageController::class, 'index'])->name('message.index')->middleware(["auth", "verified", "status"]);
+Route::get('messages/{userId}', [MessageController::class, 'getMessages'])->name('message.fetch');
+
 // Route::get("post/edit/{param}","App\Http\Controllers\PosterController@edit")->name("post.edit")->middleware('auth');
 Route::post('post/update-status', 'App\Http\Controllers\PosterController@updateStatus')->name('post.updateStatus')->middleware(["auth", "verified"]);
 Route::post("post/remove-episode", "App\Http\Controllers\PosterController@removeEpisode")->name("post.remove-episode")->middleware(["auth", "verified"]);
@@ -72,6 +87,8 @@ Route::group(["namespace" => "App\Http\Controllers\User", 'as' => 'user.', "pref
     Route::post('/self-top-up/submit', "PointsController@paymenttopup")->name('self-top-up.submit');
 
     // Project Controller
+    Route::get('/project/status', "ProjectController@projectCreatorStatus")->name('project.status');
+
     Route::get('/project/detail/{creator_id}/{project_id}', "ProjectController@getProjectDetail")->name('project.detail');
     Route::get('/project/confirm', "ProjectController@confirmProjectByCreator")->name('creator.project.confirm');
     Route::get('/project/cancel', "ProjectController@cancelProjectByCreator")->name('creator.project.cancel');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\DataTables\ProjectStatusDataTable;
 use App\DataTables\ProjectUserDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Project\StoreProjectRequest;
@@ -243,8 +244,13 @@ class ProjectController extends Controller
     }
 
     // confirm project by user
-    public function cancelProjectByUser()
+    public function cancelProjectByUser($project_id, $creator_id)
     {
         dd('cancel');
+    }
+
+    public function projectCreatorStatus(ProjectStatusDataTable $dataTable)
+    {
+        return $dataTable->render('project.project-status');
     }
 }

@@ -236,6 +236,7 @@ return [
         'na' => "无法使用",
         'purchase' => "购买",
         'apply' => '申請',
+        'message' => '信息',
     ],
 
     'lang' => [
@@ -329,6 +330,7 @@ return [
         'project_details'  => '项目详情',
         'post'  => '郵政',
         'list' => '列表',
+        'request' => '要求',
         'fields' => [
             'type'     => '類型',
             'tags'          => '標籤',
@@ -345,6 +347,11 @@ return [
                 'tags' => '選擇標籤',
                 'creator' => '選擇創作者',
             ],
+            'creator_name' => '创建者姓名',
+            'status' => [
+                'locked' => '锁定',
+                'unlocked' => '解锁',
+            ]
         ],
         'headings' => [
             'cancelled_project'     => '取消的项目',

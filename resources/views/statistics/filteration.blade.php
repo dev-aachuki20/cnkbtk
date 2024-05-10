@@ -1,12 +1,12 @@
 <div class="row">
-    <div class="col-12 col-md-6 static-inputs date-range-container">
+    <div class="col-12 col-md-4 static-inputs date-range-container">
         <div id="filterContainer-daterange">
             <label for="dateRangePicker">{{__('cruds.statistics.statistics_filteration.daterange_title')}}</label>
             <input class="form-control" type="text" id="dateRangePicker" name="dateRangePicker" />
         </div>
     </div>
 
-    <div class="col-12 col-md-6 static-inputs tagtype-container" style="display: none;">
+    <div class="col-12 col-md-4 static-inputs tagtype-container" style="display: none;">
         <div id="filterContainer">
             <label for="tagtype">{{__('cruds.statistics.statistics_filteration.tag_type_title')}}</label>
             <select id="tagtype" class="form-control form-select" multiple="multiple">
@@ -18,4 +18,14 @@
             </select>
         </div>
     </div>
+
+    {{-- <div class="col-12 col-md-4 static-inputs purchase-container" style="display: none;">
+        <div id="filterContainer">
+            <label for="tagtype">Purchase</label>
+            <select id="other" class="form-control form-select">
+                <option value="">Purchase</option>
+                <option value="">View</option>
+            </select>
+        </div>
+    </div> --}}
 </div>

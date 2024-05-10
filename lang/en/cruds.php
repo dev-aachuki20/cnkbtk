@@ -231,6 +231,7 @@ return [
         'na' => "N/A",
         'purchase' => "Purchase",
         'apply' => 'Apply',
+        'message' => 'Message',
     ],
 
     'lang' => [
@@ -327,6 +328,7 @@ return [
         'project_details'  => 'Project Details',
         'post'  => 'Post',
         'list' => 'List',
+        'request' => 'Request',
         'fields' => [
             'type'     => 'Type',
             'tags'          => 'Tag',
@@ -343,6 +345,11 @@ return [
                 'tags' => 'Select Tags',
                 'creator' => 'Select Creator',
             ],
+            'creator_name' => 'Creator Name',
+            'status' => [
+                'locked' => 'Locked',
+                'unlocked' => 'Unlocked',
+            ]
         ],
         'headings' => [
             'cancelled_project'     => 'Cancelled Project',
