@@ -498,6 +498,13 @@ class StatisticsController extends Controller
         $labelText =  trans("cruds.most_popular_poster.fields.graph");
 
         list($labels, $data) = $this->calculateAverage($labels, $data);
+        // dd($labels, $data);
+        // $averageData = $this->calculateAverage($labels, $data);
+        // dd($averageData);
+        // $average = $averageData['average'];
+        // $labels = $averageData['labels'];
+        // $data = $averageData['data'];
+
         $html = view('statistics.graph', compact('labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
         return response()->json(['success' => true, 'html' => $html], 200);
@@ -642,12 +649,25 @@ class StatisticsController extends Controller
     // }
 
     //  Avarage Calculations FILTERATION
+    // private function calculateAverage($labels, $data)
+    // {
+    //     // dd('djkd');
+    //     $totalDays = count($labels);
+    //     $total = array_sum($data);
+    //     $average = $totalDays > 0 ? $total / $totalDays : 0;
+
+    //     $labels[] = 'Average';
+    //     $data[] = $average;
+
+    //     return [$labels, $data];
+    // }
+
     private function calculateAverage($labels, $data)
     {
         $totalDays = count($labels);
         $total = array_sum($data);
-        $average = $totalDays > 0 ? $total / $totalDays : 0;
 
+        $average = $totalDays > 0 ? $total / $totalDays : 0;
         $labels[] = 'Average';
         $data[] = $average;
 

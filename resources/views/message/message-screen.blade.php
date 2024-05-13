@@ -23,10 +23,6 @@
     <div class="container">
         <div class="px-0 chatboxGroup open" id="chatboxGroup">
             <div class="row h-100 gx-3">
-                @php
-                $ifRoleUser = auth()->user()->role_id == config('constant.role.user');
-                @endphp
-                @if($ifRoleUser)
                 <div class="col-xxl-3 col-lg-4 col-md-5 h-100 animate__animated animate__fadeInUp">
                     <div class="sidebar h-100 p-3 rounded-4">
                         <div class="user-list h-100">
@@ -46,7 +42,8 @@
                                 <!-- dynamic users -->
                                 <div class="col-12 h-100 flex-fill overflow-y-auto">
                                     <ul id="userGroupList" class="list-group rounded-0">
-                                        @foreach($creators as $user)
+                                        @if(isset($users))
+                                        @foreach($users as $user)
                                         <li class="list-group-item userporfile activeAccount dynamicUserList" data-user-id="{{$user->id}}" data-user-name="{{$user->user_name}}">
                                             @php
                                             if(isset($user->uploads) && !empty($user->uploads) && count($user->uploads) > 0){
@@ -64,6 +61,7 @@
                                             </div>
                                         </li>
                                         @endforeach
+                                        @endif
                                     </ul>
                                 </div>
                                 <!-- dynamic users end -->
@@ -71,8 +69,8 @@
                         </div>
                     </div>
                 </div>
-                @endif
-                <div class="{{$ifRoleUser ? 'col-xxl-9 col-lg-8 col-md-7 col-md-12' : 'col-xxl-12 col-lg-12' }} chat-panel h-100 chatscreen">
+
+                <div class="col-xxl-9 col-lg-8 col-md-7 chat-panel h-100 chatscreen ">
                     <div class="card chatcard h-100 overflow-hidden animate__animated animate__fadeInUp">
                         <div class="row h-100 flex-column flex-nowrap overflow-hidden">
                             <div class="col-12">
@@ -81,7 +79,7 @@
                                     if(isset($user->uploads) && !empty($user->uploads) && count($user->uploads) > 0){
                                     $imagePath = asset('storage/'. $user->uploads->first()->path );
                                     } else {
-                                    $imagePath = asset('dummy-user.svg' );
+                                    $imagePath = null;
                                     }
                                     @endphp
                                     <div class="userporfile activeAccount">
@@ -191,19 +189,6 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    // Searching users
-    $('#searchInput').on('input', function() {
-        var searchQuery = $(this).val().trim().toLowerCase();
-        $('.userporfile').each(function() {
-            var username = $(this).find('.content').text().trim().toLowerCase();
-            if (username.includes(searchQuery)) {
-                $(this).show();
-            } else {
-                $(this).hide();
-            }
-        });
-    });
-
     $('#messageForm').submit(function(e) {
         e.preventDefault();
         sendMessage();
@@ -245,42 +230,6 @@
                 }
             });
         }
-    }
-
-    $(document).ready(function() {
-
-        $('.dynamicUserList:first').trigger('click');
-
-        // show chat screen when click user in sidebar
-        $(document).on('click', '.dynamicUserList', function() {
-
-            $('.dynamicUserList').removeClass('active');
-            $(this).addClass('active');
-
-            var userId = $(this).data('user-id');
-            var userName = $(this).data('user-name');
-            $.ajax({
-                type: 'GET',
-                url: "{{route('message.screen')}}",
-                data: {
-                    user_id: userId,
-                    user_name: userName,
-                },
-                dataType: 'json',
-                success: function(response) {
-                    $('.chatscreen').html(response.html);
-                    scrollToBottom();
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-    });
-
-    function scrollToBottom() {
-        var chatBox = document.getElementById("messageContainer");
-        chatBox.scrollTop = chatBox.scrollHeight;
     }
 </script>
 

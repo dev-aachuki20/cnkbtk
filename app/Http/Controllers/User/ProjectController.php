@@ -135,8 +135,6 @@ class ProjectController extends Controller
 
             DB::commit();
 
-            // return redirect()->route('user.project.index')->with(trans("messages.update_success", ['module' => trans("global.project")]));
-
             $routeUrl = URL::route('user.project.index');
 
             return response()->json(['reloadUrl' => $routeUrl, 'message' => trans("messages.update_success", ['module' => trans("global.project")]), 'alert-type' =>  'success'], 200);

@@ -32,7 +32,7 @@
                 <div class="right-single-box blacklist_box_user project_details_card h-100">
                     <div class="row gx-3">
                         <div class="col-12 text-end">
-                            <a href="{{ route('message.index', ['projectId' => $item['project']->id]) }}" class="btn btn-primary ml-auto cancel-btn" id="message" data-project-id="{{$item['project']->id}}" data-user-id="{{$item['project']->user_id}}">
+                            <a href="{{ route('message.index', ['projectId' => $item['project']->id, 'userId' => $item['project']->user_id]) }}" class="btn btn-primary ml-auto cancel-btn" id="message" data-project-id="{{$item['project']->id}}" data-user-id="{{$item['project']->user_id}}">
                                 {{__('cruds.global.message')}}
                             </a>
                         </div>
@@ -74,12 +74,45 @@
                             </ul>
                         </div>
 
+                        @if(isset($item['creatorStatus']) && $item['creatorStatus'] == 0)
+                        <div class="col-12">
+                            <button type="button" class="btn btn-primary ml-3 cancel-btn" id="cancel" data-project-id="{{$item['project']->id}}" data-user-id="{{$item['project']->user_id}}" data-creator-id="{{Auth::user()->id}}" {{ $item['creatorStatus'] == 0 ? 'disabled' : '' }}>
+                                {{ $item['creatorStatus'] == 0 ? __('cruds.create_project.headings.cancelled_project') : __('cruds.create_project.headings.cancel_project')}}
+                            </button>
+                        </div>
+                        @elseif($item['creatorStatus'] == 1)
+                        <div class="col-12">
+                            <button type="button" class="btn btn-success ml-3 confirm-btn" id="confirm" data-project-id="{{$item['project']->id}}" data-user-id="{{$item['project']->user_id}}" data-creator-id="{{Auth::user()->id}}" {{ $item['creatorStatus'] == 1 ? 'disabled' : '' }}>
+                                {{ $item['creatorStatus'] == 1 ? __('cruds.create_project.headings.confirmed_project') : __('cruds.create_project.headings.confirm_project') }}
+                            </button>
+                        </div>
+                        @elseif($item['creatorStatus'] == 2)
                         <div class="col-12">
                             <button type="button" class="btn btn-secondary add-bid-btn" id="addBidModal" data-project-id="{{$item['project']->id}}" data-user-id="{{$item['project']->user_id}}" data-creator-id="{{Auth::user()->id}}">
                                 {{ $item['creatorStatus'] == 2 ? __('cruds.create_project.headings.bid_added') : __('cruds.create_project.headings.add_bid') }}
                             </button>
                         </div>
-
+                        @else
+                        <div class="col-12">
+                            <div class="row g-3">
+                                <div class="col-auto">
+                                    <button type="button" class="btn btn-secondary add-bid-btn" id="addBidModal" data-project-id="{{$item['project']->id}}" data-user-id="{{$item['project']->user_id}}" data-creator-id="{{Auth::user()->id}}">
+                                        {{__('cruds.create_project.headings.add_bid')}}
+                                    </button>
+                                </div>
+                                <div class="col-auto">
+                                    <button type="button" class="btn btn-success ml-3 confirm-btn" id="confirm" data-project-id="{{$item['project']->id}}" data-user-id="{{$item['project']->user_id}}" data-creator-id="{{Auth::user()->id}}">
+                                        {{__('cruds.create_project.headings.confirm_project')}}
+                                    </button>
+                                </div>
+                                <div class="col-auto">
+                                    <button type="button" class="btn btn-primary ml-3 cancel-btn" id="cancel" data-project-id="{{$item['project']->id}}" data-user-id="{{$item['project']->user_id}}" data-creator-id="{{Auth::user()->id}}">
+                                        {{__('cruds.create_project.headings.cancel_project')}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>

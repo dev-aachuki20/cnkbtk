@@ -40,11 +40,14 @@ class ProjectUserDataTable extends DataTable
             })
             ->addColumn('action', function ($record) {
                 $action  = '<div class="d-flex">';
+                $action .= '<a class="btn btn-success btn-sm" title="' . trans("cruds.global.view") . '" href="' . route('message.index', ['projectId' => $record->id]) . '">
+                Message
+            </a>';
                 $action .= '<a class="btn btn-primary btn-sm" title="' . trans("cruds.global.view") . '" href="' . route('user.project.show', $record->id) . '">
                 <i class="fa fa-eye"></i>
             </a>';
                 if ($record->project_status != 1) {
-                    $action .= '<a class="btn btn-primary btn-sm" title="' . trans("cruds.global.view") . '" href="'.route("user.project.edit", $record->id).'">
+                    $action .= '<a class="btn btn-primary btn-sm" title="' . trans("cruds.global.view") . '" href="' . route("user.project.edit", $record->id) . '">
                 <i class="fa fa-pencil"></i>
             </a>';
                 }

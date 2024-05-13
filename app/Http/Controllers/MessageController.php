@@ -3,24 +3,47 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chat;
+use App\Models\Project;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use PhpParser\Node\Stmt\TryCatch;
 
 class MessageController extends Controller
 {
-    public function index($projectId, $userId)
+    public function index($projectId)
     {
         try {
-            $senderId = Auth::user()->id; //creator
-            $receiverId = $userId; // userid
-            $projectId = $projectId; //project id
+            $senderId = Auth::user()->id;
+            $senderRoleId = Auth::user()->role_id;
+            $project = Project::findOrFail($projectId);
+            $userId = $project->user_id;
+            $creators = null;
+            if ($senderRoleId == config('constant.role.creator')) {
+                $receiverId = $userId;
+                $projectId = $projectId;
+            } else {
+                //get all creators so i can show in the sidebar
+                $creators = $project->creators;
+                // $first
+                $receiverId = $senderId;
+            }
+
 
             $user = User::with('uploads')->findOrFail($userId);
 
-            // get all user data
-            return view('message.index', compact('receiverId', 'senderId', 'projectId', 'user'));
+            // get all chat data
+            $getChatData = Chat::with('sender', 'receiver')
+                ->where(function ($query) use ($receiverId, $senderId) {
+                    $query->where('receiver_id', $receiverId)
+                        ->where('sender_id', $senderId);
+                })
+                ->orWhere(function ($query) use ($receiverId, $senderId) {
+                    $query->where('sender_id', $receiverId)
+                        ->where('receiver_id', $senderId);
+                })
+                ->orderBy('id', 'asc')
+                ->get();
+            return view('message.index', compact('receiverId', 'senderId', 'projectId', 'user', 'getChatData', 'creators'));
         } catch (\Throwable $th) {
         }
     }
@@ -86,31 +109,50 @@ class MessageController extends Controller
         //
     }
 
-    public function sendMessage(Request $request)
+    public function storeMessage(Request $request)
     {
-        // $request->validate([
-        //     'content' => 'required|string',
-        //     // 'recipientId' => 'required|exists:users,id'
-        // ]);
-
         Chat::create($request->all());
-
-
-
-        // Return a success response
-        // return response()->json(['success' => true]);   
-        // return  response()->json(['message' => trans("messages.follow_success"),'alert-type' =>  'success',"follow_status" => 0]);
-
         return  response()->json(['message' => 'Message sent successfully']);
     }
 
-    public function getMessages($userId)
-    {
-        dd('gbjf');
-        $user = User::findOrFail($userId);
-        $incomingMessages = $user->incomingMessages()->with('sender')->get();
-        $outgoingMessages = $user->outgoingMessages()->with('receiver')->get();
 
-        return view('messages', compact('incomingMessages', 'outgoingMessages'));
+    // public function displayUserSide($projectId)
+    // {
+    //     $userId = Auth::user()->id;
+    //     $user = User::findOrFail($userId);
+
+    //     return view('message.message-screen');
+    // }
+
+    public function messageScreen(Request $request)
+    {
+        try {
+            $userId = $request->user_id;
+            $user = User::findOrFail($userId);
+            $senderId = Auth()->user()->id;
+
+            $getChatData = Chat::with('sender', 'receiver')
+                ->where(function ($query) use ($userId, $senderId) {
+                    $query->where('receiver_id', $userId)
+                        ->where('sender_id', $senderId);
+                })
+                ->orWhere(function ($query) use ($userId, $senderId) {
+                    $query->where('sender_id', $userId)
+                        ->where('receiver_id', $senderId);
+                })
+                ->orderBy('id', 'asc')
+                ->get();
+
+            $html = view('chat.chat-screen', compact('user', 'getChatData'))->render();
+
+            // return response()->json(['message' => trans("messages.add_success", ['module' => trans("global.blacklist_user")]), 'alert-type' =>  'success'], 200);
+
+            return response()->json(['html' => $html]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => trans("messages.something_went_wrong"),
+                'alert-type' => 'error'
+            ], 500);
+        }
     }
 }

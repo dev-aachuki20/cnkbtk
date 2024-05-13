@@ -61,12 +61,13 @@ Route::resource('chats', "App\Http\Controllers\ChatController")->middleware(["au
 
 
 
-Route::post('/message/send', [MessageController::class, 'sendMessage'])->name('message.send');
+Route::post('/message/send', [MessageController::class, 'storeMessage'])->name('message.send');
 
 
 // Message routes 
-Route::get('/message/{projectId}/{userId}', [MessageController::class, 'index'])->name('message.index')->middleware(["auth", "verified", "status"]);
-Route::get('messages/{userId}', [MessageController::class, 'getMessages'])->name('message.fetch');
+// Route::get('/message/{projectId}/{userId}', [MessageController::class, 'index'])->name('message.index')->middleware(["auth", "verified", "status"]);
+Route::get('/message/{projectId}', [MessageController::class, 'index'])->name('message.index')->middleware(["auth", "verified", "status"]);
+Route::get('messages/screen', [MessageController::class, 'messageScreen'])->name('message.screen');
 
 // Route::get("post/edit/{param}","App\Http\Controllers\PosterController@edit")->name("post.edit")->middleware('auth');
 Route::post('post/update-status', 'App\Http\Controllers\PosterController@updateStatus')->name('post.updateStatus')->middleware(["auth", "verified"]);
