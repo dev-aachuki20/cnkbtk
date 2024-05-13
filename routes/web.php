@@ -93,7 +93,7 @@ Route::group(["namespace" => "App\Http\Controllers\User", 'as' => 'user.', "pref
     Route::get('/project/confirm', "ProjectController@confirmProjectByCreator")->name('creator.project.confirm');
     Route::get('/project/cancel', "ProjectController@cancelProjectByCreator")->name('creator.project.cancel');
     Route::get('/projects/confirm/{project_id}/{creator_id}', "ProjectController@confirmProjectByUser")->name('project.confirm');
-    Route::get('/projects/cancel', "ProjectController@cancelProjectByUser")->name('project.cancel');
+    // Route::get('/projects/cancel', "ProjectController@cancelProjectByUser")->name('project.cancel');
     Route::get('/project/request', "ProjectController@getAllProjectRequest")->name('project.request');
     Route::post('/add-project-bid', "ProjectController@addBidByCreator")->name('add.project.bid');
     Route::resource('project', "ProjectController")->middleware('checkProjectAccess');

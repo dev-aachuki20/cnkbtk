@@ -205,13 +205,13 @@ $siteSettingData = getSiteSetting();
         function toggleTagTypeDropdown(activeMenu) {
             if (activeMenu === 'number-posters') {
                 $('.tagtype-container').css('display', 'block');
-                // $('.purchase-container').css('display', 'none');
+                $('.purchase-container').css('display', 'none');
             } else if (activeMenu === 'popular-posters') {
                 $('.tagtype-container').css('display', 'block');
-                // $('.purchase-container').css('display', 'block');
+                $('.purchase-container').css('display', 'block');
             } else {
                 $('.tagtype-container').css('display', 'none');
-                // $('.purchase-container').css('display', 'none');
+                $('.purchase-container').css('display', 'none');
             }
         }
 

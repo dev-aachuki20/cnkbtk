@@ -100,49 +100,49 @@
       <!-- Project Status -->
       <div class="col-lg-6 col-md-10 col-12">
         <div class="right-single-box blacklist_box_user project_details_card">
-          <div class="col-12 text-end">
+          {{-- <div class="col-12 text-end">
             @if($project->project_status == 1)
             <button type="button" class="btn btn-primary ml-auto cancel-btn" id="cancel">
               {{__('cruds.global.message')}}
-            </button>
-            @endif
-          </div>
-          <div class="row gx-3">
-            <h4 class="text-left pb-3"><b>{{trans("cruds.create_project.project")}} {{trans("cruds.global.status")}}</b></h4>
-            <div class="col">
-              <ul>
-                @php
-                $creator = $project->creators()->wherePivot('creator_status', 1)->wherePivot('user_status', 1)->first();
-                @endphp
+          </button>
+          @endif
+        </div> --}}
+        <div class="row gx-3">
+          <h4 class="text-left pb-3"><b>{{trans("cruds.create_project.project")}} {{trans("cruds.global.status")}}</b></h4>
+          <div class="col">
+            <ul>
+              @php
+              $creator = $project->creators()->wherePivot('creator_status', 1)->wherePivot('user_status', 1)->first();
+              @endphp
 
-                <li>
-                  <div class="main-title">
-                    <h6> <span>{{trans("cruds.create_project.fields.creator_name")}} :</span> {{ $creator->user_name   ?? 'N/A'}}</h6>
-                  </div>
-                </li>
+              <li>
+                <div class="main-title">
+                  <h6> <span>{{trans("cruds.create_project.fields.creator_name")}} :</span> {{ $creator->user_name   ?? 'N/A'}}</h6>
+                </div>
+              </li>
 
-                <li>
-                  <div class="main-title">
-                    <h6> <span>{{trans("cruds.create_project.fields.budget")}} :</span>{{ $creator->bid  ?? $project->budget }} CN¥</h6>
-                  </div>
-                </li>
+              <li>
+                <div class="main-title">
+                  <h6> <span>{{trans("cruds.create_project.fields.budget")}} :</span>{{ $creator->bid  ?? $project->budget }} CN¥</h6>
+                </div>
+              </li>
 
-                <li>
-                  <div class="main-title">
-                    <h6> <span>{{trans("cruds.global.status")}}:</span> @if($project->project_status == 1)
-                      <small class="badge badge-info mr-1">{{trans("cruds.create_project.fields.status.locked")}}</small>
-                      @else
-                      <small class="badge badge-danger mr-1">{{trans("cruds.create_project.fields.status.unlocked")}}</small>
-                      @endif
-                    </h6>
-                  </div>
-                </li>
-              </ul>
-            </div>
+              <li>
+                <div class="main-title">
+                  <h6> <span>{{trans("cruds.global.status")}}:</span> @if($project->project_status == 1)
+                    <small class="badge badge-info mr-1">{{trans("cruds.create_project.fields.status.locked")}}</small>
+                    @else
+                    <small class="badge badge-danger mr-1">{{trans("cruds.create_project.fields.status.unlocked")}}</small>
+                    @endif
+                  </h6>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
+  </div>
   </div>
 </section>
 @endsection

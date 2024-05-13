@@ -43,6 +43,11 @@ class ProjectUserDataTable extends DataTable
                 $action .= '<a class="btn btn-primary btn-sm" title="' . trans("cruds.global.view") . '" href="' . route('user.project.show', $record->id) . '">
                 <i class="fa fa-eye"></i>
             </a>';
+                if ($record->project_status != 1) {
+                    $action .= '<a class="btn btn-primary btn-sm" title="' . trans("cruds.global.view") . '" href="'.route("user.project.edit", $record->id).'">
+                <i class="fa fa-pencil"></i>
+            </a>';
+                }
                 $action .= '<form action="' . route('user.project.destroy', $record->id) . '" method="POST" class="deleteProject">
             <input type="hidden" name="_method" value="DELETE"> 
             <input type="hidden" name="_token" value="' . csrf_token() . '">

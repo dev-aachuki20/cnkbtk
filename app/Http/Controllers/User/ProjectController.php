@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
 use App\Notifications\ProjectCreatedNotification;
 use App\Notifications\ProjectLockedNotification;
+use App\Notifications\ProjectUpdatedNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
@@ -86,12 +87,63 @@ class ProjectController extends Controller
         return view("project.show", compact('project'));
     }
 
-    public function edit($id)
+    public function edit(Project $project)
     {
+        $tagTypes = TagType::all();
+        $creators = User::where('role_id', config("constant.role.creator"))->get();
+        return view("project.edit", compact('tagTypes', 'creators', 'project'));
     }
 
     public function update(Request $request, $id)
     {
+        try {
+            if (BlacklistUser::where('email', auth()->user()->email)->exists()) {
+                return response()->json(['message' => trans("messages.project_request_failed"), 'alert-type' => 'error'], 403);
+            }
+            DB::beginTransaction();
+            $project = Project::findOrFail($id);
+
+            $project->update([
+                'type' => $request->type,
+                'tags_id' => $request->tags_id,
+                'budget' => $request->budget,
+                'status' => $request->status,
+                'comment' => $request->comment,
+                'copyright' => $request->has('copyright') ? 1 : 0,
+            ]);
+
+            if ($request->has('creator_id')) {
+                $project->creators()->sync($request->input('creator_id'));
+            }
+
+            $creatorIds = $request->input('creator_id');
+
+            if ($creatorIds) {
+                foreach ($creatorIds as $creatorId) {
+                    $creator = User::find($creatorId);
+                    Notification::send($creator, new ProjectUpdatedNotification($project, $creator));
+                }
+            } else {
+                $creator = User::where('role_id', config("constant.role.creator"))->get();
+                if ($creator) {
+                    foreach ($creator as $creatorId) {
+                        $creator = User::find($creatorId->id);
+                        Notification::send($creator, new ProjectUpdatedNotification($project, $creator));
+                    }
+                }
+            }
+
+            DB::commit();
+
+            // return redirect()->route('user.project.index')->with(trans("messages.update_success", ['module' => trans("global.project")]));
+
+            $routeUrl = URL::route('user.project.index');
+
+            return response()->json(['reloadUrl' => $routeUrl, 'message' => trans("messages.update_success", ['module' => trans("global.project")]), 'alert-type' =>  'success'], 200);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(['message' => $e->getMessage(), 'alert-type' => 'error'], 500);
+        }
     }
 
     public function destroy(Request $request, Project $project)
@@ -244,10 +296,10 @@ class ProjectController extends Controller
     }
 
     // confirm project by user
-    public function cancelProjectByUser($project_id, $creator_id)
-    {
-        dd('cancel');
-    }
+    // public function cancelProjectByUser($project_id, $creator_id)
+    // {
+    //     dd('cancel');
+    // }
 
     public function projectCreatorStatus(ProjectStatusDataTable $dataTable)
     {

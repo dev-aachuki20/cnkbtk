@@ -15,7 +15,7 @@
                     </div>
                     <div class="useraccount text-truncate">
                         <h4 class="m-0 text-truncate" id="chatHeader">{{$user->user_name ?? ''}}</h4>
-                        <p class="text-truncate content m-0 activeuser">Active</p>
+                        <!-- <p class="text-truncate content m-0 activeuser">Active</p> -->
                     </div>
                 </div>
                 <div class="usersetting d-flex align-items-center gap-2">
@@ -26,7 +26,7 @@
                             </svg>
                         </button>
                         <ul class="dropdown-menu border-0 p-0 rounded-3 overflow-hidden" aria-labelledby="dropdownMenuButton1">
-                            <li><button type="button" class="dropdown-item del_btn dash-btn red-bg rounded-3">Delete</button></li>
+                            <li><button type="button" class="dropdown-item del_btn dash-btn red-bg rounded-3">{{__('cruds.global.delete')}}</button></li>
                         </ul>
                     </div>
                     <button class="btn close-btn d-md-none d-flex shadow-none border-0">
@@ -44,28 +44,28 @@
                 @endphp
 
                 @foreach($getChatData as $chat)
-                    @php
-                    $istTime = $chat->created_at->setTimezone('Asia/Kolkata');
-                    $formattedTime = $istTime->format('h:i A');
-                    $formattedDate = $istTime->format('d F Y');
-                    @endphp
+                @php
+                $istTime = $chat->created_at->setTimezone('Asia/Kolkata');
+                $formattedTime = $istTime->format('h:i A');
+                $formattedDate = $istTime->format('d F Y');
+                @endphp
 
-                    @if ($formattedDate !== $prevDate)
-                    <div class="datemention"><span>{{ $formattedDate }}</span></div>
-                        @php
-                            $prevDate = $formattedDate;
-                        @endphp
-                    @endif
+                @if ($formattedDate !== $prevDate)
+                <div class="datemention"><span>{{ $formattedDate }}</span></div>
+                @php
+                $prevDate = $formattedDate;
+                @endphp
+                @endif
 
-                    @if($chat->sender_id == Auth::user()->id)
-                    <div class="message outgoing">
-                        <div class="message-content">{{ $chat->content }} <span class="message_time">{{ $formattedTime }}</span></div>
-                    </div>
-                    @else
-                    <div class="message incoming">
-                        <div class="message-content">{{ $chat->content }} <span class="message_time">{{ $formattedTime }}</span></div>
-                    </div>
-                    @endif
+                @if($chat->sender_id == Auth::user()->id)
+                <div class="message outgoing">
+                    <div class="message-content">{{ $chat->content }} <span class="message_time">{{ $formattedTime }}</span></div>
+                </div>
+                @else
+                <div class="message incoming">
+                    <div class="message-content">{{ $chat->content }} <span class="message_time">{{ $formattedTime }}</span></div>
+                </div>
+                @endif
                 @endforeach
             </div>
         </div>

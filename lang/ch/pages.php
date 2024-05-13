@@ -172,7 +172,7 @@ return [
             'personal_information' => "个人信息",
             'personal_info_text' => "管理您的个人信息，包括可以联系您的电话号码和电子邮件地址.",
             "user_name" => "用户名",
-            "uid" => "Uid",
+            "uid" => "用户识别码",
             "email_status" => "电子邮件状态",
             "email_address" => "电子邮件地址",
             "active_profile" => "活动档案",

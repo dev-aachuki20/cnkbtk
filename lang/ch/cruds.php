@@ -254,6 +254,10 @@ return [
             'week' => "星期",
             'month' => "月",
             'custom_range'      => "定制范围",
+            'all'      => "全部",
+            'purchased'      => "已购买",
+            'visited'      => "访问过",
+            'filter'      => "筛选",
         ]
     ],
 
@@ -280,13 +284,13 @@ return [
     ],
 
     'most_popular_poster' => [
-        'title'             => '最受歡迎的海報',
-        'title_singular'    => '最受歡迎海報',
+        'title'             => '访问量最大的海报',
+        'title_singular'    => '访问量最大的海报',
         'fields' => [
-            'num_graph'     => '最受欢迎的海报图',
-            'time'          => '熱門海報時間',
-            'count'         => '熱門海報數量',
-            'graph'         => '熱門海報圖',
+            'num_graph'     => '访问量最大的海报图',
+            'time'          => '访问海报时间',
+            'count'         => '访问量最大的海报',
+            'graph'         => '访问海报图',
         ]
     ],
 

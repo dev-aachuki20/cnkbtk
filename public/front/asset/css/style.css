@@ -4243,11 +4243,11 @@ form#excelForm{
     position: absolute;
     bottom: 2px;
     right: 2px;
-    background-color: var(--dark-gray-color);
+    /* background-color: var(--dark-gray-color); */
 }
-.chatboxGroup .userporfile.activeAccount .userimage::before{
+/* .chatboxGroup .userporfile.activeAccount .userimage::before{
     background-color: #0fef71;
-}
+} */
 .chatboxGroup .userporfile .userimage .userpic{
     height: 100%;
     width: 100%;

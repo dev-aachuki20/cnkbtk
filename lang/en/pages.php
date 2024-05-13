@@ -193,7 +193,7 @@ return [
 
         "blacklist_user_tab" => [
             "blacklist" => "Blacklist",
-            "user" => "User",
+            "user" => "Users",
             "blacklist_users" => "Blacklist User",
             "users_not_available" => "Blacklist users not available",
         ]

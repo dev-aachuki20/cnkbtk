@@ -122,7 +122,7 @@
                           {{trans("global.post_history")}}
                         </a>
                       </li>
-                      <li>
+                     {{-- <li>
                         <a class="dropdown-item" href="{{route('chats.index')}}">
                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M13.5 21.5H2C1.45 21.5 1 21.05 1 20.5V7.5C1 3.5 3 1.5 7 1.5H15C19 1.5 21 3.5 21 7.5V12.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -133,7 +133,7 @@
                           </svg>
                           {{trans("global.chat")}}
                         </a>
-                      </li>
+                      </li> --}}
                       <li>
                         <form method="post" action="{{route('logout')}}">
 
@@ -392,7 +392,7 @@
                         @endif
 
 
-                        <li>
+                      {{--  <li>
                           <a class="dropdown-item {{Request::is('chats') ? 'active' : ''}}" href="{{route('chats.index')}}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                               <path d="M13.5 21.5H2C1.45 21.5 1 21.05 1 20.5V7.5C1 3.5 3 1.5 7 1.5H15C19 1.5 21 3.5 21 7.5V12.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -403,7 +403,7 @@
                             </svg>
                             {{trans("global.chat")}}
                           </a>
-                        </li>
+                        </li> --}}
 
                         @if(Auth::user() != null && auth()->user()->role_id == config("constant.role.user"))
 

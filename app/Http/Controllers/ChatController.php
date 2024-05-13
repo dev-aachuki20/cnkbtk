@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Chat;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use PhpParser\Node\Stmt\TryCatch;
 
 class ChatController extends Controller
 {
@@ -21,18 +19,18 @@ class ChatController extends Controller
             $userLogin = auth()->user();
             $users = [];
             if ($userLogin->role_id == config("constant.role.user")) {
-                // get all creators.
-                $users = User::where('role_id', config("constant.role.creator"))->get();
+                $users = User::where('role_id', config("constant.role.creator"))->get(); // get all creators.
             } else if ($userLogin->role_id == config("constant.role.creator")) {
-                // get all users.
-                $users = User::where('role_id', config("constant.role.user"))->get();
+                $users = User::where('role_id', config("constant.role.user"))->get(); // get all users.
             } else {
-                // get both creator and users.
-                $users = User::where('role_id', config("constant.role.user"))->orWhere('role_id', config("constant.role.creator"))->get();
+                $users = User::where('role_id', config("constant.role.user"))->orWhere('role_id', config("constant.role.creator"))->get();  // get both creator and users.
             }
             return view('chat.index', compact('users'));
-        } catch (\Throwable $th) {
-            //throw $th;
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => trans("messages.something_went_wrong"),
+                'alert-type' => 'error'
+            ], 500);
         }
     }
 
@@ -55,8 +53,15 @@ class ChatController extends Controller
      */
     public function store(Request $request)
     {
-        Chat::create($request->all());
-        return  response()->json(['message' => 'Message sent successfully']);
+        try {
+            Chat::create($request->all());
+            return  response()->json(['message' => 'Message sent successfully']);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => trans("messages.something_went_wrong"),
+                'alert-type' => 'error'
+            ], 500);
+        }
     }
 
     /**
@@ -129,7 +134,6 @@ class ChatController extends Controller
 
             return response()->json(['html' => $html]);
         } catch (\Exception $e) {
-            dd($e);
             return response()->json([
                 'message' => trans("messages.something_went_wrong"),
                 'alert-type' => 'error'

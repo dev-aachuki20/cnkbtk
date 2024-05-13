@@ -10,7 +10,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{route("home")}}">{{trans("global.home")}}</a></li>
-                <li class="breadcrumb-item active">{{ Str::ucfirst(array_search(auth()->user()->role_id, config("constant.role"))) }}</li>
+                <!-- <li class="breadcrumb-item active">{{ Str::ucfirst(array_search(auth()->user()->role_id, config("constant.role"))) }}</li> -->
                 <li class="breadcrumb-item active">{{trans("global.chat")}}</li>
             </ol>
         </nav>
@@ -30,7 +30,7 @@
                                 <div class="col-12 mb-3">
                                     <div class="input-group searchbar">
                                         <!-- saerch user -->
-                                        <input type="text" id="searchInput" class="form-control rounded-pill" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                                        <input type="text" id="searchInput" class="form-control rounded-pill" placeholder="{{__('cruds.create_project.fields.user_name')}}" aria-label="Username" aria-describedby="basic-addon1">
                                         <!-- search user end -->
                                         <button class="shadow-none btn add_btn dash-btn green-bg w-115 m-0 border-0 rounded-pill">
                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -57,7 +57,7 @@
                                             </div>
                                             <div class="useraccount">
                                                 <h5 class="content"><span class="text-truncate">{{$user->user_name}}</span> <span class="time">11:41 AM</span></h5>
-                                                <p class="text-truncate content">Sent To : {{auth()->user()->user_name}}</p>
+                                                {{-- <p class="text-truncate content">Sent To : {{auth()->user()->user_name}}</p> --}}
                                             </div>
                                         </li>
                                         @endforeach
@@ -139,7 +139,6 @@
                 dataType: 'json',
                 success: function(response) {
                     $('.chatscreen').html(response.html);
-                    // scrollToBottom('.chatscreen');
                     scrollToBottom();
                 },
                 error: function(xhr, status, error) {
@@ -150,9 +149,9 @@
 
 
     });
-    // Function to scroll to the bottom of the chat screen
+
     function scrollToBottom() {
-        var chatBox = $("#messageContainer");
+        var chatBox = document.getElementById("messageContainer");
         chatBox.scrollTop = chatBox.scrollHeight;
     }
 </script>

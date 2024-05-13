@@ -19,13 +19,14 @@
         </div>
     </div>
 
-    {{-- <div class="col-12 col-md-4 static-inputs purchase-container" style="display: none;">
+    <div class="col-12 col-md-4 static-inputs purchase-container" style="display: none;">
         <div id="filterContainer">
-            <label for="tagtype">Purchase</label>
+            <label for="tagtype">{{__('cruds.statistics.statistics_filteration.filter')}}</label>
             <select id="other" class="form-control form-select">
-                <option value="">Purchase</option>
-                <option value="">View</option>
+                <option value="">{{__('cruds.statistics.statistics_filteration.all')}}</option>
+                <option value="">{{__('cruds.statistics.statistics_filteration.purchased')}}</option>
+                <option value="">{{__('cruds.statistics.statistics_filteration.visited')}}</option>
             </select>
         </div>
-    </div> --}}
+    </div>
 </div>

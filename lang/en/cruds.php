@@ -249,6 +249,10 @@ return [
             'week'              => "Week",
             'month'             => "Month",
             'custom_range'      => "Custom Range",
+            'all'      => "All",
+            'purchased'      => "Purchased",
+            'visited'      => "Visited",
+            'filter'      => "Filter",
         ]
     ],
 
@@ -275,12 +279,12 @@ return [
     ],
 
     'most_popular_poster' => [
-        'title'             => 'Most Popular Posters',
-        'title_singular'    => 'Most Popular Poster',
+        'title'             => 'Most Visited Posters',
+        'title_singular'    => 'Most Visited Poster',
         'fields' => [
-            'num_graph'     => 'Most Popular Posters Graph',
+            'num_graph'     => 'Most Visited Posters Graph',
             'time'          => 'Popular Posters Time',
-            'count'         => 'Popular Posters Count',
+            'count'         => 'Most Visited Posters',
             'graph'         => 'Popular Posters Graph',
         ]
     ],
@@ -302,7 +306,7 @@ return [
         'fields' => [
             'num_graph'     => 'Mobile Access Users Graph',
             'time'          => 'Mobile Access Time',
-            'count'         => 'Mobile Access USer Count',
+            'count'         => 'Mobile Access User Count',
             'graph'         => 'Mobile Access Graph',
         ]
     ],
