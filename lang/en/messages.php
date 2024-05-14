@@ -1,14 +1,14 @@
 <?php
 return [
-    'add_success' => ':module has been added successfully!',  
-    'update_success' => ':module has been updated successfully!',  
-    'delete_success' => ':module has been deleted successfully!', 
-    'status_success' => 'Status has been changed successfully!', 
+    'add_success' => ':module has been added successfully!',
+    'update_success' => ':module has been updated successfully!',
+    'delete_success' => ':module has been deleted successfully!',
+    'status_success' => 'Status has been changed successfully!',
 
     // Global Error 
-    "something_went_wrong" => 'Something went wrong!',  
+    "something_went_wrong" => 'Something went wrong!',
     'error_occured' => 'Error Occurred!',
-    "are_you_sure" => 'Are you sure ?' ,
+    "are_you_sure" => 'Are you sure ?',
     "delete_warning" => "Once deleted, this record cannot be restored",
     "update_warning" => "Do you want to update status of this record?",
     "invalid_request" =>  "Invalid request",
@@ -45,10 +45,11 @@ return [
     'most_popular_poster_count' => 'Most Popular Post Count',
     'tag_type_based_post_count' => 'Tag Type Based Post Count',
 
-    'excel_uploaded'=> 'Excel file uploaded and processed successfully!',
+    'excel_uploaded' => 'Excel file uploaded and processed successfully!',
 
-    'registration_failed'=>'Registration failed. The provided email is blacklisted',
-    'project_request_failed'=>'Sorry!! Your request is failed as you are blacklisted',
-    'project_locked_successfully'=>'Project is locked successfully',
+    'registration_failed' => 'Registration failed. The provided email is blacklisted',
+    'project_request_failed' => 'Sorry!! Your request is failed as you are blacklisted',
+    'project_locked_successfully' => 'Project is locked successfully',
+    
+    'project_lock_request' => ':module lock request sent successfully',
 ];
-?>

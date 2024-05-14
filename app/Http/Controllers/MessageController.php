@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MessageController extends Controller
 {
@@ -22,12 +23,19 @@ class MessageController extends Controller
                 $receiverId = $userId;
                 $projectId = $projectId;
             } else {
-                //get all creators so i can show in the sidebar
-                $creators = $project->creators;
-                // $first
                 $receiverId = $senderId;
-            }
 
+                // If project is locked.
+                $getProjectStatus = $project->project_status;
+                if ($getProjectStatus == 1) {
+                    // get only one creator that is associated with that project after project is locked.
+                    $creartorId = DB::table('project_creator')->where('project_id', $projectId)->value('creator_id');
+                    $creators = User::where('id', $creartorId)->get();
+                } else {
+                    //get all creators so I can show in the sidebar.
+                    $creators = $project->creators;
+                }
+            }
 
             $user = User::with('uploads')->findOrFail($userId);
 
@@ -130,6 +138,12 @@ class MessageController extends Controller
             $userId = $request->user_id;
             $user = User::findOrFail($userId);
             $senderId = Auth()->user()->id;
+            $projectId =  $request->project_id;
+
+            // $userStatus =  DB::table('project_creator')->where('project_id', $projectId)->where('creator_id', $userId)->value('user_status');
+
+            $project = Project::findOrFail($projectId);
+            $projectStatus = $project->project_status;
 
             $getChatData = Chat::with('sender', 'receiver')
                 ->where(function ($query) use ($userId, $senderId) {
@@ -143,7 +157,7 @@ class MessageController extends Controller
                 ->orderBy('id', 'asc')
                 ->get();
 
-            $html = view('chat.chat-screen', compact('user', 'getChatData'))->render();
+            $html = view('message.message-screen', compact('user', 'getChatData', 'projectId', 'projectStatus'))->render();
 
             // return response()->json(['message' => trans("messages.add_success", ['module' => trans("global.blacklist_user")]), 'alert-type' =>  'success'], 200);
 

@@ -352,6 +352,7 @@ return [
                 'creator' => '選擇創作者',
             ],
             'creator_name' => '创建者姓名',
+            'project_request' => '项目确认请求',
             'status' => [
                 'locked' => '锁定',
                 'unlocked' => '解锁',

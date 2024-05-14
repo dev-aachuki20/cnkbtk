@@ -265,8 +265,8 @@
             var projectId = $(this).data('project-id');
             var userId = $(this).data('user-id');
             var creatorId = $(this).data('creator-id');
-
-            var url = "{{ route('user.creator.project.cancel') }}";
+            // route('user.creator.project.cancel')
+            var url = '';
             var confirmButton = $(this);
 
             $.ajax({

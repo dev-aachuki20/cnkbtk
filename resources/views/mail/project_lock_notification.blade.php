@@ -38,33 +38,49 @@
                             <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
                                 <tr>
                                     <td style="padding:0 0 36px 0;color:#153643;">
-                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">Project Confirmed</p>
-                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">Your project has been confirmed by {{$creator->user_name}} </p>
+                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">Project Confirmation Request Notification</p>
+                                        <p>Hello {{$creator->user_name}},</p>
+                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">{{$authUser->user_name}} has requested to confirm the project. Please review the details and confirm the project as soon as possible.</p>
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <td style="padding:0 0 36px 0;color:#153643;">
-                                        <p style="margin:0;font-size:16px;line-height:24px;">
-                                            <a href="{{route('user.project.confirm',['project_id' => $project->id, 'creator_id' => $creator->id])}}" style="display: block; padding: 10px; background: #00255b; width: fit-content; color: #fff; text-decoration: none; font-size: 14px;">
-                                                Confirm
-                                            </a>
-
-                                        </p>
+                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">Project Details:</p>
+                                        <p>Project ID: {{$project->id}}</p>
+                                        <p>Project Type: {{$project->type}}</p>
+                                        <p>Description: {{$project->comment}}</p>
+                                        <p>Requested by: {{$authUser->user_name}}</p>
+                                        <p>Date of Request: {{$project->created_at->format('Y-m-d h:i:s A')}}</p>
                                     </td>
+                                </tr>
 
+                                <tr>
+                                    <td style="padding:0 0 36px 0;color:#153643;">
+                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">Please use the below link to view project details</p>
+                                    </td>
+                                </tr>
+                                @if($creator->id != null)
+                                <tr>
+                                    <td style="padding:0 0 36px 0;color:#153643;">
+                                        <p style="margin:0;font-size:16px;line-height:24px;"><a href="{{route('user.project.detail', ['creator_id' => $creator->id, 'project_id' => $project->id])}}" style="display: block; padding: 10px; background: #00255b; width: fit-content; color: #fff; text-decoration: none; font-size: 14px;">View Project</a></p>
+                                    </td>
+                                </tr>
+                                @endif
+
+                                <tr>
                                     <td style="padding:0 0 36px 0;color:#153643;">
                                         <p style="margin:0;font-size:16px;line-height:24px;">
-                                            <a href="" style="display: block; padding: 10px; background: #00255b; width: fit-content; color: #fff; text-decoration: none; font-size: 14px;">
-                                                Cancel
+                                            <a href="{{route('user.project.confirm',['creator_id' => $creator->id, 'project_id' => $project->id])}}" style="display: block; padding: 10px; background: #00255b; width: fit-content; color: #fff; text-decoration: none; font-size: 14px;">
+                                                Confirm Project
                                             </a>
                                         </p>
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <td style="color:#153643;">
-                                        <p style="margin:0 0 12px 0;">Thank you</p>
+                                    <td style="padding:0 0 36px 0;color:#153643;">
+                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">Thank you for your attention to this matter.</p>
                                     </td>
                                 </tr>
                             </table>

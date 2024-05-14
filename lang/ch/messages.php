@@ -53,4 +53,6 @@ return [
     'project_request_failed' => '对不起！！由于您已被列入黑名单，您的请求失败',
     'project_locked_successfully' => '项目锁定成功',
 
+    'project_lock_request' => ':module 锁定请求发送成功',
+
 ];

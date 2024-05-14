@@ -38,13 +38,14 @@
                             <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
                                 <tr>
                                     <td style="padding:0 0 36px 0;color:#153643;">
-                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">This project is locked successfully.</p>
+                                        <p>Hello {{$creator->user_name}},</p>
+                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">After your confirmation now The project "{{ $project->type }}" has been confirmed with {{$user->user_name}}.</p>
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <td style="color:#153643;">
-                                        <p style="margin:0 0 12px 0;">Thank you</p>
+                                        <p style="margin:0 0 12px 0;">Thank you for your attention.</p>
                                     </td>
                                 </tr>
                             </table>

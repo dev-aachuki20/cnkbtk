@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\StatisticsCreatorController;
 use App\Http\Controllers\BlacklistUserController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\User\ProjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,9 +66,10 @@ Route::post('/message/send', [MessageController::class, 'storeMessage'])->name('
 
 
 // Message routes 
-// Route::get('/message/{projectId}/{userId}', [MessageController::class, 'index'])->name('message.index')->middleware(["auth", "verified", "status"]);
 Route::get('/message/{projectId}', [MessageController::class, 'index'])->name('message.index')->middleware(["auth", "verified", "status"]);
 Route::get('messages/screen', [MessageController::class, 'messageScreen'])->name('message.screen');
+Route::post('/lock-project', [ProjectController::class, 'lockedProject'])->name('lock.project');
+
 
 // Route::get("post/edit/{param}","App\Http\Controllers\PosterController@edit")->name("post.edit")->middleware('auth');
 Route::post('post/update-status', 'App\Http\Controllers\PosterController@updateStatus')->name('post.updateStatus')->middleware(["auth", "verified"]);
@@ -88,13 +90,9 @@ Route::group(["namespace" => "App\Http\Controllers\User", 'as' => 'user.', "pref
     Route::post('/self-top-up/submit', "PointsController@paymenttopup")->name('self-top-up.submit');
 
     // Project Controller
-    Route::get('/project/status', "ProjectController@projectCreatorStatus")->name('project.status');
-
     Route::get('/project/detail/{creator_id}/{project_id}', "ProjectController@getProjectDetail")->name('project.detail');
     Route::get('/project/confirm', "ProjectController@confirmProjectByCreator")->name('creator.project.confirm');
-    Route::get('/project/cancel', "ProjectController@cancelProjectByCreator")->name('creator.project.cancel');
-    Route::get('/projects/confirm/{project_id}/{creator_id}', "ProjectController@confirmProjectByUser")->name('project.confirm');
-    // Route::get('/projects/cancel', "ProjectController@cancelProjectByUser")->name('project.cancel');
+    Route::get('/projects/confirm/{project_id}/{creator_id}', "ProjectController@confirmProject")->name('project.confirm');
     Route::get('/project/request', "ProjectController@getAllProjectRequest")->name('project.request');
     Route::post('/add-project-bid', "ProjectController@addBidByCreator")->name('add.project.bid');
     Route::resource('project', "ProjectController")->middleware('checkProjectAccess');

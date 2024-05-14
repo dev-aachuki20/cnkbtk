@@ -4614,3 +4614,7 @@ form#excelForm{
   background: #ff6359;
 }
 
+li.confirmRequest .dropdown-item.del_btn {
+  background-color: #b7b7b7;
+  pointer-events: none;
+}

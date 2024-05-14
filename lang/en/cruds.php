@@ -350,6 +350,7 @@ return [
                 'creator' => 'Select Creator',
             ],
             'creator_name' => 'Creator Name',
+            'project_request' => 'Project Confirm Request',
             'status' => [
                 'locked' => 'Locked',
                 'unlocked' => 'Unlocked',

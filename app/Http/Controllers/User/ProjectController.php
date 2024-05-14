@@ -11,13 +11,16 @@ use App\Models\Project;
 use App\Models\TagType;
 use App\Models\User;
 use App\Notifications\BidUpdatedNotification;
-use App\Notifications\ProjectCancelledNotification;
+use App\Notifications\ProjectConfirmedForAdminNotification;
+use App\Notifications\ProjectConfirmedForCreatorNotification;
+use App\Notifications\ProjectConfirmedForUserNotification;
 use App\Notifications\ProjectConfirmedNotification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
 use App\Notifications\ProjectCreatedNotification;
-use App\Notifications\ProjectLockedNotification;
+use App\Notifications\ProjectLockNotification;
+use App\Notifications\ProjectLockRequestNotification;
 use App\Notifications\ProjectUpdatedNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
@@ -167,9 +170,9 @@ class ProjectController extends Controller
         if (Auth::check() && Auth()->user()->id != $creator_id) {
             return redirect()->route('login')->with(['message' => trans("messages.logged_in_route_access"), 'alert-type' =>  'success']);
         } else {
-            $requestProject = Project::findorFail($project_id);
+            $project = Project::findorFail($project_id);
             $creatorStatus =  DB::table('project_creator')->where('project_id', $project_id)->where('creator_id', $creator_id)->value('creator_status');
-            return view('project.creator-show', compact('creator', 'requestProject', 'creatorStatus'));
+            return view('project.creator-show', compact('creator', 'project', 'creatorStatus'));
         }
     }
 
@@ -233,74 +236,116 @@ class ProjectController extends Controller
         }
     }
 
-    // confirm project by creator
+
+
+    // cancel project by creator
+    // public function cancelProjectByCreator(Request $request)
+    // {
+    //     if ($request->creatorId != Auth::id()) {
+    //         return response()->json(['message' => 'You are not authorized to cancel this project.'], 403);
+    //     }
+    //     $project = Project::findOrFail($request->projectId);
+
+    //     DB::table('project_creator')->where('project_id', $request->projectId)->where('creator_id', $request->creatorId)->update(['creator_status' => 0]);
+
+    //     $creator = User::findOrFail($request->creatorId);
+    //     $user = User::findOrFail($request->userId);
+    //     $user->notify(new ProjectCancelledNotification($project, $creator));
+    //     return response()->json(['message' => 'Project cancelled successfully.']);
+    // }
+
+
+
+
+    // Working function
+    // locked project by user  and send request to creator when click on button from user panel.
+    public function lockedProject(Request $request)
+    {
+        $authUser = auth()->user();
+        $projectId = $request->projectId;
+        $creatorID = $request->creatorId;
+
+        DB::table('project_creator')->where('project_id', $projectId)->where('creator_id', $creatorID)->update(['user_status' => 1]);
+
+        $project = Project::findOrFail($projectId);
+        $creator = User::find($creatorID);
+        $user = User::find($authUser->id);
+
+        // Send email to creator.
+        $creator->notify(new ProjectLockNotification($project, $creator, $authUser));
+        // Send email to user.
+        $user->notify(new ProjectLockRequestNotification($project, $creator, $authUser));
+
+        return response()->json(['message' => trans("messages.project_lock_request", ['module' => trans("global.project")]), 'alert-type' =>  'success'], 200);
+    }
+
+    // confirm project by creator.
     public function confirmProjectByCreator(Request $request)
     {
+        $projectId = $request->projectId;
+        $creatorId = $request->creatorId;
+        $userId = $request->userId;
+
         if ($request->creatorId != Auth::id()) {
-            return response()->json(['message' => 'You are not authorized to confirm this project.'], 403);
-        }
-        $project = Project::findOrFail($request->projectId);
-
-        $getUserStatus = DB::table('project_creator')->where('project_id', $request->projectId)->where('creator_id', $request->creatorId)->value('user_status');
-
-        if ($getUserStatus == 1) {
-            return response()->json(['message' => 'Sorry, you cannot bid. This project is locked.'], 403);
+            // return response()->json(['message' => 'You are not authorized to confirm this project.'], 403);
+            return to_route('login');
         }
 
-        DB::table('project_creator')->where('project_id', $request->projectId)->where('creator_id', $request->creatorId)->update(['creator_status' => 1]);
+        $project = Project::findOrFail($projectId);
+        DB::table('project_creator')->where('project_id', $projectId)->where('creator_id', $creatorId)->update(['creator_status' => 1]);
 
-        $creator = User::findOrFail($request->creatorId);
-        $user = User::findOrFail($request->userId);
-        $user->notify(new ProjectConfirmedNotification($project, $creator));
+        $projectStatus =  $project->project_status == 0 ? 1 : 0;
+        $project->update(['project_status' => $projectStatus]);
+
+        $user = User::findOrFail($userId);
+        $creator = User::findOrFail($creatorId);
+        $admin = User::where('role_id', config('constant.role.admin'))->first();
+
+        if ($project->project_status == 1) {
+            // mail send to User
+            $user->notify(new ProjectConfirmedForCreatorNotification($project, $creator, $user));
+
+            // mail send to Creator
+            $creator->notify(new ProjectConfirmedForUserNotification($project, $creator, $user));
+
+            // mail send to Admin
+            $admin->notify(new ProjectConfirmedForAdminNotification($project, $creator, $user, $admin));
+        }
         return response()->json(['message' => 'Project confirmed successfully.']);
     }
 
-    // cancel project by creator
-    public function cancelProjectByCreator(Request $request)
+    // confirm project by creator by mail confirm button
+    public function confirmProject($creator_id, $project_id)
     {
-        if ($request->creatorId != Auth::id()) {
-            return response()->json(['message' => 'You are not authorized to cancel this project.'], 403);
+        if ($creator_id != Auth::id()) {
+            return to_route('login');
         }
-        $project = Project::findOrFail($request->projectId);
 
-        DB::table('project_creator')->where('project_id', $request->projectId)->where('creator_id', $request->creatorId)->update(['creator_status' => 0]);
-
-        $creator = User::findOrFail($request->creatorId);
-        $user = User::findOrFail($request->userId);
-        $user->notify(new ProjectCancelledNotification($project, $creator));
-        return response()->json(['message' => 'Project cancelled successfully.']);
-    }
-
-    // confirm project by user
-    public function confirmProjectByUser($project_id, $creator_id)
-    {
         $project = Project::findOrFail($project_id);
-        DB::table('project_creator')->where('project_id', $project_id)->where('creator_id', $creator_id)->update(['user_status' => 1]);
+        $userId = $project->user_id;
 
-        $getCreatorStatus = DB::table('project_creator')->where('project_id', $project_id)->where('creator_id', $creator_id)->value('creator_status');
+        DB::table('project_creator')->where('project_id', $project_id)->where('creator_id', $creator_id)->update(['creator_status' => 1]);
 
-        if ($getCreatorStatus == 1) {
-            $project->update(['project_status' => 1]); // 1 for locked
-        }
+        $projectStatus =  $project->project_status == 0 ? 1 : 0;
+        $project->update(['project_status' => $projectStatus]);
 
-        if ($getCreatorStatus == 2) {
-            $project->update(['project_status' => 1]); // 1 for locked
-            // return response()->json(['message' => trans("messages.project_locked_successfully"), 'alert-type' =>  'success'], 200);
-        }
-
+        $user = User::findOrFail($userId);
         $creator = User::findOrFail($creator_id);
-        $creator->notify(new ProjectLockedNotification($project, $creator));
-        return redirect()->back();
-    }
+        $admin = User::where('role_id', config('constant.role.admin'))->first();
 
-    // confirm project by user
-    // public function cancelProjectByUser($project_id, $creator_id)
-    // {
-    //     dd('cancel');
-    // }
+        $creatorStatus =  DB::table('project_creator')->where('project_id', $project_id)->where('creator_id', $creator_id)->value('creator_status');
 
-    public function projectCreatorStatus(ProjectStatusDataTable $dataTable)
-    {
-        return $dataTable->render('project.project-status');
+        if ($project->project_status == 1) {
+            // mail send to User
+            $user->notify(new ProjectConfirmedForCreatorNotification($project, $creator, $user));
+
+            // mail send to Creator
+            $creator->notify(new ProjectConfirmedForUserNotification($project, $creator, $user));
+
+            // mail send to Admin
+            $admin->notify(new ProjectConfirmedForAdminNotification($project, $creator, $user, $admin));
+        }
+
+        return view('project.creator-show', compact('creator', 'project', 'creatorStatus'));
     }
 }

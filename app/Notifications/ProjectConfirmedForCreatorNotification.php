@@ -6,20 +6,22 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ProjectLockedNotification extends Notification
+class ProjectConfirmedForCreatorNotification extends Notification
 {
     use Queueable;
     protected $project;
     protected $creator;
+    protected $user;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($project, $creator)
+    public function __construct($project, $creator, $user)
     {
         $this->project = $project;
         $this->creator = $creator;
+        $this->user = $user;
     }
 
     /**
@@ -43,7 +45,7 @@ class ProjectLockedNotification extends Notification
     {
         if ($this->creator->id) {
             return (new MailMessage)
-                ->markdown('mail.project_locked', ['project' => $this->project, 'creator' => $this->creator]);
+                ->markdown('mail.project_confirmed_for_creator', ['project' => $this->project, 'creator' => $this->creator, 'user' => $this->user]);
         }
     }
 

@@ -31,11 +31,13 @@
             <div class="col-lg-6 col-md-6 col-12">
                 <div class="right-single-box blacklist_box_user project_details_card h-100">
                     <div class="row gx-3">
+                        @if($item['project']->project_status == 1)
                         <div class="col-12 text-end">
                             <a href="{{ route('message.index', ['projectId' => $item['project']->id]) }}" class="btn btn-primary ml-auto cancel-btn" id="message" data-project-id="{{$item['project']->id}}" data-user-id="{{$item['project']->user_id}}">
                                 {{__('cruds.global.message')}}
                             </a>
                         </div>
+                        @endif
                         <div class="col">
                             <ul>
                                 <li>
@@ -74,10 +76,20 @@
                             </ul>
                         </div>
 
+                        <!-- buttons -->
                         <div class="col-12">
-                            <button type="button" class="btn btn-secondary add-bid-btn" id="addBidModal" data-project-id="{{$item['project']->id}}" data-user-id="{{$item['project']->user_id}}" data-creator-id="{{Auth::user()->id}}">
-                                {{ $item['creatorStatus'] == 2 ? __('cruds.create_project.headings.bid_added') : __('cruds.create_project.headings.add_bid') }}
-                            </button>
+                            <div class="row g-3">
+                                <div class="col-auto">
+                                    <button type="button" class="btn btn-secondary add-bid-btn" id="addBidModal" data-project-id="{{$item['project']->id}}" data-user-id="{{$item['project']->user_id}}" data-creator-id="{{Auth::user()->id}}" {{$item['project']->project_status == 1  ? 'disabled' : ''}}>
+                                        {{ $item['creatorStatus'] == 2 ? __('cruds.create_project.headings.bid_added') : __('cruds.create_project.headings.add_bid') }}
+                                    </button>
+                                </div>
+                                <div class="col-auto">
+                                    <button type="button" class="btn btn-success ml-3 confirm-btn" id="confirm" data-project-id="{{$item['project']->id}}" data-user-id="{{$item['project']->user_id}}" data-creator-id="{{Auth::user()->id}}" {{$item['project']->project_status == 1  ? 'disabled' : ''}}>
+                                        {{$item['project']->project_status == 1  ? 'Confirmed' : __('cruds.create_project.headings.confirm_project')}}
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
@@ -136,10 +148,9 @@
             $('#exampleModal').modal('show');
         });
 
+        // add bid
         $(document).on("submit", "#addBidForm", function(e) {
             e.preventDefault();
-            $('#cancel').hide();
-            $('#confirm').hide();
             var formData = new FormData(this);
             var project_id = $('#project_id').val();
             var auth_id = $('#auth_id').val();
@@ -186,7 +197,7 @@
             });
         });
 
-        // confirm project
+        // confirm project by creator
         $(document).on("click", "#confirm", function(e) {
             e.preventDefault();
 
@@ -195,46 +206,6 @@
             var creatorId = $(this).data('creator-id');
 
             var url = "{{ route('user.creator.project.confirm') }}";
-            var confirmButton = $(this);
-
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $("meta[name=csrf-token]").attr('content')
-                },
-                type: 'GET',
-                url: url,
-                data: {
-                    projectId: projectId,
-                    userId: userId,
-                    creatorId: creatorId,
-                },
-                beforeSend: function(response) {
-                    showLoader();
-                    $(".text-danger.errors").remove();
-                },
-                success: function(response) {
-                    toastr.success(response.message);
-                    location.reload();
-                },
-                error: function(xhr, creatorStatus, error) {
-                    toastr.error("Error occurred while confirming project: " + error);
-                },
-                complete: function() {
-                    hideLoader();
-                }
-            });
-        });
-
-        // cancel project
-        $(document).on("click", "#cancel", function(e) {
-            e.preventDefault();
-
-            var projectId = $(this).data('project-id');
-            var userId = $(this).data('user-id');
-            var creatorId = $(this).data('creator-id');
-
-            var url = "{{ route('user.creator.project.cancel') }}";
-            var confirmButton = $(this);
 
             $.ajax({
                 headers: {

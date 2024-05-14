@@ -34,90 +34,78 @@
                         <div class="col-12 text-end">
                             <button type="button" class="btn btn-primary ml-auto cancel-btn">
                                 {{__('cruds.global.message')}}
-                            </button>
-                        </div>
-                        --}}
-                        <div class="col">
-                            <ul>
-                                <li>
-                                    <div class="main-title">
-                                        <h6> <span>{{trans("cruds.create_project.fields.user_name")}} :</span> {{ $requestProject->user->user_name  ?? ''}}</h6>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="main-title">
-                                        <h6> <span>{{trans("cruds.create_project.project")}} {{trans("cruds.create_project.fields.type")}} :</span> {{ $requestProject->type  ?? ''}}</h6>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="description-text main-title">
-                                        <h6> <span>{{trans("cruds.create_project.fields.tags")}} :</span>
-                                            @if(app()->getLocale() == 'en')
-                                            {{ $requestProject->tags->name_en ?? '' }}
-                                            @else
-                                            {{ $requestProject->tags->name_ch ?? '' }}
-                                            @endif
-                                        </h6>
-                                    </div>
-                                </li>
+                        </button>
+                    </div>
+                    --}}
 
-                                <li>
-                                    <div class="main-title">
-                                        <h6> <span>{{trans("cruds.create_project.fields.budget")}} :</span>{{ $requestProject->budget  ?? ''}} CN¥</h6>
-                                    </div>
-                                </li>
+                    @if($project->project_status == 1)
+                    <div class="col-12 text-end">
+                        <a href="{{ route('message.index', ['projectId' => $project->id]) }}" class="btn btn-primary ml-auto cancel-btn" id="message" data-project-id="{{$project->id}}" data-user-id="{{$project->user_id}}">
+                            {{__('cruds.global.message')}}
+                        </a>
+                    </div>
+                    @endif
 
-                                <li>
-                                    <div class="main-title">
-                                        <h6> <span>{{trans("cruds.create_project.fields.description")}} :</span> {!! $requestProject->comment ?? '' !!}</h6>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
 
-                        @if(isset($creatorStatus) && $creatorStatus == 0)
-                        <div class="col-12">
-                            <button type="button" class="btn btn-primary ml-3 cancel-btn" id="cancel" {{ $creatorStatus == 0 ? 'disabled' : '' }}>
-                                {{ $creatorStatus == 0 ? __('cruds.create_project.headings.cancelled_project') : __('cruds.create_project.headings.cancel_project') }}
-                            </button>
-                        </div>
-                        @elseif($creatorStatus == 1)
-                        <div class="col-12">
-                            <button type="button" class="btn btn-success ml-3 confirm-btn" id="confirm" {{ $creatorStatus == 1 ? 'disabled' : '' }}>
-                                {{ $creatorStatus == 1 ? __('cruds.create_project.headings.confirmed_project') : __('cruds.create_project.headings.confirm_project') }}
-                            </button>
-                        </div>
-                        @elseif($creatorStatus == 2)
-                        <div class="col-12">
-                            <button type="button" class="btn btn-secondary add-bid-btn" id="addBidModal">
-                                {{ $creatorStatus == 2 ? __('cruds.create_project.headings.bid_added') : __('cruds.create_project.headings.add_bid') }}
-                            </button>
-                        </div>
-                        @else
-                        <div class="col-12">
-                            <div class="row g-3">
-                                <div class="col-auto">
-                                    <button type="button" class="btn btn-secondary add-bid-btn" id="addBidModal">
-                                        {{__('cruds.create_project.headings.add_bid')}}
-                                    </button>
+                    <div class="col">
+                        <ul>
+                            <li>
+                                <div class="main-title">
+                                    <h6> <span>{{trans("cruds.create_project.fields.user_name")}} :</span> {{ $project->user->user_name  ?? ''}}</h6>
                                 </div>
-                                <div class="col-auto">
-                                    <button type="button" class="btn btn-success ml-3 confirm-btn" id="confirm">
-                                        {{__('cruds.create_project.headings.confirm_project')}}
-                                    </button>
+                            </li>
+                            <li>
+                                <div class="main-title">
+                                    <h6> <span>{{trans("cruds.create_project.project")}} {{trans("cruds.create_project.fields.type")}} :</span> {{ $project->type  ?? ''}}</h6>
                                 </div>
-                                <div class="col-auto">
-                                    <button type="button" class="btn btn-primary ml-3 cancel-btn" id="cancel">
-                                        {{__('cruds.create_project.headings.cancel_project')}}
-                                    </button>
+                            </li>
+                            <li>
+                                <div class="description-text main-title">
+                                    <h6> <span>{{trans("cruds.create_project.fields.tags")}} :</span>
+                                        @if(app()->getLocale() == 'en')
+                                        {{ $project->tags->name_en ?? '' }}
+                                        @else
+                                        {{ $project->tags->name_ch ?? '' }}
+                                        @endif
+                                    </h6>
                                 </div>
+                            </li>
+
+                            <li>
+                                <div class="main-title">
+                                    <h6> <span>{{trans("cruds.create_project.fields.budget")}} :</span>{{ $project->budget  ?? ''}} CN¥</h6>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="main-title">
+                                    <h6> <span>{{trans("cruds.create_project.fields.description")}} :</span> {!! $project->comment ?? '' !!}</h6>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+
+                    <!-- creatorStatus == 1 -->
+                    <!-- buttons -->
+                    <div class="col-12">
+                        <div class="row g-3">
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-secondary add-bid-btn" id="addBidModal" data-project-id="{{$project->id}}" data-user-id="{{$project->user_id}}" data-creator-id="{{Auth::user()->id}}" {{$project->project_status == 1  ? 'disabled' : ''}}>
+                                    {{ $creatorStatus == 2 ? __('cruds.create_project.headings.bid_added') : __('cruds.create_project.headings.add_bid') }}
+                                </button>
+                            </div>
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-success ml-3 confirm-btn" id="confirm" data-project-id="{{$project->id}}" data-user-id="{{$project->user_id}}" data-creator-id="{{Auth::user()->id}}" {{$project->project_status == 1  ? 'disabled' : ''}}>
+                                    {{$project->project_status == 1  ? 'Confirmed' : __('cruds.create_project.headings.confirm_project')}}
+                                </button>
                             </div>
                         </div>
-                        @endif
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <!-- Bid Modal -->
@@ -132,8 +120,8 @@
                 <form action="{{route('user.add.project.bid')}}" method="post" id="addBidForm">
                     <div class="modal-body">
                         <input type="hidden" id="auth_id" value="{{auth()->user()->id}}">
-                        <input type="hidden" id="project_id" value="{{$requestProject->id}}">
-                        <input type="hidden" id="user_id" value="{{$requestProject->user_id}}">
+                        <input type="hidden" id="project_id" value="{{$project->id}}">
+                        <input type="hidden" id="user_id" value="{{$project->user_id}}">
                         <div class="mb-4">
                             <div class="form-group">
                                 <label for="budget">{{__('cruds.create_project.fields.budget')}} <span class="text-danger">*</span></label>
@@ -156,10 +144,19 @@
 @section("scripts")
 <script>
     $(document).ready(function() {
-        $('#addBidModal').click(function() {
+        $(document).on("click", "#addBidModal", function(e) {
+            var projectId = $(this).data('project-id');
+            var userId = $(this).data('user-id');
+            var creatorId = $(this).data('creator-id');
+
+            $('#project_id').val(projectId);
+            $('#user_id').val(userId);
+            $('#auth_id').val(creatorId);
+
             $('#exampleModal').modal('show');
         });
 
+        // add bid
         $(document).on("submit", "#addBidForm", function(e) {
             e.preventDefault();
             var formData = new FormData(this);
@@ -233,44 +230,6 @@
                     toastr.success(response.message);
                     location.reload();
 
-                },
-                error: function(xhr, status, error) {
-                    toastr.error("Error occurred while confirming project: " + error);
-                },
-                complete: function() {
-                    hideLoader();
-                }
-            });
-        });
-
-        // cancel project
-        $(document).on("click", "#cancel", function(e) {
-            e.preventDefault();
-
-            var projectId = $('#project_id').val();
-            var creatorId = $('#auth_id').val();
-            var userId = $('#user_id').val();
-
-            var url = "{{ route('user.creator.project.cancel') }}";
-
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $("meta[name=csrf-token]").attr('content')
-                },
-                type: 'GET',
-                url: url,
-                data: {
-                    projectId: projectId,
-                    userId: userId,
-                    creatorId: creatorId,
-                },
-                beforeSend: function(response) {
-                    showLoader();
-                    $(".text-danger.errors").remove();
-                },
-                success: function(response) {
-                    toastr.success(response.message);
-                    location.reload();
                 },
                 error: function(xhr, status, error) {
                     toastr.error("Error occurred while confirming project: " + error);

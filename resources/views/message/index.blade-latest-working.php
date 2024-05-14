@@ -25,7 +25,6 @@
             <div class="row h-100 gx-3">
                 @php
                 $ifRoleUser = auth()->user()->role_id == config('constant.role.user');
-                $ifRoleCreator = auth()->user()->role_id == config('constant.role.creator');
                 @endphp
                 @if($ifRoleUser)
                 <div class="col-xxl-3 col-lg-4 col-md-5 h-100 animate__animated animate__fadeInUp">
@@ -47,9 +46,8 @@
                                 <!-- dynamic users -->
                                 <div class="col-12 h-100 flex-fill overflow-y-auto">
                                     <ul id="userGroupList" class="list-group rounded-0">
-                                        @if(isset($creators))
                                         @foreach($creators as $user)
-                                        <li class="list-group-item userporfile activeAccount dynamicUserList" data-user-id="{{$user->id}}" data-project-id="{{$projectId}}" data-user-name="{{$user->user_name}}">
+                                        <li class="list-group-item userporfile activeAccount dynamicUserList" data-user-id="{{$user->id}}" data-user-name="{{$user->user_name}}">
                                             @php
                                             if(isset($user->uploads) && !empty($user->uploads) && count($user->uploads) > 0){
                                             $imagePath = asset('storage/'. $user->uploads->first()->path );
@@ -66,7 +64,6 @@
                                             </div>
                                         </li>
                                         @endforeach
-                                        @endif
                                     </ul>
                                 </div>
                                 <!-- dynamic users end -->
@@ -75,10 +72,8 @@
                     </div>
                 </div>
                 @endif
-
-                <!-- right panel for creator -->
-                @if($ifRoleCreator)
-                <div class="col-xxl-12 col-lg-12 chat-panel h-100 chatscreen">
+                @if(!$ifRoleUser)
+                <div class="{{$ifRoleUser ? 'col-xxl-9 col-lg-8 col-md-7 col-md-12' : 'col-xxl-12 col-lg-12' }} chat-panel h-100 chatscreen">
                     <div class="card chatcard h-100 overflow-hidden animate__animated animate__fadeInUp">
                         <div class="row h-100 flex-column flex-nowrap overflow-hidden">
                             <div class="col-12">
@@ -98,8 +93,8 @@
                                             <h4 class="m-0 text-truncate" id="chatHeader">{{$user->user_name}}</h4>
                                             <!-- <p class="text-truncate content m-0 activeuser">Active</p> -->
                                         </div>
-                                        <div class="useraccount d-none">
-                                            <button class="btn btn-primary">Confirm</button>
+                                        <div class="useraccount">
+                                            <button class="btn btn-primary">Project Confirm Request</button>
                                         </div>
                                     </div>
                                     <div class="usersetting d-flex align-items-center gap-2">
@@ -154,6 +149,7 @@
                                 </div>
                             </div>
                             <div class="col-12">
+                                <!-- form start -->
                                 <form id="messageForm" data-project-id="{{$projectId}}" data-sender-id="{{$senderId}}" data-receiver-id="{{$receiverId}}">
                                     <div class="message-input p-3">
                                         <div class="row gx-2 align-items-center">
@@ -184,45 +180,12 @@
                                         </div>
                                     </div>
                                 </form>
+                                <!-- form end -->
                             </div>
                         </div>
                     </div>
                 </div>
                 @endif
-                <!-- right panel end for creator -->
-
-
-                <!-- Welcome screen for user. -->
-                <!-- right panel start -->
-                <div class="{{$ifRoleUser ? 'col-xxl-9 col-lg-8 col-md-7 col-md-12' : 'col-xxl-12 col-lg-12' }} chat-panel h-100 chatscreen">
-                    <div class="card chatcard h-100">
-                        <div class="row h-100 flex-column flex-nowrap overflow-hidden groupChatScreen">
-                            <div class="col-12">
-                                <div class="welcome-screen">
-                                    @php
-                                    $authuser = auth()->user();
-                                    if(isset($authuser->uploads) && !empty($authuser->uploads) && count($authuser->uploads) > 0){
-                                    $authimagePath = asset('storage/'. $authuser->uploads->first()->path );
-                                    } else {
-                                    $authimagePath = asset('dummy-user.svg');
-                                    }
-                                    @endphp
-                                    <div class="userporfile">
-                                        <div class="userimage">
-                                            <img class="userpic" src="{{$authimagePath}}" alt="Super Admin">
-                                        </div>
-                                        <div class="useraccount text-truncate">
-                                            <h3>Welcome!</h3>
-                                            <h4 class="welcome_user m-0 text-truncate">{{auth()->user()->user_name}}</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- right panel end -->
-                <!-- Welcome screen end for user. -->
             </div>
         </div>
     </div>
@@ -290,21 +253,23 @@
     }
 
     $(document).ready(function() {
+
+        // $('.dynamicUserList:first').trigger('click');
+
         // show chat screen when click user in sidebar
         $(document).on('click', '.dynamicUserList', function() {
+
             $('.dynamicUserList').removeClass('active');
             $(this).addClass('active');
 
             var userId = $(this).data('user-id');
             var userName = $(this).data('user-name');
-            var projectId = $(this).data('project-id');
             $.ajax({
                 type: 'GET',
                 url: "{{route('message.screen')}}",
                 data: {
                     user_id: userId,
                     user_name: userName,
-                    project_id: projectId,
                 },
                 dataType: 'json',
                 success: function(response) {
