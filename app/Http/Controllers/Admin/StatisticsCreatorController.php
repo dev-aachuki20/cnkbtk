@@ -91,7 +91,33 @@ class StatisticsCreatorController extends Controller
             }
         }
 
-        list($labels, $data) = $this->calculateAverage($labels, $data);
+        // list($labels, $data) = $this->calculateAverage($labels, $data);
+
+        $averageData = $this->calculateAverage($labels, $data);
+        $labels = $averageData['labels'];
+        $data = $averageData['data'];
+
+        // Add average data to datasets
+        $datasets[] = [
+            'label' => 'Average',
+            'data' => [$averageData['data'][count($averageData['data']) - 1]],
+            'backgroundColor' => '#000000',
+            'borderColor' => '#000000',
+            'fill' => false,
+            'borderWidth' => 1,
+            'tension' => 0.5,
+            'pointBorderColor' => "#fd463b",
+            'pointBackgroundColor' => "#fd463b",
+            'pointBorderWidth' => 6,
+            'pointHoverRadius' => 6,
+            'pointHoverBackgroundColor' => "#000000",
+            'pointHoverBorderColor' => "#000000",
+            'pointHoverBorderWidth' => 3,
+            'pointRadius' => 1,
+            'borderWidth' => 3,
+            'pointHitRadius' => 30
+        ];
+
 
         $pluginText = trans("cruds.registered_members.fields.num_graph");
         // $xAxisText =  trans("cruds.registered_members.fields.time");
@@ -244,7 +270,32 @@ class StatisticsCreatorController extends Controller
         $yAxisText =  trans("cruds.number_of_posts.fields.count");
         $labelText =  trans("cruds.number_of_posts.fields.graph");
 
-        list($labels, $data) = $this->calculateAverage($labels, $data);
+        // list($labels, $data) = $this->calculateAverage($labels, $data);
+
+        $averageData = $this->calculateAverage($labels, $data);
+        $labels = $averageData['labels'];
+        $data = $averageData['data'];
+
+        // Add average data to datasets
+        $datasets[] = [
+            'label' => 'Average',
+            'data' => [$averageData['data'][count($averageData['data']) - 1]],
+            'backgroundColor' => '#000000',
+            'borderColor' => '#000000',
+            'fill' => false,
+            'borderWidth' => 1,
+            'tension' => 0.5,
+            'pointBorderColor' => "#fd463b",
+            'pointBackgroundColor' => "#fd463b",
+            'pointBorderWidth' => 6,
+            'pointHoverRadius' => 6,
+            'pointHoverBackgroundColor' => "#000000",
+            'pointHoverBorderColor' => "#000000",
+            'pointHoverBorderWidth' => 3,
+            'pointRadius' => 1,
+            'borderWidth' => 3,
+            'pointHitRadius' => 30
+        ];
 
         $html = view('statistics.creator-graph', compact('labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
         return response()->json(['success' => true, 'html' => $html], 200);
@@ -336,7 +387,32 @@ class StatisticsCreatorController extends Controller
         $yAxisText =  trans("cruds.visiting_users.fields.count");
         $labelText =  trans("cruds.visiting_users.fields.graph");
 
-        list($labels, $data) = $this->calculateAverage($labels, $data);
+        // list($labels, $data) = $this->calculateAverage($labels, $data);
+
+        $averageData = $this->calculateAverage($labels, $data);
+        $labels = $averageData['labels'];
+        $data = $averageData['data'];
+
+        // Add average data to datasets
+        $datasets[] = [
+            'label' => 'Average',
+            'data' => [$averageData['data'][count($averageData['data']) - 1]],
+            'backgroundColor' => '#000000',
+            'borderColor' => '#000000',
+            'fill' => false,
+            'borderWidth' => 1,
+            'tension' => 0.5,
+            'pointBorderColor' => "#fd463b",
+            'pointBackgroundColor' => "#fd463b",
+            'pointBorderWidth' => 6,
+            'pointHoverRadius' => 6,
+            'pointHoverBackgroundColor' => "#000000",
+            'pointHoverBorderColor' => "#000000",
+            'pointHoverBorderWidth' => 3,
+            'pointRadius' => 1,
+            'borderWidth' => 3,
+            'pointHitRadius' => 30
+        ];
         $html = view('statistics.creator-graph', compact('labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
         return response()->json(['success' => true, 'html' => $html], 200);
@@ -483,7 +559,32 @@ class StatisticsCreatorController extends Controller
         $yAxisText =  trans("cruds.most_popular_poster.fields.count");
         $labelText =  trans("cruds.most_popular_poster.fields.graph");
 
-        list($labels, $data) = $this->calculateAverage($labels, $data);
+        // list($labels, $data) = $this->calculateAverage($labels, $data);
+
+        $averageData = $this->calculateAverage($labels, $data);
+        $labels = $averageData['labels'];
+        $data = $averageData['data'];
+
+        // Add average data to datasets
+        $datasets[] = [
+            'label' => 'Average',
+            'data' => [$averageData['data'][count($averageData['data']) - 1]],
+            'backgroundColor' => '#000000',
+            'borderColor' => '#000000',
+            'fill' => false,
+            'borderWidth' => 1,
+            'tension' => 0.5,
+            'pointBorderColor' => "#fd463b",
+            'pointBackgroundColor' => "#fd463b",
+            'pointBorderWidth' => 6,
+            'pointHoverRadius' => 6,
+            'pointHoverBackgroundColor' => "#000000",
+            'pointHoverBorderColor' => "#000000",
+            'pointHoverBorderWidth' => 3,
+            'pointRadius' => 1,
+            'borderWidth' => 3,
+            'pointHitRadius' => 30
+        ];
         $html = view('statistics.creator-graph', compact('labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
         return response()->json(['success' => true, 'html' => $html], 200);
@@ -576,7 +677,31 @@ class StatisticsCreatorController extends Controller
         $yAxisText =  trans("cruds.mobile_access.fields.count");
         $labelText =  trans("cruds.mobile_access.fields.graph");
 
-        list($labels, $data) = $this->calculateAverage($labels, $data);
+        // list($labels, $data) = $this->calculateAverage($labels, $data);
+        $averageData = $this->calculateAverage($labels, $data);
+        $labels = $averageData['labels'];
+        $data = $averageData['data'];
+
+        // Add average data to datasets
+        $datasets[] = [
+            'label' => 'Average',
+            'data' => [$averageData['data'][count($averageData['data']) - 1]],
+            'backgroundColor' => '#000000',
+            'borderColor' => '#000000',
+            'fill' => false,
+            'borderWidth' => 1,
+            'tension' => 0.5,
+            'pointBorderColor' => "#fd463b",
+            'pointBackgroundColor' => "#fd463b",
+            'pointBorderWidth' => 6,
+            'pointHoverRadius' => 6,
+            'pointHoverBackgroundColor' => "#000000",
+            'pointHoverBorderColor' => "#000000",
+            'pointHoverBorderWidth' => 3,
+            'pointRadius' => 1,
+            'borderWidth' => 3,
+            'pointHitRadius' => 30
+        ];
         $html = view('statistics.creator-graph', compact('labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
         return response()->json(['success' => true, 'html' => $html], 200);
@@ -632,11 +757,8 @@ class StatisticsCreatorController extends Controller
         $totalDays = count($labels);
         $total = array_sum($data);
         $average = $totalDays > 0 ? $total / $totalDays : 0;
-
-        $labels[] = 'Average';
         $data[] = $average;
-
-        return [$labels, $data];
+        return ['labels' => $labels, 'data' => $data];
     }
 
     //  Members Registrations 
