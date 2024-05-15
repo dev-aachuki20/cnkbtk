@@ -4530,6 +4530,7 @@ form#excelForm{
   padding: 30px 25px!important;
   border-radius: 20px;
   background: #ffeceb;
+  height: 100%;
 }
 .blacklist_box_user .main-title h2 {
   margin: 15px 0;
@@ -4584,6 +4585,7 @@ form#excelForm{
   flex-direction: column;
   gap: 8px;
   margin-bottom: 12px;
+  margin: 0px;
 }
 .project_details_card ul li .description-text, .project_details_card ul li p{
   margin: 0px;
@@ -4598,9 +4600,10 @@ form#excelForm{
 }
 .project_details_card ul li span {
   font-weight: 800;
-  min-width: 130px;
+  min-width: 170px;
   font-size: 16px;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
 }
 .project_details_card ul li .badge {
   display: flex;
@@ -4609,6 +4612,7 @@ form#excelForm{
   font-size: 14px;
   line-height: 1;
   font-weight: 500;
+  padding: 8px 10px 7px;
 }
 .project_details_card ul li .badge.badge-danger {
   background: #ff6359;
@@ -4618,3 +4622,49 @@ li.confirmRequest .dropdown-item.del_btn {
   background-color: #b7b7b7;
   pointer-events: none;
 }
+
+/* multipal select group css */
+.multipal_select_group .select2-selection ul {
+  padding: 10px 40px 9px 12px !important;
+  position: relative;
+}
+.multipal_select_group .select2-selection ul li.select2-selection__choice~li.select2-search--inline {
+  display: none;
+}
+.multipal_select_group .select2-selection ul li.select2-search--inline {
+  padding: 5px 0px;
+}
+.multipal_select_group .select2-selection ul li.select2-search--inline input {
+  height: auto !important;
+}
+.multipal_select_group .select2-selection ul li.select2-search--inline input::placeholder {
+  color: #9fa19f !important;
+}
+.multipal_select_group .select2-selection ul .select2-selection__clear {
+  margin: 0px !important;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  padding: 0px 5px;
+}
+
+/* project card design css */
+.project_card_group {
+  padding: 30px 25px;
+  border-radius: 30px;
+  background: #ffeceb;
+  border: 1px solid #ffdfde;
+}
+.project_card_group .blacklist_box_user  {
+  background: #fff;
+}
+
+.project_card_group .blacklist_box_user .main-title h2{
+  margin-top: 0px;
+}
+.project_details_card ul li .main-title h6.description {
+  align-items: start;
+  flex-wrap: nowrap;
+}
+
+.project_details_card ul li span

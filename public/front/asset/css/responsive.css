@@ -930,8 +930,48 @@ section.edit-post-wrapper .col-md-6 {
       transform: translateX(0%);
   }
   .chatboxGroup .chat-panel .userporfile{
-      width: calc(100% - 90px);
+      width: calc(100% - 134px);
   }
+  .chatboxGroup textarea.form-control {
+    font-size: 14px;
+    line-height: 26px;
+}
+}
+
+
+@media screen and (max-width: 576px) {
+  .chatboxGroup .chat-panel .userporfile{
+    width: calc(100% - 114px);
+}
+  .chatboxGroup .usersetting .dropdown-item {
+    padding: 9px 15px !important;
+    font-size: 12px;
+    border-radius: 23px !important;
+    line-height: 1;
+}
+.chatboxGroup .userporfile .userimage {
+  width: 35px;
+  height: 35px;
+  min-width: 35px;
+}
+.chatboxGroup .chat-header .useraccount h4 {
+  font-size: 16px;
+  line-height: 26px;
+}
+.chatboxGroup .close-btn, .chatboxGroup .usersetting .editbtn {
+  height: 30px;
+  width: 30px;
+}
+.project_details_card ul li span {
+  min-width: 120px;
+}
+.project_card_group {
+  padding: 20px 15px;
+}
+.blacklist_box_user {
+  padding: 20px !important;
+}
+
 }
 
 @media (max-width: 580px) {
