@@ -9,6 +9,7 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Support\Str;
 
 class ProjectsAdminDataTable extends DataTable
 {
@@ -53,30 +54,14 @@ class ProjectsAdminDataTable extends DataTable
                 return $html;
             })
 
-            // ->filterColumn('status', function ($query, $keyword) {
-            //     dd($keyword);
-            //     if ($keyword !== '') {
-            //         $keyword = strtolower($keyword);
-            //         $statusValues = array_map('strtolower', config('constant.status'));
-            //         $matches = array_filter($statusValues, function ($value) use ($keyword) {
-            //             return strpos($value, $keyword) !== false;
-            //         });
-            //         $statusKeys = array_keys($matches);
-            //         $query->whereIn('status', $statusKeys);
-            //     }
-            // })
-
-            ->filterColumn('projects.status', function ($query, $keyword) {
-                if ($keyword !== '') {
-                    $keyword = strtolower($keyword);
-                    $statusLabels = config('constant.status');
-                    $filteredStatusLabels = array_filter($statusLabels, function ($value) use ($keyword) {
-                        return strpos(strtolower($value), $keyword) !== false;
-                    });
-
-                    $statusKeys = array_keys($filteredStatusLabels);
-                    $query->whereIn('projects.status', $statusKeys);
+            ->filterColumn('status', function ($query, $keyword) {
+                $statusSearch  = null;
+                if (Str::contains("{{__('cruds.status.active')}}", strtolower($keyword))) {
+                    $statusSearch = 1;
+                } else if (Str::contains("{{__('cruds.status.inactive')}}", strtolower($keyword))) {
+                    $statusSearch = 0;
                 }
+                $query->where('projects.status', $statusSearch);
             })
 
 
@@ -159,7 +144,7 @@ class ProjectsAdminDataTable extends DataTable
             Column::make('tags_id')->title(trans("cruds.create_project.fields.tags")),
             Column::make('user_ip')->title(trans("cruds.create_project.fields.user_ip")),
             Column::make('budget')->title(trans("cruds.create_project.fields.budget")),
-            Column::computed('status')->title(trans("cruds.global.status"))->orderable(false)->searchable(false),
+            Column::computed('status')->title(trans("cruds.global.status"))->orderable(false)->searchable(true),
             Column::make('created_at')->title(trans("cruds.global.created_date"))->orderable(false)->searchable(false),
             Column::computed('action')->title(trans("cruds.global.action"))->orderable(false)->searchable(false),
         ];

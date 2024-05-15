@@ -378,6 +378,10 @@ return [
             'novel'     => '小说',
             'tutorial'  => '教程',
         ]
+    ],
+    'status' => [
+        'active' => '积极的',
+        'inactive' => '不活跃'
     ]
 
 ];

@@ -3,7 +3,6 @@
         <canvas id="myChart" width="400" height="400" style="display: block; width: 400px; height: 400px;"></canvas>
     </div>
 </div>
-
 <script>
     var ctx = document.getElementById('myChart').getContext('2d');
     var labels = @json($labels);
@@ -12,33 +11,10 @@
     var xAxisText = @json($xAxisText);
     var yAxisText = @json($yAxisText);
     var labelText = @json($labelText);
-
     var data = {
         labels: labels,
         datasets: membersData,
     }
-    // var data = {
-    //     labels: labels,
-    //     datasets: [{
-    //         label: labelText,
-    //         data: membersData,
-    //         backgroundColor: '#dee9f7',
-    //         borderColor: '#ff6359',
-    //         borderWidth: 2,
-    //         tension: 0.5,
-    //         pointBorderColor: "#fd463b",
-    //         pointBackgroundColor: "#fd463b",
-    //         pointBorderWidth: 8,
-    //         pointHoverRadius: 8,
-    //         pointHoverBackgroundColor: "#000000",
-    //         pointHoverBorderColor: "#000000",
-    //         pointHoverBorderWidth: 4,
-    //         pointRadius: 1,
-    //         borderWidth: 4,
-    //         pointHitRadius: 30
-    //     }]
-    // };
-
     var config = {
         type: 'line',
         data: data,
@@ -46,6 +22,36 @@
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
+                tooltip: {
+                    callbacks: {
+                        labelColor: function(context) {
+                            // var dataset = context.chart.data.datasets[context.datasetIndex];
+                            var dataset = context.dataset || {};
+                            var backgroundColor = dataset.backgroundColor || '';
+                            var borderColor = dataset.borderColor || '';
+                            return {
+                                borderColor: borderColor,
+                                backgroundColor: backgroundColor,
+                                borderWidth: 1,
+                                borderDash: [0, 0],
+                                borderRadius: 0,
+                            };
+                        },
+                        labelTextColor: function(context) {
+                            return '#fff';
+                        },
+                        label: function(context) {
+                            var label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed.y !== null) {
+                                label += new Intl.NumberFormat().format(context.parsed.y);
+                            }
+                            return label;
+                        }
+                    }
+                },
                 title: {
                     display: true,
                     text: pluginText
@@ -57,20 +63,21 @@
             },
             scales: {
                 x: {
+                    min: 0,
                     display: true,
                     title: {
                         display: true,
-                        // text: xAxisText
                     }
                 },
                 y: {
+                    min: 0,
                     display: true,
                     title: {
                         display: true,
                         text: yAxisText
                     }
                 }
-            }
+            },
         }
 
     };

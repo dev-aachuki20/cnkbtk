@@ -114,19 +114,14 @@ class StatisticsController extends Controller
         // Add average data to datasets
         $datasets[] = [
             'label' => 'Average',
-            'data' => [$averageData['data'][count($averageData['data']) - 1]],
-            'backgroundColor' => '#000000',
-            'borderColor' => '#000000',
+            'data' => $data,
+            'backgroundColor' => '#0000FF',
+            'borderColor' => '#0000FF',
             'fill' => false,
             'borderWidth' => 1,
             'tension' => 0.5,
-            'pointBorderColor' => "#fd463b",
-            'pointBackgroundColor' => "#fd463b",
             'pointBorderWidth' => 6,
             'pointHoverRadius' => 6,
-            'pointHoverBackgroundColor' => "#000000",
-            'pointHoverBorderColor' => "#000000",
-            'pointHoverBorderWidth' => 3,
             'pointRadius' => 1,
             'borderWidth' => 3,
             'pointHitRadius' => 30
@@ -292,19 +287,14 @@ class StatisticsController extends Controller
         // Add average data to datasets
         $datasets[] = [
             'label' => 'Average',
-            'data' => [$averageData['data'][count($averageData['data']) - 1]],
-            'backgroundColor' => '#000000',
-            'borderColor' => '#000000',
+            'data' => $data,
+            'backgroundColor' => '#0000FF',
+            'borderColor' => '#0000FF',
             'fill' => false,
             'borderWidth' => 1,
             'tension' => 0.5,
-            'pointBorderColor' => "#fd463b",
-            'pointBackgroundColor' => "#fd463b",
             'pointBorderWidth' => 6,
             'pointHoverRadius' => 6,
-            'pointHoverBackgroundColor' => "#000000",
-            'pointHoverBorderColor' => "#000000",
-            'pointHoverBorderWidth' => 3,
             'pointRadius' => 1,
             'borderWidth' => 3,
             'pointHitRadius' => 30
@@ -406,19 +396,14 @@ class StatisticsController extends Controller
         // Add average data to datasets
         $datasets[] = [
             'label' => 'Average',
-            'data' => [$averageData['data'][count($averageData['data']) - 1]],
-            'backgroundColor' => '#000000',
-            'borderColor' => '#000000',
+            'data' => $data,
+            'backgroundColor' => '#0000FF',
+            'borderColor' => '#0000FF',
             'fill' => false,
             'borderWidth' => 1,
             'tension' => 0.5,
-            'pointBorderColor' => "#fd463b",
-            'pointBackgroundColor' => "#fd463b",
             'pointBorderWidth' => 6,
             'pointHoverRadius' => 6,
-            'pointHoverBackgroundColor' => "#000000",
-            'pointHoverBorderColor' => "#000000",
-            'pointHoverBorderWidth' => 3,
             'pointRadius' => 1,
             'borderWidth' => 3,
             'pointHitRadius' => 30
@@ -579,19 +564,14 @@ class StatisticsController extends Controller
         // Add average data to datasets
         $datasets[] = [
             'label' => 'Average',
-            'data' => [$averageData['data'][count($averageData['data']) - 1]],
-            'backgroundColor' => '#000000',
-            'borderColor' => '#000000',
+            'data' => $data,
+            'backgroundColor' => '#0000FF',
+            'borderColor' => '#0000FF',
             'fill' => false,
             'borderWidth' => 1,
             'tension' => 0.5,
-            'pointBorderColor' => "#fd463b",
-            'pointBackgroundColor' => "#fd463b",
             'pointBorderWidth' => 6,
             'pointHoverRadius' => 6,
-            'pointHoverBackgroundColor' => "#000000",
-            'pointHoverBorderColor' => "#000000",
-            'pointHoverBorderWidth' => 3,
             'pointRadius' => 1,
             'borderWidth' => 3,
             'pointHitRadius' => 30
@@ -693,26 +673,37 @@ class StatisticsController extends Controller
         $averageData = $this->calculateAverage($labels, $data);
         $labels = $averageData['labels'];
         $data = $averageData['data'];
+        $average = $averageData['average'];
 
         // Add average data to datasets
         $datasets[] = [
             'label' => 'Average',
-            'data' => [$averageData['data'][count($averageData['data']) - 1]],
-            'backgroundColor' => '#000000',
-            'borderColor' => '#000000',
+            'data' => $data,
+            'backgroundColor' => '#0000FF',
+            'borderColor' => '#0000FF',
             'fill' => false,
             'borderWidth' => 1,
             'tension' => 0.5,
-            'pointBorderColor' => "#fd463b",
-            'pointBackgroundColor' => "#fd463b",
             'pointBorderWidth' => 6,
             'pointHoverRadius' => 6,
-            'pointHoverBackgroundColor' => "#000000",
-            'pointHoverBorderColor' => "#000000",
-            'pointHoverBorderWidth' => 3,
             'pointRadius' => 1,
             'borderWidth' => 3,
             'pointHitRadius' => 30
+        ];
+
+        // Add annotation for average value
+        $annotations[] = [
+            'type' => 'line',
+            'mode' => 'horizontal',
+            'scaleID' => 'y-axis-0',
+            'value' => $average,
+            'borderColor' => '#000000',
+            'borderWidth' => 2,
+            'label' => [
+                'enabled' => true,
+                'content' => 'Average: ' . $average,
+                'position' => 'right'
+            ]
         ];
 
         $html = view('statistics.graph', compact('labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();

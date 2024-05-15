@@ -376,6 +376,11 @@ return [
             'novel'     => 'Novel',
             'tutorial'  => 'Tutorial',
         ]
+    ],
+
+    'status' => [
+        'active' => 'Active',
+        'inactive' => 'In-Active'
     ]
 
 

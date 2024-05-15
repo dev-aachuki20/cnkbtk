@@ -25,7 +25,8 @@
                 tooltip: {
                     callbacks: {
                         labelColor: function(context) {
-                            var dataset = context.chart.data.datasets[context.datasetIndex];
+                            // var dataset = context.chart.data.datasets[context.datasetIndex];
+                            var dataset = context.dataset || {};
                             var backgroundColor = dataset.backgroundColor || '';
                             var borderColor = dataset.borderColor || '';
                             return {
@@ -38,6 +39,16 @@
                         },
                         labelTextColor: function(context) {
                             return '#fff';
+                        },
+                        label: function(context) {
+                            var label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed.y !== null) {
+                                label += new Intl.NumberFormat().format(context.parsed.y);
+                            }
+                            return label;
                         }
                     }
                 },
@@ -52,10 +63,10 @@
             },
             scales: {
                 x: {
+                    min: 0,
                     display: true,
                     title: {
                         display: true,
-                        // text: xAxisText
                     }
                 },
                 y: {
