@@ -71,7 +71,7 @@ class ProjectUserDataTable extends DataTable
     public function query(Project $model)
     {
         $auth = Auth::user()->id;
-        return $model->where('user_id', $auth)->where('status', 1)->newQuery();
+        return $model->where('user_id', $auth)->newQuery();
     }
 
     /**

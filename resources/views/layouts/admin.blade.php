@@ -42,7 +42,7 @@
     </head>
     <body class="hold-transition sidebar-mini layout-fixed deepskyblue">
     <div class="overlay" style="background: #000000ad;z-index: 9999999999999999999;display: none;position: fixed;width: 100%;height: 100%;top: 0;left: 0;">
-      <img src="http://developmentrealestate.hipl-staging2.com/front/assets/images/loader.gif" alt="Logo" width="140"> 
+      <!-- <img src="http://developmentrealestate.hipl-staging2.com/front/assets/images/loader.gif" alt="Logo" width="140">  -->
       <i class="fas fa-2x fa-sync-alt fa-spin" style="position: absolute;top: 50%;left: 50%;color: white;font-size: 80px;"></i>
     </div>
         <div class="wrapper">

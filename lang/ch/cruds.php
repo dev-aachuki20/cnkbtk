@@ -331,9 +331,10 @@ return [
         'create'    => '創造',
         'project'  => '專案',
         'projects'  => '项目',
-        'project_details'  => '项目详情',
+        'project_details'  => '项目清单',
         'post'  => '郵政',
         'list' => '列表',
+        'list_title' => '列表',
         'request' => '要求',
         'fields' => [
             'type'     => '類型',

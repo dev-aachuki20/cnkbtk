@@ -408,7 +408,7 @@
                         @if(Auth::user() != null && auth()->user()->role_id == config("constant.role.user"))
 
                         <li>
-                          <a class="dropdown-item {{Request::is('user/project*') ? 'active' : ''}}" href="{{route('user.project.index')}}">
+                          <a class="dropdown-item {{Request::is('user/project') ? 'active' : ''}}" href="{{route('user.project.index')}}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                               <path d="M13.5 21.5H2C1.45 21.5 1 21.05 1 20.5V7.5C1 3.5 3 1.5 7 1.5H15C19 1.5 21 3.5 21 7.5V12.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                               <path d="M11.91 7.34003L6.72004 12.53C6.52004 12.73 6.33004 13.12 6.29004 13.4L6.01004 15.38C5.91004 16.1 6.41004 16.6 7.13004 16.5L9.11004 16.22C9.39004 16.18 9.78004 15.99 9.98004 15.79L15.17 10.6C16.06 9.71003 16.49 8.67003 15.17 7.35003C13.85 6.02003 12.81 6.44003 11.91 7.34003Z" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />

@@ -96,11 +96,13 @@ class StatisticsCreatorController extends Controller
         $averageData = $this->calculateAverage($labels, $data);
         $labels = $averageData['labels'];
         $data = $averageData['data'];
+        $average = $averageData['average'];
 
         // Add average data to datasets
         $datasets[] = [
             'label' => 'Average',
-            'data' => [$averageData['data'][count($averageData['data']) - 1]],
+            // 'data' => [$averageData['data'][count($averageData['data']) - 1]],
+            'data' => $data,
             'backgroundColor' => '#000000',
             'borderColor' => '#000000',
             'fill' => false,
@@ -116,6 +118,21 @@ class StatisticsCreatorController extends Controller
             'pointRadius' => 1,
             'borderWidth' => 3,
             'pointHitRadius' => 30
+        ];
+
+        // Add annotation for average value
+        $annotations[] = [
+            'type' => 'line',
+            'mode' => 'horizontal',
+            'scaleID' => 'y-axis-0',
+            'value' => $average,
+            'borderColor' => '#000000',
+            'borderWidth' => 2,
+            'label' => [
+                'enabled' => true,
+                'content' => 'Average: ' . $average,
+                'position' => 'right'
+            ]
         ];
 
 
@@ -275,11 +292,13 @@ class StatisticsCreatorController extends Controller
         $averageData = $this->calculateAverage($labels, $data);
         $labels = $averageData['labels'];
         $data = $averageData['data'];
+        $average = $averageData['average'];
 
         // Add average data to datasets
         $datasets[] = [
             'label' => 'Average',
-            'data' => [$averageData['data'][count($averageData['data']) - 1]],
+            // 'data' => [$averageData['data'][count($averageData['data']) - 1]],
+            'data' => $data,
             'backgroundColor' => '#000000',
             'borderColor' => '#000000',
             'fill' => false,
@@ -295,6 +314,21 @@ class StatisticsCreatorController extends Controller
             'pointRadius' => 1,
             'borderWidth' => 3,
             'pointHitRadius' => 30
+        ];
+
+        // Add annotation for average value
+        $annotations[] = [
+            'type' => 'line',
+            'mode' => 'horizontal',
+            'scaleID' => 'y-axis-0',
+            'value' => $average,
+            'borderColor' => '#000000',
+            'borderWidth' => 2,
+            'label' => [
+                'enabled' => true,
+                'content' => 'Average: ' . $average,
+                'position' => 'right'
+            ]
         ];
 
         $html = view('statistics.creator-graph', compact('labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
@@ -392,11 +426,13 @@ class StatisticsCreatorController extends Controller
         $averageData = $this->calculateAverage($labels, $data);
         $labels = $averageData['labels'];
         $data = $averageData['data'];
+        $average = $averageData['average'];
 
         // Add average data to datasets
         $datasets[] = [
             'label' => 'Average',
-            'data' => [$averageData['data'][count($averageData['data']) - 1]],
+            // 'data' => [$averageData['data'][count($averageData['data']) - 1]],
+            'data' => $data,
             'backgroundColor' => '#000000',
             'borderColor' => '#000000',
             'fill' => false,
@@ -412,6 +448,21 @@ class StatisticsCreatorController extends Controller
             'pointRadius' => 1,
             'borderWidth' => 3,
             'pointHitRadius' => 30
+        ];
+
+        // Add annotation for average value
+        $annotations[] = [
+            'type' => 'line',
+            'mode' => 'horizontal',
+            'scaleID' => 'y-axis-0',
+            'value' => $average,
+            'borderColor' => '#000000',
+            'borderWidth' => 2,
+            'label' => [
+                'enabled' => true,
+                'content' => 'Average: ' . $average,
+                'position' => 'right'
+            ]
         ];
         $html = view('statistics.creator-graph', compact('labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
@@ -564,11 +615,13 @@ class StatisticsCreatorController extends Controller
         $averageData = $this->calculateAverage($labels, $data);
         $labels = $averageData['labels'];
         $data = $averageData['data'];
+        $average = $averageData['average'];
 
         // Add average data to datasets
         $datasets[] = [
             'label' => 'Average',
-            'data' => [$averageData['data'][count($averageData['data']) - 1]],
+            // 'data' => [$averageData['data'][count($averageData['data']) - 1]],
+            'data' => $data,
             'backgroundColor' => '#000000',
             'borderColor' => '#000000',
             'fill' => false,
@@ -584,6 +637,20 @@ class StatisticsCreatorController extends Controller
             'pointRadius' => 1,
             'borderWidth' => 3,
             'pointHitRadius' => 30
+        ];
+        // Add annotation for average value
+        $annotations[] = [
+            'type' => 'line',
+            'mode' => 'horizontal',
+            'scaleID' => 'y-axis-0',
+            'value' => $average,
+            'borderColor' => '#000000',
+            'borderWidth' => 2,
+            'label' => [
+                'enabled' => true,
+                'content' => 'Average: ' . $average,
+                'position' => 'right'
+            ]
         ];
         $html = view('statistics.creator-graph', compact('labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
@@ -681,11 +748,13 @@ class StatisticsCreatorController extends Controller
         $averageData = $this->calculateAverage($labels, $data);
         $labels = $averageData['labels'];
         $data = $averageData['data'];
+        $average = $averageData['average'];
 
         // Add average data to datasets
         $datasets[] = [
             'label' => 'Average',
-            'data' => [$averageData['data'][count($averageData['data']) - 1]],
+            // 'data' => [$averageData['data'][count($averageData['data']) - 1]],
+            'data' => $data,
             'backgroundColor' => '#000000',
             'borderColor' => '#000000',
             'fill' => false,
@@ -701,6 +770,23 @@ class StatisticsCreatorController extends Controller
             'pointRadius' => 1,
             'borderWidth' => 3,
             'pointHitRadius' => 30
+        ];
+
+        // Add annotation for average value
+        $annotations[] = [
+            'type' => 'line',
+            'mode' => 'horizontal',
+            'scaleID' => 'y-axis-0',
+            'value' => $average,
+            'borderColor' => '#000000',
+            'borderWidth' => 2,
+            'label' => [
+                'enabled' => true,
+                'content' => 'Average: ' . $average,
+                'position' => 'right',
+                'backgroundColor' => '#000000',
+                'fontColor' => '#ffffff' 
+            ]
         ];
         $html = view('statistics.creator-graph', compact('labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
@@ -757,8 +843,9 @@ class StatisticsCreatorController extends Controller
         $totalDays = count($labels);
         $total = array_sum($data);
         $average = $totalDays > 0 ? $total / $totalDays : 0;
+        $labels[] = 'Average';
         $data[] = $average;
-        return ['labels' => $labels, 'data' => $data];
+        return ['labels' => $labels, 'data' => $data, 'average' => $average];
     }
 
     //  Members Registrations 

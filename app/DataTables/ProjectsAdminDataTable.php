@@ -41,6 +41,46 @@ class ProjectsAdminDataTable extends DataTable
                 return $record->budget . config("constant.currency.rmb") ?? '0.00';
             })
 
+            ->editColumn('status', function ($record) {
+                $checkedStatus = ($record->status == 1 ? 'checked' : '');
+                $currentStatus = ($record->status == 1 ? trans("cruds.global.active") : trans("cruds.global.in_active"));
+                $status = 1;
+                if ($record->status == 1) {
+                    $status = 0;
+                }
+
+                $html = ' <div class="form-group custom-control custom-switch custom-switch-off-danger custom-switch-on-success"><input class="user_status custom-control-input" id="normal' . $record->id . '"  value="' . $status . '" ' . $checkedStatus . ' type="checkbox" name="status" data-status-id="' . $record->id . '"> <label class="custom-control-label" for="normal' . $record->id . '">' . $currentStatus . '</label></div>';
+                return $html;
+            })
+
+            // ->filterColumn('status', function ($query, $keyword) {
+            //     dd($keyword);
+            //     if ($keyword !== '') {
+            //         $keyword = strtolower($keyword);
+            //         $statusValues = array_map('strtolower', config('constant.status'));
+            //         $matches = array_filter($statusValues, function ($value) use ($keyword) {
+            //             return strpos($value, $keyword) !== false;
+            //         });
+            //         $statusKeys = array_keys($matches);
+            //         $query->whereIn('status', $statusKeys);
+            //     }
+            // })
+
+            ->filterColumn('projects.status', function ($query, $keyword) {
+                if ($keyword !== '') {
+                    $keyword = strtolower($keyword);
+                    $statusLabels = config('constant.status');
+                    $filteredStatusLabels = array_filter($statusLabels, function ($value) use ($keyword) {
+                        return strpos(strtolower($value), $keyword) !== false;
+                    });
+
+                    $statusKeys = array_keys($filteredStatusLabels);
+                    $query->whereIn('projects.status', $statusKeys);
+                }
+            })
+
+
+
             ->filterColumn('tags_id', function ($query, $keyword) {
                 $query->whereHas('tags', function ($query) use ($keyword) {
                     $query->where('name_en', 'like', "%$keyword%")
@@ -49,13 +89,21 @@ class ProjectsAdminDataTable extends DataTable
             })
             ->addColumn('action', function ($record) {
                 $action  = '<div class="d-flex">';
+
                 $action .= '<a class="btn btn-primary btn-sm" title="' . trans("cruds.global.view") . '" href="' . route('admin.projects.show', $record->id) . '">
                 <i class="fas fa-eye"></i>
             </a>';
+
+                if ($record->project_status == 1) {
+                    $action .= '<a class="btn btn-primary btn-sm" title="' . trans("cruds.global.view") . '" href="' . route('admin.projects.show', $record->id) . '">
+                Read chat
+            </a>';
+                }
+
                 $action .= '</div>';
                 return $action;
             })
-            ->rawColumns(['tags_id', 'action']);
+            ->rawColumns(['tags_id', 'status', 'action']);
     }
 
     /**
@@ -66,7 +114,7 @@ class ProjectsAdminDataTable extends DataTable
      */
     public function query(Project $model)
     {
-        return $model->where('projects.status', 1)->newQuery();
+        return $model->newQuery();
     }
 
     /**
@@ -111,6 +159,7 @@ class ProjectsAdminDataTable extends DataTable
             Column::make('tags_id')->title(trans("cruds.create_project.fields.tags")),
             Column::make('user_ip')->title(trans("cruds.create_project.fields.user_ip")),
             Column::make('budget')->title(trans("cruds.create_project.fields.budget")),
+            Column::computed('status')->title(trans("cruds.global.status"))->orderable(false)->searchable(false),
             Column::make('created_at')->title(trans("cruds.global.created_date"))->orderable(false)->searchable(false),
             Column::computed('action')->title(trans("cruds.global.action"))->orderable(false)->searchable(false),
         ];

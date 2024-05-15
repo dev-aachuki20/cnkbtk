@@ -7,8 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Models\Report;
-
-
+use Validator;
 
 class ProjectAdminController extends Controller
 {
@@ -93,6 +92,25 @@ class ProjectAdminController extends Controller
                 'success' => true,
                 'message' => $notification,
             ]);
+        }
+    }
+
+    public function updateStatus(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id'  => 'required|exists:projects,id',
+            'status'   => 'required|in:1,0',
+        ]);
+
+        if ($validator->passes()) {
+            $project = Project::find($request->id);
+            if ($project) {
+                $project->status = $request->status;
+                $project->save();
+                return response()->json(['success' => true, 'message' =>  trans("messages.status_success", ['module' => trans("cruds.create_project.project")])], 200);
+            }
+        } else {
+            return response()->json(['success' => false, 'errors' => $validator->getMessageBag()->toArray(), 'message' =>  trans("messages.error_occured")], 400);
         }
     }
 }

@@ -49,7 +49,7 @@
     <div class="mb-4">
       <div class="form-group">
         <label for="budget">{{__('cruds.create_project.fields.budget')}} <span class="text-danger">*</span></label>
-        <input type="text" value="{{ isset($project) ? $project->budget :''}}" class="form-control" name="budget" id="budget" placeholder="{{__('cruds.create_project.fields.placeholder')}}" />
+        <input type="number" value="{{ isset($project) ? $project->budget :''}}" class="form-control" name="budget" id="budget" placeholder="{{__('cruds.create_project.fields.placeholder')}}" />
       </div>
     </div>
   </div>
@@ -59,8 +59,8 @@
       <div class="form-group">
         <label>{{trans("pages.post.form.fields.status")}} <span class="text-danger">*</span></label>
         <select class="form-select" name="status" id="status">
-          <option value="1" {{ isset($project) &&  $project->status ? 'selected' : '' }}>{{trans('global.active')}}</option>
-          <option value="0" {{ isset($project) &&  $project->status ? 'selected' : '' }}>{{trans('global.in_active')}}</option>
+          <option value="1" {{ isset($project) &&  $project->status == 1 ? 'selected' : '' }}>{{trans('global.active')}}</option>
+          <option value="0" {{ isset($project) &&  $project->status == 0 ? 'selected' : '' }}>{{trans('global.in_active')}}</option>
         </select>
       </div>
     </div>

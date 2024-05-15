@@ -99,6 +99,7 @@ class ProjectController extends Controller
 
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         try {
             if (BlacklistUser::where('email', auth()->user()->email)->exists()) {
                 return response()->json(['message' => trans("messages.project_request_failed"), 'alert-type' => 'error'], 403);

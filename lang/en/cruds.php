@@ -329,9 +329,10 @@ return [
         'create'    => 'Create',
         'project'  => 'Project',
         'projects'  => 'Projects',
-        'project_details'  => 'Project Details',
+        'project_details'  => 'Project Lists',
         'post'  => 'Post',
         'list' => 'List',
+        'list_title' => 'Lists',
         'request' => 'Request',
         'fields' => [
             'type'     => 'Type',

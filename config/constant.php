@@ -60,7 +60,12 @@ return [
 
     "currency" =>[
         'rmb' => ' CN¥',
-    ]
+    ],
+
+    "status" => [
+        1 => 'Active',
+        0 => 'Inactive',
+    ],
 
 ];
 
