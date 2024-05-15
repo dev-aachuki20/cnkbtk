@@ -24,6 +24,9 @@ class ProjectsAdminDataTable extends DataTable
         return datatables()
             ->eloquent($query->with('user', 'tags')->select('projects.*'))
             ->addIndexColumn()
+            ->editColumn('title', function ($record) {
+                return ucfirst($record->title) ?? '';
+            })
             ->editColumn('created_at', function ($record) {
                 return $record->created_at->format(config('app.date_format'));
             })
@@ -140,6 +143,7 @@ class ProjectsAdminDataTable extends DataTable
         return [
             Column::make('DT_RowIndex')->title('#')->orderable(false)->searchable(false),
             Column::make('user.user_name')->title(trans("cruds.create_project.fields.user_name")),
+            Column::make('title')->title(trans("cruds.create_project.fields.title")),
             Column::make('type')->title(trans("cruds.create_project.fields.type")),
             Column::make('tags_id')->title(trans("cruds.create_project.fields.tags")),
             Column::make('user_ip')->title(trans("cruds.create_project.fields.user_ip")),

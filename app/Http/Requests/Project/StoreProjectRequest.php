@@ -24,6 +24,7 @@ class StoreProjectRequest extends FormRequest
     public function rules()
     {
         return [
+            'title'     => ['required', 'string'],
             'type'      => ['required', 'string'],
             'tags_id'   => ['required'],
             'budget'    => ['required', 'numeric'],
@@ -35,6 +36,9 @@ class StoreProjectRequest extends FormRequest
     public function messages()
     {
         return [
+            'title.required' => __('validation.required', ['attribute' => __('cruds.create_project.fields.title')]),
+            'title.string' =>  __('validation.string', ['attribute' => __('cruds.create_project.fields.title')]),
+
             'type.required' => __('validation.required', ['attribute' => __('cruds.create_project.fields.type')]),
             'type.string' =>  __('validation.string', ['attribute' => __('cruds.create_project.fields.type')]),
 

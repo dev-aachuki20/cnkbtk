@@ -335,6 +335,7 @@ return [
         'list_title' => 'Lists',
         'request' => 'Request',
         'fields' => [
+            'title'     => 'Title',
             'type'     => 'Type',
             'tags'          => 'Tag',
             'creators'         => 'Creators',
@@ -344,6 +345,7 @@ return [
             'user_ip'         => 'IP Address',
             'copyright'         => 'Copyright',
             'placeholder'         => 'Enter Budget',
+            'title_placeholder'         => 'Enter Title',
             'text'         => 'By checking this box, you agree to abide by our copyright policies.',
             'selected' => [
                 'type' => 'Select Type',

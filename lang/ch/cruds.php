@@ -337,6 +337,7 @@ return [
         'list_title' => '列表',
         'request' => '要求',
         'fields' => [
+            'title'     => '标题',
             'type'     => '類型',
             'tags'          => '標籤',
             'creators'         => '創作者',
@@ -346,6 +347,7 @@ return [
             'user_ip'         => 'IP地址',
             'copyright'         => '版權',
             'placeholder'         => '輸入預算',
+            'title_placeholder'         => '输入标题',
             'text'         => '勾選此方塊即表示您同意遵守我們的版權政策。',
             'selected' => [
                 'type' => '選擇類型',

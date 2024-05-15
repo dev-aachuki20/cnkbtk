@@ -18,6 +18,11 @@ class ProjectUserDataTable extends DataTable
         return datatables()
             ->eloquent($query->with('tags'))
             ->addIndexColumn()
+
+            ->editColumn('title', function ($record) {
+                return ucfirst($record->title) ?? '';
+            })
+
             ->editColumn('created_at', function ($record) {
                 return $record->created_at->format(config('app.date_format'));
             })
@@ -135,6 +140,7 @@ class ProjectUserDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex')->title('#')->orderable(false)->searchable(false),
+            Column::make('title')->title(trans("cruds.create_project.fields.title")),
             Column::make('type')->title(trans("cruds.create_project.fields.type")),
             Column::make('tags_id')->title(trans("cruds.create_project.fields.tags")),
             Column::make('budget')->title(trans("cruds.create_project.fields.budget")),

@@ -1,5 +1,15 @@
 <div class="row">
-  <div class="col-md-6">
+
+  <div class="col-md-4">
+    <div class="mb-4">
+      <div class="form-group">
+        <label for="title">{{__('cruds.create_project.fields.title')}} <span class="text-danger">*</span></label>
+        <input type="text" value="{{ isset($project) ? $project->title :''}}" class="form-control" name="title" id="title" placeholder="{{__('cruds.create_project.fields.title_placeholder')}}" />
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
     <div class="mb-4">
       <div class="form-group">
         <label for="type">{{__('cruds.create_project.fields.type')}} <span class="text-danger">*</span></label>
@@ -14,7 +24,7 @@
     </div>
   </div>
 
-  <div class="col-md-6">
+  <div class="col-md-4">
     <div class="mb-4">
       <div class="form-group">
         <label for="tags_id">{{__('cruds.create_project.fields.tags')}} <span class="text-danger">*</span></label>

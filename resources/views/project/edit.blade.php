@@ -56,10 +56,25 @@
         });
 
         ClassicEditor
-            .create(document.querySelector('.editor'))
-            .catch(error => {
-                console.error(error);
-            });
+      .create(document.querySelector('.editor'), {
+        toolbar: {
+          items: [
+            'heading',
+            '|',
+            'bold',
+            'italic',
+            'link',
+            'bulletedList',
+            'numberedList',
+            'blockQuote',
+            'undo',
+            'redo'
+          ]
+        },
+      })
+      .catch(error => {
+        console.error(error);
+      });
 
         // Update project and send notification.
         $(document).on("submit", "#projectEditForm", function(e) {

@@ -28,7 +28,7 @@
                 $ifRoleCreator = auth()->user()->role_id == config('constant.role.creator');
                 @endphp
                 @if($ifRoleUser)
-                <div class="col-xxl-3 col-lg-4 col-md-5 h-100">
+                <div class="col-xxl-3 col-lg-4 col-md-5 h-100 animate__animated animate__fadeInUp">
                     <div class="sidebar h-100 p-3 rounded-4">
                         <div class="user-list h-100">
                             <div class="row h-100 overflow-hidden flex-column flex-nowrap">
@@ -79,7 +79,7 @@
                 <!-- right panel for creator -->
                 @if($ifRoleCreator)
                 <div class="col-xxl-12 col-lg-12 chat-panel h-100 chatscreen">
-                    <div class="card chatcard h-100 overflow-hidden">
+                    <div class="card chatcard h-100 overflow-hidden animate__animated animate__fadeInUp">
                         <div class="row h-100 flex-column flex-nowrap overflow-hidden">
                             <div class="col-12">
                                 <div class="chat-header p-3 d-flex justify-content-between align-items-center">
@@ -122,7 +122,7 @@
                                 </div>
                             </div>
                             <div class="col-12 h-100 flex-fill overflow-y-auto messageBoxBg">
-                                <div class="message-container px-3" id="messageContainer">
+                                <div class="message-container px-3 overflow-y-auto" id="messageContainer">
                                     @php
                                     $prevDate = null; // Initialize previous date variable
                                     @endphp
@@ -194,7 +194,7 @@
 
                 <!-- Welcome screen for user. -->
                 <!-- right panel start -->
-                <div class="{{$ifRoleUser ? 'col-xxl-9 col-lg-8 col-md-7' : 'col-xxl-12 col-lg-12' }} chat-panel h-100 chatscreen">
+                <div class="{{$ifRoleUser ? 'col-xxl-9 col-lg-8 col-md-7 col-md-12' : 'col-xxl-12 col-lg-12' }} chat-panel h-100 chatscreen">
                     <div class="card chatcard h-100">
                         <div class="row h-100 flex-column flex-nowrap overflow-hidden groupChatScreen">
                             <div class="col-12">
@@ -207,7 +207,7 @@
                                     $authimagePath = asset('dummy-user.svg');
                                     }
                                     @endphp
-                                    <div class="userporfile w-100">
+                                    <div class="userporfile">
                                         <div class="userimage">
                                             <img class="userpic" src="{{$authimagePath}}" alt="Super Admin">
                                         </div>
@@ -306,6 +306,7 @@
                     user_name: userName,
                     project_id: projectId,
                 },
+                async: false,
                 dataType: 'json',
                 success: function(response) {
                     $('.chatscreen').html(response.html);

@@ -44,6 +44,11 @@
                     </tr>
 
                     <tr>
+                      <th>{{trans("cruds.create_project.fields.title")}}</th>
+                      <td>{{ ucwords($project->title)  ?? ''}}</td>
+                    </tr>
+
+                    <tr>
                       <th>{{trans("cruds.create_project.fields.type")}}</th>
                       <td>{{ $project->type  ?? ''}}</td>
                     </tr>

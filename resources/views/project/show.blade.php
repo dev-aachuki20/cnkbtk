@@ -23,7 +23,7 @@
           </a>
         </li>
         <li class="breadcrumb-item active" aria-current="page">
-          {{ $project->type ?? ''}}
+          {{ ucwords($project->title) ?? ''}}
         </li>
       </ol>
       <!-- <a href="javascript:;" type="button" class="btn btn-dark px-3 btn-sm"><span><svg width="21" height="11" viewBox="0 0 21 11" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -44,9 +44,15 @@
                 <div class="col-12">
                   <div class="main-title"><h2 class="title">Project Details</h2></div>
                   <div class="row">
+                    <div class="col-lg-auto col-sm-3 col-4 main-title"><h6 class="cardtitle">{{trans("cruds.create_project.fields.title")}}</h6></div>
+                    <div class="col-lg col-sm-9 col-8 d-flex align-items-center"><div class="content">{{ ucwords($project->title)  ?? ''}}</div></div>
+                  </div>
+                  
+                  <div class="row">
                     <div class="col-lg-auto col-sm-3 col-4 main-title"><h6 class="cardtitle">{{trans("cruds.create_project.fields.type")}}</h6></div>
                     <div class="col-lg col-sm-9 col-8 d-flex align-items-center"><div class="content">{{ $project->type  ?? ''}}</div></div>
                   </div>
+                  
                 </div>
                 <div class="col-12">
                   <div class="row">
