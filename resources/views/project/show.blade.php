@@ -23,7 +23,7 @@
           </a>
         </li>
         <li class="breadcrumb-item active" aria-current="page">
-          {{trans('cruds.create_project.project_details')}}
+          {{ $project->type ?? ''}}
         </li>
       </ol>
       <!-- <a href="javascript:;" type="button" class="btn btn-dark px-3 btn-sm"><span><svg width="21" height="11" viewBox="0 0 21 11" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,8 +33,122 @@
   </div>
 </section>
 <section class="single-wrapper ">
-  <div class="container">
-    <div class="card project_card_group">
+  <div class="container project_card_group">
+
+    <div class="right-single-box project_details_card">
+      <div class="row row-gap-lg-3 row-gap-2">
+        <div class="col-12">
+          <div class="row row-gap-4">
+            <div class="col-xl-8 col-lg-7 col-12 order-lg-1 order-2">
+              <div class="row row-gap-lg-3 row-gap-2">
+                <div class="col-12">
+                  <div class="main-title"><h2 class="title">Project Details</h2></div>
+                  <div class="row">
+                    <div class="col-lg-auto col-sm-3 col-4 main-title"><h6 class="cardtitle">{{trans("cruds.create_project.fields.type")}}</h6></div>
+                    <div class="col-lg col-sm-9 col-8 d-flex align-items-center"><div class="content">{{ $project->type  ?? ''}}</div></div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-lg-auto col-sm-3 col-4 main-title"><h6 class="cardtitle">{{trans("cruds.create_project.fields.tags")}}</h6></div>
+                    <div class="col-lg col-sm-9 col-8 d-flex align-items-center"><div class="content"> 
+                      @if(app()->getLocale() == 'en')
+                      {{ $project->tags->name_en ?? '' }}
+                      @else
+                      {{ $project->tags->name_ch ?? '' }}
+                      @endif</div></div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-lg-auto col-sm-3 col-4 main-title"><h6 class="cardtitle">{{trans("cruds.create_project.fields.budget")}}</h6></div>
+                    <div class="col-lg col-sm-9 col-8 d-flex align-items-center"><div class="content">{{ $project->budget  ?? ''}} CN¥</div></div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-lg-auto col-sm-3 col-4 main-title"><h6 class="cardtitle">{{trans("cruds.create_project.fields.creators")}} </h6></div>
+                    <div class="col-lg col-sm-9 col-8 d-flex align-items-center"><div class="content">
+                      @foreach ($project->creators as $creator)
+                      {{ $creator->user_name }}
+                      @endforeach</div></div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-lg-auto col-sm-3 col-4 main-title"><h6 class="cardtitle">{{trans("cruds.global.status")}}</h6></div>
+                    <div class="col-lg col-sm-9 col-8 d-flex align-items-center"><div class="content">
+                      @if($project->status == 1)
+                        <small class="badge badge-info mr-1">{{trans("cruds.global.active")}}</small>
+                        @else
+                        <small class="badge badge-danger mr-1">{{trans("cruds.global.in_active")}}</small>
+                        @endif
+                      </div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-5 col-12 order-lg-2 order-1">
+              <div class="project_details_card bg-white statuscard">
+                <div class="row">
+                  {{-- <div class="col-12 text-end">
+                    @if($project->project_status == 1)
+                    <button type="button" class="btn btn-primary ml-auto cancel-btn" id="cancel">
+                      {{__('cruds.global.message')}}
+                  </button>
+                  @endif
+                </div> --}}
+                  <div class="col-12">
+                    <div class="main-title"><h2 class="title">Status</h2></div>
+                    {{-- <div class="main-title"><h2 class="title">{{trans("cruds.create_project.project")}} {{trans("cruds.global.status")}}</h2></div> --}}
+                  </div>
+                  <div class="col-12">
+                    <ul>
+                      @php
+                      $creator = $project->creators()->wherePivot('creator_status', 1)->wherePivot('user_status', 1)->first();
+                      @endphp
+  
+                      <li>
+                        <div class="main-title">
+                          <h6> <span>{{trans("cruds.create_project.fields.creator_name")}} </span> {{ $creator->user_name   ?? 'N/A'}}</h6>
+                        </div>
+                      </li>
+        
+                      <li>
+                        <div class="main-title">
+                          <h6> <span>{{trans("cruds.create_project.fields.budget")}} </span>{{ $creator->bid  ?? $project->budget }} CN¥</h6>
+                        </div>
+                      </li>
+        
+                      <li>
+                        <div class="main-title">
+                          <h6> <span>{{trans("cruds.global.status")}}</span> @if($project->project_status == 1)
+                            <small class="badge badge-info mr-1">{{trans("cruds.create_project.fields.status.locked")}}</small>
+                            @else
+                            <small class="badge badge-danger mr-1">{{trans("cruds.create_project.fields.status.unlocked")}}</small>
+                            @endif
+                          </h6>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="description_wapper">
+            <div class="row row-gap-2">
+              <div class="col-lg-auto col-sm-3 main-title"><h6 class="cardtitle">{{trans("cruds.create_project.fields.description")}}</h6></div>
+              <div class="col-lg col-sm-9 d-flex align-items-center"><div class="content">{!! $project->comment ?? '' !!}</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    {{-- <div class="card ">
         <div class="row g-4">
           <!-- Project Details -->
           <div class="col-lg-6 col-12">
@@ -59,14 +173,11 @@
                         </h6>
                       </div>
                     </li>
-    
                     <li>
                       <div class="main-title">
                         <h6> <span>{{trans("cruds.create_project.fields.budget")}} :</span>{{ $project->budget  ?? ''}} CN¥</h6>
                       </div>
                     </li>
-    
-    
                     <li>
                       <div class="main-title">
                         <h6> <span>{{trans("cruds.create_project.fields.creators")}} :</span> @foreach ($project->creators as $creator)
@@ -75,13 +186,11 @@
                         </h6>
                       </div>
                     </li>
-    
                     <li>
                       <div class="main-title">
                         <h6 class="description"> <span>{{trans("cruds.create_project.fields.description")}} :</span> {!! $project->comment ?? '' !!}</h6>
                       </div>
                     </li>
-    
                     <li>
                       <div class="main-title">
                         <h6> <span>{{trans("cruds.global.status")}}:</span> @if($project->status == 1)
@@ -102,13 +211,7 @@
           <!-- Project Status -->
           <div class="col-lg-6 col-12">
             <div class="right-single-box blacklist_box_user project_details_card">
-                {{-- <div class="col-12 text-end">
-                  @if($project->project_status == 1)
-                  <button type="button" class="btn btn-primary ml-auto cancel-btn" id="cancel">
-                    {{__('cruds.global.message')}}
-                </button>
-                @endif
-              </div> --}}
+               
               <div class="row gx-3">
                 <div class="main-title"><h2>{{trans("cruds.create_project.project")}} {{trans("cruds.global.status")}}</h2></div>
                 <div class="col">
@@ -145,7 +248,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> --}}
   </div>
 </section>
 @endsection

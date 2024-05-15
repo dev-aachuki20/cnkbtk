@@ -293,6 +293,19 @@ span.count-number{
 
 }
 
+@media screen and (min-width: 992px) {
+  .project_card_group .project_details_card .main-title .cardtitle {
+    min-width: 200px;
+  }
+}
+
+
+@media screen and (max-width: 991px) and (min-width: 576px) {
+  .project_card_group .project_details_card ul li span {
+    min-width: 187px;
+}
+}
+
 @media (max-width: 991px) {
 
   .user-content-info> .row .col-md-4,
@@ -424,7 +437,16 @@ section.chart-wrapper{
   margin: 0 auto;
 }
 
+.project_card_group .project_details_card .description_wapper {
+  border-top: none;
+  padding-top: 0px;
 }
+.project_card_group .project_details_card .description_wapper .content {
+  padding-top: 6px;
+}
+}
+
+
 
 
 @media (max-width: 769px) {
@@ -936,6 +958,10 @@ section.edit-post-wrapper .col-md-6 {
     font-size: 14px;
     line-height: 26px;
 }
+
+.project_card_group .project_details_card .main-title .cardtitle::before{
+  right: 10%;
+}
 }
 
 
@@ -963,15 +989,17 @@ section.edit-post-wrapper .col-md-6 {
   width: 30px;
 }
 .project_details_card ul li span {
-  min-width: 120px;
+  min-width: 140px;
 }
-.project_card_group {
-  padding: 20px 15px;
+.project_details_card ul li span::before {
+  right: 8%;
 }
-.blacklist_box_user {
-  padding: 20px !important;
+.project_card_group .project_details_card .description_wapper .main-title .cardtitle::before{
+  display: none;
 }
-
+.project_details_card ul li span::before {
+  right: 0;
+}
 }
 
 @media (max-width: 580px) {
@@ -1179,9 +1207,6 @@ section.edit-post-wrapper .col-md-6 {
     display: inline-table !important;
   }
 
-  .project_details_card ul li span {
-    min-width: 110px;
-  }
 
 }
 
@@ -1212,5 +1237,24 @@ section.edit-post-wrapper .col-md-6 {
     margin: 0 2px;
     font-size: 13px;
     padding: 5px 11px;
+  }
+  .project_card_group .project_details_card {
+    padding: 20px 15px;
+  }
+  .project_details_card ul li span {
+    min-width: 120px;
+  }
+  .project_card_group .project_details_card .main-title .cardtitle::before {
+    right: 0;
+  }
+
+  .project_details_card .status-item{
+    min-width: 100%;
+  }
+  .project_details_card .status-item>div>div:first-child {
+    width: 40%;
+  }
+  .project_details_card .status-item>div>div:last-child {
+    width: 60%;
   }
 }
