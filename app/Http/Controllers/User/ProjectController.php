@@ -239,6 +239,22 @@ class ProjectController extends Controller
 
     public function update(Request $request, $id)
     {
+        $rules = [
+            'title' => ['required', 'string'],
+            'budget' => ['required'],
+            'comment' => ['required'],
+        ];
+
+        $customMessages = [];
+
+        $customName = [
+            'title' => trans("cruds.create_project.fields.title"),
+            'budget' => trans("cruds.create_project.fields.budget"),
+            'comment' => trans("cruds.create_project.fields.description"),
+        ];
+
+
+        $this->validate($request, $rules, $customMessages, $customName);
         try {
             if (BlacklistUser::where('email', auth()->user()->email)->exists()) {
                 return response()->json(['message' => trans("messages.project_request_failed"), 'alert-type' => 'error'], 403);
