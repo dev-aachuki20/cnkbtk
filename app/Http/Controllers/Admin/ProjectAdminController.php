@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\DataTables\ProjectsAdminDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\Chat;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Models\Report;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Validator;
 
 class ProjectAdminController extends Controller
@@ -116,6 +119,33 @@ class ProjectAdminController extends Controller
 
     public function readChat(Request $request, $projectId)
     {
+        $project = Project::findOrFail($projectId);
+
+        // find user
+        $userId = $project->user_id;
+        $user = User::with('uploads')->findOrFail($userId);
+
+        //Find project id form project_creator table
+        // find creator
+        $creator = User::findOrFail(DB::table('project_creator')->where('project_id', $projectId)->value('creator_id'));
+
+        // Get chat between user and creator
+        $getChatData = Chat::with(['sender', 'receiver'])
+            ->where(function ($query) use ($user, $creator) {
+                $query->where('sender_id', $user->id)
+                    ->where('receiver_id', $creator->id);
+            })
+            ->orWhere(function ($query) use ($user, $creator) {
+                $query->where('sender_id', $creator->id)
+                    ->where('receiver_id', $user->id);
+            })
+            ->orderBy('id', 'asc')
+            ->get();
+
+
+
+
+        // return view('admin.message.index', compact('user', 'getChatData', 'projectId', 'creator'));
         return view('admin.message.index');
     }
 }

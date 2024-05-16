@@ -332,8 +332,13 @@ class ProjectController extends Controller
                 ->where('creator_id', $user->id)
                 ->value('creator_status');
 
+            $userStatus = DB::table('project_creator')
+                ->where('project_id', $project->id)
+                ->where('creator_id', $user->id)
+                ->value('user_status');
+
             return [
-                'project' => $project, 'creatorStatus' => $creatorStatus,
+                'project' => $project, 'creatorStatus' => $creatorStatus, 'userStatus' =>  $userStatus,
             ];
         });
 
@@ -437,7 +442,7 @@ class ProjectController extends Controller
         }
 
         $project = Project::findOrFail($projectId);
-        DB::table('project_creator')->where('project_id', $projectId)->where('creator_id', $creatorId)->update(['creator_status' => 1]);
+        DB::table('project_creator')->where('project_id', $projectId)->where('creator_id', $creatorId)->update(['creator_status' => 1, 'user_status' => 1]);
 
         $projectStatus =  $project->project_status == 0 ? 1 : 0;
         $project->update(['project_status' => $projectStatus]);

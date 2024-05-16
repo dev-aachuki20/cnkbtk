@@ -47,6 +47,11 @@
                                 </li>
                                 <li>
                                     <div class="main-title">
+                                        <h6> <span>{{trans("cruds.create_project.fields.title")}} :</span> {{ ucfirst($item['project']->title)  ?? ''}}</h6>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="main-title">
                                         <h6> <span>{{trans("cruds.create_project.project")}} {{trans("cruds.create_project.fields.type")}} :</span> {{ $item['project']->type  ?? ''}}</h6>
                                     </div>
                                 </li>
@@ -84,11 +89,13 @@
                                         {{ $item['creatorStatus'] == 2 ? __('cruds.create_project.headings.bid_added') : __('cruds.create_project.headings.add_bid') }}
                                     </button>
                                 </div>
+                                @if($item['userStatus'] == 1)
                                 <div class="col-auto">
                                     <button type="button" class="btn btn-success ml-3 confirm-btn" id="confirm" data-project-id="{{$item['project']->id}}" data-user-id="{{$item['project']->user_id}}" data-creator-id="{{Auth::user()->id}}" {{$item['project']->project_status == 1  ? 'disabled' : ''}}>
                                         {{$item['project']->project_status == 1  ? 'Confirmed' : __('cruds.create_project.headings.confirm_project')}}
                                     </button>
                                 </div>
+                                @endif
                             </div>
                         </div>
 

@@ -56,6 +56,11 @@
                             </li>
                             <li>
                                 <div class="main-title">
+                                    <h6> <span>{{trans("cruds.create_project.fields.title")}} :</span> {{ ucfirst($project->title)  ?? ''}}</h6>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="main-title">
                                     <h6> <span>{{trans("cruds.create_project.project")}} {{trans("cruds.create_project.fields.type")}} :</span> {{ $project->type  ?? ''}}</h6>
                                 </div>
                             </li>
