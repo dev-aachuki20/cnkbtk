@@ -83,8 +83,7 @@ class ProjectsAdminDataTable extends DataTable
             </a>';
 
                 if ($record->project_status == 1) {
-                    $action .= '<a class="btn btn-primary btn-sm" title="' . trans("cruds.global.view") . '" href="' . route('admin.projects.show', $record->id) . '">
-                Read chat
+                    $action .= '<a class="btn btn-primary btn-sm" title="' . trans("cruds.global.read_chat") . '" href="' . route('admin.projects.readChat', $record->id) . '">' . trans("cruds.global.read_chat") . '
             </a>';
                 }
 

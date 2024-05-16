@@ -69,18 +69,18 @@ class ProjectUserDataTable extends DataTable
 
             ->addColumn('action', function ($record) {
                 $action  = '<div class="d-flex">';
-                
-                if($record->status == 1){
-                    $action .= '<a class="btn btn-success btn-sm" title="' . trans("cruds.global.view") . '" href="' . route('message.index', ['projectId' => $record->id]) . '">
-                    '. trans("cruds.global.message") .'
+
+                if ($record->status == 1) {
+                    $action .= '<a class="btn btn-success btn-sm" title="' . trans("cruds.global.message") . '" href="' . route('message.index', ['projectId' => $record->id]) . '">
+                    <i class="fa fa-commenting-o" aria-hidden="true"></i>
                 </a>';
                 }
-                
+
                 $action .= '<a class="btn btn-primary btn-sm" title="' . trans("cruds.global.view") . '" href="' . route('user.project.show', $record->id) . '">
                 <i class="fa fa-eye"></i>
             </a>';
                 if ($record->project_status != 1) {
-                    $action .= '<a class="btn btn-primary btn-sm" title="' . trans("cruds.global.view") . '" href="' . route("user.project.edit", $record->id) . '">
+                    $action .= '<a class="btn btn-primary btn-sm" title="' . trans("cruds.global.edit") . '" href="' . route("user.project.edit", $record->id) . '">
                 <i class="fa fa-pencil"></i>
             </a>';
                 }

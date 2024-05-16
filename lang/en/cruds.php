@@ -232,6 +232,7 @@ return [
         'purchase' => "Purchase",
         'apply' => 'Apply',
         'message' => 'Message',
+        'read_chat' => 'Read Chat',
     ],
 
     'lang' => [

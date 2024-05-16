@@ -237,6 +237,7 @@ return [
         'purchase' => "购买",
         'apply' => '申請',
         'message' => '信息',
+        'read_chat' => '阅读聊天',
     ],
 
     'lang' => [

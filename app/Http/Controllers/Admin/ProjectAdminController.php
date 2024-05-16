@@ -113,4 +113,9 @@ class ProjectAdminController extends Controller
             return response()->json(['success' => false, 'errors' => $validator->getMessageBag()->toArray(), 'message' =>  trans("messages.error_occured")], 400);
         }
     }
+
+    public function readChat(Request $request, $projectId)
+    {
+        return view('admin.message.index');
+    }
 }

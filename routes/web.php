@@ -117,6 +117,7 @@ Route::group(["namespace" => "App\Http\Controllers\Admin", 'as' => 'admin.', "pr
     Route::post('advertisement/update-status', 'AdvertisementController@updateStatus')->name('advertisement.updateStatus');
     Route::post('plan/update-status', 'PlanController@updateStatus')->name('plan.updateStatus');
     Route::post('projects/update-status', 'ProjectAdminController@updateStatus')->name('projects.updateStatus');
+    Route::get('projects/read-chat/{projectId}', 'ProjectAdminController@readChat')->name('projects.readChat');
 
 
     // Site statistics Graph Filteration Admin routes start
