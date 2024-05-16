@@ -328,9 +328,9 @@
                 dataType: 'json',
                 success: function(response) {
                     $('.chatscreen').html(response.html);
-                    setTimeout(function(){
+                    setTimeout(function() {
                         scrollToBottom();
-                    },2000)
+                    }, 2000)
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
@@ -341,7 +341,7 @@
 
     function scrollToBottom() {
         // alert();
-        var chatBox =  $("#messageContainer");//document.getElementById("messageContainer");
+        var chatBox = $("#messageContainer"); //document.getElementById("messageContainer");
         // chatBox.scrollTop = chatBox.scrollHeight;
         chatBox.scrollToBottom(chatBox[0].scrollHeight);
         //chatBox.scrollTop(chatBox[0].scrollHeight);

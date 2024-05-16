@@ -106,26 +106,31 @@ class StatisticsController extends Controller
             }
         }
 
+        $totalDays = count($labels);
+        $total = array_sum($data);
+        $average = $totalDays > 0 ? $total / $totalDays : 0.00;
+        $average = round($average, 2);
+
         // list($labels, $data) = $this->calculateAverage($labels, $data);
-        $averageData = $this->calculateAverage($labels, $data);
-        $labels = $averageData['labels'];
-        $data = $averageData['data'];
+        // $averageData = $this->calculateAverage($labels, $data);
+        // $labels = $averageData['labels'];
+        // $data = $averageData['data'];
 
         // Add average data to datasets
-        $datasets[] = [
-            'label' => 'Average',
-            'data' => $data,
-            'backgroundColor' => '#0000FF',
-            'borderColor' => '#0000FF',
-            'fill' => false,
-            'borderWidth' => 1,
-            'tension' => 0.5,
-            'pointBorderWidth' => 6,
-            'pointHoverRadius' => 6,
-            'pointRadius' => 1,
-            'borderWidth' => 3,
-            'pointHitRadius' => 30
-        ];
+        // $datasets[] = [
+        //     'label' => 'Average',
+        //     'data' => $data,
+        //     'backgroundColor' => '#0000FF',
+        //     'borderColor' => '#0000FF',
+        //     'fill' => false,
+        //     'borderWidth' => 1,
+        //     'tension' => 0.5,
+        //     'pointBorderWidth' => 6,
+        //     'pointHoverRadius' => 6,
+        //     'pointRadius' => 1,
+        //     'borderWidth' => 3,
+        //     'pointHitRadius' => 30
+        // ];
 
         $pluginText = trans("cruds.registered_members.fields.num_graph");
         // $xAxisText =  trans("cruds.registered_members.fields.time");
@@ -133,7 +138,7 @@ class StatisticsController extends Controller
         $yAxisText =  trans("cruds.registered_members.fields.count");
         $labelText =  trans("cruds.registered_members.fields.graph");
 
-        $html = view('statistics.graph', compact('labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+        $html = view('statistics.graph', compact('average', 'labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
         return response()->json(['success' => true, 'html' => $html], 200);
     }
 
@@ -147,7 +152,6 @@ class StatisticsController extends Controller
         $labels = [];
         $data = [];
         $datasets = [];
-        // $colors = $this->generateColors(count($tagTypes));
         $colors = ['#ff0000', '#00ff00', '#0000ff'];
         if (!$request->has(['start_date', 'end_date', 'range'])) {
             if (!in_array($range, ['day', 'week', 'month', 'custom range'])) {
@@ -279,28 +283,31 @@ class StatisticsController extends Controller
         $yAxisText =  trans("cruds.number_of_posts.fields.count");
         $labelText =  trans("cruds.number_of_posts.fields.graph");
 
-        // list($labels, $data) = $this->calculateAverage($labels, $data);
-        $averageData = $this->calculateAverage($labels, $data);
-        $labels = $averageData['labels'];
-        $data = $averageData['data'];
+        $totalDays = count($labels);
+        $total = array_sum($data);
+        $average = $totalDays > 0 ? $total / $totalDays : 0.00;
+        $average = round($average, 2);
+
+        // $averageData = $this->calculateAverage($labels, $data);
+        // $labels = $averageData['labels'];
+        // $data = $averageData['data'];
 
         // Add average data to datasets
-        $datasets[] = [
-            'label' => 'Average',
-            'data' => $data,
-            'backgroundColor' => '#0000FF',
-            'borderColor' => '#0000FF',
-            'fill' => false,
-            'borderWidth' => 1,
-            'tension' => 0.5,
-            'pointBorderWidth' => 6,
-            'pointHoverRadius' => 6,
-            'pointRadius' => 1,
-            'borderWidth' => 3,
-            'pointHitRadius' => 30
-        ];
-
-        $html = view('statistics.graph', compact('labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+        // $datasets[] = [
+        //     'label' => 'Average',
+        //     'data' => $data,
+        //     'backgroundColor' => '#0000FF',
+        //     'borderColor' => '#0000FF',
+        //     'fill' => false,
+        //     'borderWidth' => 1,
+        //     'tension' => 0.5,
+        //     'pointBorderWidth' => 6,
+        //     'pointHoverRadius' => 6,
+        //     'pointRadius' => 1,
+        //     'borderWidth' => 3,
+        //     'pointHitRadius' => 30
+        // ];
+        $html = view('statistics.graph', compact('average', 'labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
         return response()->json(['success' => true, 'html' => $html], 200);
     }
 
@@ -388,27 +395,11 @@ class StatisticsController extends Controller
         $yAxisText =  trans("cruds.visiting_users.fields.count");
         $labelText =  trans("cruds.visiting_users.fields.graph");
 
-        // list($labels, $data) = $this->calculateAverage($labels, $data);
-        $averageData = $this->calculateAverage($labels, $data);
-        $labels = $averageData['labels'];
-        $data = $averageData['data'];
-
-        // Add average data to datasets
-        $datasets[] = [
-            'label' => 'Average',
-            'data' => $data,
-            'backgroundColor' => '#0000FF',
-            'borderColor' => '#0000FF',
-            'fill' => false,
-            'borderWidth' => 1,
-            'tension' => 0.5,
-            'pointBorderWidth' => 6,
-            'pointHoverRadius' => 6,
-            'pointRadius' => 1,
-            'borderWidth' => 3,
-            'pointHitRadius' => 30
-        ];
-        $html = view('statistics.graph', compact('labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+        $totalDays = count($labels);
+        $total = array_sum($data);
+        $average = $totalDays > 0 ? $total / $totalDays : 0.00;
+        $average = round($average, 2);
+        $html = view('statistics.graph', compact('average', 'labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
         return response()->json(['success' => true, 'html' => $html], 200);
     }
@@ -421,7 +412,6 @@ class StatisticsController extends Controller
         $data = [];
         $labels = [];
         $datasets = [];
-        // $colors = $this->generateColors(count($tagTypes));
         $colors = ['#ff0000', '#00ff00', '#0000ff'];
 
         if (!$request->has(['start_date', 'end_date', 'range'])) {
@@ -554,30 +544,12 @@ class StatisticsController extends Controller
         $yAxisText =  trans("cruds.most_popular_poster.fields.count");
         $labelText =  trans("cruds.most_popular_poster.fields.graph");
 
-        // list($labels, $data) = $this->calculateAverage($labels, $data);
+        $totalDays = count($labels);
+        $total = array_sum($data);
+        $average = $totalDays > 0 ? $total / $totalDays : 0.00;
+        $average = round($average, 2);
 
-        // Calculate average
-        $averageData = $this->calculateAverage($labels, $data);
-        $labels = $averageData['labels'];
-        $data = $averageData['data'];
-
-        // Add average data to datasets
-        $datasets[] = [
-            'label' => 'Average',
-            'data' => $data,
-            'backgroundColor' => '#0000FF',
-            'borderColor' => '#0000FF',
-            'fill' => false,
-            'borderWidth' => 1,
-            'tension' => 0.5,
-            'pointBorderWidth' => 6,
-            'pointHoverRadius' => 6,
-            'pointRadius' => 1,
-            'borderWidth' => 3,
-            'pointHitRadius' => 30
-        ];
-
-        $html = view('statistics.graph', compact('labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+        $html = view('statistics.graph', compact('average', 'labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
         return response()->json(['success' => true, 'html' => $html], 200);
     }
@@ -668,45 +640,12 @@ class StatisticsController extends Controller
         $xAxisText =  '';
         $yAxisText =  trans("cruds.mobile_access.fields.count");
         $labelText =  trans("cruds.mobile_access.fields.graph");
+        $totalDays = count($labels);
+        $total = array_sum($data);
+        $average = $totalDays > 0 ? $total / $totalDays : 0.00;
+        $average = round($average, 2);
 
-        // list($labels, $data) = $this->calculateAverage($labels, $data);
-        $averageData = $this->calculateAverage($labels, $data);
-        $labels = $averageData['labels'];
-        $data = $averageData['data'];
-        $average = $averageData['average'];
-
-        // Add average data to datasets
-        $datasets[] = [
-            'label' => 'Average',
-            'data' => $data,
-            'backgroundColor' => '#0000FF',
-            'borderColor' => '#0000FF',
-            'fill' => false,
-            'borderWidth' => 1,
-            'tension' => 0.5,
-            'pointBorderWidth' => 6,
-            'pointHoverRadius' => 6,
-            'pointRadius' => 1,
-            'borderWidth' => 3,
-            'pointHitRadius' => 30
-        ];
-
-        // Add annotation for average value
-        $annotations[] = [
-            'type' => 'line',
-            'mode' => 'horizontal',
-            'scaleID' => 'y-axis-0',
-            'value' => $average,
-            'borderColor' => '#000000',
-            'borderWidth' => 2,
-            'label' => [
-                'enabled' => true,
-                'content' => 'Average: ' . $average,
-                'position' => 'right'
-            ]
-        ];
-
-        $html = view('statistics.graph', compact('labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+        $html = view('statistics.graph', compact('average', 'labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
 
         return response()->json(['success' => true, 'html' => $html], 200);
     }
@@ -736,93 +675,15 @@ class StatisticsController extends Controller
         return $monthlyDateRanges;
     }
 
-
-    // monthly date-range filteration
-    // private function getMonthlyDateRanges($startDate, $endDate)
-    // {
-    //     $monthlyDateRanges = [];
-    //     $currentDate = $startDate->copy()->startOfMonth();
-    //     while ($currentDate->lte($endDate)) {
-    //         $endOfMonth = $currentDate->copy()->endOfMonth();
-    //         if ($endOfMonth->gt($endDate)) {
-    //             $endOfMonth = $endDate->copy();
-    //         }
-    //         $monthlyDateRanges[] = [
-    //             'start' => $currentDate->copy()->startOfDay(),
-    //             'end' => $endOfMonth->copy()->endOfDay()
-    //         ];
-    //         $currentDate->addMonth()->startOfMonth();
-    //     }
-    //     return $monthlyDateRanges;
-    // }
-
-    //  Avarage Calculations FILTERATION
-    // private function calculateAverage($labels, $data)
-    // {
-    //     // dd('djkd');
-    //     $totalDays = count($labels);
-    //     $total = array_sum($data);
-    //     $average = $totalDays > 0 ? $total / $totalDays : 0;
-
-    //     $labels[] = 'Average';
-    //     $data[] = $average;
-
-    //     return [$labels, $data];
-    // }
-
     private function calculateAverage($labels, $data)
     {
         $totalDays = count($labels);
         $total = array_sum($data);
-
         $average = $totalDays > 0 ? $total / $totalDays : 0;
         // $labels[] = 'Average';
-        $data[] = $average;
-
-        // dd($labels, $data);
-        // return [$labels, $data];
+        $dataaverage[] = $average;
         return ['labels' => $labels, 'data' => $data];
     }
-
-    // private function generateMembersRegistrationGraph($dateRanges)
-    // {
-    //     $labels = [];
-    //     $data = [];
-
-    //     foreach ($dateRanges as $range) {
-    //         $start = $range['start'];
-    //         $end = $range['end'];
-
-    //         // Calculate the total number of days in the range
-    //         $totalDays = $start->diffInDays($end);
-
-    //         // Calculate the number of days in the month
-    //         $daysInMonth = $start->copy()->endOfMonth()->day;
-
-    //         // Check if the total number of days in the range is less than 5 for this month
-    //         if ($totalDays < 5 && $totalDays < $daysInMonth) {
-    //             // Generate data for each day within the month
-    //             $currentDate = $start->copy();
-    //             while ($currentDate->lte($end)) {
-    //                 $users = User::whereDate('created_at', $currentDate)->get();
-    //                 $count = $users->count();
-    //                 $data[] = $count;
-    //                 $labels[] = $currentDate->format('Y-m-d');
-    //                 $currentDate->addDay();
-    //             }
-    //         } else {
-    //             // Generate data for the end date of the month
-    //             $users = User::whereBetween('created_at', [$start, $end])->orderBy('created_at')->get();
-    //             $count = $users->count();
-    //             $data[] = $count;
-    //             $labels[] = $end->format('Y-m-d');
-    //         }
-    //     }
-
-    //     return [$labels, $data];
-    // }
-
-
 
     //  Members Registrations 
     private function generateMembersRegistrationGraph($dateRanges)
@@ -903,15 +764,4 @@ class StatisticsController extends Controller
         }
         return [$labels, $data];
     }
-
-
-    // private function generateColors($count)
-    // {
-    //     $colors = [];
-    //     for ($i = 0; $i < $count; $i++) {
-    //         // Generate random RGB colors
-    //         $colors[] = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
-    //     }
-    //     return $colors;
-    // }
 }

@@ -1,4 +1,11 @@
 <div id="myChartContainer">
+    <div class="avg"> <b>{{__('cruds.global.average')}} :</b>
+        @if ($average == 0)
+        0.00
+        @else
+        {{$average}}
+        @endif
+    </div>
     <div style="position: relative; height:55vh;">
         <canvas id="myChart" width="400" height="400" style="display: block; width: 400px; height: 400px;"></canvas>
     </div>
@@ -11,6 +18,9 @@
     var xAxisText = @json($xAxisText);
     var yAxisText = @json($yAxisText);
     var labelText = @json($labelText);
+
+
+
     var data = {
         labels: labels,
         datasets: membersData,
@@ -25,7 +35,6 @@
                 tooltip: {
                     callbacks: {
                         labelColor: function(context) {
-                            // var dataset = context.chart.data.datasets[context.datasetIndex];
                             var dataset = context.dataset || {};
                             var backgroundColor = dataset.backgroundColor || '';
                             var borderColor = dataset.borderColor || '';

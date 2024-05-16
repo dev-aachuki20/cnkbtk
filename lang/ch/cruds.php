@@ -238,6 +238,7 @@ return [
         'apply' => '申請',
         'message' => '信息',
         'read_chat' => '阅读聊天',
+        'average' => '平均的',
     ],
 
     'lang' => [

@@ -233,6 +233,7 @@ return [
         'apply' => 'Apply',
         'message' => 'Message',
         'read_chat' => 'Read Chat',
+        'average' =>'Average',
     ],
 
     'lang' => [
