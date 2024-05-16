@@ -12,7 +12,7 @@
     <div class="container">
         <div class="hero-banner">
             <div class="prc-title">
-                <h2>{{__('cruds.create_project.projects')}} <span>{{__('cruds.create_project.list_title')}}</span></h2>
+                <h2>{{__('cruds.create_project.projects')}}</h2>
             </div>
         </div>
     </div>
@@ -25,7 +25,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{route('home')}}">{{trans("global.home")}}</a></li>
                 <li class="breadcrumb-item active" aria-current="page">
-                    {{__('cruds.create_project.project_details')}}
+                    {{__('cruds.create_project.projects')}}
                 </li>
             </ol>
         </nav>
@@ -48,7 +48,7 @@
                                             </g>
                                         </svg>
                                     </div>
-                                    <h5 class="categories-details-title text-nowrap"> {{__('cruds.create_project.project_details')}}</h5>
+                                    <h5 class="categories-details-title text-nowrap"> {{__('cruds.create_project.projects')}}</h5>
                                 </div>
                             </div>
                             <div class="col-auto">

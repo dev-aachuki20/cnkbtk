@@ -71,7 +71,7 @@ class ProjectUserDataTable extends DataTable
                 $action  = '<div class="d-flex">';
 
                 if ($record->status == 1) {
-                    $action .= '<a class="btn btn-success btn-sm" title="' . trans("cruds.global.message") . '" href="' . route('message.index', ['projectId' => $record->id]) . '">
+                    $action .= '<a class="btn btn-primary btn-sm" title="' . trans("cruds.global.message") . '" href="' . route('message.index', ['projectId' => $record->id]) . '">
                     <i class="fa fa-commenting-o" aria-hidden="true"></i>
                 </a>';
                 }
@@ -87,7 +87,7 @@ class ProjectUserDataTable extends DataTable
                 $action .= '<form action="' . route('user.project.destroy', $record->id) . '" method="POST" class="deleteProject">
             <input type="hidden" name="_method" value="DELETE"> 
             <input type="hidden" name="_token" value="' . csrf_token() . '">
-            <button class="btn btn-danger record_delete_btn btn-sm" title="' . trans("cruds.global.delete") . '"><i class="fa fa-trash-o"></i></button></form>';
+            <button class="btn btn-primary record_delete_btn btn-sm" title="' . trans("cruds.global.delete") . '"><i class="fa fa-trash-o"></i></button></form>';
                 $action .= '</div>';
                 $action .= '</div>';
                 return $action;

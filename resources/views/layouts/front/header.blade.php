@@ -416,7 +416,7 @@
                               <path d="M23 18.5C23 19.25 22.79 19.96 22.42 20.56C22.0675 21.1525 21.5667 21.643 20.967 21.9831C20.3674 22.3233 19.6894 22.5014 19 22.5C18.3106 22.5014 17.6326 22.3233 17.033 21.9831C16.4333 21.643 15.9325 21.1525 15.58 20.56C15.1993 19.9404 14.9985 19.2272 15 18.5C15 16.29 16.79 14.5 19 14.5C21.21 14.5 23 16.29 23 18.5Z" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
                               <path d="M20.561 19.49H18.431L18.5 17.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
-                            {{trans("cruds.create_project.project_details")}}
+                            {{trans("cruds.create_project.projects")}}
                           </a>
                         </li>
                         @endif

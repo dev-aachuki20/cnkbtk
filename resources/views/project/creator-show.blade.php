@@ -38,13 +38,11 @@
                     </div>
                     --}}
 
-                    @if($project->project_status == 1)
                     <div class="col-12 text-end">
                         <a href="{{ route('message.index', ['projectId' => $project->id]) }}" class="btn btn-primary ml-auto cancel-btn" id="message" data-project-id="{{$project->id}}" data-user-id="{{$project->user_id}}">
                             {{__('cruds.global.message')}}
                         </a>
                     </div>
-                    @endif
 
 
                     <div class="col">

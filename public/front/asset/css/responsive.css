@@ -248,6 +248,12 @@ button.navbar-toggler span.navbar-toggler-icon {
 .chatboxGroup .message.outgoing .message-content{
   border-radius: 10px 10px 0px 10px;
 }
+.chatboxGroup .message.multipal-message.incoming .message-content:not(:last-child){
+  border-radius: 0px 10px 10px 0px;
+}
+.chatboxGroup .message.multipal-message.outgoing .message-content:not(:first-child){
+  border-radius: 10px 0px 0px 10px;
+}
 .chatboxGroup .message {
   max-width: 70%;
 }
@@ -1000,6 +1006,9 @@ section.edit-post-wrapper .col-md-6 {
 .project_details_card ul li span::before {
   right: 0;
 }
+.chatboxGroup .messageBoxBg {
+  padding: 15px;
+}
 }
 
 @media (max-width: 580px) {
@@ -1196,6 +1205,9 @@ section.edit-post-wrapper .col-md-6 {
   .mobile-vc {
     padding-right: 5px;
   }
+  .mobile-vc > div:not(:last-child) {
+    margin-right: 10px;
+}
   .tags-his ul li {
     padding: 4px 15px;
   }
@@ -1245,7 +1257,7 @@ section.edit-post-wrapper .col-md-6 {
     min-width: 120px;
   }
   .project_card_group .project_details_card .main-title .cardtitle::before {
-    right: 0;
+    right: -8px;
   }
 
   .project_details_card .status-item{

@@ -31,13 +31,13 @@
             <div class="col-lg-6 col-md-6 col-12">
                 <div class="right-single-box blacklist_box_user project_details_card h-100">
                     <div class="row gx-3">
-                        @if($item['project']->project_status == 1)
+                      {{--  @if($item['project']->project_status == 1) --}}
                         <div class="col-12 text-end">
                             <a href="{{ route('message.index', ['projectId' => $item['project']->id]) }}" class="btn btn-primary ml-auto cancel-btn" id="message" data-project-id="{{$item['project']->id}}" data-user-id="{{$item['project']->user_id}}">
                                 {{__('cruds.global.message')}}
                             </a>
                         </div>
-                        @endif
+                        {{-- @endif --}}
                         <div class="col">
                             <ul>
                                 <li>

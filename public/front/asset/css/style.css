@@ -607,6 +607,7 @@ input[type="password"] {
 
 .login-search {
   align-items: center;
+  margin-right: 10px;
 }
 .login-search > *:not(:last-child),
 .login-search > ul *:not(:last-child),
@@ -4179,7 +4180,7 @@ form#excelForm{
 .chatboxGroup .sidebar, .chatboxGroup .chatcard {
   background-color: #f9f9f9;
     border: none;
-    border-radius: 30px;
+    border-radius: 20px;
 }
 .chatboxGroup .list-group{
     display: flex;
@@ -4189,6 +4190,9 @@ form#excelForm{
 .chatboxGroup .list-group .list-group-item.active,.chatboxGroup .list-group .list-group-item:hover {
     background-color: var(--color-primary);
     border-color: var(--color-primary);
+}
+.chatboxGroup .list-group .list-group-item.active .userimage img,.chatboxGroup .list-group .list-group-item:hover .userimage img {
+  box-shadow: 0px 0px 5px 2px #ffffff;
 }
 .chatboxGroup .list-group .list-group-item .content {
     transition: var(--ease-transition);
@@ -4234,6 +4238,7 @@ form#excelForm{
     min-width: 50px;
     border-radius: 50%;
     position: relative;
+    box-shadow: 0px 0px 5px 2px #e3e3e3;
 }
 .chatboxGroup .userporfile .userimage::before{
     content: '';
@@ -4338,8 +4343,12 @@ form#excelForm{
   color: var(--color-black);
   font-weight: var(--fw-700);
 }
-.chatboxGroup .messageBoxBg, .chatboxGroup .sidebar {
+.chatboxGroup .sidebar {
   background-color: #f9f9f9;
+}
+.chatboxGroup .messageBoxBg{
+  background-color: #f9f9f9;
+  padding: 20px;
 }
 
 .chatboxGroup textarea.form-control{
@@ -4350,16 +4359,22 @@ form#excelForm{
     padding: 11px 15px;
     resize: none;
     border: 1px solid var(--gray-color);
-    border-radius: 25px;
+    border-radius: 10px;
     max-height: 100px;
 }
 .chatboxGroup textarea.form-control:focus{
     border-color: var(--color-primary);
 }
 
-.chatboxGroup .message-container {
+/* .chatboxGroup .message-container {
     padding-bottom: 10px;
     padding-top: 40px;
+} */
+.chatboxGroup .chatbodypart {
+    padding-bottom: 20px;
+    padding-top: 20px;
+    background-color: #fff;
+    border-radius: 10px;
 }
 .chatboxGroup .message {
     margin-bottom: 20px;
@@ -4375,10 +4390,20 @@ form#excelForm{
     width: fit-content;
     position: relative;
     word-break: break-all;
+    min-width: 100px;
+}
+.chatboxGroup .message.multipal-message.incoming .message-content:not(:last-child){
+  border-radius: 0px 14px 14px 0px;
+}
+.chatboxGroup .message.multipal-message.outgoing .message-content:not(:first-child){
+  border-radius: 14px 0px 0px 14px;
 }
 .chatboxGroup .message .message-content:not(:last-child){
-    margin-bottom: 23px;
+    margin-bottom: 4px;
 }
+/* .chatboxGroup .message .message-content:not(:last-child){
+    margin-bottom: 23px;
+} */
 .chatboxGroup .message .message-content .message_time {
     position: absolute;
     white-space: nowrap;
@@ -4449,6 +4474,14 @@ form#excelForm{
     border: 1px solid var(--color-primary);
     background-color: transparent;
 }
+.chatboxGroup .add_btn.submitbtn {
+  border: none;
+  background-color: var(--color-primary);
+  padding: 11px;
+}
+.chatboxGroup .add_btn.submitbtn svg {
+  margin-right: -5px;
+}
 .chatboxGroup .add_btn svg, .chatboxGroup .close-btn svg {
     height: 100%;
     width: 100%;
@@ -4474,7 +4507,7 @@ form#excelForm{
 }
 .chatboxGroup .searchbar input {
     min-height: unset;
-    padding-right: 63px;
+    padding-right: 50px;
     z-index: 0 !important;
 }
 .chatboxGroup .searchbar .btn {
@@ -4517,13 +4550,15 @@ form#excelForm{
   height: 4px
 }
 ::-webkit-scrollbar-button {
-  background: #eee
+  background: #ccc;
+  height: 0px;
+  width: 0px;
 }
 ::-webkit-scrollbar-track-piece {
-  background: #ccc
+  background: #eee;
 }
 ::-webkit-scrollbar-thumb {
-  background: #eee
+  background: #ccc;
 }
 
 .blacklist_box_user {
@@ -4747,4 +4782,25 @@ li.confirmRequest .dropdown-item.del_btn {
 
 .project_card_group .project_details_card:not(:last-child){
   margin-bottom: 40px;
+}
+
+/* Data Table Icon Css */
+.dataTables_wrapper .dataTable tbody tr td:last-child{
+  text-align: center;
+} 
+.dataTables_wrapper .dataTable tbody tr td:last-child>div{
+      /* justify-content: center; */
+      gap: 4px;
+      display: inline-grid !important;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+} 
+.dataTables_wrapper .dataTable tbody tr td:last-child .btn-sm {
+  min-width: 32px;
+  height: 32px;
+}
+
+
+/* admin chart css */
+.profile-wrapper-cp .profile-content .avg {
+  text-align: end;
 }
