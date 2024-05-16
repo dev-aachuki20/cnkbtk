@@ -330,6 +330,7 @@ return [
         'project'  => 'Project',
         'projects'  => 'Projects',
         'project_details'  => 'Project Lists',
+        'detail' => 'Details',
         'post'  => 'Post',
         'list' => 'List',
         'list_title' => 'Lists',

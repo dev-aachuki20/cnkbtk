@@ -332,6 +332,7 @@ return [
         'project'  => '專案',
         'projects'  => '项目',
         'project_details'  => '项目清单',
+        'detail' => '细节',
         'post'  => '郵政',
         'list' => '列表',
         'list_title' => '列表',

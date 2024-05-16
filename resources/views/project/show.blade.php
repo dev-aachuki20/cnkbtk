@@ -42,7 +42,7 @@
             <div class="col-xl-8 col-lg-7 col-12 order-lg-1 order-2">
               <div class="row row-gap-lg-3 row-gap-2">
                 <div class="col-12">
-                  <div class="main-title"><h2 class="title">Project Details</h2></div>
+                  <div class="main-title"><h2 class="title">{{__('cruds.create_project.project')}} {{__('cruds.create_project.detail')}}</h2></div>
                   <div class="row">
                     <div class="col-lg-auto col-sm-3 col-4 main-title"><h6 class="cardtitle">{{trans("cruds.create_project.fields.title")}}</h6></div>
                     <div class="col-lg col-sm-9 col-8 d-flex align-items-center"><div class="content">{{ ucwords($project->title)  ?? ''}}</div></div>
@@ -105,7 +105,7 @@
                   @endif
                 </div> --}}
                   <div class="col-12">
-                    <div class="main-title"><h2 class="title">Status</h2></div>
+                    <div class="main-title"><h2 class="title">{{__('cruds.global.status')}}</h2></div>
                     {{-- <div class="main-title"><h2 class="title">{{trans("cruds.create_project.project")}} {{trans("cruds.global.status")}}</h2></div> --}}
                   </div>
                   <div class="col-12">
