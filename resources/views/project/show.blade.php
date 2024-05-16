@@ -46,8 +46,10 @@
                   <div class="row">
                     <div class="col-lg-auto col-sm-3 col-4 main-title"><h6 class="cardtitle">{{trans("cruds.create_project.fields.title")}}</h6></div>
                     <div class="col-lg col-sm-9 col-8 d-flex align-items-center"><div class="content">{{ ucwords($project->title)  ?? ''}}</div></div>
-                  </div>
-                  
+                  </div>                  
+                </div>
+
+                <div class="col-12">                
                   <div class="row">
                     <div class="col-lg-auto col-sm-3 col-4 main-title"><h6 class="cardtitle">{{trans("cruds.create_project.fields.type")}}</h6></div>
                     <div class="col-lg col-sm-9 col-8 d-flex align-items-center"><div class="content">{{ $project->type  ?? ''}}</div></div>

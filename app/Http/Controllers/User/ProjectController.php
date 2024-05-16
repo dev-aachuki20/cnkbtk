@@ -97,146 +97,6 @@ class ProjectController extends Controller
         return view("project.edit", compact('tagTypes', 'creators', 'project'));
     }
 
-    // public function update(Request $request, $id)
-    // {
-    //     try {
-    //         if (BlacklistUser::where('email', auth()->user()->email)->exists()) {
-    //             return response()->json(['message' => trans("messages.project_request_failed"), 'alert-type' => 'error'], 403);
-    //         }
-    //         DB::beginTransaction();
-    //         $project = Project::findOrFail($id);
-
-    //         // Check if any changes are made to the project fields
-    //         $fieldsChanged = $project->isDirty([
-    //             'type', 'tags_id', 'budget', 'comment'
-    //         ]);
-
-    //         $oldCreatorIds = $project->creators()->pluck('id')->toArray();
-
-    //         $project->update([
-    //             'type' => $request->type,
-    //             'tags_id' => $request->tags_id,
-    //             'budget' => $request->budget,
-    //             'status' => $request->status,
-    //             'comment' => $request->comment,
-    //             'copyright' => $request->has('copyright') ? 1 : 0,
-    //         ]);
-
-    //         if ($request->has('creator_id')) {
-    //             $project->creators()->sync($request->input('creator_id'));
-    //         }
-
-
-    //         $newCreatorIds = $request->input('creator_id', []);
-    //         // Find new creator IDs
-    //         $addedCreatorIds = array_diff($newCreatorIds, $oldCreatorIds);
-    //         // dd($newCreatorIds, $addedCreatorIds, $fieldsChanged);
-
-
-    //         // If added new creator but not edit any field then 
-    //         if ($addedCreatorIds) {
-    //             // Send create notification to new added creators
-    //             foreach ($addedCreatorIds as $creatorId) {
-    //                 $creator = User::find($creatorId);
-    //                 Notification::send($creator, new ProjectCreatedNotification($project, $creator));
-    //             }
-    //         }
-
-    //         // If added field then 
-    //         if ($oldCreatorIds) {
-    //             dd('old creators exist');
-    //             // Send update notification to old creators
-    //             foreach ($oldCreatorIds as $creatorId) {
-    //                 $creator = User::find($creatorId);
-    //                 Notification::send($creator, new ProjectUpdatedNotification($project, $creator));
-    //             }
-    //         }
-
-
-
-
-
-    //         // if ($addedCreatorIds) {
-    //         // dump($oldCreatorIds, $addedCreatorIds);
-    //         // if ($oldCreatorIds) {
-    //         //     dd('old creators exist');
-    //         //     // Send update notification to old creators
-    //         //     foreach ($oldCreatorIds as $creatorId) {
-    //         //         $creator = User::find($creatorId);
-    //         //         Notification::send($creator, new ProjectUpdatedNotification($project, $creator));
-    //         //     }
-    //         // }
-    //         // dd('fdfjhghd');
-    //         // if ($addedCreatorIds) {
-    //         //     dd('new creators');
-    //         //     // Send create notification to added creators
-    //         //     foreach ($addedCreatorIds as $creatorId) {
-    //         //         $creator = User::find($creatorId);
-    //         //         Notification::send($creator, new ProjectCreatedNotification($project, $creator));
-    //         //     }
-    //         // }
-    //         // dd('end');
-    //         // }
-
-
-
-
-
-    //         //             if ($fieldsChanged || $addedCreatorIds) {
-    //         //                 dump($oldCreatorIds, $addedCreatorIds);
-    //         //                 if ($oldCreatorIds) {
-    //         //                     dd('old creators exist');
-    //         //                     // Send update notification to old creators
-    //         //                     foreach ($oldCreatorIds as $creatorId) {
-    //         //                         $creator = User::find($creatorId);
-    //         //                         Notification::send($creator, new ProjectUpdatedNotification($project, $creator));
-    //         //                     }
-    //         //                 }
-    //         // dd('fdfjhghd');
-    //         //                 if ($addedCreatorIds) {
-    //         //                     dd('new creators');
-    //         //                     // Send create notification to added creators
-    //         //                     foreach ($addedCreatorIds as $creatorId) {
-    //         //                         $creator = User::find($creatorId);
-    //         //                         Notification::send($creator, new ProjectCreatedNotification($project, $creator));
-    //         //                     }
-    //         //                 }
-    //         //                 dd('end');
-    //         //             }
-    //         // dd('exit');
-
-
-
-
-
-
-    //         // $creatorIds = $request->input('creator_id');
-
-    //         // if ($creatorIds) {
-    //         //     foreach ($creatorIds as $creatorId) {
-    //         //         $creator = User::find($creatorId);
-    //         //         Notification::send($creator, new ProjectUpdatedNotification($project, $creator));
-    //         //     }
-    //         // } else {
-    //         //     $creator = User::where('role_id', config("constant.role.creator"))->get();
-    //         //     if ($creator) {
-    //         //         foreach ($creator as $creatorId) {
-    //         //             $creator = User::find($creatorId->id);
-    //         //             Notification::send($creator, new ProjectUpdatedNotification($project, $creator));
-    //         //         }
-    //         //     }
-    //         // }
-
-    //         DB::commit();
-
-    //         $routeUrl = URL::route('user.project.index');
-    //         return response()->json(['reloadUrl' => $routeUrl, 'message' => trans("messages.update_success", ['module' => trans("global.project")]), 'alert-type' =>  'success'], 200);
-    //     } catch (\Exception $e) {
-    //         DB::rollback();
-    //         return response()->json(['message' => $e->getMessage(), 'alert-type' => 'error'], 500);
-    //     }
-    // }
-
     public function update(Request $request, $id)
     {
         $rules = [
@@ -262,6 +122,15 @@ class ProjectController extends Controller
             DB::beginTransaction();
             $project = Project::findOrFail($id);
 
+
+            $oldTitle = $project->title;
+            $oldType = $project->type;
+            $oleTags_id = $project->tags_id;
+            $oldBudget = $project->budget;
+            $oldComment = $project->comment;
+
+            $oldCreatorIds = $project->creators()->pluck('id')->toArray();
+
             $project->update([
                 'title' => $request->title,
                 'type' => $request->type,
@@ -276,33 +145,154 @@ class ProjectController extends Controller
                 $project->creators()->sync($request->input('creator_id'));
             }
 
-            $creatorIds = $request->input('creator_id');
 
-            if ($creatorIds) {
-                foreach ($creatorIds as $creatorId) {
+            $newCreatorIds = $request->input('creator_id', []);
+
+            // Find new creator IDs
+            $addedCreatorIds = array_diff($newCreatorIds, $oldCreatorIds);
+
+            // If added new creator but not edit any field then Send create notification to new added creators only
+            if (
+                $addedCreatorIds && $oldTitle == $request->title && $oldType == $request->type && $oleTags_id == $request->tags_id && $oldBudget == $request->budget && $oldComment == $request->comment
+            ) {
+                foreach ($addedCreatorIds as $creatorId) {
+                    $creator = User::find($creatorId);
+                    Notification::send($creator, new ProjectCreatedNotification($project, $creator));
+                }
+            }
+
+            // If added field but not add new creator then send update notification to old users only
+            if (
+                $oldType != $request->type || $oleTags_id != $request->tags_id || $oldBudget != $request->budget || $oldComment != $request->comment && empty($addedCreatorIds)
+            ) {
+                // Send update notification to old creators only
+                foreach ($oldCreatorIds as $creatorId) {
                     $creator = User::find($creatorId);
                     Notification::send($creator, new ProjectUpdatedNotification($project, $creator));
                 }
-            } else {
-                $creator = User::where('role_id', config("constant.role.creator"))->get();
-                if ($creator) {
-                    foreach ($creator as $creatorId) {
-                        $creator = User::find($creatorId->id);
-                        Notification::send($creator, new ProjectUpdatedNotification($project, $creator));
-                    }
+            }
+
+            // If changes in field and add new creator also
+            if ($oldType != $request->type || $oleTags_id != $request->tags_id || $oldBudget != $request->budget || $oldComment != $request->comment && $addedCreatorIds) {
+                // Send update notification to old creators
+                foreach ($oldCreatorIds as $creatorId) {
+                    $creator = User::find($creatorId);
+                    Notification::send($creator, new ProjectUpdatedNotification($project, $creator));
+                }
+                // Send create notification to new added creators
+                foreach ($addedCreatorIds as $creatorId) {
+                    $creator = User::find($creatorId);
+                    Notification::send($creator, new ProjectCreatedNotification($project, $creator));
                 }
             }
+
+            $creatorIds = $request->input('creator_id');
+            // If all creators are removed during edit
+            if (empty($creatorIds)) {
+                // Send mail to all users
+                $creator = User::where('role_id', config("constant.role.creator"))->get();
+                foreach ($creator as $creatorId) {
+                    $creator = User::find($creatorId->id);
+                    Notification::send($creator, new ProjectUpdatedNotification($project, $creator));
+                }
+            }
+
+
+            // $creatorIds = $request->input('creator_id');
+            // // add one more condition like if remove all creators during edit then send mail to all.
+            // if ($creatorIds) {
+            //     foreach ($creatorIds as $creatorId) {
+            //         $creator = User::find($creatorId);
+            //         Notification::send($creator, new ProjectUpdatedNotification($project, $creator));
+            //     }
+            // } else {
+            //     $creator = User::where('role_id', config("constant.role.creator"))->get();
+            //     if ($creator) {
+            //         foreach ($creator as $creatorId) {
+            //             $creator = User::find($creatorId->id);
+            //             Notification::send($creator, new ProjectUpdatedNotification($project, $creator));
+            //         }
+            //     }
+            // }
 
             DB::commit();
 
             $routeUrl = URL::route('user.project.index');
-
             return response()->json(['reloadUrl' => $routeUrl, 'message' => trans("messages.update_success", ['module' => trans("global.project")]), 'alert-type' =>  'success'], 200);
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json(['message' => $e->getMessage(), 'alert-type' => 'error'], 500);
         }
     }
+
+    // public function update(Request $request, $id)
+    // {
+    //     $rules = [
+    //         'title' => ['required', 'string'],
+    //         'budget' => ['required'],
+    //         'comment' => ['required'],
+    //     ];
+
+    //     $customMessages = [];
+
+    //     $customName = [
+    //         'title' => trans("cruds.create_project.fields.title"),
+    //         'budget' => trans("cruds.create_project.fields.budget"),
+    //         'comment' => trans("cruds.create_project.fields.description"),
+    //     ];
+
+
+    //     $this->validate($request, $rules, $customMessages, $customName);
+    //     try {
+    //         if (BlacklistUser::where('email', auth()->user()->email)->exists()) {
+    //             return response()->json(['message' => trans("messages.project_request_failed"), 'alert-type' => 'error'], 403);
+    //         }
+    //         DB::beginTransaction();
+    //         $project = Project::findOrFail($id);
+
+    //         $project->update([
+    //             'title' => $request->title,
+    //             'type' => $request->type,
+    //             'tags_id' => $request->tags_id,
+    //             'budget' => $request->budget,
+    //             'status' => $request->status,
+    //             'comment' => $request->comment,
+    //             'copyright' => $request->has('copyright') ? 1 : 0,
+    //         ]);
+
+    //         if ($request->has('creator_id')) {
+    //             $project->creators()->sync($request->input('creator_id'));
+    //         }
+
+    //         $creatorIds = $request->input('creator_id');
+
+    //         if ($creatorIds) {
+    //             foreach ($creatorIds as $creatorId) {
+    //                 $creator = User::find($creatorId);
+    //                 Notification::send($creator, new ProjectUpdatedNotification($project, $creator));
+    //             }
+    //         } else {
+    //             $creator = User::where('role_id', config("constant.role.creator"))->get();
+    //             if ($creator) {
+    //                 foreach ($creator as $creatorId) {
+    //                     $creator = User::find($creatorId->id);
+    //                     Notification::send($creator, new ProjectUpdatedNotification($project, $creator));
+    //                 }
+    //             }
+    //         }
+
+    //         DB::commit();
+
+    //         $routeUrl = URL::route('user.project.index');
+
+    //         return response()->json(['reloadUrl' => $routeUrl, 'message' => trans("messages.update_success", ['module' => trans("global.project")]), 'alert-type' =>  'success'], 200);
+    //     } catch (\Exception $e) {
+    //         DB::rollback();
+    //         return response()->json(['message' => $e->getMessage(), 'alert-type' => 'error'], 500);
+    //     }
+    // }
+
+
     public function destroy(Request $request, Project $project)
     {
         if ($request->ajax()) {
@@ -347,7 +337,6 @@ class ProjectController extends Controller
             ];
         });
 
-        // dd($allRequestProjects);
         return view('project.creator-projectlist-show', compact('allRequestProjects'));
     }
 
