@@ -142,10 +142,6 @@ class ProjectAdminController extends Controller
             ->orderBy('id', 'asc')
             ->get();
 
-
-
-
-        // return view('admin.message.index', compact('user', 'getChatData', 'projectId', 'creator'));
-        return view('admin.message.index');
+        return view('admin.message.index', compact('getChatData', 'user', 'creator'));
     }
 }

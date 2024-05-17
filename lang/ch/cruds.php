@@ -239,6 +239,10 @@ return [
         'message' => '信息',
         'read_chat' => '阅读聊天',
         'average' => '平均的',
+        'finish' =>'结束',
+        'finished' => '完成的',
+        'submit' =>'提交',
+        'close' =>'关闭',
     ],
 
     'lang' => [
@@ -387,6 +391,18 @@ return [
     'status' => [
         'active' => '积极的',
         'inactive' => '不活跃'
+    ],
+
+    'finished_project' => [
+        'title' => '完成项目',
+        'title_singular' => '完成项目',
+        'options' => [
+            'add_remark' => '添加备注',
+            'finish_btn_text' => '是的，完成了！',
+        ],
+        'fields' => [
+            'remark' => '评论',
+        ],
     ]
 
 ];

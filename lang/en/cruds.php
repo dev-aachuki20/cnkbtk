@@ -233,7 +233,11 @@ return [
         'apply' => 'Apply',
         'message' => 'Message',
         'read_chat' => 'Read Chat',
-        'average' =>'Average',
+        'average' => 'Average',
+        'finish' => 'Finish',
+        'finished' => 'Finished',
+        'submit' => 'Submit',
+        'close' => 'Close',
     ],
 
     'lang' => [
@@ -386,7 +390,20 @@ return [
     'status' => [
         'active' => 'Active',
         'inactive' => 'In-Active'
+    ],
+
+    'finished_project' => [
+        'title' => 'Finish Projects',
+        'title_singular' => 'Finish Project',
+        'options' => [
+            'add_remark' => 'Add Remark',
+            'finish_btn_text' => 'Yes, finish it!',
+        ],
+        'fields' => [
+            'remark' => 'Remark',
+        ],
     ]
+
 
 
 ];

@@ -4,6 +4,7 @@ return [
     'update_success' => ':module 已经更新成功！',
     'delete_success' => ':module 已删除成功！',
     'status_success' => ':module 已更改成功！',
+    'finish_success' => ':module 已成功完成!',
 
     // Global Error 
     "something_went_wrong" => 'Something went wrong!',
@@ -54,5 +55,7 @@ return [
     'project_locked_successfully' => '项目锁定成功',
 
     'project_lock_request' => ':module 锁定请求发送成功',
+
+    'finished_project_warning_message' => '完成后您将无法重新打开该项目。'
 
 ];

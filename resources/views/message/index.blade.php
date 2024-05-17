@@ -20,9 +20,9 @@
 
             <ol class="breadcrumb">
 
-                <li class="breadcrumb-item"><a href="{{route("home")}}">{{trans("global.home")}}</a></li>
+                <li class="breadcrumb-item"><a href="{{route('home')}}">{{trans("global.home")}}</a></li>
 
-                <li class="breadcrumb-item active">{{ Str::ucfirst(array_search(auth()->user()->role_id, config("constant.role"))) }}</li>
+                <li class="breadcrumb-item"><a href="{{route('user.project.index')}}">{{trans("cruds.create_project.projects")}}</a></li>
 
                 <li class="breadcrumb-item active">{{trans("global.chat")}}</li>
 
@@ -471,7 +471,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
-
     // Searching users
 
     $('#searchInput').on('input', function() {
@@ -693,7 +692,6 @@
         //chatBox.scrollTop(chatBox[0].scrollHeight);
 
     }
-
 </script>
 
 

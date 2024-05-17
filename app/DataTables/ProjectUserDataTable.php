@@ -83,12 +83,27 @@ class ProjectUserDataTable extends DataTable
                     $action .= '<a class="btn btn-primary btn-sm" title="' . trans("cruds.global.edit") . '" href="' . route("user.project.edit", $record->id) . '">
                 <i class="fa fa-pencil"></i>
             </a>';
-                }
-                $action .= '<form action="' . route('user.project.destroy', $record->id) . '" method="POST" class="deleteProject">
+
+                    $action .= '<form action="' . route('user.project.destroy', $record->id) . '" method="POST" class="deleteProject">
             <input type="hidden" name="_method" value="DELETE"> 
             <input type="hidden" name="_token" value="' . csrf_token() . '">
             <button class="btn btn-primary record_delete_btn btn-sm" title="' . trans("cruds.global.delete") . '"><i class="fa fa-trash-o"></i></button></form>';
-                $action .= '</div>';
+                }
+                if ($record->project_status == 1) {
+                    $buttonText = trans('cruds.global.finish');
+                    if ($record->finish_status == 1) {
+                        $buttonText = trans('cruds.global.finished');
+                    }
+                    $disabledAttribute = ($record->finish_status == 1) ? 'disabled' : '';
+                    $action .= '<button class="btn btn-primary btn-sm finish_project" title="' . trans("cruds.global.finish") . '"   data-href="' . route("finish.project") . '" data-project-id="' . $record->id . '" ' . $disabledAttribute . '>
+                ' . $buttonText . '
+            </button>';
+
+                    // $action .= '<button class="btn btn-primary btn-sm" title="' . trans("cruds.global.finish") . '"   data-bs-toggle="modal" data-bs-target="#finishProjectModal" data-project-id="' . $record->id . '">
+                    //     '.trans('cruds.global.finish').'
+                    // </button>';
+                }
+
                 $action .= '</div>';
                 return $action;
             })

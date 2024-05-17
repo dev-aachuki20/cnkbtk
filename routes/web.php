@@ -69,6 +69,7 @@ Route::post('/message/send', [MessageController::class, 'storeMessage'])->name('
 Route::get('/message/{projectId}', [MessageController::class, 'index'])->name('message.index')->middleware(["auth", "verified", "status"]);
 Route::get('messages/screen', [MessageController::class, 'messageScreen'])->name('message.screen');
 Route::post('/lock-project', [ProjectController::class, 'lockedProject'])->name('lock.project');
+Route::post('/finish-project', [ProjectController::class, 'finishedProject'])->name('finish.project');
 
 
 // Route::get("post/edit/{param}","App\Http\Controllers\PosterController@edit")->name("post.edit")->middleware('auth');

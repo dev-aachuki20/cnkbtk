@@ -19,6 +19,8 @@ class Project extends Model
         "user_id",
         "user_ip",
         "copyright",
+        "remark",
+        "finish_status",
         "budget",
         'deleted_at',
     ];

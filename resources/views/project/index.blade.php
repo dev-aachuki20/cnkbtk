@@ -85,6 +85,33 @@
         </div>
     </div>
 </div>
+
+<!-- Finish Project Modal -->
+<div class="modal fade" id="finishProjectModal" tabindex="-1" aria-labelledby="finishProjectModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="finishProjectForm" action="{{ route('finish.project') }}" method="POST">
+                @csrf
+                <input type="hidden" name="project_id" id="project_id" value="">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="finishProjectModalLabel">{{ trans('cruds.finished_project.options.add_remark') }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="remark" class="form-label">{{ trans('cruds.finished_project.fields.remark') }}</label>
+                        <textarea class="form-control" id="remark" name="remark" rows="3" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    {{-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ trans('cruds.global.close') }}</button> --}}
+                    <button type="submit" class="btn btn-primary">{{ trans('cruds.global.submit') }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @section("scripts")
@@ -135,6 +162,60 @@
                         }
                     });
 
+                } else {
+                    e.dismiss;
+                }
+            });
+        });
+
+        $(document).on('click', '.finish_project', function(e){
+            e.preventDefault();
+            var url = $(this).data('href');
+            var projectId = $(this).data('project-id');
+            
+            // Set project ID in the form
+            $('#project_id').val(projectId);
+
+            // Show the modal
+            $('#finishProjectModal').modal('show');
+        });
+
+        $('#finishProjectForm').on('submit', function(e){
+        e.preventDefault();
+        var form = $(this);
+        var url = form.attr('action');
+        var formData = form.serialize();
+
+        swal.fire({
+                // title: "{{trans('messages.are_you_sure')}}",
+                text: "{{trans('messages.finished_project_warning_message')}}",
+                icon: 'warning',
+                type: "warning",
+                showCancelButton: !0,
+                confirmButtonText: "{{trans('cruds.finished_project.options.finish_btn_text')}}",
+                cancelButtonText: "{{trans('cruds.global.cancel_delete_btn_text')}}",
+                reverseButtons: !0
+            }).then(function(e) {
+                if (e.value === true) {
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $("meta[name=csrf-token]").attr('content')
+                        },
+                        type: 'POST',
+                        url: url,
+                        data: formData,
+                        dataType: 'JSON',
+                        success: function(response) {
+                            toastr.success(response.message);
+                            $('#finishProjectModal').modal('hide');
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1500);
+                        },
+                        error: function(response) {
+                            toastr.error(response.responseJSON.message);
+                        }
+                    });
                 } else {
                     e.dismiss;
                 }

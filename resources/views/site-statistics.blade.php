@@ -24,7 +24,7 @@ $siteSettingData = getSiteSetting();
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item">{{trans("global.home")}}</a></li>
-        <li class="breadcrumb-item active">
+        <li class="breadcrumb-item">
           {{trans("pages.site_statistics.site")}}
         </li>
         <li class="breadcrumb-item active" aria-current="page">

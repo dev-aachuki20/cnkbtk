@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
 use App\Notifications\ProjectCreatedNotification;
+use App\Notifications\ProjectFinishedNotification;
 use App\Notifications\ProjectLockNotification;
 use App\Notifications\ProjectLockRequestNotification;
 use App\Notifications\ProjectUpdatedNotification;
@@ -76,7 +77,7 @@ class ProjectController extends Controller
             }
 
             DB::commit();
-            $routeUrl = URL::route('user.project.create');
+            $routeUrl = URL::route('user.project.index');
             return response()->json(['reloadUrl' => $routeUrl, 'message' => trans("messages.add_success", ['module' => trans("global.project")]), 'alert-type' =>  'success'], 200);
         } catch (\Exception $e) {
             DB::rollback();
@@ -497,5 +498,38 @@ class ProjectController extends Controller
         }
 
         return view('project.creator-show', compact('creator', 'project', 'creatorStatus'));
+    }
+
+    //Finished prject by user.
+    public function finishedProject(Request $request)
+    {
+        $request->validate([
+            'remark' => 'required|string|max:255',
+        ]);
+
+        $projectId = $request->project_id;
+        try {
+            DB::beginTransaction();
+            $project = Project::findOrFail($projectId);
+            $project->update(['finish_status' => 1, 'remark' => $request->remark]);
+
+            $creatorId = DB::table('project_creator')->where('project_id', $projectId)->value('creator_id');
+            $creator =  User::where('id', $creatorId)->first(); //get creator
+            $user = Auth()->user(); //get user           
+            $admin = User::where('role_id', config('constant.role.admin'))->first(); //get admin        
+
+            Notification::send($user, new ProjectFinishedNotification($project));
+            Notification::send($admin, new ProjectFinishedNotification($project));
+            Notification::send($creator, new ProjectFinishedNotification($project));
+
+            DB::commit();
+            return response()->json(['message' => trans("messages.finish_success", ['module' => trans("global.project")]), 'alert-type' =>  'success'], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to finish project. ' . $e->getMessage(),
+            ], 500);
+        }
     }
 }

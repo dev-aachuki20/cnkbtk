@@ -4,6 +4,7 @@ return [
     'update_success' => ':module has been updated successfully!',
     'delete_success' => ':module has been deleted successfully!',
     'status_success' => 'Status has been changed successfully!',
+    'finish_success' => ':module has been finished successfully!',
 
     // Global Error 
     "something_went_wrong" => 'Something went wrong!',
@@ -52,4 +53,5 @@ return [
     'project_locked_successfully' => 'Project is locked successfully',
     
     'project_lock_request' => ':module lock request sent successfully',
+    'finished_project_warning_message' => 'Once finished you will not able to reopen the project.'
 ];
