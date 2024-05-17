@@ -83,7 +83,11 @@ class ProjectsAdminDataTable extends DataTable
             </a>';
 
                 if ($record->project_status == 1) {
-                    $action .= '<a class="btn btn-primary btn-sm" title="' . trans("cruds.global.read_chat") . '" href="' . route('admin.projects.readChat', $record->id) . '">' . trans("cruds.global.read_chat") . '
+                    $svg = '
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17 8.56667H17.1V8.46667V1V0.9H17H1H0.9V1V13.8V13.9H1H12.1697L16.9445 17.0832L17.1 17.1869V17V12.7333V12.6333H17H15.9333H15.8333V12.7333V14.6798L12.7888 12.6501L12.7636 12.6333H12.7333H2.16667V2.16667H15.8333V8.46667V8.56667H15.9333H17ZM17.1 9.53333V9.43333H17H15.9333H15.8333V9.53333V11.6667V11.7667H15.9333H17H17.1V11.6667V9.53333ZM13.4931 3.75169L13.4224 3.68097L13.3517 3.7517L8.38566 8.71878L5.61761 6.87307L5.53436 6.81755L5.4789 6.90084L4.88796 7.78831L4.83257 7.87151L4.91574 7.92694L8.47947 10.3024L8.54767 10.3479L8.60564 10.2899L14.2483 4.64832L14.319 4.57761L14.2483 4.50689L13.4931 3.75169Z" fill="white" stroke="white" stroke-width="0.2"/>
+                    </svg>';
+                    $action .= '<a class="btn btn-primary btn-sm" title="' . trans("cruds.global.read_chat") . '" href="' . route('admin.projects.readChat', $record->id) . '">' . $svg . '
             </a>';
                 }
 

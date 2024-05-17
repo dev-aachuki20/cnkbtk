@@ -187,9 +187,16 @@
                 creatorId: creatorId,
             },
             dataType: 'json',
+            beforeSend: function(response) {
+                    showLoader();
+            },
             success: function(response) {
                 // alert(response.message); // Show success message
                 toastr.success(response.message, '{{trans("global.alert.success")}}');
+                location.reload();
+            },
+            complete: function() {
+                    hideLoader();
             },
             error: function(xhr, status, error) {
                 console.error(error);

@@ -614,30 +614,27 @@
     }
 
 
-
     $(document).ready(function() {
+      
+        setTimeout(function(){
+            $('.dynamicUserList:first').trigger('click');
+        }, 100)
 
         // show chat screen when click user in sidebar
 
         $(document).on('click', '.dynamicUserList', function() {
-
             $('.dynamicUserList').removeClass('active');
-
             $(this).addClass('active');
-
-
-
             var userId = $(this).data('user-id');
-
             var userName = $(this).data('user-name');
-
             var projectId = $(this).data('project-id');
+            var url = @json(route('message.screen'));
 
             $.ajax({
 
                 type: 'GET',
 
-                url: "{{route('message.screen')}}",
+                url: url,
 
                 data: {
 
@@ -676,7 +673,6 @@
         });
 
     });
-
 
 
     function scrollToBottom() {
