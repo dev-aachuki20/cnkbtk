@@ -25,7 +25,8 @@ class StoreProjectRequest extends FormRequest
     {
         return [
             'title'     => ['required', 'string', 'unique:projects,title'],
-            'type'      => ['required', 'string'],
+            'type'      => ['required', 'string'],  
+            // 'tags'      => ['required'],
             'tags_id'   => ['required'],
             'budget'    => ['required', 'numeric'],
             'comment'   => ['required', 'string'],

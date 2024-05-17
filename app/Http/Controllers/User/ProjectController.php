@@ -54,6 +54,7 @@ class ProjectController extends Controller
             $validatedData['user_id'] = auth()->user()->id;
             $validatedData['user_ip'] = $request->ip();
             $validatedData['copyright'] = $request->has('copyright') ? 1 : 0;
+            // $validatedData['tags'] = implode(',', $request->tags);
 
             $project = Project::create($validatedData);
 

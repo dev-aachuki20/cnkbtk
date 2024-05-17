@@ -42,6 +42,25 @@
     </div>
   </div>
 
+
+  {{-- <div class="col-md-4">
+    <div class="mb-4">
+      <div class="form-group multipal_select_group">
+        <label for="tags_id">{{__('cruds.create_project.fields.tags')}} <span class="text-danger">*</span></label>
+        <select class="form-select select-subject" aria-label="Default select example" name="tags[]" id="tags_id" multiple>
+          <option value="">{{__('cruds.create_project.fields.selected.tags')}}</option>
+          @foreach($tagTypes as $tagType)
+          <optgroup label="{{ $tagType->name }}">
+            @foreach($tagType->tags as $tag)
+            <option value="{{ $tag->id }}" {{ isset($project) && $project->tags_id == $tag->id ? 'selected' : '' }}>{{ $tag->name }}</option>
+            @endforeach
+          </optgroup>
+          @endforeach
+        </select>
+      </div>
+    </div>
+  </div> --}}
+
   <div class="col-md-4">
     <div class="mb-4">
       <div class="form-group multipal_select_group">

@@ -12,6 +12,7 @@ class Project extends Model
     protected $fillable = [
         "title",
         "type",
+        "tags",
         "tags_id",
         "comment",
         "status",
