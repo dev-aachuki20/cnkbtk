@@ -26,6 +26,8 @@ use App\Notifications\ProjectUpdatedNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Validation\Rule;
+
 
 class ProjectController extends Controller
 {
@@ -101,7 +103,7 @@ class ProjectController extends Controller
     public function update(Request $request, $id)
     {
         $rules = [
-            'title' => ['required', 'string'],
+            'title' => ['required', 'string',  Rule::unique('projects')->ignore($id)],
             'budget' => ['required'],
             'comment' => ['required'],
         ];
@@ -525,11 +527,10 @@ class ProjectController extends Controller
             DB::commit();
             return response()->json(['message' => trans("messages.finish_success", ['module' => trans("global.project")]), 'alert-type' =>  'success'], 200);
         } catch (\Exception $e) {
-            DB::rollBack();
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to finish project. ' . $e->getMessage(),
-            ], 500);
+            return response()->json(['message' => $e->getMessage(), 'alert-type' => 'error'], 422);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(['message' => trans("messages.something_went_wrong"), 'alert-type' => 'error'], 500);
         }
     }
 }

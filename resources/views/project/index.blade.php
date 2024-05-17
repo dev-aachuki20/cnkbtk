@@ -100,7 +100,7 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="remark" class="form-label">{{ trans('cruds.finished_project.fields.remark') }}</label>
-                        <textarea class="form-control" id="remark" name="remark" rows="3" required></textarea>
+                        <textarea class="form-control" id="remark" name="remark" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -213,8 +213,15 @@
                             }, 1500);
                         },
                         error: function(response) {
-                            toastr.error(response.responseJSON.message);
+                            if (response.responseJSON.errors && response.responseJSON.errors.remark) {
+                                var errorMessage = response.responseJSON.errors.remark[0];
+                                $('#remark').after('<div id="remark-error" class="text-danger mt-2">' + errorMessage + '</div>');
+                            } else {
+                                var errorMessage = response.responseJSON.message || 'An error occurred. Please try again.';
+                                $('#remark').after('<div id="remark-error" class="text-danger mt-2">' + errorMessage + '</div>');
+                            }
                         }
+                        
                     });
                 } else {
                     e.dismiss;
