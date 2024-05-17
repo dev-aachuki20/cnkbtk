@@ -4804,3 +4804,15 @@ li.confirmRequest .dropdown-item.del_btn {
 .profile-wrapper-cp .profile-content .avg {
   text-align: end;
 }
+
+/* 17-05-2024 responsiveness */
+
+.avatar-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+.title-avatar {
+  align-self: center;
+}

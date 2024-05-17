@@ -136,7 +136,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->role_id = $request->role_id;
         $user->status = $request->status;
-        $user->password = Hash::make('12345678');
+        //$user->password = Hash::make('12345678');
         
         if($user->save()){
             if ($request->hasFile('image')) {
