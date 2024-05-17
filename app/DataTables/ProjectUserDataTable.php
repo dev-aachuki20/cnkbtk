@@ -1,9 +1,6 @@
 <?php
 
 namespace App\DataTables;
-
-use App\Models\BlacklistTag;
-use App\Models\BlacklistUser;
 use App\Models\Project;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Html\Button;
@@ -26,13 +23,13 @@ class ProjectUserDataTable extends DataTable
             ->editColumn('created_at', function ($record) {
                 return $record->created_at->format(config('app.date_format'));
             })
-            ->editColumn('tags_id', function ($record) {
-                $language = app()->getLocale();
-                if ($record->tags) {
-                    return $language === 'en' ? ucfirst($record->tags->name_en) : ucfirst($record->tags->name_ch);
-                }
-                return '';
-            })
+            // ->editColumn('tags_id', function ($record) {
+            //     $language = app()->getLocale();
+            //     if ($record->tags) {
+            //         return $language === 'en' ? ucfirst($record->tags->name_en) : ucfirst($record->tags->name_ch);
+            //     }
+            //     return '';
+            // })
 
             ->editColumn('budget', function ($record) {
                 return $record->budget . config("constant.currency.rmb") ?? '0.00';
@@ -60,12 +57,12 @@ class ProjectUserDataTable extends DataTable
                 $query->where('projects.status', $statusSearch);
             })
 
-            ->filterColumn('tags_id', function ($query, $keyword) {
-                $query->whereHas('tags', function ($query) use ($keyword) {
-                    $query->where('name_en', 'like', "%$keyword%")
-                        ->orWhere('name_ch', 'like', "%$keyword%");
-                });
-            })
+            // ->filterColumn('tags_id', function ($query, $keyword) {
+            //     $query->whereHas('tags', function ($query) use ($keyword) {
+            //         $query->where('name_en', 'like', "%$keyword%")
+            //             ->orWhere('name_ch', 'like', "%$keyword%");
+            //     });
+            // })
 
             ->addColumn('action', function ($record) {
                 $action  = '<div class="d-flex">';
@@ -106,7 +103,8 @@ class ProjectUserDataTable extends DataTable
                 $action .= '</div>';
                 return $action;
             })
-            ->rawColumns(['tags_id', 'status', 'action']);
+            // ->rawColumns(['tags_id', 'status', 'action']);
+            ->rawColumns(['tags', 'status', 'action']);
     }
 
     /**
@@ -160,7 +158,7 @@ class ProjectUserDataTable extends DataTable
             Column::make('DT_RowIndex')->title('#')->orderable(false)->searchable(false),
             Column::make('title')->title(trans("cruds.create_project.fields.title")),
             Column::make('type')->title(trans("cruds.create_project.fields.type")),
-            Column::make('tags_id')->title(trans("cruds.create_project.fields.tags")),
+            // Column::make('tags_id')->title(trans("cruds.create_project.fields.tags")),
             Column::make('budget')->title(trans("cruds.create_project.fields.budget")),
             Column::computed('status')->title(trans("cruds.global.status"))->orderable(false)->searchable(true),
             Column::make('created_at')->title(trans("cruds.global.created_date"))->orderable(false)->searchable(false),
@@ -175,6 +173,6 @@ class ProjectUserDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'BlacklistTag_' . date('YmdHis');
+        return 'Project_' . date('YmdHis');
     }
 }

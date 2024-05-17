@@ -56,7 +56,7 @@
                   </div>
                   
                 </div>
-                <div class="col-12">
+                {{-- <div class="col-12">
                   <div class="row">
                     <div class="col-lg-auto col-sm-3 col-4 main-title"><h6 class="cardtitle">{{trans("cruds.create_project.fields.tags")}}</h6></div>
                     <div class="col-lg col-sm-9 col-8 d-flex align-items-center"><div class="content"> 
@@ -66,14 +66,56 @@
                       {{ $project->tags->name_ch ?? '' }}
                       @endif</div></div>
                   </div>
+                </div> --}}
+
+                <div class="row">
+                  <div class="col-lg-auto col-sm-3 col-4 main-title">
+                    <h6 class="cardtitle">{{ trans("cruds.create_project.fields.tags") }}</h6>
+                  </div>
+                  <div class="col-lg col-sm-9 col-8 d-flex align-items-center">
+                    <div class="content">
+                      @php
+                        $tagIds = explode(',', $project->tags); // Convert the string to an array of IDs
+                        $tags = \App\Models\Tag::whereIn('id', $tagIds)->get(); // Fetch the tags from the database
+                        
+                        $tagNames = app()->getLocale() == 'en' ? $tags->pluck('name_en')->toArray() : $tags->pluck('name_ch')->toArray();
+                      @endphp
+                      
+                      {{ implode(', ', $tagNames) }}
+                    </div>
+                  </div>
                 </div>
+                
+
+
+
+
+
                 <div class="col-12">
                   <div class="row">
                     <div class="col-lg-auto col-sm-3 col-4 main-title"><h6 class="cardtitle">{{trans("cruds.create_project.fields.budget")}}</h6></div>
                     <div class="col-lg col-sm-9 col-8 d-flex align-items-center"><div class="content">{{ $project->budget  ?? ''}} CN¥</div></div>
                   </div>
                 </div>
+
                 <div class="col-12">
+                  <div class="row">
+                    <div class="col-lg-auto col-sm-3 col-4 main-title">
+                      <h6 class="cardtitle">{{ trans("cruds.create_project.fields.creators") }}</h6>
+                    </div>
+                    <div class="col-lg col-sm-9 col-8 d-flex align-items-center">
+                      <div class="content">
+                        @php
+                          // Collect creator names into an array
+                          $creatorNames = $project->creators->pluck('user_name')->toArray();
+                        @endphp
+                        {{ implode(', ', $creatorNames) }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {{-- <div class="col-12">
                   <div class="row">
                     <div class="col-lg-auto col-sm-3 col-4 main-title"><h6 class="cardtitle">{{trans("cruds.create_project.fields.creators")}} </h6></div>
                     <div class="col-lg col-sm-9 col-8 d-flex align-items-center"><div class="content">
@@ -81,7 +123,7 @@
                       {{ $creator->user_name }}
                       @endforeach</div></div>
                   </div>
-                </div>
+                </div> --}}
                 <div class="col-12">
                   <div class="row">
                     <div class="col-lg-auto col-sm-3 col-4 main-title"><h6 class="cardtitle">{{trans("cruds.global.status")}}</h6></div>
@@ -154,109 +196,7 @@
           </div>
         </div>
       </div>
-
-    </div>
-    {{-- <div class="card ">
-        <div class="row g-4">
-          <!-- Project Details -->
-          <div class="col-lg-6 col-12">
-            <div class="right-single-box blacklist_box_user project_details_card">
-              <div class="row gx-3">
-                <div class="col">
-                  <div class="main-title"><h2>Project Detail</h2></div>
-                  <ul>
-                    <li>
-                      <div class="main-title">
-                        <h6> <span>{{trans("cruds.create_project.fields.type")}} :</span> {{ $project->type  ?? ''}}</h6>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="description-text main-title">
-                        <h6> <span>{{trans("cruds.create_project.fields.tags")}} :</span>
-                          @if(app()->getLocale() == 'en')
-                          {{ $project->tags->name_en ?? '' }}
-                          @else
-                          {{ $project->tags->name_ch ?? '' }}
-                          @endif
-                        </h6>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="main-title">
-                        <h6> <span>{{trans("cruds.create_project.fields.budget")}} :</span>{{ $project->budget  ?? ''}} CN¥</h6>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="main-title">
-                        <h6> <span>{{trans("cruds.create_project.fields.creators")}} :</span> @foreach ($project->creators as $creator)
-                          {{ $creator->user_name }}
-                          @endforeach
-                        </h6>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="main-title">
-                        <h6 class="description"> <span>{{trans("cruds.create_project.fields.description")}} :</span> {!! $project->comment ?? '' !!}</h6>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="main-title">
-                        <h6> <span>{{trans("cruds.global.status")}}:</span> @if($project->status == 1)
-                          <small class="badge badge-info mr-1">{{trans("cruds.global.active")}}</small>
-                          @else
-                          <small class="badge badge-danger mr-1">{{trans("cruds.global.in_active")}}</small>
-                          @endif
-                        </h6>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-    
-            </div>
-          </div>
-    
-          <!-- Project Status -->
-          <div class="col-lg-6 col-12">
-            <div class="right-single-box blacklist_box_user project_details_card">
-               
-              <div class="row gx-3">
-                <div class="main-title"><h2>{{trans("cruds.create_project.project")}} {{trans("cruds.global.status")}}</h2></div>
-                <div class="col">
-                  <ul>
-                    @php
-                    $creator = $project->creators()->wherePivot('creator_status', 1)->wherePivot('user_status', 1)->first();
-                    @endphp
-      
-                    <li>
-                      <div class="main-title">
-                        <h6> <span>{{trans("cruds.create_project.fields.creator_name")}} :</span> {{ $creator->user_name   ?? 'N/A'}}</h6>
-                      </div>
-                    </li>
-      
-                    <li>
-                      <div class="main-title">
-                        <h6> <span>{{trans("cruds.create_project.fields.budget")}} :</span>{{ $creator->bid  ?? $project->budget }} CN¥</h6>
-                      </div>
-                    </li>
-      
-                    <li>
-                      <div class="main-title">
-                        <h6> <span>{{trans("cruds.global.status")}}:</span> @if($project->project_status == 1)
-                          <small class="badge badge-info mr-1">{{trans("cruds.create_project.fields.status.locked")}}</small>
-                          @else
-                          <small class="badge badge-danger mr-1">{{trans("cruds.create_project.fields.status.unlocked")}}</small>
-                          @endif
-                        </h6>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-          </div>
-        </div>
-      </div>
-    </div> --}}
+    </div>    
   </div>
 </section>
 @endsection

@@ -24,7 +24,7 @@
     </div>
   </div>
 
-  <div class="col-md-4">
+  {{-- <div class="col-md-4">
     <div class="mb-4">
       <div class="form-group">
         <label for="tags_id">{{__('cruds.create_project.fields.tags')}} <span class="text-danger">*</span></label>
@@ -40,10 +40,10 @@
         </select>
       </div>
     </div>
-  </div>
+  </div> --}}
 
-
-  {{-- <div class="col-md-4">
+  @php $tagArray = []; if(isset($project->tags)){ $tagArray = explode(",",$project->tags); }  @endphp
+  <div class="col-md-4">
     <div class="mb-4">
       <div class="form-group multipal_select_group">
         <label for="tags_id">{{__('cruds.create_project.fields.tags')}} <span class="text-danger">*</span></label>
@@ -52,14 +52,16 @@
           @foreach($tagTypes as $tagType)
           <optgroup label="{{ $tagType->name }}">
             @foreach($tagType->tags as $tag)
-            <option value="{{ $tag->id }}" {{ isset($project) && $project->tags_id == $tag->id ? 'selected' : '' }}>{{ $tag->name }}</option>
+            @if($tag->status == 1)
+            <option value="{{ $tag->id }}" {{in_array($tag->id,$tagArray) ? "selected" : ""}}>{{ $tag->name }}</option>
+            @endif
             @endforeach
           </optgroup>
           @endforeach
         </select>
       </div>
     </div>
-  </div> --}}
+  </div>
 
   <div class="col-md-4">
     <div class="mb-4">

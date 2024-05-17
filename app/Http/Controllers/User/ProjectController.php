@@ -54,7 +54,7 @@ class ProjectController extends Controller
             $validatedData['user_id'] = auth()->user()->id;
             $validatedData['user_ip'] = $request->ip();
             $validatedData['copyright'] = $request->has('copyright') ? 1 : 0;
-            // $validatedData['tags'] = implode(',', $request->tags);
+            $validatedData['tags'] = implode(',', $request->tags);
 
             $project = Project::create($validatedData);
 
@@ -107,6 +107,7 @@ class ProjectController extends Controller
             'title' => ['required', 'string',  Rule::unique('projects')->ignore($id)],
             'budget' => ['required'],
             'comment' => ['required'],
+            'tags' => ['required', 'exists:tags,id'],
         ];
 
         $customMessages = [];
@@ -115,6 +116,7 @@ class ProjectController extends Controller
             'title' => trans("cruds.create_project.fields.title"),
             'budget' => trans("cruds.create_project.fields.budget"),
             'comment' => trans("cruds.create_project.fields.description"),
+            'tags' => trans("pages.post.form.fields.tags"),
         ];
 
 
@@ -129,7 +131,8 @@ class ProjectController extends Controller
 
             $oldTitle = $project->title;
             $oldType = $project->type;
-            $oleTags_id = $project->tags_id;
+            // $oleTags_id = $project->tags_id;
+            $oleTags_id = $request->tags;
             $oldBudget = $project->budget;
             $oldComment = $project->comment;
 
@@ -138,7 +141,8 @@ class ProjectController extends Controller
             $project->update([
                 'title' => $request->title,
                 'type' => $request->type,
-                'tags_id' => $request->tags_id,
+                'tags' => implode(',', $request->tags),
+                // 'tags_id' => $request->tags_id,
                 'budget' => $request->budget,
                 'status' => $request->status,
                 'comment' => $request->comment,
