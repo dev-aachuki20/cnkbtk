@@ -39,7 +39,7 @@ class ProjectController extends Controller
     public function create()
     {
         $tagTypes = TagType::all();
-        $creators = User::where('role_id', config("constant.role.creator"))->get();
+        $creators = User::where('role_id', config("constant.role.creator"))->where('status', 1)->get();
         return view("project.create", compact('tagTypes', 'creators'));
     }
 

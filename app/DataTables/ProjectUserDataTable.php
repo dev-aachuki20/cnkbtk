@@ -132,6 +132,7 @@ class ProjectUserDataTable extends DataTable
             ->minifiedAjax()
             ->dom('lfrtip')
             ->orderBy(1)
+            // ->orderBy([0, 'desc']) 
             ->buttons(
                 Button::make('export'),
                 Button::make('reset'),
@@ -156,6 +157,7 @@ class ProjectUserDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex')->title('#')->orderable(false)->searchable(false),
+            // Column::make('id')->title('#'),
             Column::make('title')->title(trans("cruds.create_project.fields.title")),
             Column::make('type')->title(trans("cruds.create_project.fields.type")),
             // Column::make('tags_id')->title(trans("cruds.create_project.fields.tags")),
