@@ -42,22 +42,22 @@
                             <ul>
                                 <li>
                                     <div class="main-title">
-                                        <h6> <span>{{trans("cruds.create_project.fields.user_name")}} :</span> {{ $item['project']->user->user_name  ?? ''}}</h6>
+                                        <h6> <span>{{trans("cruds.create_project.fields.user_name")}} </span> {{ $item['project']->user->user_name  ?? ''}}</h6>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="main-title">
-                                        <h6> <span>{{trans("cruds.create_project.fields.title")}} :</span> {{ ucfirst($item['project']->title)  ?? ''}}</h6>
+                                        <h6> <span>{{trans("cruds.create_project.fields.title")}} </span> {{ ucfirst($item['project']->title)  ?? ''}}</h6>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="main-title">
-                                        <h6> <span>{{trans("cruds.create_project.project")}} {{trans("cruds.create_project.fields.type")}} :</span> {{ $item['project']->type  ?? ''}}</h6>
+                                        <h6> <span>{{trans("cruds.create_project.project")}} {{trans("cruds.create_project.fields.type")}} </span> {{ $item['project']->type  ?? ''}}</h6>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="description-text main-title">
-                                        <h6> <span>{{trans("cruds.create_project.fields.tags")}} :</span>
+                                        <h6> <span>{{trans("cruds.create_project.fields.tags")}} </span>
                                             @if(app()->getLocale() == 'en')
                                             {{ $item['project']->tags->name_en ?? '' }}
                                             @else
@@ -69,13 +69,13 @@
 
                                 <li>
                                     <div class="main-title">
-                                        <h6> <span>{{trans("cruds.create_project.fields.budget")}} :</span>{{ $item['project']->budget  ?? ''}} CN¥</h6>
+                                        <h6> <span>{{trans("cruds.create_project.fields.budget")}} </span>{{ $item['project']->budget  ?? ''}} CN¥</h6>
                                     </div>
                                 </li>
 
                                 <li>
                                     <div class="main-title">
-                                        <h6> <span>{{trans("cruds.create_project.fields.description")}} :</span> {!! $item['project']->comment ?? '' !!}</h6>
+                                        <h6> <span>{{trans("cruds.create_project.fields.description")}} </span> {!! $item['project']->comment ?? '' !!}</h6>
                                     </div>
                                 </li>
                             </ul>

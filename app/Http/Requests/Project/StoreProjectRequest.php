@@ -49,6 +49,7 @@ class StoreProjectRequest extends FormRequest
 
             'budget.numeric' => __('validation.numeric', ['attribute' => __('cruds.create_project.fields.budget')]),
 
+            'comment.required' => __('validation.required', ['attribute' => __('cruds.create_project.fields.description')]),
             'comment.string' => __('validation.string', ['attribute' => __('cruds.create_project.fields.description')]),
 
             'status.required' => __('validation.required', ['attribute' => __('cruds.global.status')]),
