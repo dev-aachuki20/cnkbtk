@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\View;
 use App\Models\Section;
 use Illuminate\Pagination\Paginator;
-
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -39,11 +39,12 @@ class AppServiceProvider extends ServiceProvider
         });
 
         // Getting menues to show in header
-        $sections = Section::where(function($query){
-            $query->orWhere("show_in_header",1)->orWhere("show_in_footer",1);
-        })->where("status",1)->get();
-        View::share('menues', $sections);
+        if (Schema::hasTable('sections')) {
+            $sections = Section::where(function ($query) {
+                $query->orWhere("show_in_header", 1)->orWhere("show_in_footer", 1);
+            })->where("status", 1)->get();
+            View::share('menues', $sections);
+        }
         Paginator::useBootstrapFive();
-        
     }
 }

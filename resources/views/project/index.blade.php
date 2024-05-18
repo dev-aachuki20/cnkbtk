@@ -181,12 +181,12 @@
         });
 
         $('#finishProjectForm').on('submit', function(e){
-        e.preventDefault();
-        var form = $(this);
-        var url = form.attr('action');
-        var formData = form.serialize();
+            e.preventDefault();
+            var form = $(this);
+            var url = form.attr('action');
+            var formData = form.serialize();
 
-        swal.fire({
+            swal.fire({
                 // title: "{{trans('messages.are_you_sure')}}",
                 text: "{{trans('messages.finished_project_warning_message')}}",
                 icon: 'warning',
@@ -229,6 +229,12 @@
             });
         });
 
+
+        // Reset form values when the modal is hidden
+        $('#finishProjectModal').on('hidden.bs.modal', function() {
+            $('#finishProjectForm')[0].reset();
+            $('#remark-error').remove();
+        });
     });
 </script>
 @endsection

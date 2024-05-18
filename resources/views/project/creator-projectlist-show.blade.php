@@ -124,7 +124,7 @@
                         <div class="mb-4">
                             <div class="form-group">
                                 <label for="budget">{{__('cruds.create_project.fields.budget')}} <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="bid" id="budget" placeholder="{{trans("global.enter")}} {{__('cruds.create_project.fields.budget')}}" />
+                                <input type="number" class="form-control" name="bid" id="budget" placeholder="{{trans("global.enter")}} {{__('cruds.create_project.fields.budget')}}" />
                             </div>
                         </div>
                     </div>
@@ -189,19 +189,27 @@
                     }, 1000);
 
                 },
-                error: function(jqXHR, exception) {
-                    if (jqXHR.creatorStatus == 422) {
-                        $(".errors").remove();
-                        $("#" + index).parents(".form-group").append("<span class='text-danger errors'>" + message + "</span>");
+                error: function(response) {
+                    if (response.responseJSON.errors && response.responseJSON.errors.budget) {
+                        var errorMessage = response.responseJSON.errors.budget[0];
+                        $('#budget').after('<div id="budget-error" class="text-danger mt-2">' + errorMessage + '</div>');
                     } else {
-                        toastr.error(jqXHR.responseJSON.message, '{{trans("global.alert.error")}}');
-                        location.reload();
+                        // toastr.error(jqXHR.responseJSON.message, '{{trans("global.alert.error")}}');
+                        // location.reload();
+                        var errorMessage = response.responseJSON.message || 'An error occurred. Please try again.';
+                        $('#budget').after('<div id="budget-error" class="text-danger mt-2">' + errorMessage + '</div>');
                     }
                 },
                 complete: function() {
                     hideLoader();
                 }
             });
+        });
+
+        // Reset form values when the modal is hidden
+        $('#exampleModal').on('hidden.bs.modal', function() {
+            $('#addBidForm')[0].reset();
+            $('#budget-error').remove();
         });
 
         // confirm project by creator
