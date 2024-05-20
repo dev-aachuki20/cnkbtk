@@ -36,6 +36,99 @@ class StatisticsController extends Controller
         $labels = [];
         $data = [];
         $datasets = [];
+
+        if (!$request->has(['start_date', 'end_date', 'range'])) {
+            if (!in_array($range, ['day', 'week', 'month', 'custom range'])) {
+                return response()->json(['error' => 'Invalid range'], 400);
+            }
+            if ($range == 'day') {
+                $startDate->startOfDay();
+                $endDate->endOfDay();
+                $interval = 'hour';
+            } elseif ($range == 'week') {
+                $startDate = Carbon::today()->subDays(6)->startOfDay();
+                $endDate = Carbon::today()->endOfDay();
+                $interval = 'day';
+            } elseif ($range == 'month') {
+                $startDate->startOfMonth()->startOfDay();
+                $endDate->endOfDay();
+                $interval = 'day';
+            }
+        } else {
+            $range = $request->range;
+            if ($range == 'custom range') {
+                $startDate->startOfDay();
+                $endDate->endOfDay();
+                if ($startDate->diffInDays($endDate) == 0) {
+                    $interval = 'hour';
+                } else {
+                    $interval = 'day';
+                }
+            }
+        }
+
+        $users = User::whereBetween('created_at', [$startDate, $endDate])->orderBy('created_at')->get();
+        $userCounts = $users->groupBy(function ($user) use ($interval) {
+            return $interval === 'hour' ? $user->created_at->format('h a') : $user->created_at->format('Y-m-d');
+        });
+
+        $startDateCopy = $startDate->copy();
+        while ($startDateCopy->lte($endDate)) {
+            $date = $interval === 'hour' ? $startDateCopy->format('h a') : $startDateCopy->format('Y-m-d');
+            $count = isset($userCounts[$date]) ? $userCounts[$date]->count() : 0;
+            $labels[] = $date;
+            $data[] = $count;
+
+            $startDateCopy->add(1, $interval);
+        }
+
+        if ($interval == 'hour') {
+            $totalDays = 1;
+            $total = array_sum($data);
+        } else {
+            $totalDays = count($labels);
+            $total = array_sum($data);
+        }
+        $average = $totalDays > 0 ? $total / $totalDays : 0.00;
+        $average = round($average, 2);
+
+        $pluginText = trans("cruds.registered_members.fields.num_graph");
+        $xAxisText = '';
+        $yAxisText = trans("cruds.registered_members.fields.count");
+        $labelText = trans("cruds.registered_members.fields.graph");
+
+        $datasets[] = [
+            'label' => trans("cruds.registered_members.fields.count"),
+            'data' => $data,
+            'backgroundColor' => '#ff6359',
+            'borderColor' => '#ff6359',
+            'fill' => false,
+            'borderWidth' => 0.5,
+            'tension' => 0.5,
+            'pointBorderColor' => "#fd463b",
+            'pointBackgroundColor' => "#fd463b",
+            'pointBorderWidth' => 6,
+            'pointHoverRadius' => 6,
+            'pointHoverBackgroundColor' => "#000000",
+            'pointHoverBorderColor' => "#000000",
+            'pointHoverBorderWidth' => 3,
+            'pointRadius' => 1,
+            'borderWidth' => 3,
+            'pointHitRadius' => 30
+        ];
+
+        $html = view('statistics.graph', compact('average', 'labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+        return response()->json(['success' => true, 'html' => $html], 200);
+    }
+
+    public function visitingUsersGraph(Request $request, $range)
+    {
+        $startDate = $request->has('start_date') ? Carbon::parse($request->start_date) : Carbon::now();
+        $endDate = $request->has('end_date') ? Carbon::parse($request->end_date) : Carbon::now();
+        $labels = [];
+        $data = [];
+        $datasets = [];
+
         if (!$request->has(['start_date', 'end_date', 'range'])) {
             if (!in_array($range, ['day', 'week', 'month', 'custom range'])) {
                 return response()->json(['error' => 'Invalid range'], 400);
@@ -55,92 +148,199 @@ class StatisticsController extends Controller
                 $endDate->endOfDay();
                 $interval = 'day';
             }
-
-            $users = User::whereBetween('created_at', [$startDate, $endDate])->orderBy('created_at')->get();
-            $userCounts = $users->groupBy(function ($user) use ($interval) {
-                if ($interval === 'hour') {
-                    return $user->created_at->format('h a');
-                } else {
-                    return $user->created_at->format('Y-m-d');
-                }
-            });
-
-            $startDateCopy = $startDate->copy();
-            while ($startDateCopy->lte($endDate)) {
-                if ($interval === 'hour') {
-                    $date = $startDateCopy->format('h a');
-                } else {
-                    $date = $startDateCopy->format('Y-m-d');
-                }
-                $count = isset($userCounts[$date]) ? $userCounts[$date]->count() : 0;
-                $labels[] = $date;
-                $data[] = $count;
-
-                $datasets[0] = [
-                    'label' => trans("cruds.registered_members.fields.count"),
-                    'data' => $data,
-                    'backgroundColor' => '#ff6359',
-                    'borderColor' => '#ff6359',
-                    'fill' => false,
-                    'borderWidth' => 0.5,
-                    'tension' => 0.5,
-                    'pointBorderColor' => "#fd463b",
-                    'pointBackgroundColor' => "#fd463b",
-                    'pointBorderWidth' => 6,
-                    'pointHoverRadius' => 6,
-                    'pointHoverBackgroundColor' => "#000000",
-                    'pointHoverBorderColor' => "#000000",
-                    'pointHoverBorderWidth' => 3,
-                    'pointRadius' => 1,
-                    'borderWidth' => 3,
-                    'pointHitRadius' => 30
-                ];
-
-                $startDateCopy->add(1, $interval);
-            }
         } else {
             $range = $request->range;
             if ($range == 'custom range') {
-                $monthlyDateRanges = $this->getMonthlyDateRanges($startDate, $endDate);
-                list($labels, $data) = $this->generateMembersRegistrationGraph($monthlyDateRanges, $startDate, $endDate, 'day');
+                $startDate->startOfDay();
+                $endDate->endOfDay();
+                if ($startDate->diffInDays($endDate) == 0) {
+                    $interval = 'hour';
+                } else {
+                    $interval = 'day';
+                }
             }
         }
 
-        $totalDays = count($labels);
-        $total = array_sum($data);
+        $visitingUsers = UniqueVisitor::whereBetween('created_at', [$startDate, $endDate])->orderBy('created_at')->get();
+
+        $visitCounts = $visitingUsers->groupBy(function ($visit) use ($interval) {
+            if ($interval === 'hour') {
+                return $visit->created_at->format('h a');
+            } else {
+                return $visit->created_at->format('Y-m-d');
+            }
+        });
+
+        $startDateCopy = $startDate->copy();
+
+        while ($startDateCopy->lte($endDate)) {
+            if ($interval === 'hour') {
+                $date = $startDateCopy->format('h a');
+            } else {
+                $date = $startDateCopy->format('Y-m-d');
+            }
+
+            $count = isset($visitCounts[$date]) ? $visitCounts[$date]->count() : 0;
+
+            $labels[] = $date;
+            $data[] = $count;
+
+            $startDateCopy->add(1, $interval);
+        }
+
+        if ($interval == 'hour') {
+            $totalDays = 1;
+            $total = array_sum($data);
+        } else {
+            $totalDays = count($labels);
+            $total = array_sum($data);
+        }
         $average = $totalDays > 0 ? $total / $totalDays : 0.00;
         $average = round($average, 2);
 
-        // list($labels, $data) = $this->calculateAverage($labels, $data);
-        // $averageData = $this->calculateAverage($labels, $data);
-        // $labels = $averageData['labels'];
-        // $data = $averageData['data'];
+        $pluginText = trans("cruds.visiting_users.fields.num_graph");
+        $xAxisText =  '';
+        $yAxisText =  trans("cruds.visiting_users.fields.count");
+        $labelText =  trans("cruds.visiting_users.fields.graph");
 
-        // Add average data to datasets
-        // $datasets[] = [
-        //     'label' => 'Average',
-        //     'data' => $data,
-        //     'backgroundColor' => '#0000FF',
-        //     'borderColor' => '#0000FF',
-        //     'fill' => false,
-        //     'borderWidth' => 1,
-        //     'tension' => 0.5,
-        //     'pointBorderWidth' => 6,
-        //     'pointHoverRadius' => 6,
-        //     'pointRadius' => 1,
-        //     'borderWidth' => 3,
-        //     'pointHitRadius' => 30
-        // ];
-
-        $pluginText = trans("cruds.registered_members.fields.num_graph");
-        // $xAxisText =  trans("cruds.registered_members.fields.time");
-        $xAxisText = '';
-        $yAxisText =  trans("cruds.registered_members.fields.count");
-        $labelText =  trans("cruds.registered_members.fields.graph");
+        $datasets[] = [
+            'label' => trans("cruds.visiting_users.fields.count"),
+            'data' => $data,
+            'backgroundColor' => '#ff6359',
+            'borderColor' => '#ff6359',
+            'fill' => false,
+            'borderWidth' => 0.5,
+            'tension' => 0.5,
+            'pointBorderColor' => "#fd463b",
+            'pointBackgroundColor' => "#fd463b",
+            'pointBorderWidth' => 6,
+            'pointHoverRadius' => 6,
+            'pointHoverBackgroundColor' => "#000000",
+            'pointHoverBorderColor' => "#000000",
+            'pointHoverBorderWidth' => 3,
+            'pointRadius' => 1,
+            'borderWidth' => 3,
+            'pointHitRadius' => 30
+        ];
 
         $html = view('statistics.graph', compact('average', 'labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
         return response()->json(['success' => true, 'html' => $html], 200);
     }
+
+    public function mobileAccessGraph(Request $request, $range)
+    {
+        $startDate = $request->has('start_date') ? Carbon::parse($request->start_date) : Carbon::now();
+        $endDate = $request->has('end_date') ? Carbon::parse($request->end_date) : Carbon::now();
+        $labels = [];
+        $data = [];
+        $datasets = [];
+
+        if (!$request->has(['start_date', 'end_date', 'range'])) {
+            if (!in_array($range, ['day', 'week', 'month', 'custom range'])) {
+                return response()->json(['error' => 'Invalid range'], 400);
+            }
+            if ($range == 'day') {
+                $startDate->startOfDay();
+                $endDate->endOfDay();
+                $interval = 'hour';
+            }
+            if ($range == 'week') {
+                $startDate = Carbon::today()->subDays(6)->startOfDay();
+                $endDate = Carbon::today()->endOfDay();
+                $interval = 'day';
+            }
+            if ($range == 'month') {
+                $startDate->startOfMonth()->startOfDay();
+                $endDate->endOfDay();
+                $interval = 'day';
+            }
+        } else {
+            $range = $request->range;
+            if ($range == 'custom range') {
+                $startDate->startOfDay();
+                $endDate->endOfDay();
+                if ($startDate->diffInDays($endDate) == 0) {
+                    $interval = 'hour';
+                } else {
+                    $interval = 'day';
+                }
+            }
+        }
+
+        $mobilesAccess = UniqueVisitor::whereBetween('created_at', [$startDate, $endDate])->where('device_name', 0)->orderBy('created_at')->get();
+
+        $accessCounts = $mobilesAccess->groupBy(function ($access) use ($interval) {
+            if ($interval === 'hour') {
+                return $access->created_at->format('h a');
+            } else {
+                return $access->created_at->format('Y-m-d');
+            }
+        });
+
+        $startDateCopy = $startDate->copy();
+
+        while ($startDateCopy->lte($endDate)) {
+            if ($interval === 'hour') {
+                $date = $startDateCopy->format('h a');
+            } else {
+                $date = $startDateCopy->format('Y-m-d');
+            }
+
+            $count = isset($accessCounts[$date]) ? $accessCounts[$date]->count() : 0;
+
+            $labels[] = $date;
+            $data[] = $count;
+
+            $startDateCopy->add(1, $interval);
+        }
+
+        if ($interval == 'hour') {
+            $totalDays = 1;
+            $total = array_sum($data);
+        } else {
+            $totalDays = count($labels);
+            $total = array_sum($data);
+        }
+
+        $average = $totalDays > 0 ? $total / $totalDays : 0.00;
+        $average = round($average, 2);
+        $pluginText = trans("cruds.mobile_access.fields.num_graph");
+        $xAxisText =  '';
+        $yAxisText =  trans("cruds.mobile_access.fields.count");
+        $labelText =  trans("cruds.mobile_access.fields.graph");
+
+
+        $datasets[] = [
+            'label' => trans("cruds.mobile_access.fields.count"),
+            'data' => $data,
+            'backgroundColor' => '#ff6359',
+            'borderColor' => '#ff6359',
+            'fill' => false,
+            'borderWidth' => 0.5,
+            'tension' => 0.5,
+            'pointBorderColor' => "#fd463b",
+            'pointBackgroundColor' => "#fd463b",
+            'pointBorderWidth' => 6,
+            'pointHoverRadius' => 6,
+            'pointHoverBackgroundColor' => "#000000",
+            'pointHoverBorderColor' => "#000000",
+            'pointHoverBorderWidth' => 3,
+            'pointRadius' => 1,
+            'borderWidth' => 3,
+            'pointHitRadius' => 30
+        ];
+
+        $html = view('statistics.graph', compact('average', 'labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+        return response()->json(['success' => true, 'html' => $html], 200);
+    }
+
+
+    
+
+
+
+
+
 
     public function numberPostsGraph(Request $request, $range)
     {
@@ -283,8 +483,18 @@ class StatisticsController extends Controller
         $yAxisText =  trans("cruds.number_of_posts.fields.count");
         $labelText =  trans("cruds.number_of_posts.fields.graph");
 
-        $totalDays = count($labels);
-        $total = array_sum($data);
+        // $totalDays = count($labels);
+        // $total = array_sum($data);
+        // $average = $totalDays > 0 ? $total / $totalDays : 0.00;
+        // $average = round($average, 2);
+
+        if ($interval == 'hour') {
+            $totalDays = 1;
+            $total = array_sum($data);
+        } else {
+            $totalDays = count($labels);
+            $total = array_sum($data);
+        }
         $average = $totalDays > 0 ? $total / $totalDays : 0.00;
         $average = round($average, 2);
 
@@ -311,98 +521,104 @@ class StatisticsController extends Controller
         return response()->json(['success' => true, 'html' => $html], 200);
     }
 
-    public function visitingUsersGraph(Request $request, $range)
-    {
-        $startDate = $request->has('start_date') ? Carbon::parse($request->start_date) : Carbon::now();
-        $endDate = $request->has('end_date') ? Carbon::parse($request->end_date) : Carbon::now();
-        $labels = [];
-        $data = [];
-        $datasets = [];
-        if (!$request->has(['start_date', 'end_date', 'range'])) {
-            if (!in_array($range, ['day', 'week', 'month', 'custom range'])) {
-                return response()->json(['error' => 'Invalid range'], 400);
-            }
-            if ($range == 'day') {
-                $startDate->startOfDay();
-                $endDate->endOfDay();
-                $interval = 'hour';
-            }
-            if ($range == 'week') {
-                $startDate = Carbon::today()->subDays(6)->startOfDay();
-                $endDate = Carbon::today()->endOfDay();
-                $interval = 'day';
-            }
-            if ($range == 'month') {
-                $startDate->startOfMonth()->startOfDay();
-                $endDate->endOfDay();
-                $interval = 'day';
-            }
+    // public function visitingUsersGraph(Request $request, $range)
+    // {
+    //     $startDate = $request->has('start_date') ? Carbon::parse($request->start_date) : Carbon::now();
+    //     $endDate = $request->has('end_date') ? Carbon::parse($request->end_date) : Carbon::now();
+    //     $labels = [];
+    //     $data = [];
+    //     $datasets = [];
+    //     if (!$request->has(['start_date', 'end_date', 'range'])) {
+    //         if (!in_array($range, ['day', 'week', 'month', 'custom range'])) {
+    //             return response()->json(['error' => 'Invalid range'], 400);
+    //         }
+    //         if ($range == 'day') {
+    //             $startDate->startOfDay();
+    //             $endDate->endOfDay();
+    //             $interval = 'hour';
+    //         }
+    //         if ($range == 'week') {
+    //             $startDate = Carbon::today()->subDays(6)->startOfDay();
+    //             $endDate = Carbon::today()->endOfDay();
+    //             $interval = 'day';
+    //         }
+    //         if ($range == 'month') {
+    //             $startDate->startOfMonth()->startOfDay();
+    //             $endDate->endOfDay();
+    //             $interval = 'day';
+    //         }
 
-            $visitingUsers = UniqueVisitor::whereBetween('created_at', [$startDate, $endDate])->orderBy('created_at')->get();
+    //         $visitingUsers = UniqueVisitor::whereBetween('created_at', [$startDate, $endDate])->orderBy('created_at')->get();
 
-            $visitCounts = $visitingUsers->groupBy(function ($visit) use ($interval) {
-                if ($interval === 'hour') {
-                    return $visit->created_at->format('h a');
-                } else {
-                    return $visit->created_at->format('Y-m-d');
-                }
-            });
+    //         $visitCounts = $visitingUsers->groupBy(function ($visit) use ($interval) {
+    //             if ($interval === 'hour') {
+    //                 return $visit->created_at->format('h a');
+    //             } else {
+    //                 return $visit->created_at->format('Y-m-d');
+    //             }
+    //         });
 
-            $startDateCopy = $startDate->copy();
+    //         $startDateCopy = $startDate->copy();
 
-            while ($startDateCopy->lte($endDate)) {
-                if ($interval === 'hour') {
-                    $date = $startDateCopy->format('h a');
-                } else {
-                    $date = $startDateCopy->format('Y-m-d');
-                }
+    //         while ($startDateCopy->lte($endDate)) {
+    //             if ($interval === 'hour') {
+    //                 $date = $startDateCopy->format('h a');
+    //             } else {
+    //                 $date = $startDateCopy->format('Y-m-d');
+    //             }
 
-                $count = isset($visitCounts[$date]) ? $visitCounts[$date]->count() : 0;
+    //             $count = isset($visitCounts[$date]) ? $visitCounts[$date]->count() : 0;
 
-                $labels[] = $date;
-                $data[] = $count;
-                $datasets[0] = [
-                    'label' => trans("cruds.visiting_users.fields.count"),
-                    'data' => $data,
-                    'backgroundColor' => '#ff6359',
-                    'borderColor' => '#ff6359',
-                    'fill' => false,
-                    'borderWidth' => 0.5,
-                    'tension' => 0.5,
-                    'pointBorderColor' => "#fd463b",
-                    'pointBackgroundColor' => "#fd463b",
-                    'pointBorderWidth' => 6,
-                    'pointHoverRadius' => 6,
-                    'pointHoverBackgroundColor' => "#000000",
-                    'pointHoverBorderColor' => "#000000",
-                    'pointHoverBorderWidth' => 3,
-                    'pointRadius' => 1,
-                    'borderWidth' => 3,
-                    'pointHitRadius' => 30
-                ];
-                $startDateCopy->add(1, $interval);
-            }
-        } else {
-            $range = $request->range;
-            if ($range == 'custom range') {
-                $monthlyDateRanges = $this->getMonthlyDateRanges($startDate, $endDate);
-                list($labels, $data) = $this->generateVisitingUsersGraph($monthlyDateRanges, $startDate, $endDate, 'month');
-            }
-        }
+    //             $labels[] = $date;
+    //             $data[] = $count;
+    //             $datasets[0] = [
+    //                 'label' => trans("cruds.visiting_users.fields.count"),
+    //                 'data' => $data,
+    //                 'backgroundColor' => '#ff6359',
+    //                 'borderColor' => '#ff6359',
+    //                 'fill' => false,
+    //                 'borderWidth' => 0.5,
+    //                 'tension' => 0.5,
+    //                 'pointBorderColor' => "#fd463b",
+    //                 'pointBackgroundColor' => "#fd463b",
+    //                 'pointBorderWidth' => 6,
+    //                 'pointHoverRadius' => 6,
+    //                 'pointHoverBackgroundColor' => "#000000",
+    //                 'pointHoverBorderColor' => "#000000",
+    //                 'pointHoverBorderWidth' => 3,
+    //                 'pointRadius' => 1,
+    //                 'borderWidth' => 3,
+    //                 'pointHitRadius' => 30
+    //             ];
+    //             $startDateCopy->add(1, $interval);
+    //         }
+    //     } else {
+    //         $range = $request->range;
+    //         if ($range == 'custom range') {
+    //             $monthlyDateRanges = $this->getMonthlyDateRanges($startDate, $endDate);
+    //             list($labels, $data) = $this->generateVisitingUsersGraph($monthlyDateRanges, $startDate, $endDate, 'month');
+    //         }
+    //     }
 
-        $pluginText = trans("cruds.visiting_users.fields.num_graph");
-        $xAxisText =  '';
-        $yAxisText =  trans("cruds.visiting_users.fields.count");
-        $labelText =  trans("cruds.visiting_users.fields.graph");
+    //     $pluginText = trans("cruds.visiting_users.fields.num_graph");
+    //     $xAxisText =  '';
+    //     $yAxisText =  trans("cruds.visiting_users.fields.count");
+    //     $labelText =  trans("cruds.visiting_users.fields.graph");
 
-        $totalDays = count($labels);
-        $total = array_sum($data);
-        $average = $totalDays > 0 ? $total / $totalDays : 0.00;
-        $average = round($average, 2);
-        $html = view('statistics.graph', compact('average', 'labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+    //     if ($interval == 'hour') {
+    //         $totalDays = 1;
+    //         $total = array_sum($data);
+    //     } else {
+    //         $totalDays = count($labels);
+    //         $total = array_sum($data);
+    //     }
+    //     $average = $totalDays > 0 ? $total / $totalDays : 0.00;
+    //     $average = round($average, 2);
 
-        return response()->json(['success' => true, 'html' => $html], 200);
-    }
+    //     $html = view('statistics.graph', compact('average', 'labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+
+    //     return response()->json(['success' => true, 'html' => $html], 200);
+    // }
 
     public function popularPostersGraph(Request $request, $range)
     {
@@ -544,104 +760,13 @@ class StatisticsController extends Controller
         $yAxisText =  trans("cruds.most_popular_poster.fields.count");
         $labelText =  trans("cruds.most_popular_poster.fields.graph");
 
-        $totalDays = count($labels);
-        $total = array_sum($data);
-        $average = $totalDays > 0 ? $total / $totalDays : 0.00;
-        $average = round($average, 2);
-
-        $html = view('statistics.graph', compact('average', 'labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
-
-        return response()->json(['success' => true, 'html' => $html], 200);
-    }
-
-    public function mobileAccessGraph(Request $request, $range)
-    {
-        $startDate = $request->has('start_date') ? Carbon::parse($request->start_date) : Carbon::now();
-        $endDate = $request->has('end_date') ? Carbon::parse($request->end_date) : Carbon::now();
-        $labels = [];
-        $data = [];
-        $datasets = [];
-        if (!$request->has(['start_date', 'end_date', 'range'])) {
-            if (!in_array($range, ['day', 'week', 'month', 'custom range'])) {
-                return response()->json(['error' => 'Invalid range'], 400);
-            }
-            if ($range == 'day') {
-                $startDate->startOfDay();
-                $endDate->endOfDay();
-                $interval = 'hour';
-            }
-            if ($range == 'week') {
-                $startDate = Carbon::today()->subDays(6)->startOfDay();
-                $endDate = Carbon::today()->endOfDay();
-                $interval = 'day';
-            }
-            if ($range == 'month') {
-                $startDate->startOfMonth()->startOfDay();
-                $endDate->endOfDay();
-                $interval = 'day';
-            }
-
-            $mobilesAccess = UniqueVisitor::whereBetween('created_at', [$startDate, $endDate])->where('device_name', 0)->orderBy('created_at')->get();
-
-
-            $accessCounts = $mobilesAccess->groupBy(function ($access) use ($interval) {
-                if ($interval === 'hour') {
-                    return $access->created_at->format('h a');
-                } else {
-                    return $access->created_at->format('Y-m-d');
-                }
-            });
-
-            $startDateCopy = $startDate->copy();
-
-            while ($startDateCopy->lte($endDate)) {
-                if ($interval === 'hour') {
-                    $date = $startDateCopy->format('h a');
-                } else {
-                    $date = $startDateCopy->format('Y-m-d');
-                }
-
-                $count = isset($accessCounts[$date]) ? $accessCounts[$date]->count() : 0;
-
-                $labels[] = $date;
-                $data[] = $count;
-
-                $datasets[0] = [
-                    'label' => trans("cruds.mobile_access.fields.count"),
-                    'data' => $data,
-                    'backgroundColor' => '#ff6359',
-                    'borderColor' => '#ff6359',
-                    'fill' => false,
-                    'borderWidth' => 0.5,
-                    'tension' => 0.5,
-                    'pointBorderColor' => "#fd463b",
-                    'pointBackgroundColor' => "#fd463b",
-                    'pointBorderWidth' => 6,
-                    'pointHoverRadius' => 6,
-                    'pointHoverBackgroundColor' => "#000000",
-                    'pointHoverBorderColor' => "#000000",
-                    'pointHoverBorderWidth' => 3,
-                    'pointRadius' => 1,
-                    'borderWidth' => 3,
-                    'pointHitRadius' => 30
-                ];
-
-                $startDateCopy->add(1, $interval);
-            }
+        if ($interval == 'hour') {
+            $totalDays = 1;
+            $total = array_sum($data);
         } else {
-            $range = $request->range;
-            if ($range == 'custom range') {
-                $monthlyDateRanges = $this->getMonthlyDateRanges($startDate, $endDate);
-                list($labels, $data) = $this->generateMobileAccessGraph($monthlyDateRanges, $startDate, $endDate, 'month');
-            }
+            $totalDays = count($labels);
+            $total = array_sum($data);
         }
-
-        $pluginText = trans("cruds.mobile_access.fields.num_graph");
-        $xAxisText =  '';
-        $yAxisText =  trans("cruds.mobile_access.fields.count");
-        $labelText =  trans("cruds.mobile_access.fields.graph");
-        $totalDays = count($labels);
-        $total = array_sum($data);
         $average = $totalDays > 0 ? $total / $totalDays : 0.00;
         $average = round($average, 2);
 
@@ -649,9 +774,112 @@ class StatisticsController extends Controller
 
         return response()->json(['success' => true, 'html' => $html], 200);
     }
+
+    // public function mobileAccessGraph(Request $request, $range)
+    // {
+    //     $startDate = $request->has('start_date') ? Carbon::parse($request->start_date) : Carbon::now();
+    //     $endDate = $request->has('end_date') ? Carbon::parse($request->end_date) : Carbon::now();
+    //     $labels = [];
+    //     $data = [];
+    //     $datasets = [];
+    //     if (!$request->has(['start_date', 'end_date', 'range'])) {
+    //         if (!in_array($range, ['day', 'week', 'month', 'custom range'])) {
+    //             return response()->json(['error' => 'Invalid range'], 400);
+    //         }
+    //         if ($range == 'day') {
+    //             $startDate->startOfDay();
+    //             $endDate->endOfDay();
+    //             $interval = 'hour';
+    //         }
+    //         if ($range == 'week') {
+    //             $startDate = Carbon::today()->subDays(6)->startOfDay();
+    //             $endDate = Carbon::today()->endOfDay();
+    //             $interval = 'day';
+    //         }
+    //         if ($range == 'month') {
+    //             $startDate->startOfMonth()->startOfDay();
+    //             $endDate->endOfDay();
+    //             $interval = 'day';
+    //         }
+
+    //         $mobilesAccess = UniqueVisitor::whereBetween('created_at', [$startDate, $endDate])->where('device_name', 0)->orderBy('created_at')->get();
+
+
+    //         $accessCounts = $mobilesAccess->groupBy(function ($access) use ($interval) {
+    //             if ($interval === 'hour') {
+    //                 return $access->created_at->format('h a');
+    //             } else {
+    //                 return $access->created_at->format('Y-m-d');
+    //             }
+    //         });
+
+    //         $startDateCopy = $startDate->copy();
+
+    //         while ($startDateCopy->lte($endDate)) {
+    //             if ($interval === 'hour') {
+    //                 $date = $startDateCopy->format('h a');
+    //             } else {
+    //                 $date = $startDateCopy->format('Y-m-d');
+    //             }
+
+    //             $count = isset($accessCounts[$date]) ? $accessCounts[$date]->count() : 0;
+
+    //             $labels[] = $date;
+    //             $data[] = $count;
+
+    //             $datasets[0] = [
+    //                 'label' => trans("cruds.mobile_access.fields.count"),
+    //                 'data' => $data,
+    //                 'backgroundColor' => '#ff6359',
+    //                 'borderColor' => '#ff6359',
+    //                 'fill' => false,
+    //                 'borderWidth' => 0.5,
+    //                 'tension' => 0.5,
+    //                 'pointBorderColor' => "#fd463b",
+    //                 'pointBackgroundColor' => "#fd463b",
+    //                 'pointBorderWidth' => 6,
+    //                 'pointHoverRadius' => 6,
+    //                 'pointHoverBackgroundColor' => "#000000",
+    //                 'pointHoverBorderColor' => "#000000",
+    //                 'pointHoverBorderWidth' => 3,
+    //                 'pointRadius' => 1,
+    //                 'borderWidth' => 3,
+    //                 'pointHitRadius' => 30
+    //             ];
+
+    //             $startDateCopy->add(1, $interval);
+    //         }
+    //     } else {
+    //         $range = $request->range;
+    //         if ($range == 'custom range') {
+    //             $monthlyDateRanges = $this->getMonthlyDateRanges($startDate, $endDate);
+    //             list($labels, $data) = $this->generateMobileAccessGraph($monthlyDateRanges, $startDate, $endDate, 'month');
+    //         }
+    //     }
+
+    //     $pluginText = trans("cruds.mobile_access.fields.num_graph");
+    //     $xAxisText =  '';
+    //     $yAxisText =  trans("cruds.mobile_access.fields.count");
+    //     $labelText =  trans("cruds.mobile_access.fields.graph");
+
+    //     if ($interval == 'hour') {
+    //         $totalDays = 1;
+    //         $total = array_sum($data);
+    //     } else {
+    //         $totalDays = count($labels);
+    //         $total = array_sum($data);
+    //     }
+    //     $average = $totalDays > 0 ? $total / $totalDays : 0.00;
+    //     $average = round($average, 2);
+
+    //     $html = view('statistics.graph', compact('average', 'labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+
+    //     return response()->json(['success' => true, 'html' => $html], 200);
+    // }
 
     private function getMonthlyDateRanges($startDate, $endDate)
     {
+        // dd($startDate, $endDate);
         $monthlyDateRanges = [];
         $currentDate = $startDate->copy()->startOfMonth();
         while ($currentDate->lte($endDate)) {
@@ -672,18 +900,19 @@ class StatisticsController extends Controller
 
             $currentDate->addMonth()->startOfMonth();
         }
+        // dd($monthlyDateRanges);
         return $monthlyDateRanges;
     }
 
-    private function calculateAverage($labels, $data)
-    {
-        $totalDays = count($labels);
-        $total = array_sum($data);
-        $average = $totalDays > 0 ? $total / $totalDays : 0;
-        // $labels[] = 'Average';
-        $dataaverage[] = $average;
-        return ['labels' => $labels, 'data' => $data];
-    }
+    // private function calculateAverage($labels, $data)
+    // {
+    //     $totalDays = count($labels);
+    //     $total = array_sum($data);
+    //     $average = $totalDays > 0 ? $total / $totalDays : 0;
+    //     // $labels[] = 'Average';
+    //     $dataaverage[] = $average;
+    //     return ['labels' => $labels, 'data' => $data];
+    // }
 
     //  Members Registrations 
     private function generateMembersRegistrationGraph($dateRanges)
