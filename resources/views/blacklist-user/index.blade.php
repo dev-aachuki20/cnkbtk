@@ -133,7 +133,7 @@
 
 <!-- Modal Start Blacklist user store-->
 <div class="modal fade" id="blackListModal" tabindex="-1" aria-labelledby="blackListModalLabel" aria-hidden="true" data-bs-backdrop="static">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="blackListModalLabel">{{trans('pages.blacklist_user.add')}}</h5>
@@ -187,7 +187,7 @@
 
 <!-- Modal Start Blacklist user edit-->
 <div class="modal fade" id="blackListEditModal" tabindex="-1" aria-labelledby="blackListEditModalLabel" aria-hidden="true" data-bs-backdrop="static">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="blackListEditModalLabel">{{trans('pages.blacklist_user.edit')}}</h5>

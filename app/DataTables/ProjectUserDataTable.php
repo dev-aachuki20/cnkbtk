@@ -65,7 +65,7 @@ class ProjectUserDataTable extends DataTable
             // })
 
             ->addColumn('action', function ($record) {
-                $action  = '<div class="d-flex">';
+                $action  = '<div class="grid-icon">';
 
                 if ($record->status == 1) {
                     $action .= '<a class="btn btn-primary btn-sm" title="' . trans("cruds.global.message") . '" href="' . route('message.index', ['projectId' => $record->id]) . '">

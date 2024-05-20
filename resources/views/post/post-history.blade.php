@@ -79,8 +79,8 @@
                 <ul>
                   @forelse($posters as $poster)
                   <li>
-                    <div class="post-cat-list">
-                      <a  class="post-cat-content d-flex">
+                    <div class="post-cat-list mb-3">
+                      <a  class="post-cat-content d-lg-flex">
                         <div class="post-cat-title">
                           <div class="post-cat-head d-flex align-item-center">
                             {{-- <div class="avatar-icon">

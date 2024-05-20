@@ -569,7 +569,7 @@ body.login-page.deepskyblue {
 }
 
 .nav-inner {
-  margin: 20px;
+  margin: 10px;
 
   background-color: #ffffff !important;
 
@@ -583,6 +583,10 @@ body.login-page.deepskyblue {
 .deepskyblue .main-header {
   border: none;
 }
+.main-header .navbar-nav .web_location .nav-link{
+  line-height: 1.2;
+}
+
 
 .v-row.v-row--no-gutters {
   display: flex;
@@ -710,9 +714,8 @@ footer.main-footer strong {
   border-color: var(--color-orange) !important;
 }
 
-div.dataTables_wrapper div.dataTables_info {
-  padding-top: 0 !important;
-
+.dataTables_wrapper  .dataTables_info {
+  padding-top: 6px !important;
   float: left;
 }
 
@@ -793,6 +796,8 @@ table.table-bordered.dataTable tbody th,
 table.table-bordered.dataTable tbody td {
   font-size: 16px;
   padding: 0 16px;
+  height: 45px;
+  white-space: nowrap;
 }
 
 .custom-switch.custom-switch-off-danger
@@ -1629,6 +1634,19 @@ span.badge.badge-info {
     font-size: 14px;
     line-height: 26px;
 }
+.dataTables_wrapper  .dataTables_info, .dataTables_wrapper .dataTables_paginate ul.pagination {
+  min-width: 100%;
+  text-align: center;
+}
+.dataTables_wrapper .dataTables_paginate ul.pagination {
+  padding-top: 10px;
+}
+}
+
+@media screen and (max-width: 706px) {
+  /* table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td {
+    padding: 16px;
+} */
 }
 
 
@@ -1654,5 +1672,45 @@ span.badge.badge-info {
 .chatboxGroup .close-btn, .chatboxGroup .usersetting .editbtn {
   height: 30px;
   width: 30px;
+}
+}
+@media screen and (max-width: 450px) {
+  .main-header .nav-inner {
+    align-items: start;
+    position: relative;
+  }
+  .main-header .nav-inner::before {
+    content: '';
+    width: 100%;
+    height: 0.1px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    background-color: #eaeaea;
+  }
+  .main-header .nav-inner ul:last-child, .main-header .nav-inner ul:last-child .web_location {
+    width: 100%;
+    text-align: end;
+  }
+  .main-header .nav-inner ul:last-child{
+    flex-wrap: wrap;
+    margin: 0px;
+    justify-content: space-between;
+  }
+  .main-header .nav-inner ul:last-child .web_location{
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+  }
+  .main-header .nav-inner ul:last-child .web_location a {
+    display: inline-flex;
+  }
+
+  .main-header .nav-inner ul:last-child .nav-item:not(:first-child) .nav-link {
+    border: 1px solid #eaeaea;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
 }
 }

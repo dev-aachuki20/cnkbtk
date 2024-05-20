@@ -21,7 +21,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-lg-6 col-12">
                     <div class="mb-4 form-group">
                       <label for="">{{trans("pages.post.form.fields.sub_section")}}   <span class="text-danger">*</span></label>
                       <select class="form-select" name="sub_section" id="sub_section">
@@ -49,7 +49,7 @@
                     </div>
                 </div> -->
 
-                <div class="col-md-6 ">
+                <div class="col-lg-6 col-12">
                   <div class="form-group mb-4">
                     <label for="file">{{trans("pages.post.form.fields.poster_cover_image")}} <small>{{trans("pages.post.form.fields.allowed_file_type")}}</small></label>
                     <div class="input-group file-input-group" id="cover_image"  data-controller="file-input">

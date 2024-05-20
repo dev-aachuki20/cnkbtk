@@ -29,7 +29,7 @@
         <div class="container">
             <div class="row">
                 @include("user.sidebar")
-                <div class="col-md-9">
+                <div class="col-lg-9">
                     <div class="profile-content">
                         <div class="tab-content" id="myTabContent">
                             @include("user.tabs.profile_update")

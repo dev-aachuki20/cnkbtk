@@ -58,7 +58,7 @@
 
                 @if($ifRoleUser)
 
-                <div class="col-xxl-3 col-lg-4 col-md-5 h-100 animate__animated animate__fadeInUp sidebarclass">
+                <div class="col-xxl-3 col-md-4 h-100 animate__animated animate__fadeInUp sidebarclass">
 
                     <div class="sidebar h-100 p-3 rounded-4">
 
@@ -317,8 +317,9 @@
                                         <div class="row gx-2 align-items-center">
 
                                             <div class="col">
-
-                                                <textarea name="content" id="messageInput" rows="1" class="form-control shadow-none" placeholder="Type your message..." style="height: 48px;" required></textarea>
+                                                <div class="typemessage">
+                                                    <textarea name="content" id="messageInput" rows="1" class="form-control shadow-none" placeholder="Type your message..." style="height: 48px;" required></textarea>
+                                                </div>
 
                                             </div>
 
@@ -392,7 +393,7 @@
 
                 @if(!$ifRoleCreator)
 
-                <div class="{{$ifRoleUser ? 'col-xxl-9 col-lg-8 col-md-7 col-md-12' : 'col-xxl-12 col-lg-12' }} chat-panel h-100 chatscreen">
+                <div class="{{$ifRoleUser ? 'col-xxl-9 col-md-8' : 'col-xxl-12 col-lg-12' }} chat-panel h-100 chatscreen">
 
                     <div class="card chatcard h-100">
 

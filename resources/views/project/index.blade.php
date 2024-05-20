@@ -76,7 +76,7 @@
                     <div class="card-body mt-4">
                         <div class="table-responsive normal_width_table">
                             <div class="clearfix"></div>
-                            {{$dataTable->table(['class' => 'table table-bordered table-striped', 'style' => 'width:100%;'])}}
+                            {{$dataTable->table(['class' => 'table table-bordered table-striped align-middle', 'style' => 'width:100%;'])}}
                         </div>
                     </div>
 

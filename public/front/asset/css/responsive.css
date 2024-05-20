@@ -143,6 +143,10 @@
   .login-search {
     align-items: flex-start;
     flex-direction: column;
+    margin: 0px;
+  }
+  .login-search .searchbox-wrapper-listing{
+    margin: 0px;
   }
 
   header nav.navbar{
@@ -243,16 +247,16 @@ button.navbar-toggler span.navbar-toggler-icon {
 .chatboxGroup .message .message-content {
   padding: 10px;
   line-height: 18px;
-  border-radius: 10px 10px 10px 0px;
+  border-radius: 0px 8px 8px 8px;
 }
 .chatboxGroup .message.outgoing .message-content{
-  border-radius: 10px 10px 0px 10px;
+  border-radius: 8px 8px 0px 8px;
 }
 .chatboxGroup .message.multipal-message.incoming .message-content:not(:last-child){
-  border-radius: 0px 10px 10px 0px;
+  border-radius: 0px 8px 8px 0px;
 }
 .chatboxGroup .message.multipal-message.outgoing .message-content:not(:first-child){
-  border-radius: 10px 0px 0px 10px;
+  border-radius: 8px 0px 0px 8px;
 }
 .chatboxGroup .message {
   max-width: 70%;
@@ -450,7 +454,7 @@ section.chart-wrapper{
 .project_card_group .project_details_card .description_wapper .content {
   padding-top: 6px;
 }
-.current-day.chart-innerbox {
+.current-day.chart-innerbox, .card-main-wrap  {
   margin-bottom: 20px;
 }
 .avtar-title-text {
@@ -462,9 +466,36 @@ section.chart-wrapper{
 .follow-btn {
   flex: 0 0 auto;
 }
-.username-text .icon svg, .userid-text .icon svg {
+/* .username-text .icon svg, .userid-text .icon svg {
   width: 30px;
   height: 52px;
+} */
+.card-list .title-box-mid h3 {
+  font-size: 26px;
+}
+
+.inner-popular .tag-listing ul > li:not(:last-child) {
+  margin-bottom: 2px;
+}
+.inner-popular .tag-listing ul li button, .inner-popular .tag-listing ul li a{
+  font-size: 16px;
+  padding: 5px 12px;
+}
+
+.inner-popular .tag-listing ul{
+  flex-direction: inherit;
+  gap:8px;
+}
+.inner-popular .title h4,.profile-content .cp-title h2{
+  font-size: 20px;
+}
+.post-count-list {
+  padding: 0.5rem 2rem;
+  width: fit-content;
+  margin: 0 auto;
+}
+.popular-tag {
+  margin-bottom: 1rem;
 }
 }
 
@@ -508,13 +539,14 @@ section.chart-wrapper{
     margin-bottom: 1.5rem;
   }
 
-  .inner-popular .tag-listing ul > li:not(:last-child) {
-    margin-bottom: 2px;
-}
-
-  .categories-details-listing ul li{
-    padding: 1rem 0;
+  .inner-popular .tag-listing ul li button, .inner-popular .tag-listing ul li a{
+    font-size: 13px;
+    padding: 5px 7px;
   }
+
+  /* .categories-details-listing ul li{
+    padding: 1rem 0;
+  } */
   .login-content-right {
       width: 100%;
       padding-left: 0;
@@ -557,10 +589,7 @@ section.chart-wrapper{
     padding: 1rem 1rem;
   }
 
-  .inner-popular .tag-listing ul li button, .inner-popular .tag-listing ul li a{
-    font-size: 13px;
-    padding: 5px 7px;
-  }
+
 
   .date-time-box span{
     border-right: none;
@@ -632,7 +661,7 @@ section.chart-wrapper{
     border-collapse: separate;
     border-spacing: 0;
     overflow-x: auto;
-    display: block;
+    /* display: block; */
     white-space: nowrap;
   }
 
@@ -664,9 +693,6 @@ section.chart-wrapper{
     font-size: 15px;
   }
 
-  .popular-tag {
-    margin-bottom: 1rem;
-  }
 
   section.privacy-hero .prc-title h2 {
     font-size: 24px;
@@ -811,16 +837,8 @@ section.chart-wrapper{
     padding: 2rem 0;
   }
 
-  .inner-popular .tag-listing ul{
-    flex-direction: inherit;
-    gap:8px;
-  }
 
-  .post-count-list {
-    padding: 0.5rem 2rem;
-    width: fit-content;
-    margin: 0 auto;
-}
+
 
 .back-to-top .back-to-top-box {
   width: 40px;
@@ -856,9 +874,7 @@ li.breadcrumb-item{
   font-size: 14px;
 }
 
-.inner-popular .title h4,.profile-content .cp-title h2{
-  font-size: 20px;
-}
+
 .category-table-list{
   display: table !important; 
 }
@@ -934,10 +950,10 @@ section.edit-post-wrapper .col-md-6 {
 .login-content-right{
   display: none;
 }
-.singel-top-head {
+/* .singel-top-head {
   display: inline-block;
   flex-wrap: wrap;
-}
+} */
 }
 
 @media(max-width:991px) and (min-width:767px){
@@ -990,6 +1006,20 @@ section.edit-post-wrapper .col-md-6 {
   right: 10%;
 }
 
+.card-list .title-box-mid h3 {
+  font-size: 24px;
+}
+.dataTables_wrapper .dataTables_length label {
+  margin-bottom: 31px;
+}
+.dataTables_wrapper .dataTables_filter {
+  top: 5px;
+}
+
+table.table-bordered.dataTable {
+ margin-top: 20px;
+}
+
 }
 
 
@@ -1031,6 +1061,7 @@ section.edit-post-wrapper .col-md-6 {
 .chatboxGroup .messageBoxBg {
   padding: 15px;
 }
+
 
 }
 
@@ -1177,9 +1208,6 @@ section.edit-post-wrapper .col-md-6 {
       font-size: 16px;
   }
 
-  .card-list .title-box-mid h3{
-    font-size: 24px;
-  }
 
   .card-main-wrap .card-body .card-title{
     font-size: 18px;
@@ -1241,9 +1269,9 @@ section.edit-post-wrapper .col-md-6 {
   .category_statistics_table{
     display: inline-table !important;
   }
-  .hero-section {
-    padding-bottom: 4rem !important;
-  }
+  /* .hero-section {
+    padding-bottom: 1rem !important;
+  } */
 }
 
 @media(max-width:480px){
@@ -1255,18 +1283,36 @@ section.edit-post-wrapper .col-md-6 {
   .category_statistics_table{
     display: block !important;
   }
-  .singel-top-head {
+
+  /* .singel-top-head {
     display: inline-block;
     flex-wrap: wrap;
+  }
+  .description-text p {
+      margin-bottom: 0;
+  }
+  .fa-angle-down:before {
+    content: "\f107";
+    position: absolute;
+    top: 15px;
+    right: 0;
+  } */
+
+  .dataTables_wrapper .dataTables_length label {
+    margin-bottom: 20px;
 }
-.description-text p {
-    margin-bottom: 0;
+
+  .dataTables_wrapper .dataTables_filter {
+    min-width: 100%;
+    text-align: start !important;
+    margin-bottom: 30px;
+  }
+  .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_paginate .pagination, .dataTables_wrapper .dataTables_paginate {
+    min-width: 100%;
+    text-align: center;
 }
-.fa-angle-down:before {
-  content: "\f107";
-  position: absolute;
-  top: 15px;
-  right: 0;
+.dataTables_wrapper .dataTables_paginate .pagination {
+  padding: 1rem 0px;
 }
 }
 
@@ -1305,7 +1351,8 @@ section.edit-post-wrapper .col-md-6 {
   .project_details_card .status-item>div>div:last-child {
     width: 60%;
   }
-  div#tagtype-table_paginate {
+
+  /* div#tagtype-table_paginate {
     display: inline-block;
-  }
+  } */
 }

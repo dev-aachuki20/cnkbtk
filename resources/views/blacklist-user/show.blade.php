@@ -27,7 +27,7 @@
 <section class="single-wrapper ">
   <div class="container">
     <div class="row g-3">
-      <div class="col-lg-6 col-md-10 col-12">
+      <div class="col-lg-6 col-12">
         <div class="right-single-box blacklist_box_user">
           <div class="row gx-3">
             <div class="col-auto">
