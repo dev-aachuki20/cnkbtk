@@ -29,7 +29,7 @@ class StatisticsController extends Controller
             abort(403, 'Unauthorized');
         }
     }
-    
+
     public function membersRegistrationGraph(Request $request, $range)
     {
         $startDate = $request->has('start_date') ? Carbon::parse($request->start_date) : Carbon::now();
@@ -66,6 +66,19 @@ class StatisticsController extends Controller
                     $interval = 'day';
                 }
             }
+
+            // $range = $request->input('range');
+            // if ($range == 'custom range') {
+            //     $startDate->startOfDay();
+            //     $endDate->endOfDay();
+            //     if ($startDate->diffInDays($endDate) == 0) {
+            //         $interval = 'hour';
+            //     } else {
+            //         $interval = 'day';
+            //     }
+            // } else {
+            //     return response()->json(['error' => 'Invalid range'], 400);
+            // }
         }
 
         $users = User::whereBetween('created_at', [$startDate, $endDate])->orderBy('created_at')->get();
@@ -448,21 +461,6 @@ class StatisticsController extends Controller
                     $startDateCopy->add(1, $interval);
                 }
 
-                // while ($startDateCopy->lte($endDate)) {
-
-                //     if ($interval === 'hour') {
-                //         $date = $startDateCopy->format('h a');
-                //     } else {
-                //         $date = $startDateCopy->format('Y-m-d');
-                //     }
-
-                //     $count = isset($tagTypePostCounts[$date]) ? $tagTypePostCounts[$date]->count() : 0;
-                //     $dataCount[] = $count;
-                //     $labels[] = $date;
-                //     $data[] = $count;
-                //     $startDateCopy->add(1, $interval);
-                // }
-
                 $getName = TagType::where('id', $tagType)->first();
                 $tagTypeName = app()->getLocale() == 'en' ? $getName->name_en : $getName->name_ch;
 
@@ -491,6 +489,159 @@ class StatisticsController extends Controller
         $html = view('statistics.graph', compact('average', 'labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
         return response()->json(['success' => true, 'html' => $html], 200);
     }
+
+    // public function popularPostersGraph(Request $request, $range)
+    // {
+    //     $startDate = $request->has('start_date') ? Carbon::parse($request->start_date) : Carbon::now();
+    //     $endDate = $request->has('end_date') ? Carbon::parse($request->end_date) : Carbon::now();
+    //     $tagTypes = $request->has('tagTypes') ? $request->input('tagTypes') : null;
+    //     $data = [];
+    //     $labels = [];
+    //     $datasets = [];
+    //     $colors = ['#00ff00', '#0000ff', '#fc0b03', '#605f6b', '#1e1b42', '#421b3d', '#ff0000'];
+
+    //     if (!$request->has(['start_date', 'end_date', 'range'])) {
+    //         if (!in_array($range, ['day', 'week', 'month', 'custom range'])) {
+    //             return response()->json(['error' => 'Invalid range'], 400);
+    //         }
+    //         if ($range == 'day') {
+    //             $startDate->startOfDay();
+    //             $endDate->endOfDay();
+    //             $interval = 'hour';
+    //         }
+    //         if ($range == 'week') {
+    //             $startDate = Carbon::today()->subDays(6)->startOfDay();
+    //             $endDate = Carbon::today()->endOfDay();
+    //             $interval = 'day';
+    //         }
+    //         if ($range == 'month') {
+    //             $startDate->startOfMonth()->startOfDay();
+    //             $endDate->endOfDay();
+    //             $interval = 'day';
+    //         }
+    //     } else {
+    //         $range = $request->input('range');
+    //         if ($startDate->diffInDays($endDate) == 0) {
+    //             $interval = 'hour';
+    //         } else {
+    //             $interval = 'day';
+    //         }
+    //     }
+
+    //     $popularPosters = PosterReadCount::whereBetween('created_at', [$startDate, $endDate])->orderBy('created_at')->get();
+
+    //     $popularPostersCounts = $popularPosters->groupBy(function ($popular) use ($interval) {
+    //         if ($interval === 'hour') {
+    //             return $popular->created_at->format('h a');
+    //         } else {
+    //             return $popular->created_at->format('Y-m-d');
+    //         }
+    //     });
+
+    //     $startDateCopy = $startDate->copy();
+
+    //     while ($startDateCopy->lte($endDate)) {
+    //         if ($interval === 'hour') {
+    //             $date = $startDateCopy->format('h a');
+    //         } else {
+    //             $date = $startDateCopy->format('Y-m-d');
+    //         }
+
+    //         $count = isset($popularPostersCounts[$date]) ? $popularPostersCounts[$date]->count() : 0;
+
+    //         $labels[] = $date;
+    //         $data[] = $count;
+    //         $startDateCopy->add(1, $interval);
+    //     }
+
+    //     // avg
+    //     if ($interval == 'hour') {
+    //         $totalDays = 1;
+    //         $total = array_sum($data);
+    //     } else {
+    //         $totalDays = count($labels);
+    //         $total = array_sum($data);
+    //     }
+    //     $average = $totalDays > 0 ? $total / $totalDays : 0.00;
+    //     $average = round($average, 2);
+
+
+    //     $pluginText = trans("cruds.most_popular_poster.fields.num_graph");
+    //     $xAxisText =  '';
+    //     $yAxisText =  trans("cruds.most_popular_poster.fields.count");
+    //     $labelText =  trans("cruds.most_popular_poster.fields.graph");
+
+    //     $datasets[0] = [
+    //         'label' => trans("cruds.most_popular_poster.fields.count"),
+    //         'data' => $data,
+    //         'backgroundColor' => '#ff6359',
+    //         'borderColor' => '#ff6359',
+    //         'fill' => false,
+    //         'borderWidth' => 0.5,
+    //         'tension' => 0.5,
+    //         'pointBorderColor' => "#fd463b",
+    //         'pointBackgroundColor' => "#fd463b",
+    //         'pointBorderWidth' => 6,
+    //         'pointHoverRadius' => 6,
+    //         'pointHoverBackgroundColor' => "#000000",
+    //         'pointHoverBorderColor' => "#000000",
+    //         'pointHoverBorderWidth' => 3,
+    //         'pointRadius' => 1,
+    //         'borderWidth' => 3,
+    //         'pointHitRadius' => 30
+    //     ];
+
+
+
+    //     // if ($tagTypes != null) {
+    //     //     $colorIndex = 0;
+    //     //     foreach ($tagTypes as $key => $tagType) {
+    //     //         $dataCount = [];
+    //     //         $tagIds = Tag::where('tag_type', $tagType)->pluck('id')->toArray();
+    //     //         $postersIds = Poster::whereIn('tags', $tagIds)->pluck('id')->toArray();
+    //     //         $tagTypeCount = PosterReadCount::whereIn('poster_id', $postersIds)->whereBetween('created_at', [$startDate, $endDate])->get();
+
+    //     //         foreach ($tagTypeCount as $tagCount) {
+    //     //             $dataCount[] = $tagTypeCount->count();
+    //     //         }
+
+
+    //     //         $getName = TagType::where('id', $tagType)->first();
+    //     //         $tagTypeName = app()->getLocale() == 'en' ? $getName->name_en : $getName->name_ch;
+
+    //     //         // Create a dataset for the current tag type
+    //     //         $datasets[$key + 1] = [
+    //     //             'label' => $tagTypeName,
+    //     //             'data' => $dataCount,
+    //     //             'backgroundColor' => $colors[$colorIndex],
+    //     //             'borderColor' => $colors[$colorIndex],
+    //     //             'fill' => false,
+    //     //             'borderWidth' => 1,
+    //     //             'tension' => 0.5,
+    //     //             'pointBorderColor' => "#fd463b",
+    //     //             'pointBackgroundColor' => "#fd463b",
+    //     //             'pointBorderWidth' => 6,
+    //     //             'pointHoverRadius' => 6,
+    //     //             'pointHoverBackgroundColor' => "#000000",
+    //     //             'pointHoverBorderColor' => "#000000",
+    //     //             'pointHoverBorderWidth' => 3,
+    //     //             'pointRadius' => 1,
+    //     //             'borderWidth' => 3,
+    //     //             'pointHitRadius' => 30
+    //     //         ];
+    //     //         $colorIndex++;
+    //     //     }
+    //     // }
+
+
+    //     $html = view('statistics.graph', compact('average', 'labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
+    //     return response()->json(['success' => true, 'html' => $html], 200);
+    // }
+
+
+
+
+
 
     public function popularPostersGraph(Request $request, $range)
     {
