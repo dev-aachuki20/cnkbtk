@@ -112,6 +112,7 @@ $siteSettingData = getSiteSetting();
       $('.aclink').removeClass('active');
       $(this).addClass('active');
       $('#tagtype').val(null).trigger('change.select2');
+      // $('#tagtype').val();
       var activeMenu = $(this).attr('id');
       toggleTagTypeDropdown(activeMenu);
       var url = $(this).data('id');
@@ -180,8 +181,10 @@ $siteSettingData = getSiteSetting();
 
     $(document).on('change', '#tagtype', function() {
       var tagTypes = $(this).val();
-      // label = picker.chosenLabel;
-      label = "week";
+      var startDate = moment($('#dateRangePicker').data('daterangepicker').startDate).format('YYYY-MM-DD');
+      var endDate = moment($('#dateRangePicker').data('daterangepicker').endDate).format('YYYY-MM-DD');
+      var label = $('.filter-tabs.active').data('route').split('/').pop() || "week";
+
       if (tagTypes) {
         var activeRoute = $('.filter-tabs.active').data('route');
         var url = activeRoute + '/' + label;
@@ -190,7 +193,9 @@ $siteSettingData = getSiteSetting();
           type: 'GET',
           data: {
             range: label,
-            tag_type: tagTypes,
+            tagTypes: tagTypes,
+            start_date: startDate,
+            end_date: endDate,
           },
           success: function(response) {
             $(".profile-content").html(response.html);
@@ -205,13 +210,13 @@ $siteSettingData = getSiteSetting();
     function toggleTagTypeDropdown(activeMenu) {
       if (activeMenu === 'number-posters') {
         $('.tagtype-container').css('display', 'block');
-        // $('.purchase-container').css('display', 'none');
+        $('.purchase-container').css('display', 'none');
       } else if (activeMenu === 'popular-posters') {
         $('.tagtype-container').css('display', 'block');
-        // $('.purchase-container').css('display', 'block');
+        $('.purchase-container').css('display', 'block');
       } else {
         $('.tagtype-container').css('display', 'none');
-        // $('.purchase-container').css('display', 'none');
+        $('.purchase-container').css('display', 'none');
       }
     }
 
@@ -221,7 +226,10 @@ $siteSettingData = getSiteSetting();
       label = label.toLowerCase();
       var startDate = start.format('YYYY-MM-DD');
       var endDate = end.format('YYYY-MM-DD');
-      if (label === 'month' || label === 'week' || label === 'day') {
+      var tagTypes = $('#tagtype').val();
+      console.log(tagTypes);
+
+      // if (label === 'month' || label === 'week' || label === 'day') {
         var activeRoute = $('.filter-tabs.active').data('route');
         var url = activeRoute + '/' + label;
         $.ajax({
@@ -229,6 +237,7 @@ $siteSettingData = getSiteSetting();
           type: 'GET',
           data: {
             range: label,
+            tagTypes: tagTypes,
           },
           success: function(response) {
             $(".profile-content").html(response.html);
@@ -237,27 +246,29 @@ $siteSettingData = getSiteSetting();
             console.error(error);
           }
         });
-      } else {
-        var startDate = start.format('YYYY-MM-DD');
-        var endDate = end.format('YYYY-MM-DD');
-        var activeUrl = $('.filter-tabs.active').data('id');
-        var url = activeRoute + '/' + label;
-        $.ajax({
-          url: activeUrl,
-          type: 'GET',
-          data: {
-            start_date: startDate,
-            end_date: endDate,
-            range: label,
-          },
-          success: function(response) {
-            $(".profile-content").html(response.html);
-          },
-          error: function(xhr, status, error) {
-            console.error(error);
-          }
-        });
-      }
+      // } else {
+      //   var startDate = start.format('YYYY-MM-DD');
+      //   var endDate = end.format('YYYY-MM-DD');
+      //   var activeUrl = $('.filter-tabs.active').data('id');
+      //   var url = activeRoute + '/' + label;
+      //   $.ajax({
+      //     url: activeUrl,
+      //     type: 'GET',
+      //     data: {
+      //       start_date: startDate,
+      //       end_date: endDate,
+      //       range: label,
+      //     },
+      //     success: function(response) {
+      //       $(".profile-content").html(response.html);
+      //     },
+      //     error: function(xhr, status, error) {
+      //       console.error(error);
+      //     }
+      //   });
+      // }
+
+      
       // console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
     }
 

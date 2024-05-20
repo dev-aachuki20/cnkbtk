@@ -216,9 +216,11 @@
                 <a class="nav-link {{Request::is('/') ? 'active' : ''}}" aria-current="page" href="{{route('home')}}">{{trans("global.forum")}}</a>
               </li>
 
+              @if(Auth::check() && Auth::user()->id != config('constant.role.user'))
               <li class="nav-item">
                 <a class="nav-link site-statistics {{Request::is('site-statistics') ? 'active' : ''}}" href="{{route('site-statistics')}}">{{trans("global.site_statistics")}}</a>
               </li>
+              @endif
 
 
               <li class="nav-item">
