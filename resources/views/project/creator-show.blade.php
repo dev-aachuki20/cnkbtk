@@ -50,12 +50,12 @@
                         <ul>
                             <li>
                                 <div class="main-title">
-                                    <h6> <span>{{trans("cruds.create_project.fields.user_name")}} :</span> {{ $project->user->user_name  ?? ''}}</h6>
+                                    <h6> <span>{{trans("cruds.create_project.fields.title")}} :</span> {{ ucfirst($project->title)  ?? ''}}</h6>
                                 </div>
                             </li>
                             <li>
                                 <div class="main-title">
-                                    <h6> <span>{{trans("cruds.create_project.fields.title")}} :</span> {{ ucfirst($project->title)  ?? ''}}</h6>
+                                    <h6> <span>{{trans("cruds.create_project.fields.user_name")}} :</span> {{ $project->user->user_name  ?? ''}}</h6>
                                 </div>
                             </li>
                             <li>
@@ -90,31 +90,36 @@
 
                             <li>
                                 <div class="main-title">
-                                    <h6> <span>{{trans("cruds.create_project.fields.description")}} :</span> {!! $project->comment ?? '' !!}</h6>
+                                    <h6> <span>{{trans("cruds.create_project.fields.description")}} :</span>
+                                    <div class="content">
+                                        {!! $project->comment ?? '' !!}
+                                    </div> </h6>
                                 </div>
+                            </li>
+                            <li>
+                                <!-- buttons -->
+                                @if($project->project_status != 1)
+                                <div class="col-12 buttongroupborder">
+                                    <div class="row g-3">
+                                        <div class="col-auto">
+                                            <button type="button" class="btn btn-secondary add-bid-btn" id="addBidModal" data-project-id="{{$project->id}}" data-user-id="{{$project->user_id}}" data-creator-id="{{Auth::user()->id}}" {{$project->project_status == 1  ? 'disabled' : ''}}>
+                                                {{ $creatorStatus == 2 ? __('cruds.create_project.headings.bid_added') : __('cruds.create_project.headings.add_bid') }}
+                                            </button>
+                                        </div>
+                                        <div class="col-auto">
+                                            <button type="button" class="btn btn-success ml-3 confirm-btn" id="confirm" data-project-id="{{$project->id}}" data-user-id="{{$project->user_id}}" data-creator-id="{{Auth::user()->id}}" {{$project->project_status == 1  ? 'disabled' : ''}}>
+                                                {{$project->project_status == 1  ? 'Confirmed' : __('cruds.create_project.headings.confirm_project')}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
                             </li>
                         </ul>
                     </div>
 
 
                     <!-- creatorStatus == 1 -->
-                    <!-- buttons -->
-                    @if($project->project_status != 1)
-                    <div class="col-12">
-                        <div class="row g-3">
-                            <div class="col-auto">
-                                <button type="button" class="btn btn-secondary add-bid-btn" id="addBidModal" data-project-id="{{$project->id}}" data-user-id="{{$project->user_id}}" data-creator-id="{{Auth::user()->id}}" {{$project->project_status == 1  ? 'disabled' : ''}}>
-                                    {{ $creatorStatus == 2 ? __('cruds.create_project.headings.bid_added') : __('cruds.create_project.headings.add_bid') }}
-                                </button>
-                            </div>
-                            <div class="col-auto">
-                                <button type="button" class="btn btn-success ml-3 confirm-btn" id="confirm" data-project-id="{{$project->id}}" data-user-id="{{$project->user_id}}" data-creator-id="{{Auth::user()->id}}" {{$project->project_status == 1  ? 'disabled' : ''}}>
-                                    {{$project->project_status == 1  ? 'Confirmed' : __('cruds.create_project.headings.confirm_project')}}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    @endif
                 </div>
             </div>
         </div>

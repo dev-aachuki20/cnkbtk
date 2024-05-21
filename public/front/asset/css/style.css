@@ -4667,6 +4667,11 @@ form#excelForm{
   margin-bottom: 12px;
   margin: 0px;
 }
+.project_details_card .buttongroupborder {
+  padding-top: 16px;
+  border-top: 1px solid #dfdfdf;
+
+}
 .project_details_card ul li .description-text, .project_details_card ul li p{
   margin: 0px;
   font-size: 15px;
