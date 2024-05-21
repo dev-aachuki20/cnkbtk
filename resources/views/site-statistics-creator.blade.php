@@ -12,7 +12,7 @@ $siteSettingData = getSiteSetting();
     <div class="container">
         <div class="hero-banner">
             <div class="prc-title">
-                <h2>{{trans("pages.site_statistics.basic")}} <span>{{trans("pages.site_statistics.profile")}}</span></h2>
+                <h2>{{trans("pages.site_statistics.site")}} <span>{{trans("pages.site_statistics.statistics")}}</span></h2>
             </div>
         </div>
     </div>
@@ -24,12 +24,12 @@ $siteSettingData = getSiteSetting();
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">{{trans("global.home")}}</a></li>
-                <li class="breadcrumb-item">
-                    {{trans("pages.site_statistics.site")}}
+                <li class="breadcrumb-item active">
+                    {{trans("pages.site_statistics.sitename")}}
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">
+                {{-- <li class="breadcrumb-item active" aria-current="page">
                     {{trans("cruds.registered_members.title")}}
-                </li>
+                </li> --}}
             </ol>
         </nav>
     </div>

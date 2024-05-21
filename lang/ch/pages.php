@@ -220,9 +220,9 @@ return [
     ],
 
     'site_statistics' => [
-        'basic' => "基本的",
-        'profile' => '輪廓',
-        'site' => '網站統計'
+        'site' => "地点",
+        'statistics' => '统计数据',
+        'sitename' => '网站统计'
     ],
 
     'blacklist_user' => [

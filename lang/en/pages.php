@@ -203,9 +203,9 @@ return [
 
 
     'site_statistics' => [
-        'basic' => "Basic",
-        'profile' => 'Profile',
-        'site' => 'Site statistics'
+        'site' => "Site",
+        'statistics' => 'statistics',
+        'sitename' => 'Site statistics'
     ],
 
     'blacklist_user' => [

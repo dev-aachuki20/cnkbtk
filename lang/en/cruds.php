@@ -238,6 +238,8 @@ return [
         'finished' => 'Finished',
         'submit' => 'Submit',
         'close' => 'Close',
+        'total' => 'Total',
+        'count' => 'Count',
     ],
 
     'lang' => [
@@ -285,8 +287,8 @@ return [
     ],
 
     'most_popular_poster' => [
-        'title'             => 'Most Visited Posters',
-        'title_singular'    => 'Most Visited Poster',
+        'title'             => 'Most Visited Tag Type',
+        'title_singular'    => 'Most Visited Tag Type',
         'fields' => [
             'num_graph'     => 'Most Visited Posters Graph',
             'time'          => 'Popular Posters Time',

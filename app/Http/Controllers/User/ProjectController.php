@@ -38,7 +38,11 @@ class ProjectController extends Controller
 
     public function create()
     {
-        $tagTypes = TagType::all();
+        $tagTypesData = TagType::where('status', 1)->get();
+
+        $tagTypes = $tagTypesData->filter(function ($tagType) {
+            return $tagType->tags()->where('status', 1)->exists();
+        });
         $creators = User::where('role_id', config("constant.role.creator"))->where('status', 1)->get();
         return view("project.create", compact('tagTypes', 'creators'));
     }
@@ -96,7 +100,11 @@ class ProjectController extends Controller
 
     public function edit(Project $project)
     {
-        $tagTypes = TagType::all();
+        $tagTypesData = TagType::where('status', 1)->get();
+
+        $tagTypes = $tagTypesData->filter(function ($tagType) {
+            return $tagType->tags()->where('status', 1)->exists();
+        });
         $creators = User::where('role_id', config("constant.role.creator"))->get();
         return view("project.edit", compact('tagTypes', 'creators', 'project'));
     }

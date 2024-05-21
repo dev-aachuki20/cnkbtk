@@ -12,7 +12,7 @@ $siteSettingData = getSiteSetting();
   <div class="container">
     <div class="hero-banner">
       <div class="prc-title">
-        <h2>{{trans("pages.site_statistics.basic")}} <span>{{trans("pages.site_statistics.profile")}}</span></h2>
+        <h2>{{trans("pages.site_statistics.site")}} <span>{{trans("pages.site_statistics.statistics")}}</span></h2>
       </div>
     </div>
   </div>
@@ -24,12 +24,12 @@ $siteSettingData = getSiteSetting();
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item">{{trans("global.home")}}</a></li>
-        <li class="breadcrumb-item">
-          {{trans("pages.site_statistics.site")}}
+        <li class="breadcrumb-item active">
+          {{trans("pages.site_statistics.sitename")}}
         </li>
-        <li class="breadcrumb-item active" aria-current="page">
+        {{-- <li class="breadcrumb-item active" aria-current="page">
           {{trans("cruds.registered_members.title")}}
-        </li>
+        </li> --}}
       </ol>
     </nav>
   </div>
@@ -111,20 +111,101 @@ $siteSettingData = getSiteSetting();
     $('.filter-tabs').click(function() {
       $('.aclink').removeClass('active');
       $(this).addClass('active');
-      $('#tagtype').val(null).trigger('change.select2');
-      // $('#tagtype').val();
-      var activeMenu = $(this).attr('id');
-      toggleTagTypeDropdown(activeMenu);
+      
       var url = $(this).data('id');
-      loadData(url);
+
+      var activeMenu = $(this).attr('id');
+      if(activeMenu == 'number-posters'){
+        $('#tagtype').val(null).trigger('change.select2');
+      }
+      if(activeMenu == 'popular-posters'){
+        var tagTypes = $('#tagtype option:first').val();
+        var startDate = moment($('#dateRangePicker').data('daterangepicker').startDate).format('YYYY-MM-DD');
+        var endDate = moment($('#dateRangePicker').data('daterangepicker').endDate).format('YYYY-MM-DD');
+        var filterType = $('#tagtype-most-popular option:first').val();
+        // console.log(filterType);
+        popularPostLoadData(url, startDate, endDate, tagTypes, filterType);
+      }else{        
+        loadData(url);
+      }
+      
+      toggleTagTypeDropdown(activeMenu);
     });
 
     $(".filter-tabs:first").trigger('click');
 
     function loadData(url) {
+      // console.log('other');
       $.ajax({
         url: url,
         type: 'GET',
+        success: function(response) {
+          $(".profile-content").html(response.html);
+          // daterange picker
+          $('#dateRangePicker').daterangepicker({
+            maxDate: new Date(),
+            // autoUpdateInput: false,
+            startDate: moment().subtract(6, 'days'),
+            endDate: moment(),
+            ranges: {
+              '{{ __("cruds.statistics.statistics_filteration.day") }}': [moment(), moment()],
+              '{{ __("cruds.statistics.statistics_filteration.week") }}': [moment().subtract(6, 'days'), moment()],
+              '{{ __("cruds.statistics.statistics_filteration.month") }}': [moment().startOf('month'), moment().endOf('month')]
+            },
+            locale: {
+              cancelLabel: '{{ __("cruds.global.cancel") }}',
+              applyLabel: '{{ __("cruds.global.apply") }}',
+              daysOfWeek: [
+                '{{ __("global.days_of_week.sunday") }}',
+                '{{ __("global.days_of_week.monday") }}',
+                '{{ __("global.days_of_week.tuesday") }}',
+                '{{ __("global.days_of_week.wednesday") }}',
+                '{{ __("global.days_of_week.thursday") }}',
+                '{{ __("global.days_of_week.friday") }}',
+                '{{ __("global.days_of_week.saturday") }}'
+              ],
+              monthNames: [
+                '{{ __("global.month_names.january") }}',
+                '{{ __("global.month_names.february") }}',
+                '{{ __("global.month_names.march") }}',
+                '{{ __("global.month_names.april") }}',
+                '{{ __("global.month_names.may") }}',
+                '{{ __("global.month_names.june") }}',
+                '{{ __("global.month_names.july") }}',
+                '{{ __("global.month_names.august") }}',
+                '{{ __("global.month_names.september") }}',
+                '{{ __("global.month_names.october") }}',
+                '{{ __("global.month_names.november") }}',
+                '{{ __("global.month_names.december") }}'
+              ],
+              firstDay: 0,
+              customRangeLabel: '{{ __("cruds.statistics.statistics_filteration.custom_range") }}'
+            }
+          });
+
+          $('#dateRangePicker').on('apply.daterangepicker', function(ev, picker) {
+            handleFilterChange(picker.startDate, picker.endDate, picker.chosenLabel);
+          });
+        },
+        error: function(xhr, status, error) {
+          console.error(error);
+        }
+      });
+    }
+
+
+    function popularPostLoadData(url , startDate, endDate, tagTypes, filterType) {
+      // console.log('popularPostLoadData');
+
+      $.ajax({
+        url: url,
+        type: 'GET',
+        data: {
+          start_date: startDate,
+          end_date: endDate,
+          tagTypes: tagTypes,
+          filterType: filterType,
+        },
         success: function(response) {
           $(".profile-content").html(response.html);
           // daterange picker
@@ -210,11 +291,20 @@ $siteSettingData = getSiteSetting();
     function toggleTagTypeDropdown(activeMenu) {
       if (activeMenu === 'number-posters') {
         $('.tagtype-container').css('display', 'block');
+        $('#tagtype').prop('multiple', true); 
+        $('#tagtype').select2({
+          placeholder: "{{__('global.search')}}",
+          allowClear: true
+        });
         $('.purchase-container').css('display', 'none');
+        
       } else if (activeMenu === 'popular-posters') {
-        $('.tagtype-container').css('display', 'block');
         $('.purchase-container').css('display', 'block');
-      } else {
+        $('.tagtype-container').css('display', 'block');
+        $('#tagtype').select2('destroy');
+        $('#tagtype').prop('multiple', false);
+      }
+       else {
         $('.tagtype-container').css('display', 'none');
         $('.purchase-container').css('display', 'none');
       }
@@ -230,6 +320,7 @@ $siteSettingData = getSiteSetting();
       // console.log(tagTypes);
 
       if (label === 'month' || label === 'week' || label === 'day') {
+        console.log('in')
         var activeRoute = $('.filter-tabs.active').data('route');
         var url = activeRoute + '/' + label;
         $.ajax({
@@ -247,6 +338,7 @@ $siteSettingData = getSiteSetting();
           }
         });
       } else {
+        console.log('else')
         var startDate = start.format('YYYY-MM-DD');
         var endDate = end.format('YYYY-MM-DD');
         var activeUrl = $('.filter-tabs.active').data('id');

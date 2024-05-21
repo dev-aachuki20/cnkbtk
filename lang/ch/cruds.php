@@ -243,6 +243,8 @@ return [
         'finished' => '完成的',
         'submit' =>'提交',
         'close' =>'关闭',
+        'total' => '全部的',
+        'count' => '数数',
     ],
 
     'lang' => [
@@ -290,8 +292,8 @@ return [
     ],
 
     'most_popular_poster' => [
-        'title'             => '访问量最大的海报',
-        'title_singular'    => '访问量最大的海报',
+        'title'             => '最常访问的标签类型',
+        'title_singular'    => '最常访问的标签类型',
         'fields' => [
             'num_graph'     => '访问量最大的海报图',
             'time'          => '访问海报时间',

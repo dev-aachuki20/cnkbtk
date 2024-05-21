@@ -31,13 +31,13 @@
             <div class="col-lg-6 col-md-6 col-12">
                 <div class="right-single-box blacklist_box_user project_details_card h-100">
                     <div class="row gx-3">
-                      {{--  @if($item['project']->project_status == 1) --}}
+                       @if( $item['creatorStatus'] == 1 && $item['project']->project_status == 1 || $item['project']->project_status == 0 )
                         <div class="col-12 text-end">
                             <a href="{{ route('message.index', ['projectId' => $item['project']->id]) }}" class="btn btn-primary ml-auto cancel-btn" id="message" data-project-id="{{$item['project']->id}}" data-user-id="{{$item['project']->user_id}}">
                                 {{__('cruds.global.message')}}
                             </a>
                         </div>
-                        {{-- @endif --}}
+                        @endif
                         <div class="col">
                             <ul>
                                 <li>
@@ -57,13 +57,16 @@
                                 </li>
                                 <li>
                                     <div class="description-text main-title">
-                                        <h6> <span>{{trans("cruds.create_project.fields.tags")}} </span>
-                                            @if(app()->getLocale() == 'en')
-                                            {{ $item['project']->tags->name_en ?? '' }}
-                                            @else
-                                            {{ $item['project']->tags->name_ch ?? '' }}
-                                            @endif
+                                        <h6>
+                                            <span>{{ trans("cruds.create_project.fields.tags") }}</span>
+                                            @php
+                                                $tagIds = explode(',', $item['project']->tags); 
+                                                $tags = \App\Models\Tag::whereIn('id', $tagIds)->get();
+                                                $tagNames = app()->getLocale() == 'en' ? $tags->pluck('name_en')->toArray() : $tags->pluck('name_ch')->toArray();
+                                            @endphp
+                                            {{ implode(', ', $tagNames) }}
                                         </h6>
+                                        
                                     </div>
                                 </li>
 
@@ -82,6 +85,7 @@
                         </div>
 
                         <!-- buttons -->
+                        @if($item['project']->project_status != 1)
                         <div class="col-12">
                             <div class="row g-3">
                                 <div class="col-auto">
@@ -98,6 +102,7 @@
                                 @endif
                             </div>
                         </div>
+                        @endif
 
                     </div>
                 </div>
