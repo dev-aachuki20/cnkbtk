@@ -371,12 +371,12 @@ return [
             ]
         ],
         'headings' => [
-            'cancelled_project'     => '取消的项目',
-            'cancel_project'        => '取消项目',
-            'confirmed_project'         => '已确认项目',
-            'confirm_project'        => '确认项目',
+            'cancelled_project'     => '取消',
+            'cancel_project'        => '取消',
+            'confirmed_project'         => '确认的',
+            'confirm_project'        => '确认',
             'bid_added'        => '项目投标已添加',
-            'add_bid'        => '添加您的出价',
+            'add_bid'        => '更新出价',
             'add_bid_form'        => '添加投标表格',
 
         ],

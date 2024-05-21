@@ -290,9 +290,9 @@ return [
         'title'             => 'Most Visited Tag Type',
         'title_singular'    => 'Most Visited Tag Type',
         'fields' => [
-            'num_graph'     => 'Most Visited Posters Graph',
+            'num_graph'     => 'Most Visited Tag Type Graph',
             'time'          => 'Popular Posters Time',
-            'count'         => 'Most Visited Posters',
+            'count'         => 'Most Visited Tag Type Count',
             'graph'         => 'Popular Posters Graph',
         ]
     ],
@@ -369,12 +369,12 @@ return [
             ]
         ],
         'headings' => [
-            'cancelled_project'     => 'Cancelled Project',
-            'cancel_project'        => 'Cancel Project',
-            'confirmed_project'         => 'Confirmed Project',
-            'confirm_project'        => 'Confirm Project',
-            'bid_added'        => 'Project Bid Added',
-            'add_bid'        => 'Add Your Bid',
+            'cancelled_project'     => 'Cancelled',
+            'cancel_project'        => 'Cancel',
+            'confirmed_project'         => 'Confirmed',
+            'confirm_project'        => 'Confirm',
+            'bid_added'        => 'Update Bid',
+            'add_bid'        => 'Add Bid',
             'add_bid_form'        => 'Add Bid Form',
 
         ],

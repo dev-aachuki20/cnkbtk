@@ -513,26 +513,6 @@ class StatisticsController extends Controller
         $datasets = [];
         $colors = ['#00ff00', '#0000ff', '#fc0b03', '#605f6b', '#1e1b42', '#421b3d', '#ff0000'];
 
-        // if (!$request->has(['start_date', 'end_date'])) {
-        // if (!in_array($range, ['day', 'week', 'month', 'custom range'])) {
-        //     return response()->json(['error' => 'Invalid range'], 400);
-        // }
-        // if ($range == 'day') {
-        //     $startDate->startOfDay();
-        //     $endDate->endOfDay();
-        //     $interval = 'hour';
-        // }
-        // if ($range == 'week') {
-        //     $startDate = Carbon::today()->subDays(6)->startOfDay();
-        //     $endDate = Carbon::today()->endOfDay();
-        //     $interval = 'day';
-        // }
-        // if ($range == 'month') {
-        //     $startDate->startOfMonth()->startOfDay();
-        //     $endDate->endOfDay();
-        //     $interval = 'day';
-        // }
-
         if ($range == 'day') {
             $startDate->startOfDay();
             $endDate->endOfDay();
@@ -546,48 +526,74 @@ class StatisticsController extends Controller
             $endDate->endOfDay();
             $interval = 'day';
         }
+        // else{
+        //     $startDate->startOfDay();
+        //     $endDate->endOfDay();
+        //     $interval = 'day';
+        // }
         // elseif ($range == 'custom range') {
         //     $interval = $startDate->diffInDays($endDate) == 0 ? 'hour' : 'day';
         //     // Ensure $startDate and $endDate are correctly set for custom range
         //     $startDate->startOfDay();
         //     $endDate->endOfDay();
         // }
-
         $interval = $startDate->diffInDays($endDate) == 0 ? 'hour' : 'day';
         $popularPostersCounts = [];
 
         if ($filterType == 'visited') {
+            $queryDateFormat  =  "%Y-%m-%d";
+            if($range == "day"){
+                $queryDateFormat  =  "%Y-%m-%d %H:%i:%s";
+                
+            }
             // Fetch the total poster count using the provided query
             $popularPostersCounts = DB::table(DB::raw('(
-    SELECT
-        DATE_FORMAT(poster_read_counts.date, "%Y-%m-%d") AS date,
-        COUNT(poster_read_counts.poster_id) AS poster_count
-    FROM
-        poster_read_counts
-    INNER JOIN
-        posters ON poster_read_counts.poster_id = posters.id
-    INNER JOIN
-        tags ON FIND_IN_SET(tags.id, posters.tags) > 0 AND tags.tag_type = 5
-    WHERE
-        poster_read_counts.date BETWEEN :start_date AND :end_date
-    GROUP BY
-        date
-    ORDER BY
-        date ASC
-) AS subquery_alias'))
+                SELECT
+                    DATE_FORMAT(poster_read_counts.created_at, "'.$queryDateFormat.'") AS createddate,
+                    COUNT(poster_read_counts.poster_id) AS poster_count
+                FROM
+                    poster_read_counts
+                INNER JOIN
+                    posters ON poster_read_counts.poster_id = posters.id
+                INNER JOIN
+                    tags ON FIND_IN_SET(tags.id, posters.tags) > 0 AND tags.tag_type = '. $tagTypes .'
+                WHERE
+                    poster_read_counts.created_at BETWEEN :start_date AND :end_date
+                GROUP BY
+                    createddate
+                ORDER BY
+                    createddate ASC
+                ) AS subquery_alias'))
                 ->setBindings([
                     'start_date' => $startDate,
                     'end_date' => $endDate
                 ])
-                ->pluck('poster_count', 'date');
+                ->pluck('poster_count', 'createddate');
         }
+        
+        //dd($popularPostersCounts);
+
+        // if ($filterType == 'visited') {
+        //     $popularPostersCounts = DB::table('poster_read_counts')
+        //         ->selectRaw('poster_read_counts.created_at AS date, COUNT(poster_read_counts.poster_id) AS poster_count')
+        //         ->join('posters', 'poster_read_counts.poster_id', '=', 'posters.id')
+        //         ->join('tags', function ($join) {
+        //             $join->on(DB::raw('FIND_IN_SET(tags.id, posters.tags)'), '>', DB::raw('0'))
+        //                 ->where('tags.tag_type', 5);
+        //         })
+        //         ->whereBetween('poster_read_counts.created_at', [$startDate, $endDate])
+        //         ->groupBy('date')
+        //         ->orderBy('date', 'ASC')
+        //         ->pluck('poster_count', 'date');
+        // }
+        
 
 
         // Populate data and labels arrays
         $startDateCopy = $startDate->copy();
         while ($startDateCopy->lte($endDate)) {
             $date = $interval === 'hour' ? $startDateCopy->format('h a') : $startDateCopy->format('Y-m-d');
-
+            dd($date);
             $count = $popularPostersCounts[$date] ?? 0;
             $labels[] = $date;
             $data[] = $count;
@@ -617,7 +623,7 @@ class StatisticsController extends Controller
 
         // Define dataset
         $datasets[] = [
-            'label' => trans("cruds.most_popular_poster.title.count"),
+            'label' => trans("cruds.most_popular_poster.fields.count"),
             'data' => $data,
             'backgroundColor' => '#ff6359',
             'borderColor' => '#ff6359',
@@ -636,7 +642,7 @@ class StatisticsController extends Controller
             'pointHitRadius' => 30
         ];
 
-        // dd($datasets);
+        dd($datasets);
         // Render the view and return JSON response
         $html = view('statistics.graph', compact('total', 'average', 'labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
         return response()->json(['success' => true, 'html' => $html], 200);
