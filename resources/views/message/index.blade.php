@@ -162,7 +162,7 @@
 
                     <div class="card chatcard h-100 overflow-hidden animate__animated animate__fadeInUp">
 
-                        <div class="row h-100 flex-column flex-nowrap overflow-hidden">
+                        <div class="row h-100 flex-column flex-nowrap overflow-hidden mx-0 gx-0">
 
                             <div class="col-12">
 

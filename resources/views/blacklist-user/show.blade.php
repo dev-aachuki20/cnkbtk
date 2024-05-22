@@ -42,7 +42,7 @@
 
             <div class="col">
               <div class="main-title">
-                <h2>{{$blacklistUser->user->user_name ?? ''}}</h2>
+                <h2 class="main-title-heading">{{$blacklistUser->user->user_name ?? ''}}</h2>
               </div>
               <ul>
                 <li>

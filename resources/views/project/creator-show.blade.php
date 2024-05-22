@@ -25,7 +25,7 @@
     </div>
 </section>
 <section class="single-wrapper ">
-    <div class="container">
+    <div class="container project_card_group">
         <div class="row g-3">
             <div class="col-lg-6 col-md-10 col-12">
                 <div class="right-single-box blacklist_box_user project_details_card">
@@ -89,11 +89,11 @@
                             </li>
 
                             <li>
-                                <div class="main-title">
-                                    <h6> <span>{{trans("cruds.create_project.fields.description")}} :</span>
+                                <div class="main-title description-content">
+                                    <h6> <span>{{trans("cruds.create_project.fields.description")}} :</span> <button type="button" class="btn btn-secondary add-bid-btn">...Read More</button></h6>
                                     <div class="content">
                                         {!! $project->comment ?? '' !!}
-                                    </div> </h6>
+                                    </div> 
                                 </div>
                             </li>
                             <li>
@@ -268,5 +268,34 @@
             });
         });
     });
+</script>
+
+<!-- Description More and less content js -->
+<script>
+    class ReadMoreToggle {
+    constructor(container) {
+        this.content = container.querySelector('.content');
+        this.button = container.querySelector('.read-more-btn');
+        this.button.addEventListener('click', () => this.toggleReadMore());
+    }
+
+    toggleReadMore() {
+        if (this.content.classList.contains('show-more')) {
+            this.content.classList.remove('show-more');
+            this.button.innerText = '...Read More';
+        } else {
+            this.content.classList.add('show-more');
+            this.button.innerText = '...Read Less';
+        }
+    }
+}
+
+// Initialize the ReadMoreToggle class for all description content sections
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.main-title.description-content').forEach(container => {
+        new ReadMoreToggle(container);
+    });
+});
+
 </script>
 @endsection

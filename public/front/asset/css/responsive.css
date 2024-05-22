@@ -218,7 +218,7 @@ button.navbar-toggler span.navbar-toggler-icon {
   padding: 8px 10px;
 }
 .chatboxGroup textarea.form-control {
-  padding: 10px 15px;
+  /* padding: 10px 15px; */
   min-height: 46px;
 }
 .chatboxGroup .file-label svg {
@@ -1020,6 +1020,9 @@ table.table-bordered.dataTable {
  margin-top: 20px;
 }
 
+.project_details_card .btn-primary.messages-button, .project_details_card .btn {
+  font-size: 14px !important;
+}
 }
 
 
@@ -1048,6 +1051,9 @@ table.table-bordered.dataTable {
 }
 .project_details_card ul li span {
   min-width: 140px;
+}
+.project_details_card .mobile-view-responsive ul li span {
+  min-width: 120px;
 }
 .project_details_card ul li span::before {
   right: 8%;
@@ -1337,6 +1343,9 @@ table.table-bordered.dataTable {
   }
   .project_details_card ul li span {
     min-width: 120px;
+  }
+  .project_details_card .mobile-view-responsive ul li span {
+    min-width: 110px;
   }
   .project_card_group .project_details_card .main-title .cardtitle::before {
     right: -8px;

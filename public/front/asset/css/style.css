@@ -4610,7 +4610,7 @@ form#excelForm{
   background: #ffeceb;
   height: 100%;
 }
-.blacklist_box_user .main-title h2 {
+.blacklist_box_user .main-title .main-title-heading {
   margin: 15px 0;
   font-size: 22px;
   line-height: 30px;
@@ -4703,6 +4703,92 @@ form#excelForm{
 .project_details_card ul li .badge.badge-danger {
   background: #ff6359;
 }
+.project_details_card .description-content .read-more-btn {
+  background: none;
+  padding: 0px;
+  border: none;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+.project_details_card .mobile-view-responsive .main-title.description-content {
+  padding: 16px 0px 10px;
+  border-top: 1px solid #dfdfdf;
+}
+.project_details_card .mobile-view-responsive .main-title.description-content h6 span {
+ font-size: 20px;
+}
+.project_details_card .mobile-view-responsive .main-title.description-content h6 span::before {
+  display: none;
+}
+/* .project_details_card .main-title.description-content .content {
+  padding: 10px 0px;
+  border-top: 1px solid #dfdfdf;
+  margin-top: 16px;
+} */
+.project_details_card .main-title.description-content .content p:first-child,
+.project_details_card .main-title.description-content .content h1:first-child,
+.project_details_card .main-title.description-content .content h2:first-child,
+.project_details_card .main-title.description-content .content h3:first-child,
+.project_details_card .main-title.description-content .content h4:first-child,
+.project_details_card .main-title.description-content .content h5:first-child,
+.project_details_card .main-title.description-content .content h6:first-child {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 10px 0px;
+}
+.project_details_card .main-title.description-content .content.show-more p:first-child,
+.project_details_card .main-title.description-content .content.show-more h1:first-child,
+.project_details_card .main-title.description-content .content.show-more h2:first-child,
+.project_details_card .main-title.description-content .content.show-more h3:first-child,
+.project_details_card .main-title.description-content .content.show-more h4:first-child,
+.project_details_card .main-title.description-content .content.show-more h5:first-child,
+.project_details_card .main-title.description-content .content.show-more h6:first-child {
+  white-space: wrap;
+  overflow: unset;
+  text-overflow: unset;
+  margin-top: 0px;
+}
+.project_card_group .project_details_card .content .description-text p:last-child {
+  margin-bottom: 10px;
+} 
+.project_details_card .main-title.description-content .content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.project_details_card .main-title.description-content .content.show-more {
+  align-items: start;
+  flex-direction: column;
+  padding: 16px 0px 6px;
+}
+.project_details_card .main-title.description-content .content .description-text {
+  max-width: calc(100% - 71px);
+  height: 46px;
+  overflow: hidden;
+}
+.project_details_card .main-title.description-content .content.show-more .description-text{
+  height: auto;
+  overflow: unset;
+  max-width: 100%;
+}
+.project_details_card  .main-title.details{
+  display: flex;
+  column-gap: 10px;
+  row-gap: 5px;
+}
+.project_details_card  .main-title.details .content{
+  line-height: 26px;
+}
+.project_details_card  .main-title.details h6{
+  display: block;
+}
+
+.project_details_card .btn-primary.messages-button {
+  font-size: 16px !important;
+}
+
+
 
 li.confirmRequest .dropdown-item.del_btn {
   background-color: #b7b7b7;
@@ -4760,6 +4846,7 @@ li.confirmRequest .dropdown-item.del_btn {
   padding: 30px 25px;
   border-radius: 20px;
   height: 100%;
+  position: relative;
 }
 
 .project_card_group .project_details_card .main-title .title {
@@ -4790,9 +4877,10 @@ li.confirmRequest .dropdown-item.del_btn {
 .project_card_group .project_details_card .content {
   font-size: 15px;
   line-height: normal;
+  word-break: break-all;
 }
 .project_card_group .project_details_card .content p{
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   font-size: 14px;
 }
 .project_card_group .project_details_card .content p:last-child {
@@ -4818,14 +4906,22 @@ li.confirmRequest .dropdown-item.del_btn {
   border-radius: 15px;
 }
 
-.project_card_group .project_details_card .description_wapper .content h1,
+.project_details_card .content h1,
+.project_details_card .content h2,
+.project_details_card .content h3,
+.project_details_card .content h4,
+.project_details_card .content h5,
+.project_details_card .content h6{
+  margin-bottom: 10px;
+}
+/* .project_card_group .project_details_card .description_wapper .content h1,
 .project_card_group .project_details_card .description_wapper .content h2,
 .project_card_group .project_details_card .description_wapper .content h3,
 .project_card_group .project_details_card .description_wapper .content h4,
 .project_card_group .project_details_card .description_wapper .content h5,
 .project_card_group .project_details_card .description_wapper .content h6{
   margin-bottom: 10px;
-}
+} */
 
 
 .project_card_group .project_details_card:not(:last-child){
