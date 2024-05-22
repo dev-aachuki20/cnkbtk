@@ -106,7 +106,7 @@ $siteSettingData = getSiteSetting();
     $('#tagtype').select2({
       placeholder: "{{__('global.search')}}",
       allowClear: true
-    });
+    });     
 
     $('.filter-tabs').click(function() {
       $('.aclink').removeClass('active');
@@ -118,12 +118,12 @@ $siteSettingData = getSiteSetting();
       if(activeMenu == 'number-posters'){
         $('#tagtype').val(null).trigger('change.select2');
       }
+
       if(activeMenu == 'popular-posters'){
         var tagTypes = $('#tagtype option:first').val();
         var startDate = moment($('#dateRangePicker').data('daterangepicker').startDate).format('YYYY-MM-DD');
         var endDate = moment($('#dateRangePicker').data('daterangepicker').endDate).format('YYYY-MM-DD');
-        var filterType = $('#tagtype-most-popular option:first').val();
-        // console.log(filterType);
+        var filterType = $('#tagtype-most-popular').val();
         popularPostLoadData(url, startDate, endDate, tagTypes, filterType);
       }else{        
         loadData(url);
@@ -134,8 +134,9 @@ $siteSettingData = getSiteSetting();
 
     $(".filter-tabs:first").trigger('click');
 
+    
+
     function loadData(url) {
-      // console.log('other');
       $.ajax({
         url: url,
         type: 'GET',
@@ -195,8 +196,7 @@ $siteSettingData = getSiteSetting();
 
 
     function popularPostLoadData(url , startDate, endDate, tagTypes, filterType) {
-      // console.log('popularPostLoadData');
-
+      // alert(filterType);
       $.ajax({
         url: url,
         type: 'GET',
@@ -260,24 +260,48 @@ $siteSettingData = getSiteSetting();
       });
     }
 
+    //on change on tag type 
     $(document).on('change', '#tagtype', function() {
+      var filterType = $('#tagtype-most-popular').val();
       var tagTypes = $(this).val();
       var startDate = moment($('#dateRangePicker').data('daterangepicker').startDate).format('YYYY-MM-DD');
       var endDate = moment($('#dateRangePicker').data('daterangepicker').endDate).format('YYYY-MM-DD');
-      var label = $('.filter-tabs.active').data('route').split('/').pop() || "week";
+      var label = "custom range";
+      // var label = $('.filter-tabs.active').data('route').split('/').pop() || "week";
 
       if (tagTypes) {
         var activeRoute = $('.filter-tabs.active').data('route');
         var url = activeRoute + '/' + label;
-        $.ajax({
-          url: url,
-          type: 'GET',
-          data: {
+
+        var activeMenu = $('.filter-tabs.active').attr('id');
+        if(activeMenu == 'popular-posters'){
+          var data = {
+              range: label,
+              filterType: filterType,
+              tagTypes: tagTypes,
+              start_date: startDate,
+              end_date: endDate,
+          }
+        }
+          
+        if(activeMenu == 'number-posters'){
+          var data = {
             range: label,
             tagTypes: tagTypes,
             start_date: startDate,
             end_date: endDate,
-          },
+          }
+        }
+        $.ajax({
+          url: url,
+          type: 'GET',
+          data: data,
+          // data: {
+          //   range: label,
+          //   tagTypes: tagTypes,
+          //   start_date: startDate,
+          //   end_date: endDate,
+          // },
           success: function(response) {
             $(".profile-content").html(response.html);
           },
@@ -287,6 +311,16 @@ $siteSettingData = getSiteSetting();
         });
       }
     });
+
+    // //on change on visited and purchased
+    $(document).on('change', '#tagtype-most-popular', function() {
+        var filterType = $(this).val();
+        var url = $('.filter-tabs.active').data('id');
+        var tagTypes = $('#tagtype').val();
+        var startDate = moment($('#dateRangePicker').data('daterangepicker').startDate).format('YYYY-MM-DD');
+        var endDate = moment($('#dateRangePicker').data('daterangepicker').endDate).format('YYYY-MM-DD');
+        popularPostLoadData(url, startDate, endDate, tagTypes, filterType);
+    });   
 
     function toggleTagTypeDropdown(activeMenu) {
       if (activeMenu === 'number-posters') {
@@ -313,23 +347,37 @@ $siteSettingData = getSiteSetting();
     // daterange picker
     // Function to handle the filter change
     function handleFilterChange(start, end, label) {
-      label = label.toLowerCase();
+      var label = label.toLowerCase();
       var startDate = start.format('YYYY-MM-DD');
       var endDate = end.format('YYYY-MM-DD');
       var tagTypes = $('#tagtype').val();
-      // console.log(tagTypes);
+      var filterType = $('#tagtype-most-popular').val();
+      var activeMenu = $('.filter-tabs.active').attr('id');
 
       if (label === 'month' || label === 'week' || label === 'day') {
-        console.log('in')
         var activeRoute = $('.filter-tabs.active').data('route');
         var url = activeRoute + '/' + label;
+        if(activeMenu == 'popular-posters'){
+          var data = {
+            range: label,
+            tagTypes: tagTypes,
+            filterType: filterType,
+          }  
+        }else{
+          var data = {
+          range: label,
+          tagTypes: tagTypes,         
+          }
+        }
+        
         $.ajax({
           url: url,
           type: 'GET',
-          data: {
-            range: label,
-            tagTypes: tagTypes,
-          },
+          data: data,
+          // data: {
+          //   range: label,
+          //   tagTypes: tagTypes,
+          // },
           success: function(response) {
             $(".profile-content").html(response.html);
           },
@@ -337,30 +385,118 @@ $siteSettingData = getSiteSetting();
             console.error(error);
           }
         });
-      } else {
-        console.log('else')
-        var startDate = start.format('YYYY-MM-DD');
-        var endDate = end.format('YYYY-MM-DD');
+      } 
+
+      if (label === 'custom range' ) {
         var activeUrl = $('.filter-tabs.active').data('id');
-        var url = activeRoute + '/' + label;
-        var tagTypes = $('#tagtype').val();
-        $.ajax({
-          url: activeUrl,
-          type: 'GET',
-          data: {
+        var url = activeRoute + '/' + label;    
+
+        if(activeMenu == 'popular-posters'){
+          var data = {
             start_date: startDate,
             end_date: endDate,
             range: label,
             tagTypes: tagTypes,
-          },
-          success: function(response) {
-            $(".profile-content").html(response.html);
-          },
-          error: function(xhr, status, error) {
-            console.error(error);
+            filterType: filterType,
+          }  
+        }else{
+          var data = {
+              start_date: startDate,
+              end_date: endDate,
+              range: label,
+              tagTypes: tagTypes,         
           }
-        });
+        }
+          $.ajax({
+            url: activeUrl,
+            type: 'GET',
+            data: data,
+            // data: {
+            //   start_date: startDate,
+            //   end_date: endDate,
+            //   range: label,
+            //   tagTypes: tagTypes,
+            // },
+            success: function(response) {
+              $(".profile-content").html(response.html);
+            },
+            error: function(xhr, status, error) {
+              console.error(error);
+            }
+          });
       }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      // if (label === 'month' || label === 'week' || label === 'day') {
+      //   console.log('all labels', label)
+      //   var activeRoute = $('.filter-tabs.active').data('route');
+      //   var url = activeRoute + '/' + label;
+      //   $.ajax({
+      //     url: url,
+      //     type: 'GET',
+      //     data: {
+      //       range: label,
+      //       tagTypes: tagTypes,
+      //     },
+      //     success: function(response) {
+      //       $(".profile-content").html(response.html);
+      //     },
+      //     error: function(xhr, status, error) {
+      //       console.error(error);
+      //     }
+      //   });
+      // } else {
+      //   console.log('else')
+      //   var startDate = start.format('YYYY-MM-DD');
+      //   var endDate = end.format('YYYY-MM-DD');
+      //   var activeUrl = $('.filter-tabs.active').data('id');
+      //   var url = activeRoute + '/' + label;
+      //   var tagTypes = $('#tagtype').val();
+      //   $.ajax({
+      //     url: activeUrl,
+      //     type: 'GET',
+      //     data: {
+      //       start_date: startDate,
+      //       end_date: endDate,
+      //       range: label,
+      //       tagTypes: tagTypes,
+      //     },
+      //     success: function(response) {
+      //       $(".profile-content").html(response.html);
+      //     },
+      //     error: function(xhr, status, error) {
+      //       console.error(error);
+      //     }
+      //   });
+      // }
 
       
       // console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');

@@ -163,6 +163,7 @@ class PostController extends Controller
           return  response()->json(['message' => trans("messages.purchase.success"),'alert-type' =>  'success'],200);
 
       } catch (\Throwable $th) {
+        // dd($th->getMessage() . $th->getFile() . $th->getLine());
         \DB::rollBack();
         return response()->json(['message' => trans("messages.something_went_wrong"),'alert-type' =>  'error'],500);
       }

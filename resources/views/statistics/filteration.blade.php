@@ -24,7 +24,7 @@
             <label for="tagtype-most-popular">{{__('cruds.statistics.statistics_filteration.filter')}}</label>
             <select id="tagtype-most-popular" class="form-control form-select">
                 {{-- <option value="">{{__('cruds.statistics.statistics_filteration.all')}}</option> --}}
-                <option value="visited" selected>{{__('cruds.statistics.statistics_filteration.visited')}}</option>
+                <option value="visited">{{__('cruds.statistics.statistics_filteration.visited')}}</option>
                 <option value="purchased">{{__('cruds.statistics.statistics_filteration.purchased')}}</option>
             </select>
         </div>
