@@ -593,7 +593,7 @@ class StatisticsController extends Controller
         $startDateCopy = $startDate->copy();
         while ($startDateCopy->lte($endDate)) {
             $date = $interval === 'hour' ? $startDateCopy->format('h a') : $startDateCopy->format('Y-m-d');
-            dd($date);
+            // dd($date);
             $count = $popularPostersCounts[$date] ?? 0;
             $labels[] = $date;
             $data[] = $count;
@@ -642,7 +642,7 @@ class StatisticsController extends Controller
             'pointHitRadius' => 30
         ];
 
-        dd($datasets);
+        // dd($datasets);
         // Render the view and return JSON response
         $html = view('statistics.graph', compact('total', 'average', 'labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
         return response()->json(['success' => true, 'html' => $html], 200);
