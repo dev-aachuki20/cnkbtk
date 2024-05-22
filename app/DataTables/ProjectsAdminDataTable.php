@@ -33,13 +33,13 @@ class ProjectsAdminDataTable extends DataTable
             ->addColumn('user.username', function ($record) {
                 return ucfirst($record->user->user_name) ?? "";
             })
-            ->editColumn('tags_id', function ($record) {
-                $language = app()->getLocale();
-                if ($record->tags) {
-                    return $language === 'en' ? ucfirst($record->tags->name_en) : ucfirst($record->tags->name_ch);
-                }
-                return '';
-            })
+            // ->editColumn('tags_id', function ($record) {
+            //     $language = app()->getLocale();
+            //     if ($record->tags) {
+            //         return $language === 'en' ? ucfirst($record->tags->name_en) : ucfirst($record->tags->name_ch);
+            //     }
+            //     return '';
+            // })
 
             ->editColumn('budget', function ($record) {
                 return $record->budget . config("constant.currency.rmb") ?? '0.00';
@@ -69,12 +69,12 @@ class ProjectsAdminDataTable extends DataTable
 
 
 
-            ->filterColumn('tags_id', function ($query, $keyword) {
-                $query->whereHas('tags', function ($query) use ($keyword) {
-                    $query->where('name_en', 'like', "%$keyword%")
-                        ->orWhere('name_ch', 'like', "%$keyword%");
-                });
-            })
+            // ->filterColumn('tags_id', function ($query, $keyword) {
+            //     $query->whereHas('tags', function ($query) use ($keyword) {
+            //         $query->where('name_en', 'like', "%$keyword%")
+            //             ->orWhere('name_ch', 'like', "%$keyword%");
+            //     });
+            // })
             ->addColumn('action', function ($record) {
                 $action  = '<div class="d-flex">';
 
@@ -94,7 +94,7 @@ class ProjectsAdminDataTable extends DataTable
                 $action .= '</div>';
                 return $action;
             })
-            ->rawColumns(['tags_id', 'status', 'action']);
+            ->rawColumns(['tags', 'status', 'action']);
     }
 
     /**
@@ -148,7 +148,7 @@ class ProjectsAdminDataTable extends DataTable
             Column::make('user.user_name')->title(trans("cruds.create_project.fields.user_name")),
             Column::make('title')->title(trans("cruds.create_project.fields.title")),
             Column::make('type')->title(trans("cruds.create_project.fields.type")),
-            Column::make('tags_id')->title(trans("cruds.create_project.fields.tags")),
+            // Column::make('tags_id')->title(trans("cruds.create_project.fields.tags")),
             Column::make('user_ip')->title(trans("cruds.create_project.fields.user_ip")),
             Column::make('budget')->title(trans("cruds.create_project.fields.budget")),
             Column::computed('status')->title(trans("cruds.global.status"))->orderable(false)->searchable(true),
