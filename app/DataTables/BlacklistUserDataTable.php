@@ -28,20 +28,20 @@ class BlacklistUserDataTable extends DataTable
             ->editColumn('ip_address', function ($record) {
                 return $record->ip_address ?? "";
             })
-            ->editColumn('blacklist_tag_id', function ($record) {
-                $language = app()->getLocale();
-                if ($record->blacklistTag) {
-                    return $language === 'en' ? ucfirst($record->blacklistTag->name_en) : ucfirst($record->blacklistTag->name_ch);
-                }
-                return '';
-            })
+            // ->editColumn('blacklist_tag_id', function ($record) {
+            //     $language = app()->getLocale();
+            //     if ($record->blacklistTag) {
+            //         return $language === 'en' ? ucfirst($record->blacklistTag->name_en) : ucfirst($record->blacklistTag->name_ch);
+            //     }
+            //     return '';
+            // })
 
-            ->filterColumn('blacklist_tag_id', function ($query, $keyword) {
-                $query->whereHas('blacklistTag', function ($query) use ($keyword) {
-                    $query->where('name_en', 'like', "%$keyword%")
-                        ->orWhere('name_ch', 'like', "%$keyword%");
-                });
-            })
+            // ->filterColumn('blacklist_tag_id', function ($query, $keyword) {
+            //     $query->whereHas('blacklistTag', function ($query) use ($keyword) {
+            //         $query->where('name_en', 'like', "%$keyword%")
+            //             ->orWhere('name_ch', 'like', "%$keyword%");
+            //     });
+            // })
 
             ->addColumn('action', function ($record) {
                 $action  = '<div class="d-flex">';
@@ -54,7 +54,7 @@ class BlacklistUserDataTable extends DataTable
                 $action .= '</div>';
                 return $action;
             })
-            ->rawColumns(['email', 'ip_address', 'blacklist_tag_id', 'action']);
+            ->rawColumns(['email', 'ip_address', 'action']);
     }
 
     /**
@@ -108,7 +108,7 @@ class BlacklistUserDataTable extends DataTable
             Column::make('user.user_name')->title(trans("pages.blacklist_user.form.fields.username"))->orderable(false),
             Column::make('email')->title(trans("pages.blacklist_user.form.fields.email")),
             Column::computed('ip_address')->title(trans("pages.blacklist_user.form.fields.ip_address"))->searchable(true),
-            Column::make('blacklist_tag_id')->title(trans("pages.blacklist_user.form.fields.reason"))->searchable(true),
+            // Column::make('blacklist_tag_id')->title(trans("pages.blacklist_user.form.fields.reason"))->searchable(true),
             Column::make('created_at')->title(trans("cruds.global.created_date"))->orderable(false)->searchable(false),
             Column::computed('action')->title(trans("cruds.global.action"))->orderable(false)->searchable(false)
         ];

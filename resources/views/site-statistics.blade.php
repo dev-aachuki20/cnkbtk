@@ -133,7 +133,6 @@ $siteSettingData = getSiteSetting();
     });
 
     $(".filter-tabs:first").trigger('click');
-
     
 
     function loadData(url) {
@@ -425,81 +424,6 @@ $siteSettingData = getSiteSetting();
             }
           });
       }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      // if (label === 'month' || label === 'week' || label === 'day') {
-      //   console.log('all labels', label)
-      //   var activeRoute = $('.filter-tabs.active').data('route');
-      //   var url = activeRoute + '/' + label;
-      //   $.ajax({
-      //     url: url,
-      //     type: 'GET',
-      //     data: {
-      //       range: label,
-      //       tagTypes: tagTypes,
-      //     },
-      //     success: function(response) {
-      //       $(".profile-content").html(response.html);
-      //     },
-      //     error: function(xhr, status, error) {
-      //       console.error(error);
-      //     }
-      //   });
-      // } else {
-      //   console.log('else')
-      //   var startDate = start.format('YYYY-MM-DD');
-      //   var endDate = end.format('YYYY-MM-DD');
-      //   var activeUrl = $('.filter-tabs.active').data('id');
-      //   var url = activeRoute + '/' + label;
-      //   var tagTypes = $('#tagtype').val();
-      //   $.ajax({
-      //     url: activeUrl,
-      //     type: 'GET',
-      //     data: {
-      //       start_date: startDate,
-      //       end_date: endDate,
-      //       range: label,
-      //       tagTypes: tagTypes,
-      //     },
-      //     success: function(response) {
-      //       $(".profile-content").html(response.html);
-      //     },
-      //     error: function(xhr, status, error) {
-      //       console.error(error);
-      //     }
-      //   });
-      // }
-
-      
-      // console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
     }
 
   });

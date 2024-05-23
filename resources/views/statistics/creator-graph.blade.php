@@ -1,4 +1,11 @@
 <div id="myChartContainer">
+    <div class="avg"> <b>{{__('cruds.global.total')}} {{__('cruds.global.count')}} :</b>
+        @if ($total == 0)
+        0
+        @else
+        {{$total}}
+        @endif
+    </div>
     <div class="avg"> <b>{{__('cruds.global.average')}} :</b>
         @if ($average == 0)
         0.00

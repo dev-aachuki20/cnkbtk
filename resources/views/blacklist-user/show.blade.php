@@ -57,14 +57,19 @@
                 </li>
                 <li>
                   <div class="description-text">
-                    <span>{{ trans('pages.blacklist_user.form.fields.reason') }} :</span>
-                    @if(app()->getLocale() == 'en')
-                    {{ $blacklistUser->blacklistTag->name_en ?? '' }}
-                    @else
-                    {{ $blacklistUser->blacklistTag->name_ch ?? '' }}
-                    @endif
+                      <span>{{ trans('pages.blacklist_user.form.fields.reason') }} :</span>
+                      @if($blacklistUser->blacklist_tag_id == null)
+                          {{ ucfirst($blacklistUser->other_reason) }}
+                      @else
+                          @if(app()->getLocale() == 'en')
+                              {{ $blacklistUser->blacklistTag->name_en ?? '' }}
+                          @else
+                              {{ $blacklistUser->blacklistTag->name_ch ?? '' }}
+                          @endif
+                      @endif
                   </div>
-                </li>
+              </li>
+              
 
               </ul>
             </div>

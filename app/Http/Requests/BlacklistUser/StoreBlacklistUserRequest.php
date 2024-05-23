@@ -27,6 +27,7 @@ class StoreBlacklistUserRequest extends FormRequest
             'email' => ['required', 'email'],
             'ip_address' => ['required', 'ip'],
             'blacklist_tag_id' => ['required'],
+            'other_reason' => ['required_if:blacklist_tag_id,other', 'nullable', 'string', 'max:255'],
         ];
     }
 
@@ -38,6 +39,8 @@ class StoreBlacklistUserRequest extends FormRequest
             'ip_address.required' => __('validation.required', ['attribute' => __('pages.blacklist_user.form.fields.ip_address')]),
             'ip_address.ip' =>  __('validation.ip', ['attribute' => __('pages.blacklist_user.form.fields.ip_address')]),
             'blacklist_tag_id.required' => __('validation.required', ['attribute' => __('pages.blacklist_user.form.fields.reason')]),
+
+            'other_reason.required_if' => trans('messages.other_reason.required_if'),
         ];
     }
 }

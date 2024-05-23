@@ -20,7 +20,7 @@ class BlacklistUserController extends Controller
 
     public function index(BlacklistUserDataTable $dataTable)
     {
-        $balcklistTag = BlacklistTag::all();
+        $balcklistTag = BlacklistTag::where('status', 1)->get();
         return $dataTable->render('blacklist-user.index', compact('balcklistTag'));
     }
 
@@ -31,7 +31,14 @@ class BlacklistUserController extends Controller
             $validatedData = $request->all();
             $user = User::where('email', $validatedData['email'])->first();
             $userId = $user ? $user->id : null;
-            $validatedData['user_id'] = $userId;
+            $validatedData['user_id'] = $user ? $userId : null;
+
+            if ($validatedData['blacklist_tag_id'] == 'other') {
+                $validatedData['blacklist_tag_id'] = null;
+                $validatedData['other_reason'] = $request->other_reason;
+            } else {
+                $validatedData['other_reason'] = null;
+            }
 
             BlacklistUser::create($validatedData);
 
@@ -106,11 +113,19 @@ class BlacklistUserController extends Controller
             $user = User::where('email', $request->email)->first();
             $userId = $user ? $user->id : null;
             $validatedData['user_id'] = $userId;
+
+            // Handle other_reason field
+            if ($request->blacklist_tag_id === 'other') {
+                $validatedData['blacklist_tag_id'] = null;
+            } else {
+                $validatedData['other_reason'] = null;
+            }
+
             $blacklistUser = BlacklistUser::findOrFail($id);
             $blacklistUser->update($validatedData);
 
             DB::commit();
-            return response()->json(['message' => trans("messages.add_success", ['module' => trans("global.blacklist_user")]), 'alert-type' =>  'success'], 200);
+            return response()->json(['message' => trans("messages.update_success", ['module' => trans("global.blacklist_user")]), 'alert-type' =>  'success'], 200);
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json(['message' => trans("messages.something_went_wrong"), 'alert-type' =>  'error'], 500);

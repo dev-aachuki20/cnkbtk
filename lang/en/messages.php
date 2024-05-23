@@ -53,5 +53,12 @@ return [
     'project_locked_successfully' => 'Project is locked successfully',
     
     'project_lock_request' => ':module lock request sent successfully',
-    'finished_project_warning_message' => 'Once finished you will not able to reopen the project.'
+    'finished_project_warning_message' => 'Once finished you will not able to reopen the project.',
+
+    'authentication_failed' => 'Authentication failed. The provided email is blacklisted',
+
+    'other_reason' => [
+        'required_if' => 'The other reason field is required when the reason is other.',
+    ],
+    
 ];

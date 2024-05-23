@@ -145,7 +145,7 @@
                         <div class="col-md-12">
                             <div class="mb-4">
                                 <div class="form-group">
-                                    <label for="">{{trans("pages.blacklist_user.form.fields.email")}} <span class="text-danger">*</span></label>
+                                    <label for="">{{trans("pages.blacklist_user.form.fields.email")}}<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="email" id="email" placeholder="{{trans("global.enter")}} {{trans("pages.blacklist_user.form.fields.email")}}" />
                                 </div>
                             </div>
@@ -154,7 +154,7 @@
                         <div class="col-md-12">
                             <div class="mb-4">
                                 <div class="form-group">
-                                    <label for="">{{trans("pages.blacklist_user.form.fields.ip_address")}} <span class="text-danger">*</span></label>
+                                    <label for="">{{trans("pages.blacklist_user.form.fields.ip_address")}}<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="ip_address" id="ip_address" placeholder="{{trans("global.enter")}} {{trans("pages.blacklist_user.form.fields.ip_address")}}" />
                                 </div>
                             </div>
@@ -163,13 +163,21 @@
                         <div class="col-md-12">
                             <div class="mb-4">
                                 <div class="form-group">
-                                    <label for="">{{trans("pages.blacklist_user.form.fields.reason")}} <span class="text-danger">*</span></label>
+                                    <label for="">{{trans("pages.blacklist_user.form.fields.reason")}}<span class="text-danger">*</span></label>
                                     <select name="blacklist_tag_id" id="blacklist_tag_id" class="form-control">
                                         <option value="">{{trans('cruds.global.select')}}</option>
                                         @foreach($balcklistTag as $tag)
                                         <option value="{{$tag->id}}">{{app()->getLocale() == 'en' ? $tag->name_en : $tag->name_ch}}</option>
                                         @endforeach
+                                        <option value="other">Other</option>
                                     </select>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="form-group" id="other-reason" style="display:none;">
+                                        {{-- <label for="other_reason">Other <span class="text-danger">*</span></label> --}}
+                                        {{-- <input type="text" name="other_reason" id="other_reason" class="form-control"> --}}
+                                        <textarea class="form-control" name="other_reason" id="other_reason" cols="30" rows="10" placeholder="Enter reason here"></textarea>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -200,7 +208,7 @@
                         <div class="col-md-12">
                             <div class="mb-4">
                                 <div class="form-group form-group-edit">
-                                    <label for="">{{trans("pages.blacklist_user.form.fields.email")}} <span class="text-danger">*</span></label>
+                                    <label for="">{{trans("pages.blacklist_user.form.fields.email")}}<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="email" id="edit-email" placeholder="{{trans("global.enter")}} {{trans("pages.blacklist_user.form.fields.email")}}" />
                                 </div>
                             </div>
@@ -209,7 +217,7 @@
                         <div class="col-md-12">
                             <div class="mb-4">
                                 <div class="form-group form-group-edit">
-                                    <label for="">{{trans("pages.blacklist_user.form.fields.ip_address")}} <span class="text-danger">*</span></label>
+                                    <label for="">{{trans("pages.blacklist_user.form.fields.ip_address")}}<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="ip_address" id="edit-ip_address" placeholder="{{trans("global.enter")}} {{trans("pages.blacklist_user.form.fields.ip_address")}}" />
                                 </div>
                             </div>
@@ -218,16 +226,24 @@
                         <div class="col-md-12">
                             <div class="mb-4">
                                 <div class="form-group form-group-edit">
-                                    <label for="">{{trans("pages.blacklist_user.form.fields.reason")}} <span class="text-danger">*</span></label>
+                                    <label for="">{{trans("pages.blacklist_user.form.fields.reason")}}<span class="text-danger">*</span></label>
                                     <select name="blacklist_tag_id" id="edit-blacklist_tag_id" class="form-control">
                                         <option value="">{{trans('cruds.global.select')}}</option>
                                         @foreach($balcklistTag as $tag)
                                         <option value="{{$tag->id}}">{{app()->getLocale() == 'en' ? $tag->name_en : $tag->name_ch}}</option>
                                         @endforeach
+                                        <option value="other">Other</option>
                                     </select>
                                 </div>
                             </div>
+                            <div class="mb-4" id="edit-other_reason_container">
+                                <div class="form-group form-group-edit">
+                                    {{-- <label for="edit-other_reason">{{ trans("pages.blacklist_user.form.fields.other_reason") }} <span class="text-danger">*</span></label> --}}
+                                    <textarea class="form-control" name="other_reason" id="edit-other_reason" cols="30" rows="10" placeholder="Other reason"></textarea>
+                                </div>
+                            </div>
                         </div>
+                        
                     </div>
                 </form>
             </div>
@@ -261,6 +277,15 @@
 {!! $dataTable->scripts() !!}
 <script>
     $(document).ready(function() {
+        $('#blacklist_tag_id').change(function() {
+            if ($(this).val() == 'other') {
+                $('#other-reason').show();
+            } else {
+                $('#other-reason').hide();
+                $('#other_reason').val(''); // Clear the input field when hidden
+            }
+        });
+
         // Import Blacklist user data by importing a file
         $('#excel_file').change(function(e) {
             var file = e.target.files[0];
@@ -320,6 +345,7 @@
                 },
                 success: function(response) {
                     $("#addBlacklistForm").trigger("reset");
+                    $('#other_reason_container').hide();
                     Swal.fire({
                         title: 'Success',
                         text: response.message,
@@ -371,6 +397,18 @@
                     $('#edit-email').val(response.data.email);
                     $('#edit-ip_address').val(response.data.ip_address);
                     $('#edit-blacklist_tag_id').val(response.data.blacklist_tag_id);
+
+                    // Check if the blacklist tag ID is for the "other reason"
+                    if (response.data.blacklist_tag_id == null) {
+                        $('#edit-other_reason').val(response.data.other_reason);
+                        $('#edit-other_reason_container').show();
+                        $('#edit-blacklist_tag_id').val('other');
+                    } else {
+                        $('#edit-blacklist_tag_id').val(response.data.blacklist_tag_id);
+                        $('#edit-other_reason_container').hide();
+                        $('#edit-other_reason').val('');
+                    }
+
                     $(".text-danger.errors").remove();
                     $('#blackListEditModal').modal('show');
                 },
@@ -400,8 +438,17 @@
                 },
                 success: function(response) {
                     $('#blackListEditModal').modal('hide');
-                    $('#blackListEditModal').trigger('reset');
-                    toastr.success(response.message);
+                    $('#edit-other_reason_container').hide();
+                    $("#blackListEditModal").trigger("reset");
+                    // toastr.success(response.message);
+                    Swal.fire({
+                        title: 'Success',
+                        text: response.message,
+                        icon: 'success',
+                        confirmButtonText: 'Okay!'
+                    }).then((result) => {
+                        location.reload();
+                    })
                 },
                 error: function(jqXHR, exception) {
                     if (jqXHR.status == 422) {
@@ -419,6 +466,15 @@
                 }
             });
         });
+
+        $('#edit-blacklist_tag_id').change(function() {
+        if ($(this).val() === 'other') {
+            $('#edit-other_reason_container').show();
+        } else {
+            $('#edit-other_reason_container').hide();
+            $('#edit-other_reason').val('');
+        }
+});
 
     });
 </script>

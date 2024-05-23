@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Poster;
 use App\Models\UniqueVisitor;
-use App\Models\PosterReadCount;
 use App\Models\Tag;
 use App\Models\TagType;
 use Carbon\Carbon;
@@ -574,10 +573,8 @@ class StatisticsController extends Controller
                     user_episodes
                 INNER JOIN
                     posters ON user_episodes.poster_id = posters.id
-                INNER JOIN
-                    tags ON FIND_IN_SET(tags.id, posters.tags) > 0 AND tags.tag_type = ' . $tagTypes . '
                 WHERE
-                    user_episodes.created_at BETWEEN :start_date AND :end_date
+                user_episodes.created_at BETWEEN :start_date AND :end_date
                 GROUP BY
                     createddate
                 ORDER BY

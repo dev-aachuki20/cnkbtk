@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\BlacklistUser;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use App\Models\LoginLog;
+use App\Models\User;
+
 // use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
@@ -72,6 +75,13 @@ class LoginController extends Controller
         ];
 
         $request->validate($validations,$customMessages,$customName);
+
+        // Check if user is blacklisted
+        $user = User::where($columnName, $username)->first();
+        if ($user && BlacklistUser::where('user_id', $user->id)->exists()) {
+            $response = ['alert-type' => "error", "message" => trans("messages.authentication_failed")];
+            return redirect()->route("login")->with($response);
+        }
        
         if(Auth::attempt([$columnName => $username, 'password' => $password])) {
             $response = ['alert-type' => "success", "message" => trans("auth.login_success")];
