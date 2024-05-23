@@ -1,5 +1,5 @@
         
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <form id="reportForm">
                     <div class="modal-header">

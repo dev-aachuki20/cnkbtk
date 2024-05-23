@@ -16,6 +16,16 @@
     top: 45px;    
   }
 
+ .navbar-expand-lg .navbar-collapse a.nav-link {
+      padding-left: 0;
+      padding-right: 0;
+      padding-bottom: 2px;
+  }
+
+  .navbar-expand-lg .navbar-collapse a.nav-link.active{
+    margin-bottom: 5px;
+  }
+
   .episode-main-inner{
     padding: 0;
     border: none;
@@ -318,6 +328,10 @@ span.count-number{
 
 @media (max-width: 991px) {
 
+  .card-list .title-box-mid h3 {
+    font-size: 24px;
+  }
+
   .user-content-info> .row .col-md-4,
   .active-profile-info> .row .col-md-4
    {
@@ -470,9 +484,6 @@ section.chart-wrapper{
   width: 30px;
   height: 52px;
 } */
-.card-list .title-box-mid h3 {
-  font-size: 26px;
-}
 
 .inner-popular .tag-listing ul > li:not(:last-child) {
   margin-bottom: 2px;
@@ -496,11 +507,28 @@ section.chart-wrapper{
 }
 .popular-tag {
   margin-bottom: 1rem;
+  height: fit-content;
 }
+
+.formbold-form-wrapper{
+  padding: 2rem 1rem;
 }
 
+.method-box{
+  padding: 1rem 1rem;
+}
 
+.following-list {
+  display: flex;
+  gap: 20px;
+}
 
+.profile-inner{
+  max-width: 300px;
+  margin: 0 auto 1.5rem;
+}
+
+}
 
 @media (max-width: 769px) {
 
@@ -958,12 +986,16 @@ section.edit-post-wrapper .col-md-6 {
 
 @media(max-width:991px) and (min-width:767px){
   .edit-profile .col-md-6 {
-    width: 100% !important;
+    box-sizing: border-box;
 }
 
 }
 
 @media(max-width:767px){
+
+  form#projectForm .row .col-md-4 {
+    width: 50%;
+  }
 
   .episode-main-box .row .row .col-md-12 {
     width: 50%;
@@ -1006,9 +1038,6 @@ section.edit-post-wrapper .col-md-6 {
   right: 10%;
 }
 
-.card-list .title-box-mid h3 {
-  font-size: 24px;
-}
 .dataTables_wrapper .dataTables_length label {
   margin-bottom: 31px;
 }
@@ -1023,10 +1052,24 @@ table.table-bordered.dataTable {
 .project_details_card .btn-primary.messages-button, .project_details_card .btn {
   font-size: 14px !important;
 }
+
+.formbold-form-wrapper .double-boxs{
+  flex-wrap: wrap;
 }
 
+}
 
 @media screen and (max-width: 576px) {
+
+  .following-list{
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .profile-inner{
+    max-width: 100%;
+  }
+
   .chatboxGroup .chat-panel .userporfile{
     width: calc(100% - 114px);
 }
@@ -1068,10 +1111,17 @@ table.table-bordered.dataTable {
   padding: 15px;
 }
 
+section.contact-wrapper{
+  padding: 3rem 0 4rem;
+}
 
 }
 
 @media (max-width: 580px) {
+
+  form#projectForm .row .col-md-4 {
+    width: 100%;
+  }
 
   .user-content-info> .row .col-md-4, .active-profile-info> .row .col-md-4 {
     width: 100%;

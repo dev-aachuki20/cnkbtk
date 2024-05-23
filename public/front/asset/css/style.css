@@ -204,7 +204,7 @@ select.form-control {
   box-shadow: none;
 }
 
-.btn-primary {
+.btn-primary,.edit-blacklist-user {
   background-color: var(--color-primary) !important;
   border-color: var(--color-primary) !important;
   text-transform: uppercase;
@@ -213,10 +213,18 @@ select.form-control {
   min-width: 100px;
 }
 
-.btn-primary:hover {
+.btn-primary:hover,.edit-blacklist-user:hover {
   color: var(--color-black);
   background-color: transparent !important;
   border-color: var(--color-primary) !important;
+}
+
+.edit-blacklist-user i{
+  color: var(--color-white);
+}
+
+.edit-blacklist-user:hover i{
+  color: var(--color-black);
 }
 
 input[type="radio"] {
@@ -326,6 +334,30 @@ input[type="radio"]:before {
 
 .login-form label a {
   color: #ff2e44;
+}
+
+label .required {
+  color: #ff2e44;
+  margin-left: 2px;
+  position: absolute;
+}
+
+.modal label{
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-black);
+  margin-bottom: 3px;
+  position: relative;
+}
+
+.modal-footer {
+  margin-top: 8px;
+}
+
+.modal-footer .btn-secondary {
+  height: 35px;
+  display: flex;
+  align-items: center;
 }
 
 .social-login-content {
@@ -2066,8 +2098,8 @@ section.contact-wrapper {
 
 .btn-close {
   border: none;
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   background-color: #f8fafb;
   border-radius: 50%;
   border: 1px solid #cae6f3;
@@ -2075,6 +2107,11 @@ section.contact-wrapper {
 
 .modal-header {
   justify-content: flex-end;
+}
+
+.modal-title {
+  font-size: 20px;
+  font-weight: 700;
 }
 
 /* privacy  */
@@ -4156,6 +4193,17 @@ li.page-item.disabled .page-link {
 body .daterangepicker .ranges li.active {
   background-color: #fa6157;
 }
+
+.daterangepicker td.in-range{
+  background-color: #ff625b29 !important;
+}
+
+.daterangepicker td.active, .daterangepicker td.active:hover {
+  background-color: #ff625b !important;
+  border-color: transparent;
+  color: #fff;
+}
+
 body .select2-container--default .select2-selection--multiple .select2-selection__rendered {
   padding: 9px 20px 9px 8px;
   display: flex;
@@ -4550,6 +4598,7 @@ form#excelForm{
 }
 .chatboxGroup .searchbar input {
     min-height: unset;
+    padding-left: 20px;
     padding-right: 50px;
     z-index: 0 !important;
 }
@@ -4988,6 +5037,7 @@ table.dataTable{
 }
 .categories-details table.dataTable {
   margin-bottom: 35px !important;
+  border: 1px solid #e1e1e180;
 }
 .dataTables_wrapper .dataTables_info {
   clear: both;
@@ -5011,4 +5061,52 @@ table.dataTable>tbody>tr.child ul.dtr-details{
 }
 .finish_project:hover svg{
   filter: invert(1);
+}
+
+li.page-item[aria-label="« Previous"] .page-link,
+li.page-item .page-link[aria-label="Next »"]{
+  padding: 0 16px;
+  font-size: 30px;
+  line-height: normal;
+  height: 39px;
+  display: flex;
+  align-items: center;
+}
+
+button.btn.btn-primary.btn-sm.finish_project {
+  background-color: #1ecb1e !important;
+  border-color: #1ecb1e !important;
+}
+
+button.btn.btn-primary.btn-sm.finish_project:hover{
+  background-color: transparent !important;
+}
+
+button.btn.btn-primary.btn-sm.finish_project:hover svg{
+  fill: #1ecb1e !important;
+  filter: none;
+}
+
+button.btn.btn-primary.btn-sm.finish_project:hover svg path{
+  fill: #1ecb1e !important;
+}
+
+.project_card_group .project_details_card .description_wapper .content h2{
+  font-size: 24px;
+}
+.project_card_group .project_details_card .description_wapper .content h3{
+  font-size: 22px;
+}
+.project_card_group .project_details_card .description_wapper .content h4{
+  font-size: 20px;
+}
+.project_card_group .project_details_card .description_wapper .content h5{
+  font-size: 18px;
+}
+
+img#posterImage {
+  margin-top: 6px;
+  padding: 5px;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
 }
