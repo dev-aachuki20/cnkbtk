@@ -11,15 +11,17 @@
 @section('content')
 <!-- hero privacy  -->
 <section class="privacy-hero">
-    <div class="container">
-        <div class="hero-banner">
-            <div class="prc-title">
-                <h2>{{__('cruds.global.user_chat')}}</h2>
-            </div>
-        </div>
+  <div class="container">
+    <div class="hero-banner">
+      <div class="prc-title">
+        <h2>{{__('cruds.global.user_chat')}} <span>{{__('global.chat')}}</span></h2>
+      </div>
     </div>
+  </div>
 </section>
 <!-- end  -->
+
+
 
 
 <section class="breadcrumb-wrap">

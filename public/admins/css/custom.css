@@ -1094,6 +1094,18 @@ span.badge.badge-info {
   object-fit: cover;
 }
 
+table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td {
+  vertical-align: middle;
+}
+
+table.dataTable.dtr-inline.collapsed>tbody>tr>td.dtr-control:before, table.dataTable.dtr-inline.collapsed>tbody>tr>th.dtr-control:before{
+  background-color: #ff6457 !important;
+}
+
+.page-link{
+  color: #5c5a67;
+}
+
 @media (max-width: 1440px) {
   label:not(.form-check-label):not(.custom-file-label) {
     font-size: 14px;
@@ -1651,6 +1663,16 @@ span.badge.badge-info {
 
 
 @media screen and (max-width: 576px) {
+
+  .authorname.chat-header .row {
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.chatboxGroup .authorname span.outgoing {
+  margin-left: 0;
+}
+
   .chatboxGroup .chat-panel .userporfile{
     width: calc(100% - 114px);
 }

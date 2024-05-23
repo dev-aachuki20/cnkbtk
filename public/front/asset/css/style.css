@@ -5093,15 +5093,36 @@ button.btn.btn-primary.btn-sm.finish_project:hover svg path{
 
 .project_card_group .project_details_card .description_wapper .content h2{
   font-size: 24px;
+  font-weight: 600;
 }
 .project_card_group .project_details_card .description_wapper .content h3{
   font-size: 22px;
+  font-weight: 600;
 }
 .project_card_group .project_details_card .description_wapper .content h4{
   font-size: 20px;
+  font-weight: 600;
 }
 .project_card_group .project_details_card .description_wapper .content h5{
   font-size: 18px;
+  font-weight: 600;
+}
+
+.ck.ck-editor__main>.ck-editor__editable h2{
+  font-size: 24px;
+  font-weight: 600;
+}
+.ck.ck-editor__main>.ck-editor__editable h3{
+  font-size: 22px;
+  font-weight: 600;
+}
+.ck.ck-editor__main>.ck-editor__editable h4{
+  font-size: 20px;
+  font-weight: 600;
+}
+.ck.ck-editor__main>.ck-editor__editable h5{
+  font-size: 18px;
+  font-weight: 600;
 }
 
 img#posterImage {
@@ -5109,4 +5130,17 @@ img#posterImage {
   padding: 5px;
   border: 1px solid #d9d9d9;
   border-radius: 5px;
+}
+
+table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td {
+  vertical-align: middle;
+}
+
+table.dataTable.dtr-inline.collapsed>tbody>tr>td.dtr-control:before, table.dataTable.dtr-inline.collapsed>tbody>tr>th.dtr-control:before{
+  background-color: var(--color-primary) !important;
+}
+
+.dtr-data .d-flex {
+  gap: 5px;
+  margin-top: 5px;
 }
