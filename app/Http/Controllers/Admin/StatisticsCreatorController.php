@@ -453,6 +453,7 @@ class StatisticsCreatorController extends Controller
 
                 $startDateCopy = $startDate->copy();
                 while ($startDateCopy->lte($endDate)) {
+                    $date = $startDateCopy->format('Y-m-d');
                     $count = isset($tagTypePostCounts[$date]) ? $tagTypePostCounts[$date]->count() : 0;
                     $dataCount[] = $count;
                     $startDateCopy->add(1, $interval);

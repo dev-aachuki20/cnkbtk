@@ -290,6 +290,7 @@ $siteSettingData = getSiteSetting();
             start_date: startDate,
             end_date: endDate,
           }
+          console.log('data',data);
         }
         $.ajax({
           url: url,

@@ -396,6 +396,7 @@ class StatisticsController extends Controller
         }
 
         $posts = Poster::whereBetween('created_at', [$startDate, $endDate])->orderBy('created_at')->get();
+
         $postCounts = $posts->groupBy(function ($access) use ($interval) {
             if ($interval === 'hour') {
                 return $access->created_at->format('h a');
@@ -460,20 +461,21 @@ class StatisticsController extends Controller
                 $dataCount = [];
                 $tagIds = Tag::where('tag_type', $tagType)->pluck('id')->toArray();
                 $tagTypeCount = Poster::whereIn('tags', $tagIds)->whereBetween('created_at', [$startDate, $endDate])->get();
+                
                 $tagTypePostCounts = $tagTypeCount->groupBy(function ($post) use ($interval) {
                     return $interval === 'hour' ? $post->created_at->format('h a') : $post->created_at->format('Y-m-d');
                 });
 
                 $startDateCopy = $startDate->copy();
                 while ($startDateCopy->lte($endDate)) {
+                    $date = $startDateCopy->format('Y-m-d');
                     $count = isset($tagTypePostCounts[$date]) ? $tagTypePostCounts[$date]->count() : 0;
-                    $dataCount[] = $count;
+                    $dataCount[] = $count;                    
                     $startDateCopy->add(1, $interval);
                 }
 
                 $getName = TagType::where('id', $tagType)->first();
                 $tagTypeName = app()->getLocale() == 'en' ? $getName->name_en : $getName->name_ch;
-
                 $datasets[$key + 1] = [
                     'label' => $tagTypeName,
                     'data' => $dataCount,
