@@ -136,7 +136,7 @@
 
     <!-- Bid Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">{{__('cruds.create_project.headings.add_bid_form')}}</h5>
@@ -150,7 +150,7 @@
                         <input type="hidden" id="user_id" value="">
                         <div class="mb-4">
                             <div class="form-group">
-                                <label for="budget">{{__('cruds.create_project.fields.budget')}} <span class="text-danger">*</span></label>
+                                <label for="budget">{{__('cruds.create_project.fields.budget')}}<span class="text-danger">*</span></label>
                                 <input type="number" class="form-control" name="bid" id="budget" placeholder="{{trans("global.enter")}} {{__('cruds.create_project.fields.budget')}}" />
                             </div>
                         </div>

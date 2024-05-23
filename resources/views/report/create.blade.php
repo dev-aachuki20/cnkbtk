@@ -12,12 +12,12 @@
                     <div class="modal-body">
                         <input type="hidden" name="poster_id" value="{{$id}}" id="poster_id" class="form-control" >
                         <div class="form-group  col-md-12">
-                            <label>{{trans("cruds.reports.fields.reason")}} <span class="required">*</span></label>
+                            <label>{{trans("cruds.reports.fields.reason")}}<span class="required">*</span></label>
                             <input type="text"  name="reason" value="" id="reason" class="form-control"  placeholder="{{trans("cruds.global.enter")}} {{trans("cruds.reports.fields.reason")}}">
                         </div>
                             <br>
                         <div class="form-group  col-md-12">
-                            <label>{{trans("cruds.reports.fields.description")}} <span class="required">*</span></label>
+                            <label>{{trans("cruds.reports.fields.description")}}<span class="required">*</span></label>
                             <textarea name="description"  class="form-control" placeholder="{{trans("cruds.global.enter")}} {{trans("cruds.reports.fields.description")}}" id="description" ></textarea>
                         </div>
 

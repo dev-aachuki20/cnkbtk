@@ -246,6 +246,8 @@ return [
         'total' => '全部的',
         'count' => '数数',
         'other' => '其他',
+        'user_chat' => '用户聊天',
+        'assign' => '分配',
     ],
 
     'lang' => [

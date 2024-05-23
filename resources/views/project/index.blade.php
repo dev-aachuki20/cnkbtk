@@ -88,7 +88,7 @@
 
 <!-- Finish Project Modal -->
 <div class="modal fade" id="finishProjectModal" tabindex="-1" aria-labelledby="finishProjectModalLabel" aria-hidden="true" data-bs-backdrop="static">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <form id="finishProjectForm" action="{{ route('finish.project') }}" method="POST">
                 @csrf

@@ -241,6 +241,8 @@ return [
         'total' => 'Total',
         'count' => 'Count',
         'other' => 'Other',
+        'user_chat' => 'User chat',
+        'assign' => 'Assign',
     ],
 
     'lang' => [

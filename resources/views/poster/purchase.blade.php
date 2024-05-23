@@ -1,5 +1,5 @@
 
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <form id="purchaseForm">
                      <input name="episode_id" type="hidden" value="{{Crypt::encrypt($episode->id)}}">

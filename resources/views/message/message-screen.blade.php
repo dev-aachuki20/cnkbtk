@@ -20,7 +20,7 @@
                 </div>
                 <div class="usersetting d-flex align-items-center gap-2">
                     <div class="{{$projectStatus == 1 ? 'confirmRequest' :''}}">
-                        <button type="button" class="dropdown-item del_btn dash-btn red-bg rounded-3 px-3 py-2" id="lockProjectBtn" data-project-id="{{$projectId}}" data-creator-id="{{$user->id}}" {{$projectStatus == 1 ? 'disabled' : ''}}>{{__('Assign')}}</button>
+                        <button type="button" class="dropdown-item del_btn dash-btn red-bg rounded-3 px-3 py-2" id="lockProjectBtn" data-project-id="{{$projectId}}" data-creator-id="{{$user->id}}" {{$projectStatus == 1 ? 'disabled' : ''}}>{{__('cruds.global.assign')}}</button>
                         {{-- <button type="button" class="dropdown-item del_btn dash-btn red-bg rounded-3 px-3 py-2 d-sm-none d-block" id="lockProjectBtn" data-project-id="{{$projectId}}" data-creator-id="{{$user->id}}" {{$projectStatus == 1 ? 'disabled' : ''}}>{{__('Assign')}}</button> --}}
                     </div>
                     {{-- <div class="dropdown drop-start d-sm-none d-block">
