@@ -124,6 +124,7 @@ $siteSettingData = getSiteSetting();
         var startDate = moment($('#dateRangePicker').data('daterangepicker').startDate).format('YYYY-MM-DD');
         var endDate = moment($('#dateRangePicker').data('daterangepicker').endDate).format('YYYY-MM-DD');
         var filterType = $('#tagtype-most-popular').val();
+        console.log('data');
         popularPostLoadData(url, startDate, endDate, tagTypes, filterType);
       }else{        
         loadData(url);
@@ -195,7 +196,7 @@ $siteSettingData = getSiteSetting();
 
 
     function popularPostLoadData(url , startDate, endDate, tagTypes, filterType) {
-      // alert(filterType);
+      // console.log(startDate, endDate);
       $.ajax({
         url: url,
         type: 'GET',
@@ -206,13 +207,17 @@ $siteSettingData = getSiteSetting();
           filterType: filterType,
         },
         success: function(response) {
+          console.log('success',startDate, endDate);
+          
           $(".profile-content").html(response.html);
-          // daterange picker
+          //daterange picker
+          // console.log(moment());
           $('#dateRangePicker').daterangepicker({
             maxDate: new Date(),
+            
             // autoUpdateInput: false,
-            startDate: moment().subtract(6, 'days'),
-            endDate: moment(),
+            startDate: moment(startDate),
+            endDate: moment(endDate),
             ranges: {
               '{{ __("cruds.statistics.statistics_filteration.day") }}': [moment(), moment()],
               '{{ __("cruds.statistics.statistics_filteration.week") }}': [moment().subtract(6, 'days'), moment()],
@@ -319,6 +324,7 @@ $siteSettingData = getSiteSetting();
         var tagTypes = $('#tagtype').val();
         var startDate = moment($('#dateRangePicker').data('daterangepicker').startDate).format('YYYY-MM-DD');
         var endDate = moment($('#dateRangePicker').data('daterangepicker').endDate).format('YYYY-MM-DD');
+        // console.log('start', startDate, endDate);
         popularPostLoadData(url, startDate, endDate, tagTypes, filterType);
     });   
 

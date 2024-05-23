@@ -383,6 +383,16 @@ class StatisticsController extends Controller
                 $interval = 'day';
             }
 
+            // if ($request->range == 'custom range') {
+            //     $startDate->startOfDay();
+            //     $endDate->endOfDay();
+            //     if ($startDate->diffInDays($endDate) == 0) {
+            //         $interval = 'hour';
+            //     } else {
+            //         $interval = 'day';
+            //     }
+            // }
+
             // $range = $request->range;
             // if ($range == 'custom range') {
             //     $startDate->startOfDay();
@@ -394,6 +404,8 @@ class StatisticsController extends Controller
             //     }
             // }
         }
+
+        // $interval = $startDate->diffInDays($endDate) == 0 ? 'hour' : 'day';
 
         $posts = Poster::whereBetween('created_at', [$startDate, $endDate])->orderBy('created_at')->get();
 
