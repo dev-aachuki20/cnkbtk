@@ -245,6 +245,7 @@ return [
         'close' =>'关闭',
         'total' => '全部的',
         'count' => '数数',
+        'other' => '其他',
     ],
 
     'lang' => [

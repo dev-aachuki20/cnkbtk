@@ -169,14 +169,12 @@
                                         @foreach($balcklistTag as $tag)
                                         <option value="{{$tag->id}}">{{app()->getLocale() == 'en' ? $tag->name_en : $tag->name_ch}}</option>
                                         @endforeach
-                                        <option value="other">Other</option>
+                                        <option value="other">{{trans("cruds.global.other")}}</option>
                                     </select>
                                 </div>
                                 <div class="mb-4">
                                     <div class="form-group" id="other-reason" style="display:none;">
-                                        {{-- <label for="other_reason">Other <span class="text-danger">*</span></label> --}}
-                                        {{-- <input type="text" name="other_reason" id="other_reason" class="form-control"> --}}
-                                        <textarea class="form-control" name="other_reason" id="other_reason" cols="30" rows="10" placeholder="Enter reason here"></textarea>
+                                        <textarea class="form-control" name="other_reason" id="other_reason" cols="30" rows="10" placeholder="{{trans("cruds.global.enter")}} {{trans("cruds.global.other")}} {{trans("pages.blacklist_user.form.fields.reason")}}"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -232,14 +230,13 @@
                                         @foreach($balcklistTag as $tag)
                                         <option value="{{$tag->id}}">{{app()->getLocale() == 'en' ? $tag->name_en : $tag->name_ch}}</option>
                                         @endforeach
-                                        <option value="other">Other</option>
+                                        <option value="other">{{trans("cruds.global.enter")}}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="mb-4" id="edit-other_reason_container">
                                 <div class="form-group form-group-edit">
-                                    {{-- <label for="edit-other_reason">{{ trans("pages.blacklist_user.form.fields.other_reason") }} <span class="text-danger">*</span></label> --}}
-                                    <textarea class="form-control" name="other_reason" id="edit-other_reason" cols="30" rows="10" placeholder="Other reason"></textarea>
+                                    <textarea class="form-control" name="other_reason" id="edit-other_reason" cols="30" rows="10" placeholder="{{trans("cruds.global.enter")}} {{trans("cruds.global.other")}} {{trans("pages.blacklist_user.form.fields.reason")}}"></textarea>
                                 </div>
                             </div>
                         </div>

@@ -240,6 +240,7 @@ return [
         'close' => 'Close',
         'total' => 'Total',
         'count' => 'Count',
+        'other' => 'Other',
     ],
 
     'lang' => [

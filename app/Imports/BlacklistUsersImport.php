@@ -21,6 +21,7 @@ class BlacklistUsersImport implements ToModel, WithStartRow
             return new BlacklistUser([
                 'email' => $row[0],
                 'ip_address' => $row[1],
+                'other_reason' => $row[2],
             ]);
         }
         return null;
