@@ -365,7 +365,9 @@
                         });
                     } else {
                         toastr.error(jqXHR.responseJSON.message, '{{trans("global.alert.error")}}');
-                        location.reload();
+                        setTimeout(() => {
+                            location.reload();
+                        }, 500);
                     }
                 },
                 complete: function() {

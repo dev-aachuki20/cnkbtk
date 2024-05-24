@@ -33,17 +33,25 @@ class BlacklistUserController extends Controller
             $userId = $user ? $user->id : null;
             $validatedData['user_id'] = $user ? $userId : null;
 
-            if ($validatedData['blacklist_tag_id'] == 'other') {
-                $validatedData['blacklist_tag_id'] = null;
-                $validatedData['other_reason'] = $request->other_reason;
+            $existingBlacklistUser = BlacklistUser::where('email', $validatedData['email'])->first();
+            if ($existingBlacklistUser) {
+                return response()->json([
+                    'message' => trans("messages.email_already_blacklisted"),
+                    'alert-type' => 'warning'
+                ], 400);
             } else {
-                $validatedData['other_reason'] = null;
+                if ($validatedData['blacklist_tag_id'] == 'other') {
+                    $validatedData['blacklist_tag_id'] = null;
+                    $validatedData['other_reason'] = $request->other_reason;
+                } else {
+                    $validatedData['other_reason'] = null;
+                }
+
+                BlacklistUser::create($validatedData);
+
+                DB::commit();
+                return response()->json(['message' => trans("messages.add_success", ['module' => trans("global.blacklist_user")]), 'alert-type' =>  'success'], 200);
             }
-
-            BlacklistUser::create($validatedData);
-
-            DB::commit();
-            return response()->json(['message' => trans("messages.add_success", ['module' => trans("global.blacklist_user")]), 'alert-type' =>  'success'], 200);
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json([

@@ -56,6 +56,7 @@ return [
     'finished_project_warning_message' => 'Once finished you will not able to reopen the project.',
 
     'authentication_failed' => 'Authentication failed. The provided email is blacklisted',
+    'email_already_blacklisted' => 'User is already blacklisted.',
 
     'other_reason' => [
         'required_if' => 'The other reason field is required when the reason is other.',
