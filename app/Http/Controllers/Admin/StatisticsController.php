@@ -452,20 +452,32 @@ class StatisticsController extends Controller
             foreach ($tagTypes as $key => $tagType) {
                 $dataCount = [];
                 $tagIds = Tag::where('tag_type', $tagType)->pluck('id')->toArray();
-                $tagTypeCount = Poster::whereIn('tags', $tagIds)->whereBetween('created_at', [$startDate, $endDate])->get();
                 
+                // Fetch posts using raw query to match tags correctly
+                $tagTypeCount = Poster::whereBetween('created_at', [$startDate, $endDate])
+                    ->where(function ($query) use ($tagIds) {
+                        foreach ($tagIds as $tagId) {
+                            $query->orWhereRaw('FIND_IN_SET(?, tags)', [$tagId]);
+                        }
+                    })
+                    ->get();
+                
+                // Group posts by date based on interval
                 $tagTypePostCounts = $tagTypeCount->groupBy(function ($post) use ($interval) {
-                    return $interval === 'hour' ? $post->created_at->format('h a') : $post->created_at->format('Y-m-d');
+                    return $interval === 'hour' ? $post->created_at->format('Y-m-d H:00:00') : $post->created_at->format('Y-m-d');
                 });
-
+        
                 $startDateCopy = $startDate->copy();
+        
                 while ($startDateCopy->lte($endDate)) {
-                    $date = $startDateCopy->format('Y-m-d');
+                    $date = $interval === 'hour' ? $startDateCopy->format('Y-m-d H:00:00') : $startDateCopy->format('Y-m-d');
+        
+                    // Ensure the count is correctly checked
                     $count = isset($tagTypePostCounts[$date]) ? $tagTypePostCounts[$date]->count() : 0;
-                    $dataCount[] = $count;                    
-                    $startDateCopy->add(1, $interval);
+                    $dataCount[] = $count;
+                    $startDateCopy->add(1, $interval === 'hour' ? 'hour' : 'day');
                 }
-
+        
                 $getName = TagType::where('id', $tagType)->first();
                 $tagTypeName = app()->getLocale() == 'en' ? $getName->name_en : $getName->name_ch;
                 $datasets[$key + 1] = [
@@ -490,6 +502,10 @@ class StatisticsController extends Controller
                 $colorIndex++;
             }
         }
+
+
+
+
         $html = view('statistics.graph', compact('total', 'average', 'labels', 'datasets', 'pluginText', 'xAxisText', 'yAxisText', 'labelText'))->render();
         return response()->json(['success' => true, 'html' => $html], 200);
     }
