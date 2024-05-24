@@ -17,13 +17,7 @@
   }
 
  .navbar-expand-lg .navbar-collapse a.nav-link {
-      padding-left: 0;
-      padding-right: 0;
       padding-bottom: 2px;
-  }
-
-  .navbar-expand-lg .navbar-collapse a.nav-link.active{
-    margin-bottom: 5px;
   }
 
   .episode-main-inner{

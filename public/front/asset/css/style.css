@@ -2312,6 +2312,7 @@ h5.categories-details-title {
 .categories-details-head .edit-post  a{
   width: 40px;
   height: 40px;
+  cursor: pointer;
 }
 .categories-details-head .edit-post  a svg{
   width: 25px;

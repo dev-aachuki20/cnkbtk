@@ -377,7 +377,7 @@
 
         // View sample file
         $('#openSampleFileBtn').click(function() {
-            window.open("{{ asset('sample_sheet_blacklist_user.xlsx') }}", '_blank');
+            window.open("{{ asset('sample_sheet_blacklist_user_list.xlsx') }}", '_blank');
         });
 
 
