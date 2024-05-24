@@ -363,23 +363,15 @@ class StatisticsCreatorController extends Controller
                 $interval = 'day';
             }
         } else {
-            $range = $request->input('custom range');
-            if ($startDate->diffInDays($endDate) == 0) {
-                $interval = 'hour';
-            } else {
-                $interval = 'day';
+            if ($request->range == 'custom range') {
+                $startDate->startOfDay();
+                $endDate->endOfDay();
+                if ($startDate->diffInDays($endDate) == 0) {
+                    $interval = 'hour';
+                } else {
+                    $interval = 'day';
+                }
             }
-
-            // $range = $request->range;
-            // if ($range == 'custom range') {
-            //     $startDate->startOfDay();
-            //     $endDate->endOfDay();
-            //     if ($startDate->diffInDays($endDate) == 0) {
-            //         $interval = 'hour';
-            //     } else {
-            //         $interval = 'day';
-            //     }
-            // }
         }
 
         $posts = Poster::whereBetween('created_at', [$startDate, $endDate])->orderBy('created_at')->get();
@@ -446,17 +438,27 @@ class StatisticsCreatorController extends Controller
             foreach ($tagTypes as $key => $tagType) {
                 $dataCount = [];
                 $tagIds = Tag::where('tag_type', $tagType)->pluck('id')->toArray();
-                $tagTypeCount = Poster::whereIn('tags', $tagIds)->whereBetween('created_at', [$startDate, $endDate])->get();
+
+                // Fetch posts using raw query to match tags correctly
+                $tagTypeCount = Poster::whereBetween('created_at', [$startDate, $endDate])
+                    ->where(function ($query) use ($tagIds) {
+                        foreach ($tagIds as $tagId) {
+                            $query->orWhereRaw('FIND_IN_SET(?, tags)', [$tagId]);
+                        }
+                    })
+                    ->get();
+
+
                 $tagTypePostCounts = $tagTypeCount->groupBy(function ($post) use ($interval) {
-                    return $interval === 'hour' ? $post->created_at->format('h a') : $post->created_at->format('Y-m-d');
+                    return $interval === 'hour' ? $post->created_at->format('Y-m-d H:00:00') : $post->created_at->format('Y-m-d');
                 });
 
                 $startDateCopy = $startDate->copy();
                 while ($startDateCopy->lte($endDate)) {
-                    $date = $startDateCopy->format('Y-m-d');
+                    $date = $interval === 'hour' ? $startDateCopy->format('Y-m-d H:00:00') : $startDateCopy->format('Y-m-d');
                     $count = isset($tagTypePostCounts[$date]) ? $tagTypePostCounts[$date]->count() : 0;
                     $dataCount[] = $count;
-                    $startDateCopy->add(1, $interval);
+                    $startDateCopy->add(1, $interval === 'hour' ? 'hour' : 'day');
                 }
 
                 $getName = TagType::where('id', $tagType)->first();
