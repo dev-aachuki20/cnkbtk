@@ -452,7 +452,7 @@ class StatisticsController extends Controller
             foreach ($tagTypes as $key => $tagType) {
                 $dataCount = [];
                 $tagIds = Tag::where('tag_type', $tagType)->pluck('id')->toArray();
-                
+
                 // Fetch posts using raw query to match tags correctly
                 $tagTypeCount = Poster::whereBetween('created_at', [$startDate, $endDate])
                     ->where(function ($query) use ($tagIds) {
@@ -461,23 +461,23 @@ class StatisticsController extends Controller
                         }
                     })
                     ->get();
-                
+
                 // Group posts by date based on interval
                 $tagTypePostCounts = $tagTypeCount->groupBy(function ($post) use ($interval) {
                     return $interval === 'hour' ? $post->created_at->format('Y-m-d H:00:00') : $post->created_at->format('Y-m-d');
                 });
-        
+
                 $startDateCopy = $startDate->copy();
-        
+
                 while ($startDateCopy->lte($endDate)) {
                     $date = $interval === 'hour' ? $startDateCopy->format('Y-m-d H:00:00') : $startDateCopy->format('Y-m-d');
-        
+
                     // Ensure the count is correctly checked
                     $count = isset($tagTypePostCounts[$date]) ? $tagTypePostCounts[$date]->count() : 0;
                     $dataCount[] = $count;
                     $startDateCopy->add(1, $interval === 'hour' ? 'hour' : 'day');
                 }
-        
+
                 $getName = TagType::where('id', $tagType)->first();
                 $tagTypeName = app()->getLocale() == 'en' ? $getName->name_en : $getName->name_ch;
                 $datasets[$key + 1] = [
@@ -521,15 +521,22 @@ class StatisticsController extends Controller
         $datasets = [];
         $colors = ['#00ff00', '#0000ff', '#fc0b03', '#605f6b', '#1e1b42', '#421b3d', '#ff0000'];
         if (!$request->has(['start_date', 'end_date', 'range'])) {
+
             if ($range == 'day') {
                 $startDate->startOfDay();
                 $endDate->endOfDay();
                 $interval = 'hour';
             }
             if ($range == 'week') {
-                $startDate = Carbon::today()->subDays(6)->startOfDay();
-                $endDate = $endDate->endOfDay();
-                $interval = 'day';
+                if (isset($request->isCustomWeek)) {
+                    $startDate->startOfDay();
+                    $endDate->endOfDay();
+                    $interval = 'day';
+                } else {
+                    $startDate = Carbon::today()->subDays(6)->startOfDay();
+                    $endDate = $endDate->endOfDay();
+                    $interval = 'day';
+                }
             }
             if ($range == 'month') {
                 $startDate->startOfMonth()->startOfDay();
@@ -537,6 +544,7 @@ class StatisticsController extends Controller
                 $interval = 'day';
             }
         } else {
+
             if ($request->range == 'custom range') {
                 $startDate->startOfDay();
                 $endDate->endOfDay();
@@ -602,7 +610,6 @@ class StatisticsController extends Controller
         while ($startDateCopy->lte($endDate)) {
             $date = $interval === 'hour' ? $startDateCopy->format('Y-m-d H:00:00') : $startDateCopy->format('Y-m-d');
             $count = $popularPostersCounts[$date] ?? 0;
-            // $labels[] = $date;
             $labels[] = $interval === 'hour' ? $startDateCopy->format('h A') : $date;
             $data[] = $count;
             $startDateCopy->add(1, $interval);

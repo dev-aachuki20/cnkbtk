@@ -124,7 +124,7 @@ $siteSettingData = getSiteSetting();
         var startDate = moment($('#dateRangePicker').data('daterangepicker').startDate).format('YYYY-MM-DD');
         var endDate = moment($('#dateRangePicker').data('daterangepicker').endDate).format('YYYY-MM-DD');
         var filterType = $('#tagtype-most-popular').val();
-        popularPostLoadData(url, startDate, endDate, tagTypes, filterType);
+        popularPostLoadData(startDate, endDate, tagTypes, filterType);
       }else{        
         loadData(url);
       }
@@ -141,10 +141,9 @@ $siteSettingData = getSiteSetting();
         type: 'GET',
         success: function(response) {
           $(".profile-content").html(response.html);
-          // daterange picker
+
           $('#dateRangePicker').daterangepicker({
             maxDate: new Date(),
-            // autoUpdateInput: false,
             startDate: moment().subtract(6, 'days'),
             endDate: moment(),
             ranges: {
@@ -194,7 +193,16 @@ $siteSettingData = getSiteSetting();
     }
 
 
-    function popularPostLoadData(url , startDate, endDate, tagTypes, filterType) {
+    async function popularPostLoadData(startDate, endDate, tagTypes, filterType) {
+      selectedLabel = await getSelectedLabel();
+      var isCustomWeek = true;
+      if (selectedLabel === 'month' || selectedLabel === 'week' || selectedLabel === 'day') {
+        var activeRoute = $('.filter-tabs.active').data('route');
+        var url = activeRoute + '/' + selectedLabel;
+      }else{
+        var activeUrl = $('.filter-tabs.active').data('id');
+        var url = activeRoute + '/' + selectedLabel; 
+      }
       $.ajax({
         url: url,
         type: 'GET',
@@ -203,15 +211,14 @@ $siteSettingData = getSiteSetting();
           end_date: endDate,
           tagTypes: tagTypes,
           filterType: filterType,
+          isCustomWeek : isCustomWeek
         },
         success: function(response) {
           
           $(".profile-content").html(response.html);
-          //daterange picker
+
           $('#dateRangePicker').daterangepicker({
             maxDate: new Date(),
-            
-            // autoUpdateInput: false,
             startDate: moment(startDate),
             endDate: moment(endDate),
             ranges: {
@@ -260,6 +267,26 @@ $siteSettingData = getSiteSetting();
       });
     }
 
+
+    function getSelectedLabel(){
+      const picker = $('#dateRangePicker').data('daterangepicker');
+      const startDate = picker.startDate;
+      const endDate = picker.endDate;
+
+      const diffInDays = Math.ceil(Math.abs(endDate.diff(startDate, 'days')));
+      let selectedLabel;
+      if (diffInDays === 0) {
+        selectedLabel = "Day";
+      } else if (diffInDays === 6) {
+        selectedLabel = "Week";
+      } else if (startDate.isSameMonth(endDate)) {
+        selectedLabel = "Month";
+      } else {
+        selectedLabel = "Custom Range";
+      }
+      return selectedLabel.toLowerCase();
+    }
+
     //on change on tag type 
     $(document).on('change', '#tagtype', function() {
       var filterType = $('#tagtype-most-popular').val();
@@ -267,12 +294,10 @@ $siteSettingData = getSiteSetting();
       var startDate = moment($('#dateRangePicker').data('daterangepicker').startDate).format('YYYY-MM-DD');
       var endDate = moment($('#dateRangePicker').data('daterangepicker').endDate).format('YYYY-MM-DD');
       var label = "custom range";
-      // var label = $('.filter-tabs.active').data('route').split('/').pop() || "week";
 
       if (tagTypes) {
         var activeRoute = $('.filter-tabs.active').data('route');
         var url = activeRoute + '/' + label;
-
         var activeMenu = $('.filter-tabs.active').attr('id');
         if(activeMenu == 'popular-posters'){
           var data = {
@@ -296,12 +321,6 @@ $siteSettingData = getSiteSetting();
           url: url,
           type: 'GET',
           data: data,
-          // data: {
-          //   range: label,
-          //   tagTypes: tagTypes,
-          //   start_date: startDate,
-          //   end_date: endDate,
-          // },
           success: function(response) {
             $(".profile-content").html(response.html);
           },
@@ -315,11 +334,10 @@ $siteSettingData = getSiteSetting();
     // //on change on visited and purchased
     $(document).on('change', '#tagtype-most-popular', function() {
         var filterType = $(this).val();
-        var url = $('.filter-tabs.active').data('id');
         var tagTypes = $('#tagtype').val();
         var startDate = moment($('#dateRangePicker').data('daterangepicker').startDate).format('YYYY-MM-DD');
         var endDate = moment($('#dateRangePicker').data('daterangepicker').endDate).format('YYYY-MM-DD');
-        popularPostLoadData(url, startDate, endDate, tagTypes, filterType);
+        popularPostLoadData(startDate, endDate, tagTypes, filterType);
     });   
 
     function toggleTagTypeDropdown(activeMenu) {
@@ -344,7 +362,6 @@ $siteSettingData = getSiteSetting();
       }
     }
 
-    // daterange picker
     // Function to handle the filter change
     function handleFilterChange(start, end, label) {
       var label = label.toLowerCase();
@@ -374,10 +391,6 @@ $siteSettingData = getSiteSetting();
           url: url,
           type: 'GET',
           data: data,
-          // data: {
-          //   range: label,
-          //   tagTypes: tagTypes,
-          // },
           success: function(response) {
             $(".profile-content").html(response.html);
           },
@@ -411,12 +424,6 @@ $siteSettingData = getSiteSetting();
             url: activeUrl,
             type: 'GET',
             data: data,
-            // data: {
-            //   start_date: startDate,
-            //   end_date: endDate,
-            //   range: label,
-            //   tagTypes: tagTypes,
-            // },
             success: function(response) {
               $(".profile-content").html(response.html);
             },

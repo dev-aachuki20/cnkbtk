@@ -124,7 +124,7 @@ $(document).ready(function() {
             var startDate = moment($('#dateRangePicker').data('daterangepicker').startDate).format('YYYY-MM-DD');
             var endDate = moment($('#dateRangePicker').data('daterangepicker').endDate).format('YYYY-MM-DD');
             var filterType = $('#tagtype-most-popular').val();
-            popularPostLoadData(url, startDate, endDate, tagTypes, filterType);
+            popularPostLoadData(startDate, endDate, tagTypes, filterType);
         }else{        
             loadData(url);
         }
@@ -139,10 +139,8 @@ $(document).ready(function() {
             type: 'GET',
             success: function(response) {
                 $(".profile-content").html(response.html);
-                // daterange picker
                 $('#dateRangePicker').daterangepicker({
                     maxDate: new Date(),
-                    // autoUpdateInput: false,
                     startDate: moment().subtract(6, 'days'),
                     endDate: moment(),
                     ranges: {
@@ -191,8 +189,16 @@ $(document).ready(function() {
         });
     }
 
-    function popularPostLoadData(url , startDate, endDate, tagTypes, filterType) {
-      // alert(filterType);
+    async function popularPostLoadData(startDate, endDate, tagTypes, filterType) {
+        selectedLabel = await getSelectedLabel();
+        var isCustomWeek = true;
+        if (selectedLabel === 'month' || selectedLabel === 'week' || selectedLabel === 'day') {
+            var activeRoute = $('.filter-tabs.active').data('route');
+            var url = activeRoute + '/' + selectedLabel;
+        }else{
+            var activeUrl = $('.filter-tabs.active').data('id');
+            var url = activeRoute + '/' + selectedLabel; 
+        }
       $.ajax({
         url: url,
         type: 'GET',
@@ -204,10 +210,8 @@ $(document).ready(function() {
         },
         success: function(response) {
           $(".profile-content").html(response.html);
-          // daterange picker
           $('#dateRangePicker').daterangepicker({
             maxDate: new Date(),
-            // autoUpdateInput: false,
             startDate: moment().subtract(6, 'days'),
             endDate: moment(),
             ranges: {
@@ -256,6 +260,24 @@ $(document).ready(function() {
       });
     }
 
+    function getSelectedLabel(){
+      const picker = $('#dateRangePicker').data('daterangepicker');
+      const startDate = picker.startDate;
+      const endDate = picker.endDate;
+      const diffInDays = Math.ceil(Math.abs(endDate.diff(startDate, 'days')));
+      let selectedLabel;
+      if (diffInDays === 0) {
+        selectedLabel = "Day";
+      } else if (diffInDays === 6) {
+        selectedLabel = "Week";
+      } else if (startDate.isSameMonth(endDate)) {
+        selectedLabel = "Month";
+      } else {
+        selectedLabel = "Custom Range";
+      }
+      return selectedLabel.toLowerCase();
+    }
+
     $(document).on('change', '#tagtype', function() {
         var filterType = $('#tagtype-most-popular').val();
         var tagTypes = $(this).val();
@@ -291,12 +313,6 @@ $(document).ready(function() {
                 url: url,
                 type: 'GET',
                 data: data,
-                // data: {
-                //   range: label,
-                //   tagTypes: tagTypes,
-                //   start_date: startDate,
-                //   end_date: endDate,
-                // },
                 success: function(response) {
                     $(".profile-content").html(response.html);
                 },
@@ -307,14 +323,14 @@ $(document).ready(function() {
         }
     });
 
-    // //on change on visited and purchased
+    //on change on visited and purchased
     $(document).on('change', '#tagtype-most-popular', function() {
         var filterType = $(this).val();
         var url = $('.filter-tabs.active').data('id');
         var tagTypes = $('#tagtype').val();
         var startDate = moment($('#dateRangePicker').data('daterangepicker').startDate).format('YYYY-MM-DD');
         var endDate = moment($('#dateRangePicker').data('daterangepicker').endDate).format('YYYY-MM-DD');
-        popularPostLoadData(url, startDate, endDate, tagTypes, filterType);
+        popularPostLoadData(startDate, endDate, tagTypes, filterType);
     }); 
 
     function toggleTagTypeDropdown(activeMenu) {
@@ -339,7 +355,6 @@ $(document).ready(function() {
       }
     }    
 
-    // daterange picker
     // Function to handle the filter change
     function handleFilterChange(start, end, label) {
         var label = label.toLowerCase();
@@ -369,10 +384,6 @@ $(document).ready(function() {
                 url: url,
                 type: 'GET',
                 data: data,
-                // data: {
-                //   range: label,
-                //   tagTypes: tagTypes,
-                // },
                 success: function(response) {
                     $(".profile-content").html(response.html);
                 },
@@ -405,12 +416,6 @@ $(document).ready(function() {
                 url: activeUrl,
                 type: 'GET',
                 data: data,
-                // data: {
-                //   start_date: startDate,
-                //   end_date: endDate,
-                //   range: label,
-                //   tagTypes: tagTypes,
-                // },
                 success: function(response) {
                 $(".profile-content").html(response.html);
                 },
