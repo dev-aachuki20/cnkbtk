@@ -21,6 +21,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        \App\Http\Middleware\CheckIfBlacklisted::class,
     ];
 
     /**
@@ -37,7 +38,8 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\Localization::class, /* <--- add this */
-            \App\Http\Middleware\RecordVisitor::class
+            \App\Http\Middleware\RecordVisitor::class,
+            \App\Http\Middleware\CheckIfBlacklisted::class,
         ],
 
         'api' => [
@@ -72,5 +74,6 @@ class Kernel extends HttpKernel
         'iscreator' => \App\Http\Middleware\IsCreator::class,
         'checkProjectAccess' => \App\Http\Middleware\CheckProjectAccess::class,
         'projectAccessToAdmin' => \App\Http\Middleware\ProjectAccessToAdmin::class,
+        'blacklist.check' => \App\Http\Middleware\CheckIfBlacklisted::class,
     ];
 }

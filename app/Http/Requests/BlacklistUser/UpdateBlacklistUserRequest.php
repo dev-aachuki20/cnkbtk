@@ -28,8 +28,10 @@ class UpdateBlacklistUserRequest extends FormRequest
         return [
             'email' => ['required', 'email', Rule::unique('blacklist_users')->ignore($id)],
             'ip_address' => 'required|ip',
-            'blacklist_tag_id' => 'required',
-            'other_reason' => ['required_if:blacklist_tag_id,other', 'nullable', 'string', 'max:255']
+            // 'blacklist_tag_id' => 'required',
+            // 'other_reason' => ['required_if:blacklist_tag_id,other', 'nullable', 'string', 'max:255']
+            'blacklist_tag_id' => 'nullable',
+            'other_reason' => ['nullable', 'string', 'max:255']
         ];
     }
 

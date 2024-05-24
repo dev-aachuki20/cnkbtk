@@ -230,7 +230,7 @@
                                         @foreach($balcklistTag as $tag)
                                         <option value="{{$tag->id}}">{{app()->getLocale() == 'en' ? $tag->name_en : $tag->name_ch}}</option>
                                         @endforeach
-                                        <option value="other">{{trans("cruds.global.enter")}}</option>
+                                        <option value="other">{{trans("cruds.global.other")}}</option>
                                     </select>
                                 </div>
                             </div>
