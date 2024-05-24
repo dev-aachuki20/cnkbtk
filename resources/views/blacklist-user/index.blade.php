@@ -305,6 +305,9 @@
                 success: function(response) {
                     $("#excelForm").trigger("reset");
                     toastr.success(response.message);
+                    setTimeout(() => {
+                            location.reload();
+                        }, 500);
                 },
                 complete: function() {
                     hideLoader();
@@ -379,7 +382,7 @@
 
         // View sample file
         $('#openSampleFileBtn').click(function() {
-            window.open("{{ asset('sample_sheet_blacklist_user_list.xlsx') }}", '_blank');
+            window.open("{{ asset('sample_excel_blacklist_user.xlsx') }}", '_blank');
         });
 
 

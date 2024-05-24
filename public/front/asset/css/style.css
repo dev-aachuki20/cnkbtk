@@ -5024,6 +5024,7 @@ table.dataTable{
 .dataTables_wrapper div.dataTables_length select {
   height: 40px;
   text-align: center;
+  appearance: auto;
 }
 .dataTables_wrapper .dataTables_length label {
   display: inline-flex;
@@ -5034,7 +5035,8 @@ table.dataTable{
 .dataTables_wrapper .dataTables_filter {
   position: relative;
   top: -31px;
-  margin-left: 20px;
+  margin-left: auto;
+  width: fit-content;
 }
 .categories-details table.dataTable {
   margin-bottom: 35px !important;
