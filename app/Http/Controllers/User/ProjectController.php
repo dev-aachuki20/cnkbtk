@@ -377,11 +377,12 @@ class ProjectController extends Controller
 
             $projectCreator = DB::table('project_creator')->where('project_id', $request->project_id)->where('creator_id', $request->auth_id)->first();
 
+
             if (!$projectCreator) {
                 throw ValidationException::withMessages(['message' => 'Project creator relationship not found.']);
             }
 
-            $getUserStatus = DB::table('project_creator')->where('project_id', $request->project_id)->where('creator_id', $request->auth_id)->value('user_status');
+            $getUserStatus = DB::table('project_creator')->where('project_id', $request->project_id)->where('creator_id', $request->auth_id)->value('creator_status');
 
             if ($getUserStatus == 1) {
                 return response()->json(['message' => 'Sorry, you cannot bid. This project is locked.'], 403);

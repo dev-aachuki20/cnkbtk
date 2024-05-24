@@ -29,7 +29,7 @@ class MessageController extends Controller
                 $getProjectStatus = $project->project_status;
                 if ($getProjectStatus == 1) {
                     // get only one creator that is associated with that project after project is locked.
-                    $creartorId = DB::table('project_creator')->where('project_id', $projectId)->value('creator_id');
+                    $creartorId = DB::table('project_creator')->where('project_id', $projectId)->where('creator_status' , 1)->value('creator_id');
                     $creators = User::where('id', $creartorId)->get();
                 } else {
                     //get all creators so I can show in the sidebar.
