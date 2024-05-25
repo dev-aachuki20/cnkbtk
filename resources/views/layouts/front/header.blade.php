@@ -10,6 +10,7 @@
 
           </a>
 
+          {{-- Mobile navbar start --}}
           <div class="lang-wrapper mobile-vc">
             @auth
             <div class="avatar-nav-profile">
@@ -121,19 +122,61 @@
                           </svg>
                           {{trans("global.post_history")}}
                         </a>
-                      </li>
-                     {{-- <li>
-                        <a class="dropdown-item" href="{{route('chats.index')}}">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M13.5 21.5H2C1.45 21.5 1 21.05 1 20.5V7.5C1 3.5 3 1.5 7 1.5H15C19 1.5 21 3.5 21 7.5V12.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M11.91 7.34003L6.72004 12.53C6.52004 12.73 6.33004 13.12 6.29004 13.4L6.01004 15.38C5.91004 16.1 6.41004 16.6 7.13004 16.5L9.11004 16.22C9.39004 16.18 9.78004 15.99 9.98004 15.79L15.17 10.6C16.06 9.71003 16.49 8.67003 15.17 7.35003C13.85 6.02003 12.81 6.44003 11.91 7.34003Z" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M11.17 8.08002C11.3871 8.8552 11.8002 9.56141 12.3694 10.1306C12.9387 10.6999 13.6449 11.1129 14.42 11.33" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M23 18.5C23 19.25 22.79 19.96 22.42 20.56C22.0675 21.1525 21.5667 21.643 20.967 21.9831C20.3674 22.3233 19.6894 22.5014 19 22.5C18.3106 22.5014 17.6326 22.3233 17.033 21.9831C16.4333 21.643 15.9325 21.1525 15.58 20.56C15.1993 19.9404 14.9985 19.2272 15 18.5C15 16.29 16.79 14.5 19 14.5C21.21 14.5 23 16.29 23 18.5Z" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M20.561 19.49H18.431L18.5 17.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                          </svg>
-                          {{trans("global.chat")}}
-                        </a>
-                      </li> --}}
+                      </li>  
+                      
+                      
+                      @if(auth()->user()->role_id == config("constant.role.admin") || auth()->user()->role_id == config("constant.role.creator"))
+                        <li>
+                          <a class="dropdown-item {{Request::is('blacklist/users*') || Route::currentRouteName() === 'blacklist.user.show' ? 'active' : ''}}" href="{{route('blacklist.user')}}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                              <g clip-path="url(#clip0_22_2)">
+                                <path d="M20.59 22C20.59 18.13 16.74 15 12 15C7.26003 15 3.41003 18.13 3.41003 22M12 12C13.3261 12 14.5979 11.4732 15.5356 10.5355C16.4733 9.59785 17 8.32608 17 7C17 5.67392 16.4733 4.40215 15.5356 3.46447C14.5979 2.52678 13.3261 2 12 2C10.674 2 9.40218 2.52678 8.4645 3.46447C7.52682 4.40215 7.00003 5.67392 7.00003 7C7.00003 8.32608 7.52682 9.59785 8.4645 10.5355C9.40218 11.4732 10.674 12 12 12Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_22_2">
+                                  <rect width="24" height="24" fill="white" />
+                                </clipPath>
+                              </defs>
+                            </svg>
+                            {{trans("global.blacklist_user")}}
+                          </a>
+                        </li>
+                      @endif
+
+
+                      @if(auth()->user()->role_id == config("constant.role.creator"))
+                        <li>
+                          <a class="dropdown-item {{Route::currentRouteName() === 'user.project.request' ? 'active' : ''}}" href="{{ route('user.project.request') }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                              <g clip-path="url(#clip0_22_2)">
+                                <path d="M20.59 22C20.59 18.13 16.74 15 12 15C7.26003 15 3.41003 18.13 3.41003 22M12 12C13.3261 12 14.5979 11.4732 15.5356 10.5355C16.4733 9.59785 17 8.32608 17 7C17 5.67392 16.4733 4.40215 15.5356 3.46447C14.5979 2.52678 13.3261 2 12 2C10.674 2 9.40218 2.52678 8.4645 3.46447C7.52682 4.40215 7.00003 5.67392 7.00003 7C7.00003 8.32608 7.52682 9.59785 8.4645 10.5355C9.40218 11.4732 10.674 12 12 12Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_22_2">
+                                  <rect width="24" height="24" fill="white" />
+                                </clipPath>
+                              </defs>
+                            </svg>
+                            {{trans("global.project_request")}}
+                          </a>
+                        </li>
+                      @endif
+
+                      @if(Auth::user() != null && auth()->user()->role_id == config("constant.role.user"))
+
+                        <li>
+                          <a class="dropdown-item {{Request::is('user/project') ? 'active' : ''}}" href="{{route('user.project.index')}}">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                              <path d="M15.75 9H8.25" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                              <path d="M15.75 15H8.25" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>
+                              
+                            {{trans("cruds.create_project.projects")}}
+                          </a>
+                        </li>
+                      @endif
+
                       <li>
                         <form method="post" action="{{route('logout')}}">
 
@@ -202,6 +245,7 @@
 
             </div>
           </div>
+          {{-- mobile --}}
 
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 
@@ -392,20 +436,6 @@
                           </a>
                         </li>
                         @endif
-
-
-                      {{--  <li>
-                          <a class="dropdown-item {{Request::is('chats') ? 'active' : ''}}" href="{{route('chats.index')}}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                              <path d="M13.5 21.5H2C1.45 21.5 1 21.05 1 20.5V7.5C1 3.5 3 1.5 7 1.5H15C19 1.5 21 3.5 21 7.5V12.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                              <path d="M11.91 7.34003L6.72004 12.53C6.52004 12.73 6.33004 13.12 6.29004 13.4L6.01004 15.38C5.91004 16.1 6.41004 16.6 7.13004 16.5L9.11004 16.22C9.39004 16.18 9.78004 15.99 9.98004 15.79L15.17 10.6C16.06 9.71003 16.49 8.67003 15.17 7.35003C13.85 6.02003 12.81 6.44003 11.91 7.34003Z" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-                              <path d="M11.17 8.08002C11.3871 8.8552 11.8002 9.56141 12.3694 10.1306C12.9387 10.6999 13.6449 11.1129 14.42 11.33" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-                              <path d="M23 18.5C23 19.25 22.79 19.96 22.42 20.56C22.0675 21.1525 21.5667 21.643 20.967 21.9831C20.3674 22.3233 19.6894 22.5014 19 22.5C18.3106 22.5014 17.6326 22.3233 17.033 21.9831C16.4333 21.643 15.9325 21.1525 15.58 20.56C15.1993 19.9404 14.9985 19.2272 15 18.5C15 16.29 16.79 14.5 19 14.5C21.21 14.5 23 16.29 23 18.5Z" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-                              <path d="M20.561 19.49H18.431L18.5 17.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                            {{trans("global.chat")}}
-                          </a>
-                        </li> --}}
 
                         @if(Auth::user() != null && auth()->user()->role_id == config("constant.role.user"))
 
