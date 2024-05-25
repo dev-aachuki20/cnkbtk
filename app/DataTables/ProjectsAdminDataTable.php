@@ -53,7 +53,11 @@ class ProjectsAdminDataTable extends DataTable
                     $status = 0;
                 }
 
-                $html = ' <div class="form-group custom-control custom-switch custom-switch-off-danger custom-switch-on-success"><input class="user_status custom-control-input" id="normal' . $record->id . '"  value="' . $status . '" ' . $checkedStatus . ' type="checkbox" name="status" data-status-id="' . $record->id . '"> <label class="custom-control-label" for="normal' . $record->id . '">' . $currentStatus . '</label></div>';
+                if ($record->project_status != 1) {
+                    $html = ' <div class="form-group custom-control custom-switch custom-switch-off-danger custom-switch-on-success"><input class="user_status custom-control-input" id="normal' . $record->id . '"  value="' . $status . '" ' . $checkedStatus . ' type="checkbox" name="status" data-status-id="' . $record->id . '"> <label class="custom-control-label" for="normal' . $record->id . '">' . $currentStatus . '</label></div>';
+                } else {
+                    $html = '';
+                }
                 return $html;
             })
 

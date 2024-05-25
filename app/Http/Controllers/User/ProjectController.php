@@ -342,7 +342,7 @@ class ProjectController extends Controller
     {
         $user =  Auth::user();
         // $allRequestProjects = $user->projects;
-        $allRequestProjects = $user->projects->map(function ($project) use ($user) {
+        $allRequestProjects = $user->projects->where('status', 1)->map(function ($project) use ($user) {
             $creatorStatus = DB::table('project_creator')
                 ->where('project_id', $project->id)
                 ->where('creator_id', $user->id)

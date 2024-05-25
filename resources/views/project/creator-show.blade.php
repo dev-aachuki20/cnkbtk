@@ -46,6 +46,7 @@
                     @endif
 
 
+                    @if(isset($project) && $project->status == 1)
                     <div class="col">
                         <ul>
                             <li>
@@ -117,6 +118,7 @@
                             </li>
                         </ul>
                     </div>
+                    @endif
 
 
                     <!-- creatorStatus == 1 -->
