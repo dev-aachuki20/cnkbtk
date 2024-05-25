@@ -43,11 +43,8 @@ class ProjectCancelledNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        // if ($this->creator->id) {
-            return (new MailMessage)
-                // ->markdown('mail.cancel_project', ['project' => $this->project, 'creator' => $this->creator]);
-                ->markdown('mail.cancel_project', ['project' => $this->project, 'creator' => $notifiable]);
-        // }
+        return (new MailMessage)
+            ->markdown('mail.cancel_project', ['project' => $this->project, 'creator' => $notifiable]);
     }
 
     /**

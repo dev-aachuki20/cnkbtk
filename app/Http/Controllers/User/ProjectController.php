@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\User;
 
-use App\DataTables\ProjectStatusDataTable;
 use App\DataTables\ProjectUserDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Project\StoreProjectRequest;
@@ -15,7 +14,6 @@ use App\Notifications\ProjectCancelledNotification;
 use App\Notifications\ProjectConfirmedForAdminNotification;
 use App\Notifications\ProjectConfirmedForCreatorNotification;
 use App\Notifications\ProjectConfirmedForUserNotification;
-use App\Notifications\ProjectConfirmedNotification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
@@ -214,24 +212,6 @@ class ProjectController extends Controller
                 }
             }
 
-
-            // $creatorIds = $request->input('creator_id');
-            // // add one more condition like if remove all creators during edit then send mail to all.
-            // if ($creatorIds) {
-            //     foreach ($creatorIds as $creatorId) {
-            //         $creator = User::find($creatorId);
-            //         Notification::send($creator, new ProjectUpdatedNotification($project, $creator));
-            //     }
-            // } else {
-            //     $creator = User::where('role_id', config("constant.role.creator"))->get();
-            //     if ($creator) {
-            //         foreach ($creator as $creatorId) {
-            //             $creator = User::find($creatorId->id);
-            //             Notification::send($creator, new ProjectUpdatedNotification($project, $creator));
-            //         }
-            //     }
-            // }
-
             DB::commit();
 
             $routeUrl = URL::route('user.project.index');
@@ -380,24 +360,6 @@ class ProjectController extends Controller
         }
         return response()->json(['message' => 'Project confirmed successfully.']);
     }
-
-    // cancel project by creator
-    // public function cancelProjectByCreator(Request $request)
-    // {
-    //     if ($request->creatorId != Auth::id()) {
-    //         return response()->json(['message' => 'You are not authorized to cancel this project.'], 403);
-    //     }
-    //     $project = Project::findOrFail($request->projectId);
-
-    //     DB::table('project_creator')->where('project_id', $request->projectId)->where('creator_id', $request->creatorId)->update(['creator_status' => 0]);
-
-    //     $creator = User::findOrFail($request->creatorId);
-    //     $user = User::findOrFail($request->userId);
-    //     $user->notify(new ProjectCancelledNotification($project, $creator));
-    //     return response()->json(['message' => 'Project cancelled successfully.']);
-    // }
-
-
 
     // Confirm project by user by mail confirm button
     public function confirmProject($creator_id, $project_id)
