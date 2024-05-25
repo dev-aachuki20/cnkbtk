@@ -40,9 +40,9 @@
                                 <tr>
                                     <td style="padding:0 0 36px 0;color:#153643;">
                                         <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">The bid for the project has been updated.</p>
-                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">Creator: {{$creator->user_name}}</p>
-                                        <p style="margin:0;font-size:16px;line-height:24px;">Bid: {{$bid . config("constant.currency.rmb")}}</p>
-                                        <p style="margin:0;font-size:16px;line-height:24px;">Please use the below link to perfom action.</p>
+                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">Creator Name: {{$creator->user_name}}</p>
+                                        <p style="margin:0;font-size:16px;line-height:24px;">Creator Bid: {{$bid . config("constant.currency.rmb")}}</p>
+                                        <p style="margin:0;font-size:16px;line-height:24px;">Please approve or cancel the request</p>
 
                                     </td>
                                 </tr>
@@ -50,16 +50,15 @@
                                 <tr>
                                     <td style="padding:0 0 36px 0;color:#153643;">
                                         <p style="margin:0;font-size:16px;line-height:24px;">
-                                            <a href="" style="display: block; padding: 10px; background: #00255b; width: fit-content; color: #fff; text-decoration: none; font-size: 14px;">
-                                                Confirm
+                                            <a href="{{route('user.project.confirm',['creator_id' => $creator->id, 'project_id' => $project->id])}}" style="display: block; padding: 10px; background: #00255b; width: fit-content; color: #fff; text-decoration: none; font-size: 14px;">
+                                                Assign
                                             </a>
-
                                         </p>
                                     </td>
 
                                     <td style="padding:0 0 36px 0;color:#153643;">
                                         <p style="margin:0;font-size:16px;line-height:24px;">
-                                            <a href="" style="display: block; padding: 10px; background: #00255b; width: fit-content; color: #fff; text-decoration: none; font-size: 14px;">
+                                            <a href="{{route('user.project.cancel',['creator_id' => $creator->id, 'project_id' => $project->id])}}" style="display: block; padding: 10px; background: #00255b; width: fit-content; color: #fff; text-decoration: none; font-size: 14px;">
                                                 Cancel
                                             </a>
                                         </p>

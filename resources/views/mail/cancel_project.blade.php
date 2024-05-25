@@ -39,7 +39,8 @@
                                 <tr>
                                     <td style="padding:0 0 36px 0;color:#153643;">
                                         <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">Project Cancelled</p>
-                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">Your project has been Cancelled by {{$creator->user_name}} </p>
+                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">Hello {{ucfirst($creator->username)}},</p>
+                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">The project {{ucfirst($project->title)}} has been cancelled.</p>
                                     </td>
                                 </tr>
 

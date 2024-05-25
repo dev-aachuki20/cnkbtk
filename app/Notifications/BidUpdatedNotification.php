@@ -11,16 +11,18 @@ class BidUpdatedNotification extends Notification
     use Queueable;
     protected $creator;
     protected $bid;
+    protected $project;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($creator, $bid)
+    public function __construct($creator, $bid, $project)
     {
         $this->creator = $creator;
         $this->bid = $bid;
+        $this->project = $project;
     }
 
     /**
@@ -43,7 +45,7 @@ class BidUpdatedNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->markdown('mail.bid_update', ['creator' => $this->creator, 'bid' => $this->bid]);
+            ->markdown('mail.bid_update', ['creator' => $this->creator, 'bid' => $this->bid, 'project' => $this->project]);
     }
 
     /**

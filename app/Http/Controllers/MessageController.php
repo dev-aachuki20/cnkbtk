@@ -123,15 +123,6 @@ class MessageController extends Controller
         return  response()->json(['message' => 'Message sent successfully']);
     }
 
-
-    // public function displayUserSide($projectId)
-    // {
-    //     $userId = Auth::user()->id;
-    //     $user = User::findOrFail($userId);
-
-    //     return view('message.message-screen');
-    // }
-
     public function messageScreen(Request $request)
     {
         try {
@@ -139,8 +130,6 @@ class MessageController extends Controller
             $user = User::findOrFail($userId);
             $senderId = Auth()->user()->id;
             $projectId =  $request->project_id;
-
-            // $userStatus =  DB::table('project_creator')->where('project_id', $projectId)->where('creator_id', $userId)->value('user_status');
 
             $project = Project::findOrFail($projectId);
             $projectStatus = $project->project_status;
@@ -158,8 +147,6 @@ class MessageController extends Controller
                 ->get();
 
             $html = view('message.message-screen', compact('user', 'getChatData', 'projectId', 'projectStatus'))->render();
-
-            // return response()->json(['message' => trans("messages.add_success", ['module' => trans("global.blacklist_user")]), 'alert-type' =>  'success'], 200);
 
             return response()->json(['html' => $html]);
         } catch (\Exception $e) {

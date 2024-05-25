@@ -12,16 +12,16 @@ class ProjectCancelledNotification extends Notification
 {
     use Queueable;
     protected $project;
-    protected $creator;
+    // protected $creator;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($project, $creator)
+    public function __construct($project)
     {
         $this->project = $project;
-        $this->creator = $creator;
+        // $this->creator = $creator;
     }
 
     /**
@@ -43,10 +43,11 @@ class ProjectCancelledNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        if ($this->creator->id) {
+        // if ($this->creator->id) {
             return (new MailMessage)
-                ->markdown('mail.cancel_project', ['project' => $this->project, 'creator' => $this->creator]);
-        }
+                // ->markdown('mail.cancel_project', ['project' => $this->project, 'creator' => $this->creator]);
+                ->markdown('mail.cancel_project', ['project' => $this->project, 'creator' => $notifiable]);
+        // }
     }
 
     /**
