@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Project\StoreProjectRequest;
 use App\Models\BlacklistUser;
 use App\Models\Project;
+use App\Models\Rating;
 use App\Models\TagType;
 use App\Models\User;
 use App\Notifications\BidUpdatedNotification;
@@ -274,7 +275,7 @@ class ProjectController extends Controller
                 ->where('creator_id', $user->id)
                 ->value('bid');
             return [
-                'project' => $project, 'creatorStatus' => $creatorStatus,'bid' => $bid,
+                'project' => $project, 'creatorStatus' => $creatorStatus, 'bid' => $bid,
             ];
         });
 
@@ -433,7 +434,8 @@ class ProjectController extends Controller
     public function finishedProject(Request $request)
     {
         $request->validate([
-            'remark' => 'required|string|max:255',
+            'remark' => 'nullable|string|max:255',
+            'star_rating' => 'required|integer|min:1|max:5',
         ]);
 
         $projectId = $request->project_id;
@@ -445,7 +447,28 @@ class ProjectController extends Controller
             $creatorId = DB::table('project_creator')->where('project_id', $projectId)->value('creator_id');
             $creator =  User::where('id', $creatorId)->first(); //get creator
             $user = Auth()->user(); //get user           
-            $admin = User::where('role_id', config('constant.role.admin'))->first(); //get admin        
+            $admin = User::where('role_id', config('constant.role.admin'))->first(); //get admin 
+
+            $ratingData = [
+                'project_id' => $projectId,
+                'creator_id' => $creatorId,
+                'user_id' => $project->user_id,
+            ];
+
+            if ($user->role_id == config('constant.role.user')) {
+                $ratingData['user_rating'] = $request->star_rating;
+                $ratingData['user_remark'] = $request->remark;
+            } else {
+                $ratingData['creator_rating'] = $request->star_rating;
+                $ratingData['creator_remark'] = $request->remark;
+            }
+
+            // Rating::create($ratingData);
+            Rating::updateOrCreate(
+                ['project_id' => $projectId, 'creator_id' => $creatorId, 'user_id' => $project->user_id],
+                $ratingData
+            );
+
 
             Notification::send($user, new ProjectFinishedNotification($project));
             Notification::send($admin, new ProjectFinishedNotification($project));

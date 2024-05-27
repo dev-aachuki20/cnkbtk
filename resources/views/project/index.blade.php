@@ -99,7 +99,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="remark" class="form-label w-100">Rating</label>
+                        <label for="remark" class="form-label w-100">Rating<span class="text-danger">*</span></label>
                         <div class="ratingWrapper">
                         <input type="hidden" name="star_rating" id="star_rating" value="" >
                         <div class="rating" role="radiogroup" id="starRatings" aria-labelledby="rating">
@@ -229,6 +229,9 @@
                         url: url,
                         data: formData,
                         dataType: 'JSON',
+                        beforeSend: function(response) {
+                            showLoader();
+                        },
                         success: function(response) {
                             toastr.success(response.message);
                             $('#finishProjectModal').modal('hide');
@@ -244,6 +247,9 @@
                                 var errorMessage = response.responseJSON.message || 'An error occurred. Please try again.';
                                 $('#remark').after('<div id="remark-error" class="text-danger mt-2">' + errorMessage + '</div>');
                             }
+                        },
+                        complete: function() {
+                            hideLoader();
                         }
                         
                     });
