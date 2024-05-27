@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Rule;
+use Carbon\Carbon;
 
 
 class ProjectController extends Controller
@@ -263,17 +264,17 @@ class ProjectController extends Controller
                 ->where('creator_id', $user->id)
                 ->value('creator_status');
 
-            $userStatus = DB::table('project_creator')
-                ->where('project_id', $project->id)
-                ->where('creator_id', $user->id)
-                ->value('user_status');
+            // $userStatus = DB::table('project_creator')
+            //     ->where('project_id', $project->id)
+            //     ->where('creator_id', $user->id)
+            //     ->value('user_status');
 
             $bid = DB::table('project_creator')
                 ->where('project_id', $project->id)
                 ->where('creator_id', $user->id)
                 ->value('bid');
             return [
-                'project' => $project, 'creatorStatus' => $creatorStatus, 'userStatus' =>  $userStatus, 'bid' => $bid,
+                'project' => $project, 'creatorStatus' => $creatorStatus,'bid' => $bid,
             ];
         });
 
@@ -459,4 +460,26 @@ class ProjectController extends Controller
             return response()->json(['message' => trans("messages.something_went_wrong"), 'alert-type' => 'error'], 500);
         }
     }
+
+    // public function deleteRequestProjects(Request $request)
+    // {
+    //     $oneWeekAgo = Carbon::now()->subWeek();
+
+    //     $projectsToDelete = DB::table('projects')
+    //         ->leftJoin('project_creator', 'projects.id', '=', 'project_creator.project_id')
+    //         ->whereDate('projects.created_at', '=', $oneWeekAgo->format('Y-m-d'))
+    //         ->whereNull('project_creator.creator_status')
+    //         ->where('project_creator.user_status', '1')
+    //         ->select('projects.id')
+    //         ->groupBy('projects.id')
+    //         ->havingRaw('COUNT(project_creator.id) = 1')
+    //         ->get();
+
+    //     // Delete the projects
+    //     foreach ($projectsToDelete as $project) {
+    //         Project::destroy($project->id);
+    //     }
+
+    //     return redirect()->back()->with('success', 'Projects deleted successfully.');
+    // }
 }

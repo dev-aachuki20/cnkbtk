@@ -81,10 +81,15 @@
 
                             <li>
                                 <div class="main-title description-content">
-                                    <h6> <span>{{trans("cruds.create_project.fields.description")}} :</span> <button type="button" class="btn btn-secondary add-bid-btn">...Read More</button></h6>
-                                    <div class="content">
-                                        {!! $project->comment ?? '' !!}
-                                    </div> 
+                                    <h6> <span>{{trans("cruds.create_project.fields.description")}} </span></h6>                                    
+                                    <div class="content" id="content">
+                                        <div class="description-text">
+                                            {!! $project->comment ?? '' !!}
+                                        </div>
+                                        @if(isset($project->comment))
+                                            <button type="button" class="btn btn-dark add-bid-btn btn-sm read-more-btn">Read More</button>
+                                        @endif
+                                    </div>
                                 </div>
                             </li>
                             <li>
