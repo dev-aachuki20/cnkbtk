@@ -81,16 +81,9 @@ class ProjectsAdminDataTable extends DataTable
             // })
 
             ->addColumn('user_rating', function ($record) {
-                // return optional($record->ratings->first())->user_rating ?? '';
                 return renderStars(optional($record->ratings->first())->user_rating);
-                // $userRating = optional($record->ratings->firstWhere('user_id', $record->user_id))->user_rating ?? 0;
-                // return renderStars($userRating);
-
-                //$userRating = $record->ratings->where('user_id', $record->user_id)->first();
-            //return $userRating ? renderStars($userRating->user_rating) : 'N/A';
             })
             ->addColumn('creator_rating', function ($record) {
-                // return optional($record->ratings->first())->creator_rating ?? '';
                 return renderStars(optional($record->ratings->first())->creator_rating);
             })
             ->addColumn('action', function ($record) {
