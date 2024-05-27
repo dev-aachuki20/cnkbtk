@@ -57,6 +57,7 @@ return [
 
     'authentication_failed' => 'Authentication failed. The provided email is blacklisted',
     'email_already_blacklisted' => 'User is already blacklisted.',
+    'creator_message'=> 'If no selection is made, the request is automatically sent to all creators.',
 
     'other_reason' => [
         'required_if' => 'The other reason field is required when the reason is other.',

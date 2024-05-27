@@ -59,6 +59,7 @@ return [
     'finished_project_warning_message' => '完成后您将无法重新打开该项目。',
     'authentication_failed' => '认证失败。提供的电子邮件已被列入黑名单',
     'email_already_blacklisted' => '用户已被列入黑名单。',
+    'creator_message'=> '如果没有选择，则请求自动发送给所有创建者。',
 
     'other_reason' => [
         'required_if' => '当原因是其他时，其他原因字段是必需的。',
