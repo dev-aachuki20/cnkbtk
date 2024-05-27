@@ -1140,7 +1140,9 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td.dtr-control:before, table.dataT
   padding-left: 0;
 }
 
-
+.check-active:before{
+  color:  orange;
+}
 
 @media (max-width: 1440px) {
   label:not(.form-check-label):not(.custom-file-label) {

@@ -125,9 +125,10 @@ if (!function_exists('renderStars')) {
                     <div class="rating" role="radiogroup" id="starRatings" aria-labelledby="rating">';
 
         for ($i = 5; $i >= 1; $i--) {
-            $checked = ($i == $rating) ? 'checked' : '';
-            $html .= '<input type="radio" id="star' . $i . '" name="star_rating" value="' . $i . '" ' . $checked . ' disabled>
-                      <label for="star' . $i . '" aria-label="' . $i . ' stars" class="mb-1"></label>';
+            $checked = ($i <= $rating) ? 'checked' : '';
+			$className = ($i <= $rating) ? 'check-active' : '';
+            $html .= '<input type="radio" class="'.$className.'" id="star' . $i . '" name="star_rating" value="' . $i . '" ' . $checked . ' disabled>
+                      <label for="star' . $i . '" aria-label="' . $i . ' stars" class="mb-1 '.$className.'"></label>';
         }
 
         $html .= '</div></div>';
