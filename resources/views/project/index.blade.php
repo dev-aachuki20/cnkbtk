@@ -242,10 +242,13 @@
                         error: function(response) {
                             if (response.responseJSON.errors && response.responseJSON.errors.remark) {
                                 var errorMessage = response.responseJSON.errors.remark[0];
-                                $('#remark').after('<div id="remark-error" class="text-danger mt-2">' + errorMessage + '</div>');
+                                // $('#remark').after('<div id="remark-error" class="text-danger mt-2">' + errorMessage + '</div>');
+                                $('#starRatings').after('<div id="star_rating-error" class="text-danger mt-2">' + errorMessage + '</div>');
+
                             } else {
                                 var errorMessage = response.responseJSON.message || 'An error occurred. Please try again.';
-                                $('#remark').after('<div id="remark-error" class="text-danger mt-2">' + errorMessage + '</div>');
+                                // $('#remark').after('<div id="remark-error" class="text-danger mt-2">' + errorMessage + '</div>');
+                                $('#starRatings').after('<div id="star_rating-error" class="text-danger mt-2">' + errorMessage + '</div>');
                             }
                         },
                         complete: function() {

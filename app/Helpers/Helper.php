@@ -118,17 +118,15 @@ if(!function_exists('getCurrentAvailablePoint')){
 	}
 }
 
-
 if (!function_exists('renderStars')) {
     function renderStars($rating)
     {
         $html = '<div class="ratingWrapper">
-                    <input type="hidden" name="star_rating" id="star_rating" value="">
                     <div class="rating" role="radiogroup" id="starRatings" aria-labelledby="rating">';
 
         for ($i = 5; $i >= 1; $i--) {
             $checked = ($i == $rating) ? 'checked' : '';
-            $html .= '<input type="radio" id="star' . $i . '" name="star_rating" value="' . $i . '" ' . $checked . '>
+            $html .= '<input type="radio" id="star' . $i . '" name="star_rating" value="' . $i . '" ' . $checked . ' disabled>
                       <label for="star' . $i . '" aria-label="' . $i . ' stars" class="mb-1"></label>';
         }
 
@@ -137,6 +135,7 @@ if (!function_exists('renderStars')) {
         return $html;
     }
 }
+
 
 
 

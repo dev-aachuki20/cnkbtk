@@ -103,5 +103,20 @@
         }
       });
   });
+
+  $(document).ready(function() {
+    
+    window.addEventListener('DOMContentLoaded', function () {
+    const stars = document.querySelectorAll('.rating input');
+    
+    for (let i = 0; i < stars.length; i++) {
+        stars[i].addEventListener('click', function () {
+            document.getElementById("star_rating").value = this.value;
+        });
+    }
+});
+
+
+  });
 </script>
 @endsection
