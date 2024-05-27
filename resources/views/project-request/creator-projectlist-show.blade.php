@@ -92,9 +92,11 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="rating-wrapper mb-3">
-                                        <button class="btn btn-primary" type="button">Rating</button>
-                                    </div>
+                                    @if($item['project']->project_status == 1)
+                                        <div class="rating-wrapper mb-3">
+                                            <button class="btn btn-primary" type="button">{{__('cruds.global.rating')}}</button>
+                                        </div>
+                                    @endif
                                     <!-- buttons -->
                                     <div class="col-12 buttongroupborder">
                                         <div class="row gx-3 row-gap-3">

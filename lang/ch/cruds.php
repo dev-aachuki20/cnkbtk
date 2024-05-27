@@ -248,6 +248,7 @@ return [
         'other' => '其他',
         'user_chat' => '用户',
         'assign' => '分配',
+        'rating' => '评分',
     ],
 
     'lang' => [
@@ -371,7 +372,9 @@ return [
             'status' => [
                 'locked' => '锁定',
                 'unlocked' => '解锁',
-            ]
+            ],
+            'user_rating' =>  'User Rating',
+            'creator_rating' => 'Creator Rating',
         ],
         'headings' => [
             'cancelled_project'     => '取消',

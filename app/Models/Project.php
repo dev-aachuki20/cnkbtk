@@ -40,4 +40,15 @@ class Project extends Model
     {
         return $this->belongsTo(Tag::class);
     }
+
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+
+    // Alternatively, if a project has only one rating (one-to-one relationship)
+    public function rating()
+    {
+        return $this->hasOne(Rating::class);
+    }
 }

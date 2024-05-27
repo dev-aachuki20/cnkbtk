@@ -99,7 +99,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="remark" class="form-label w-100">Rating<span class="text-danger">*</span></label>
+                        <label for="remark" class="form-label w-100">{{__('cruds.global.rating')}}<span class="text-danger">*</span></label>
                         <div class="ratingWrapper">
                         <input type="hidden" name="star_rating" id="star_rating" value="" >
                         <div class="rating" role="radiogroup" id="starRatings" aria-labelledby="rating">

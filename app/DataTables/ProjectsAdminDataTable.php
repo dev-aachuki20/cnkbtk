@@ -22,7 +22,7 @@ class ProjectsAdminDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables()
-            ->eloquent($query->with('user', 'tags')->select('projects.*'))
+            ->eloquent($query->with('user', 'ratings')->select('projects.*'))
             ->addIndexColumn()
             ->editColumn('title', function ($record) {
                 return ucfirst($record->title) ?? '';
@@ -79,6 +79,15 @@ class ProjectsAdminDataTable extends DataTable
             //             ->orWhere('name_ch', 'like', "%$keyword%");
             //     });
             // })
+
+            ->addColumn('user_rating', function ($record) {
+                // return optional($record->ratings->first())->user_rating ?? '';
+                return renderStars(optional($record->ratings->first())->user_rating);
+            })
+            ->addColumn('creator_rating', function ($record) {
+                // return optional($record->ratings->first())->creator_rating ?? '';
+                return renderStars(optional($record->ratings->first())->creator_rating);
+            })
             ->addColumn('action', function ($record) {
                 $action  = '<div class="d-flex">';
 
@@ -98,7 +107,7 @@ class ProjectsAdminDataTable extends DataTable
                 $action .= '</div>';
                 return $action;
             })
-            ->rawColumns(['tags', 'status', 'action']);
+            ->rawColumns(['tags', 'status', 'action','user_rating', 'creator_rating']);
     }
 
     /**
@@ -155,6 +164,8 @@ class ProjectsAdminDataTable extends DataTable
             // Column::make('tags_id')->title(trans("cruds.create_project.fields.tags")),
             Column::make('user_ip')->title(trans("cruds.create_project.fields.user_ip")),
             Column::make('budget')->title(trans("cruds.create_project.fields.budget")),
+            Column::make('user_rating')->title(trans("cruds.create_project.fields.user_rating")),
+            Column::make('creator_rating')->title(trans("cruds.create_project.fields.creator_rating")),
             Column::computed('status')->title(trans("cruds.global.status"))->orderable(false)->searchable(true),
             Column::make('created_at')->title(trans("cruds.global.created_date"))->orderable(false)->searchable(false),
             Column::computed('action')->title(trans("cruds.global.action"))->orderable(false)->searchable(false),

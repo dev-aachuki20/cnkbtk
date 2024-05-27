@@ -1106,6 +1106,42 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td.dtr-control:before, table.dataT
   color: #5c5a67;
 }
 
+/* rating  */
+
+.ratingWrapper {
+  margin-bottom: 5px;
+}
+
+.rating {
+  display: inline-block;
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  vertical-align: middle;
+}
+.rating input {
+  display: none;
+}
+.rating label {
+  display: inline-block;
+  padding: 5px 5px;
+  font-size: 24px !important;
+  line-height: 20px;
+  color: #777777;
+  cursor: pointer;
+}
+.rating label:before {
+  content: '\2605';
+}
+.rating input:checked ~ label:before {
+  color:  orange;
+}
+
+.star_one{
+  padding-left: 0;
+}
+
+
+
 @media (max-width: 1440px) {
   label:not(.form-check-label):not(.custom-file-label) {
     font-size: 14px;

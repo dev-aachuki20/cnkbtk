@@ -243,6 +243,7 @@ return [
         'other' => 'Other',
         'user_chat' => 'User',
         'assign' => 'Assign',
+        'rating' => 'Rating',
     ],
 
     'lang' => [
@@ -369,7 +370,9 @@ return [
             'status' => [
                 'locked' => 'Locked',
                 'unlocked' => 'Unlocked',
-            ]
+            ],
+            'user_rating' =>  'User Rating',
+            'creator_rating' => 'Creator Rating',
         ],
         'headings' => [
             'cancelled_project'     => 'Cancelled',
