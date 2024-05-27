@@ -166,7 +166,17 @@
         
                       <li>
                         <div class="main-title">
-                          <h6> <span>{{trans("cruds.create_project.fields.budget")}} </span>{{ $creator->bid  ?? $project->budget }} CN¥</h6>
+                          <!--<h6> <span>{{trans("cruds.create_project.fields.budget")}} </span>{{ $creator->bid  ?? $project->budget }} CN¥</h6>-->
+                          <h6>
+                    <span>{{ trans('cruds.create_project.fields.budget') }}</span>
+                            @php
+                                $bid = $creator ? DB::table('project_creator')
+                                    ->where('project_id', $project->id)
+                                    ->where('creator_id', $creator->id)
+                                    ->value('bid') : null;
+                            @endphp
+                            {{ $bid ?? $project->budget }} CN¥
+                        </h6>
                         </div>
                       </li>
         

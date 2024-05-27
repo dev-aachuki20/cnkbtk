@@ -39,7 +39,7 @@
                                 <tr>
                                     <td style="padding:0 0 36px 0;color:#153643;">
                                         <p>Hello {{$creator->user_name}},</p>
-                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">After your confirmation now The project "{{ $project->type }}" has been confirmed with {{$user->user_name}}.</p>
+                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">Congratulations! Your bid is approved. The project "{{ $project->type }}" has been confirmed with {{$user->user_name}}.</p>
                                     </td>
                                 </tr>
 
