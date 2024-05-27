@@ -89,6 +89,9 @@
                                             <button type="button" class="btn btn-dark add-bid-btn btn-sm read-more-btn">Read More</button>
                                         </div>
                                     </div>
+                                    <div class="rating-wrapper mb-3">
+                                        <button class="btn btn-primary" type="button">Rating</button>
+                                    </div>
                                     <!-- buttons -->
                                     <div class="col-12 buttongroupborder">
                                         <div class="row gx-3 row-gap-3">

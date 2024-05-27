@@ -45,7 +45,7 @@ class ProjectConfirmedForUserNotification extends Notification
     {
         if ($this->creator->id) {
             return (new MailMessage)
-                ->markdown('mail.project_confirmed_for_user', ['project' => $this->project, 'creator' => $this->creator, 'user' => $this->user]);
+                ->markdown('mail.project_confirmed_for_creator', ['project' => $this->project, 'creator' => $this->creator, 'user' => $this->user]);
         }
     }
 

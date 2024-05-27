@@ -5147,3 +5147,41 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td.dtr-control:before, table.dataT
   gap: 5px;
   margin-top: 5px;
 }
+
+.ratingWrapper {
+  margin-bottom: 5px;
+}
+
+.rating {
+  display: inline-block;
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  vertical-align: middle;
+}
+.rating input {
+  display: none;
+}
+.rating label {
+  display: inline-block;
+  padding: 5px 5px;
+  font-size: 24px;
+  line-height: 20px;
+  color: #777777;
+  cursor: pointer;
+  border: 1px solid;
+  border-radius: 4px;
+}
+.rating label:before {
+  content: '\2605';
+}
+.rating input:checked ~ label:before {
+  color:  orange;
+}
+
+.star_one{
+  padding-left: 0;
+}
+
+.rating input:checked ~ label{
+  border-color: orange;
+}
