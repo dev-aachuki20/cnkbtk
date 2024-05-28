@@ -5076,10 +5076,10 @@ li.page-item .page-link[aria-label="Next »"]{
   align-items: center;
 }
 
-/* button.btn.btn-primary.btn-sm.finish_project {
+button.btn.btn-primary.btn-sm.finish_project {
   background-color: #1ecb1e !important;
   border-color: #1ecb1e !important;
-} */
+}
 
 button.btn.btn-primary.btn-sm.finish_project:hover{
   background-color: transparent !important;

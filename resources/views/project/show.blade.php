@@ -68,29 +68,26 @@
                   </div>
                 </div> --}}
 
-                <div class="row">
-                  <div class="col-lg-auto col-sm-3 col-4 main-title">
-                    <h6 class="cardtitle">{{ trans("cruds.create_project.fields.tags") }}</h6>
-                  </div>
-                  <div class="col-lg col-sm-9 col-8 d-flex align-items-center">
-                    <div class="content">
-                      @php
-                        $tagIds = explode(',', $project->tags); // Convert the string to an array of IDs
-                        $tags = \App\Models\Tag::whereIn('id', $tagIds)->get(); // Fetch the tags from the database
+                <div class="col-12">  
+                  <div class="row">
+                    <div class="col-lg-auto col-sm-3 col-4 main-title">
+                      <h6 class="cardtitle">{{ trans("cruds.create_project.fields.tags") }}</h6>
+                    </div>
+                    <div class="col-lg col-sm-9 col-8 d-flex align-items-center">
+                      <div class="content">
+                        @php
+                          $tagIds = explode(',', $project->tags); // Convert the string to an array of IDs
+                          $tags = \App\Models\Tag::whereIn('id', $tagIds)->get(); // Fetch the tags from the database
+                          
+                          $tagNames = app()->getLocale() == 'en' ? $tags->pluck('name_en')->toArray() : $tags->pluck('name_ch')->toArray();
+                        @endphp
                         
-                        $tagNames = app()->getLocale() == 'en' ? $tags->pluck('name_en')->toArray() : $tags->pluck('name_ch')->toArray();
-                      @endphp
-                      
-                      {{ implode(', ', $tagNames) }}
+                        {{ implode(', ', $tagNames) }}
+                      </div>
                     </div>
                   </div>
                 </div>
                 
-
-
-
-
-
                 <div class="col-12">
                   <div class="row">
                     <div class="col-lg-auto col-sm-3 col-4 main-title"><h6 class="cardtitle">{{trans("cruds.create_project.fields.budget")}}</h6></div>

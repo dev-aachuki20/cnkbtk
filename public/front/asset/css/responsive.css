@@ -9,6 +9,10 @@
   header a.nav-link{
     font-size: 14px;
   }
+
+  .project_card_group .project_details_card .main-title .cardtitle{
+      max-width: 150px;
+  }
 }
 @media (max-width: 1199px){
 

@@ -104,7 +104,7 @@
     </div>
   </div>
 
-  <div class="col-md-6">
+  <div class="col-md-12">
     <div class="mb-4 form-check">
       <input type="checkbox" value="{{isset($project) &&  $project->copyright}}" class="form-check-input" id="copyright" name="copyright" {{ isset($project) &&  $project->copyright ? 'checked' : '' }}>
       <label class="form-check-label" for="copyright">{{__('cruds.create_project.fields.copyright')}}</label>
