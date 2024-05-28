@@ -252,7 +252,9 @@ class ProjectController extends Controller
 
             $bid =  DB::table('project_creator')->where('project_id', $project_id)->where('creator_id', $creator_id)->value('bid');
 
-            return view('project-request.creator-show', compact('creator', 'project', 'creatorStatus', 'bid'));
+            $assignStatus =  DB::table('project_creator')->where('project_id', $project_id)->where('creator_id', $creator_id)->value('assign_status');
+
+            return view('project-request.creator-show', compact('creator', 'project', 'creatorStatus', 'bid', 'assignStatus'));
         }
     }
 
@@ -274,8 +276,13 @@ class ProjectController extends Controller
                 ->where('project_id', $project->id)
                 ->where('creator_id', $user->id)
                 ->value('bid');
+
+            $assignStatus =  DB::table('project_creator')
+            ->where('project_id', $project->id)
+            ->where('creator_id', $user->id)
+            ->value('assign_status');
             return [
-                'project' => $project, 'creatorStatus' => $creatorStatus, 'bid' => $bid,
+                'project' => $project, 'creatorStatus' => $creatorStatus, 'bid' => $bid, 'assignStatus' => $assignStatus
             ];
         });
 

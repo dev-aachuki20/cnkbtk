@@ -95,7 +95,7 @@
                                                 {!! $item['project']->comment ?? '' !!}
                                             </div>
                                             @if(isset($item['project']->comment))
-                                                <button type="button" class="btn btn-dark add-bid-btn btn-sm read-more-btn">Read More</button>
+                                                <button type="button" class="btn btn-dark add-bid-btn btn-sm read-more-btn">{{__('cruds.global.readmore')}}</button>
                                             @endif
                                         </div>
                                     </div>
@@ -110,13 +110,13 @@
                                                             {{ $item['creatorStatus'] == 2 ? __('cruds.create_project.headings.bid_added') : __('cruds.create_project.headings.add_bid') }}
                                                         </button>
                                                     </div>
-                                                    {{-- @if($item['userStatus'] == 1) --}}
+                                                    @if($item['assignStatus'] == 1)
                                                     <div class="col-auto">
                                                         <button type="button" class="btn btn-success ml-3 confirm-btn" id="confirm" data-project-id="{{$item['project']->id}}" data-user-id="{{$item['project']->user_id}}" data-creator-id="{{Auth::user()->id}}" {{$item['project']->project_status == 1  ? 'disabled' : ''}}>
-                                                            {{$item['project']->project_status == 1  ? 'Confirmed' : __('cruds.create_project.headings.confirm_project')}}
+                                                            {{$item['project']->project_status == 1  ? __('cruds.global.confirmed') : __('cruds.create_project.headings.confirm_project')}}
                                                         </button>
                                                     </div>
-                                                    {{-- @endif --}}
+                                                    @endif
                                                 </div>
                                             </div>
                                             @endif

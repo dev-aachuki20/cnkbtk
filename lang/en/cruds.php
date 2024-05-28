@@ -245,6 +245,8 @@ return [
         'assign' => 'Assign',
         'rating' => 'Rating',
         'assigned' => 'Assigned',
+        'confirmed' => 'Confirmed',
+        'readmore' => 'Read More',
     ],
 
     'lang' => [

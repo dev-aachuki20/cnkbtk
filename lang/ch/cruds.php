@@ -250,6 +250,8 @@ return [
         'assign' => '分配',
         'rating' => '评分',
         'assigned' => '已分配',
+        'confirmed' => '确认的',
+        'readmore' => '阅读更多',
     ],
 
     'lang' => [
