@@ -49,7 +49,7 @@
                                         <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">Project Details:</p>
                                         <p>Project ID: {{$project->id}}</p>
                                         <p>Project Type: {{$project->type}}</p>
-                                        <p>Description: {{$project->comment}}</p>
+                                        <p>Description: {!! $project->comment !!}</p>
                                         <p>Requested by: {{$authUser->user_name}}</p>
                                         <p>Date of Request: {{$project->created_at->format('Y-m-d h:i:s A')}}</p>
                                     </td>
