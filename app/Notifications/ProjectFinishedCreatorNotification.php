@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ProjectFinishedNotification extends Notification
+class ProjectFinishedCreatorNotification extends Notification
 {
     use Queueable;
     protected $project;
@@ -43,7 +43,7 @@ class ProjectFinishedNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->markdown('mail.finish_project_update', ['project' => $this->project, 'rating' => $this->rating]);
+            ->markdown('mail.finish_project_creator_update', ['project' => $this->project, 'rating' => $this->rating]);
     }
 
     /**

@@ -19,7 +19,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
 use App\Notifications\ProjectCreatedNotification;
+use App\Notifications\ProjectFinishedCreatorNotification;
 use App\Notifications\ProjectFinishedNotification;
+use App\Notifications\ProjectFinishedUserNotification;
 use App\Notifications\ProjectLockNotification;
 use App\Notifications\ProjectLockRequestNotification;
 use App\Notifications\ProjectUpdatedNotification;
@@ -256,7 +258,7 @@ class ProjectController extends Controller
 
             $creatorRatingStatus = Rating::where('project_id', $project->id)->value('creator_rating');
 
-            return view('project-request.creator-show', compact('creator', 'project', 'creatorStatus', 'bid', 'assignStatus','creatorRatingStatus'));
+            return view('project-request.creator-show', compact('creator', 'project', 'creatorStatus', 'bid', 'assignStatus', 'creatorRatingStatus'));
         }
     }
 
@@ -280,9 +282,9 @@ class ProjectController extends Controller
                 ->value('bid');
 
             $assignStatus =  DB::table('project_creator')
-            ->where('project_id', $project->id)
-            ->where('creator_id', $user->id)
-            ->value('assign_status');
+                ->where('project_id', $project->id)
+                ->where('creator_id', $user->id)
+                ->value('assign_status');
 
             $creatorRatingStatus = Rating::where('project_id', $project->id)->value('creator_rating');
             return [
@@ -334,7 +336,7 @@ class ProjectController extends Controller
             return response()->json(['message' => $e->getMessage(), 'alert-type' => 'error'], 422);
         } catch (\Exception $e) {
             DB::rollback();
-            dd($e->getMessage() . $e->getFile() . $e->getLine());
+            // dd($e->getMessage() . $e->getFile() . $e->getLine());
             return response()->json(['message' => trans("messages.something_went_wrong"), 'alert-type' => 'error'], 500);
         }
     }
@@ -410,7 +412,7 @@ class ProjectController extends Controller
         // return redirect()->route('user.project.index')->with('success', 'Project has been successfully cancelled.');
     }
 
-    // Cancel project by user via mail button.
+    // Cancel bid by user via mail button.
     public function cancelProjectByUser($creator_id, $project_id)
     {
         $project = Project::findOrFail($project_id);
@@ -431,7 +433,7 @@ class ProjectController extends Controller
 
         $project = Project::findOrFail($projectId);
         $creator = User::find($creatorID);
-        $user = User::find($authUser->id);        
+        $user = User::find($authUser->id);
 
         // Send email to creator.
         $creator->notify(new ProjectLockNotification($project, $creator, $authUser));
@@ -480,10 +482,16 @@ class ProjectController extends Controller
                 $ratingData
             );
 
+            // Ratings
+            $rating = Rating::where('project_id', $projectId)->first();
 
-            Notification::send($user, new ProjectFinishedNotification($project));
-            Notification::send($admin, new ProjectFinishedNotification($project));
-            Notification::send($creator, new ProjectFinishedNotification($project));
+            // Notification::send($user, new ProjectFinishedNotification($project, $rating));
+            // Notification::send($admin, new ProjectFinishedNotification($project, $rating));
+            // Notification::send($creator, new ProjectFinishedNotification($project, $rating));
+
+            Notification::send($user, new ProjectFinishedUserNotification($project, $rating));
+            Notification::send($admin, new ProjectFinishedNotification($project, $rating));
+            Notification::send($creator, new ProjectFinishedCreatorNotification($project, $rating));
 
             DB::commit();
             return response()->json(['message' => trans("messages.finish_success", ['module' => trans("global.project")]), 'alert-type' =>  'success'], 200);

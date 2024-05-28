@@ -38,9 +38,9 @@
                             <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
                                 <tr>
                                     <td style="padding:0 0 36px 0;color:#153643;">
-                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">Project Cancelled</p>
+                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">Project Bid Cancelled</p>
                                         <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">Hello {{ucfirst($creator->username)}},</p>
-                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">The project {{ucfirst($project->title)}} has been cancelled.</p>
+                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">The bid you made for the project {{ucfirst($project->title)}} has been cancelled.</p>
                                     </td>
                                 </tr>
 

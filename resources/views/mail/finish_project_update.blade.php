@@ -40,7 +40,11 @@
                                     <td style="padding:0 0 36px 0;color:#153643;">
                                         <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">Project Finsihed Notification</p>
                                         <p>The project "{{$project->title}}" has been finished successfully.</p>
-                                        <p>Remarks: {{$project->remark}}</p>
+                                        <p>Rating by creator to user: {{$rating->creator_rating}}</p>
+                                        <p>User remarks: {{$rating->creator_remark}}</p>
+
+                                        <p>Rating by user to creaor: {{$rating->user_rating}}</p>
+                                        <p>Creator remarks: {{$rating->user_remark}}</p>
                                     </td>
                                 </tr>
 
