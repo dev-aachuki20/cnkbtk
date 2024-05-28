@@ -99,11 +99,6 @@
                                             @endif
                                         </div>
                                     </div>
-                                    @if( $item['creatorStatus'] == 1 && $item['project']->project_status == 1 && $item['project']->project_status != 0 )
-                                        <div class="rating-wrapper mb-3">
-                                            <button class="btn btn-primary" type="button" id="add_rating" data-project-id="{{$item['project']->id}}">{{__('cruds.global.rating')}}</button>
-                                        </div>
-                                    @endif
                                     <!-- buttons -->
                                     <div class="col-12 buttongroupborder">
                                         <div class="row gx-3 row-gap-3">
@@ -130,6 +125,11 @@
                                                 <a href="{{ route('message.index', ['projectId' => $item['project']->id]) }}" class="btn btn-primary ml-auto cancel-btn messages-button" id="message" data-project-id="{{$item['project']->id}}" data-user-id="{{$item['project']->user_id}}">
                                                     {{__('cruds.global.message')}}
                                                 </a>
+                                            </div>
+                                            @endif
+                                            @if( $item['creatorStatus'] == 1 && $item['project']->project_status == 1 && $item['project']->project_status != 0 )
+                                            <div class="col-auto">
+                                                <button class="btn btn-primary ml-auto cancel-btn messages-button" type="button" id="add_rating" data-project-id="{{$item['project']->id}}">{{__('cruds.global.rating')}}</button>
                                             </div>
                                             @endif
                                         </div>
