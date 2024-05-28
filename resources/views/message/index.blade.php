@@ -220,7 +220,7 @@
 
                                     <div class="usersetting d-flex align-items-center gap-2">
 
-                                        <div class="dropdown drop-start">
+                                        {{-- <div class="dropdown drop-start">
 
                                             <button class="btn btn-secondary border-0 shadow-none editbtn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
 
@@ -238,7 +238,7 @@
 
                                             </ul>
 
-                                        </div>
+                                        </div> --}}
 
                                         <button id="closeCreatorScreen" class="btn close-btn d-md-none d-flex shadow-none border-0">
 

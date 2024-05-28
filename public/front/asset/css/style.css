@@ -4370,6 +4370,11 @@ form#excelForm{
     background-color: var(--color-primary);
     color: var(--color-white);
 }
+
+.chatboxGroup .usersetting .dropdown-item:disabled{
+  opacity: .7;
+}
+
 .chatboxGroup .usersetting .editbtn .editicon{
     width: 100%;
     height: 100%;

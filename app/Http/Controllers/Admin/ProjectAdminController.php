@@ -127,7 +127,8 @@ class ProjectAdminController extends Controller
 
         //Find project id form project_creator table
         // find creator
-        $creator = User::findOrFail(DB::table('project_creator')->where('project_id', $projectId)->value('creator_id'));
+        $creator = User::findOrFail(DB::table('project_creator')->where('project_id', $projectId)->where('user_status', 1)->where('creator_status', 1)->value('creator_id'));
+
 
         // Get chat between user and creator
         $getChatData = Chat::with(['sender', 'receiver'])
