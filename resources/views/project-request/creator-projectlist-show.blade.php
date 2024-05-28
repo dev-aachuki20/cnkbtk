@@ -127,9 +127,9 @@
                                                 </a>
                                             </div>
                                             @endif
-                                            @if( $item['creatorStatus'] == 1 && $item['project']->project_status == 1 && $item['project']->project_status != 0 )
+                                            @if($item['creatorStatus'] == 1 && $item['project']->project_status == 1 && $item['creatorRatingStatus'] == null)
                                             <div class="col-auto">
-                                                <button class="btn btn-primary ml-auto cancel-btn messages-button" type="button" id="add_rating" data-project-id="{{$item['project']->id}}">{{__('cruds.global.rating')}}</button>
+                                                <button class="btn btn-primary ml-auto cancel-btn messages-button" type="button" title="{{__('cruds.global.rating')}}" id="add_rating" data-project-id="{{$item['project']->id}}">{{__('cruds.global.rating')}}</button>
                                             </div>
                                             @endif
                                         </div>

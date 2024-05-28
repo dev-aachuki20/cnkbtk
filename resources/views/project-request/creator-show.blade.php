@@ -41,9 +41,9 @@
                         </div>
                     @endif
 
-                    @if($project->project_status == 1)
+                    @if($creatorStatus == 1 && $project->project_status == 1 && $creatorRatingStatus == null)                                            
                         <div class="col-auto">
-                            <button class="btn btn-primary ml-auto cancel-btn messages-button" type="button" id="add_rating" data-project-id="{{$project->id}}">{{__('cruds.global.rating')}}</button>
+                            <button class="btn btn-primary ml-auto cancel-btn messages-button" type="button" title="{{__('cruds.global.rating')}}" id="add_rating" data-project-id="{{$project->id}}">{{__('cruds.global.rating')}}</button>
                         </div>
                     @endif
 
