@@ -249,6 +249,7 @@ return [
         'user_chat' => '用户',
         'assign' => '分配',
         'rating' => '评分',
+        'assigned' => '已分配',
     ],
 
     'lang' => [

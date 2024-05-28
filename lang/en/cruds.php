@@ -244,6 +244,7 @@ return [
         'user_chat' => 'User',
         'assign' => 'Assign',
         'rating' => 'Rating',
+        'assigned' => 'Assigned',
     ],
 
     'lang' => [

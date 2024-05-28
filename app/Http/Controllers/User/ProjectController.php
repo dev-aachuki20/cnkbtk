@@ -416,11 +416,11 @@ class ProjectController extends Controller
         $projectId = $request->projectId;
         $creatorID = $request->creatorId;
 
-        DB::table('project_creator')->where('project_id', $projectId)->where('creator_id', $creatorID)->update(['user_status' => 1]);
+        DB::table('project_creator')->where('project_id', $projectId)->where('creator_id', $creatorID)->update(['user_status' => 1, 'assign_status' => 1, 'assign_date' => now()->format('Y-m-d')]);
 
         $project = Project::findOrFail($projectId);
         $creator = User::find($creatorID);
-        $user = User::find($authUser->id);
+        $user = User::find($authUser->id);        
 
         // Send email to creator.
         $creator->notify(new ProjectLockNotification($project, $creator, $authUser));

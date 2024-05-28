@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class MessageController extends Controller
 {
@@ -29,7 +30,7 @@ class MessageController extends Controller
                 $getProjectStatus = $project->project_status;
                 if ($getProjectStatus == 1) {
                     // get only one creator that is associated with that project after project is locked.
-                    $creartorId = DB::table('project_creator')->where('project_id', $projectId)->where('creator_status' , 1)->value('creator_id');
+                    $creartorId = DB::table('project_creator')->where('project_id', $projectId)->where('creator_status', 1)->value('creator_id');
                     $creators = User::where('id', $creartorId)->get();
                 } else {
                     //get all creators so I can show in the sidebar.
@@ -134,6 +135,32 @@ class MessageController extends Controller
             $project = Project::findOrFail($projectId);
             $projectStatus = $project->project_status;
 
+            $projectAssginStatus = DB::table('project_creator')->where('project_id', $projectId)->where('user_status', 1)->where('creator_id', $userId)->value('assign_status');
+
+            // Check if any creator has not responded within 7 days
+            $shouldEnableButton = DB::table('project_creator')
+                ->where('project_id', $projectId)
+                ->where('user_status', 1)
+                ->where('assign_status', 1)
+                ->where('creator_status', 0)
+                ->where('assign_date', '<=', now()->subDays(7))
+                ->exists();
+
+            if ($shouldEnableButton) {
+                DB::table('project_creator')
+                    ->where('project_id', $projectId)
+                    ->where('user_status', 1)
+                    ->where('assign_status', 1) // Assigned
+                    ->where('assign_date', '<=', now()->subDays(7))
+                    ->update(['assign_status' => 0, 'assign_date' => null]);
+            }
+
+            // Determine button text based on assignment status and shouldEnableButton
+            $buttonText = $projectAssginStatus == 1 ? __('cruds.global.assigned') : __('cruds.global.assign');
+            if ($shouldEnableButton) {
+                $buttonText = __('cruds.global.assign');
+            }
+
             $getChatData = Chat::with('sender', 'receiver')
                 ->where(function ($query) use ($userId, $senderId) {
                     $query->where('receiver_id', $userId)
@@ -146,10 +173,11 @@ class MessageController extends Controller
                 ->orderBy('id', 'asc')
                 ->get();
 
-            $html = view('message.message-screen', compact('user', 'getChatData', 'projectId', 'projectStatus'))->render();
+            $html = view('message.message-screen', compact('user', 'getChatData', 'projectId', 'projectStatus','shouldEnableButton', 'buttonText'))->render();
 
             return response()->json(['html' => $html]);
         } catch (\Exception $e) {
+            dd($e->getMessage());
             return response()->json([
                 'message' => trans("messages.something_went_wrong"),
                 'alert-type' => 'error'
