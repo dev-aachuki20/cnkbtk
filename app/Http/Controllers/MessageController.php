@@ -173,11 +173,11 @@ class MessageController extends Controller
                 ->orderBy('id', 'asc')
                 ->get();
 
-            $html = view('message.message-screen', compact('user', 'getChatData', 'projectId', 'projectStatus','shouldEnableButton', 'buttonText'))->render();
+            $html = view('message.message-screen', compact('user', 'getChatData', 'projectId', 'projectStatus','shouldEnableButton', 'buttonText','projectAssginStatus'))->render();
 
             return response()->json(['html' => $html]);
         } catch (\Exception $e) {
-            dd($e->getMessage());
+            // dd($e->getMessage());
             return response()->json([
                 'message' => trans("messages.something_went_wrong"),
                 'alert-type' => 'error'

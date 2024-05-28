@@ -219,6 +219,10 @@ select.form-control {
   border-color: var(--color-primary) !important;
 }
 
+.btn-primary:hover{
+  color: var(--color-primary) !important;
+}
+
 .edit-blacklist-user i{
   color: var(--color-white);
 }
@@ -2855,7 +2859,7 @@ span.count-number {
 }
 
 .post-btn:hover {
-  color: var(--color-white);
+  color: var(--color-white) !important;
   background-color: var(--secondary-color) !important;
   border-color: var(--secondary-color) !important;
   box-shadow: none;
@@ -4270,8 +4274,17 @@ form#excelForm{
     background-color: var(--color-primary);
     border-color: var(--color-primary);
 }
+
+.chatboxGroup .list-group .list-group-item.active .userimage{
+  box-shadow: none;
+}
+
+.chatboxGroup .list-group .list-group-item:hover .userimage{
+  box-shadow: none;
+}
+
 .chatboxGroup .list-group .list-group-item.active .userimage img,.chatboxGroup .list-group .list-group-item:hover .userimage img {
-  box-shadow: 0px 0px 5px 2px #ffffff;
+  box-shadow: 0px 0px 5px 1px #ffffff87;
 }
 .chatboxGroup .list-group .list-group-item .content {
     transition: var(--ease-transition);
@@ -5189,4 +5202,8 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td.dtr-control:before, table.dataT
 
 .rating input:checked ~ label{
   border-color: orange;
+}
+
+.modal-footer .btn {
+  line-height: 27px;
 }

@@ -20,7 +20,7 @@
                 <div class="usersetting d-flex align-items-center gap-2">
                     @if($projectStatus != 1)
                         <div class="{{$projectStatus == 1 ? 'confirmRequest' :''}}">
-                            <button type="button" class="dropdown-item del_btn dash-btn red-bg rounded-3 px-3 py-2" id="lockProjectBtn" data-project-id="{{$projectId}}" data-creator-id="{{$user->id}}" {{$shouldEnableButton ? '' : 'disabled'}}>{{ $buttonText }}</button>
+                            <button type="button" class="dropdown-item del_btn dash-btn red-bg rounded-3 px-3 py-2" id="lockProjectBtn" data-project-id="{{$projectId}}" data-creator-id="{{$user->id}}" {{$projectAssginStatus == 1 ? 'disabled' : ''}}>{{ $buttonText }}</button>
                         </div> 
                     @endif
 

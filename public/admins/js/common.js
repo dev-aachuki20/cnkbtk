@@ -28,3 +28,28 @@ async function getSubparentSections(url){
         
     })
 }   
+
+$(document).ready(function(){
+    function scrollToBottom() {
+        var chatContainer = $('#messageContainer .chatbody ');
+        chatContainer.scrollTop(chatContainer.prop("scrollHeight"));
+    }
+    scrollToBottom();
+
+    setTimeout(function() {
+        scrollToBottom();
+    }, 120);
+
+    $(".dynamicUserList").click(function(){
+        function scrollToBottom() {
+            var chatContainer = $('#messageContainer .chatbody ');
+            chatContainer.scrollTop(chatContainer.prop("scrollHeight"));
+        }
+        scrollToBottom();
+    
+        setTimeout(function() {
+            scrollToBottom();
+        }, 120);
+    
+      });
+});

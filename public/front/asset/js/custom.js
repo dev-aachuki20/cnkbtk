@@ -16,5 +16,21 @@ $(document).ready(function(){
 
     setTimeout(function() {
         scrollToBottom();
-    }, 150);
+    }, 120);
+
+    $(".dynamicUserList").click(function(){
+        function scrollToBottom() {
+            var chatContainer = $('#messageContainer');
+            chatContainer.scrollTop(chatContainer.prop("scrollHeight"));
+        }
+        scrollToBottom();
+    
+        setTimeout(function() {
+            scrollToBottom();
+        }, 120);
+    
+      });
+    
 });
+
+
