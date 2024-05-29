@@ -34,7 +34,7 @@
 
                 <li class="breadcrumb-item"><a href="{{route('home')}}">{{trans("global.home")}}</a></li>
 
-                <li class="breadcrumb-item"><a href="{{route('user.project.index')}}">{{trans("cruds.create_project.projects")}}</a></li>
+                <li class="breadcrumb-item"><a href="{{route('user.project.request')}}">{{trans("cruds.create_project.project")}} {{__('cruds.create_project.request')}}</a></li>
 
                 <li class="breadcrumb-item active">{{trans("global.chat")}}</li>
 

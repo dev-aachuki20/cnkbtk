@@ -64,5 +64,5 @@ return [
     'other_reason' => [
         'required_if' => '当原因是其他时，其他原因字段是必需的。',
     ],
-
+    'project_assigned' => '嘿！该项目已分配给另一个创建者。您只能查看该项目。',
 ];

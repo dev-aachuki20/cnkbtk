@@ -63,4 +63,6 @@ return [
         'required_if' => 'The other reason field is required when the reason is other.',
     ],
     
+    'project_assigned' => 'Hey! This project is already assigned to another creator. You can only view this project.',
+    
 ];

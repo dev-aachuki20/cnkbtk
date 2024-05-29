@@ -414,8 +414,13 @@ class ProjectController extends Controller
             // mail send to Admin
             $admin->notify(new ProjectConfirmedForAdminNotification($project, $creator, $user, $admin));
         }
+        $bid =  DB::table('project_creator')->where('project_id', $project_id)->where('creator_id', $creator_id)->value('bid');
+        
+        $assignStatus =  DB::table('project_creator')->where('project_id', $project_id)->where('creator_id', $creator_id)->value('assign_status');
+        
+        $creatorRatingStatus = Rating::where('project_id', $project_id)->value('creator_rating');
 
-        return view('project-request.creator-show', compact('creator', 'project', 'creatorStatus'));
+        return view('project-request.creator-show', compact('creator', 'project', 'creatorStatus','creatorRatingStatus','assignStatus','bid'));
         // return redirect()->route('user.project.index')->with('success', 'Project has been successfully cancelled.');
     }
 
