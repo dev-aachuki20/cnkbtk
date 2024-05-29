@@ -298,11 +298,11 @@
 
                                     @if($chat->sender_id == Auth::user()->id)
 
-                                    <div class="message outgoing">
+                                        <div class="message outgoing">
 
-                                        <div class="message-content">{{ $chat->content }} <span class="message_time">{{ $formattedTime }}</span></div>
+                                            <div class="message-content">{{ $chat->content }} <span class="message_time">{{ $formattedTime }}</span></div>
 
-                                    </div>
+                                        </div>
 
                                     @else
 

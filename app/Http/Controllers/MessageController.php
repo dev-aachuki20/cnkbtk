@@ -42,6 +42,7 @@ class MessageController extends Controller
 
             // get all chat data
             $getChatData = Chat::with('sender', 'receiver')
+                ->where('project_id', $projectId)
                 ->where(function ($query) use ($receiverId, $senderId) {
                     $query->where('receiver_id', $receiverId)
                         ->where('sender_id', $senderId);
@@ -50,6 +51,7 @@ class MessageController extends Controller
                     $query->where('sender_id', $receiverId)
                         ->where('receiver_id', $senderId);
                 })
+                ->where('project_id', $projectId)
                 ->orderBy('id', 'asc')
                 ->get();
             return view('message.index', compact('receiverId', 'senderId', 'projectId', 'user', 'getChatData', 'creators'));
@@ -162,6 +164,7 @@ class MessageController extends Controller
             }
 
             $getChatData = Chat::with('sender', 'receiver')
+                ->where('project_id', $projectId)
                 ->where(function ($query) use ($userId, $senderId) {
                     $query->where('receiver_id', $userId)
                         ->where('sender_id', $senderId);
@@ -170,10 +173,11 @@ class MessageController extends Controller
                     $query->where('sender_id', $userId)
                         ->where('receiver_id', $senderId);
                 })
+                ->where('project_id', $projectId)
                 ->orderBy('id', 'asc')
                 ->get();
 
-            $html = view('message.message-screen', compact('user', 'getChatData', 'projectId', 'projectStatus','shouldEnableButton', 'buttonText','projectAssginStatus'))->render();
+            $html = view('message.message-screen', compact('user', 'getChatData', 'projectId', 'projectStatus', 'shouldEnableButton', 'buttonText', 'projectAssginStatus'))->render();
 
             return response()->json(['html' => $html]);
         } catch (\Exception $e) {

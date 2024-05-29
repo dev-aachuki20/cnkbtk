@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addBidModalLabel">{{__('cruds.create_project.headings.add_bid_form')}}</h5>
+                <h5 class="modal-title" id="addBidModalLabel">{{__('cruds.create_project.headings.add_bid')}}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <!-- form start -->

@@ -73,7 +73,7 @@
     </div>
     <div class="col-12">
         <!-- form start -->
-        <form id="messageForm" data-sender-id="{{auth()->user()->id}}" data-receiver-id="{{$user->id}}">
+        <form id="messageForm" data-sender-id="{{auth()->user()->id}}" data-receiver-id="{{$user->id}}" data-project-id="{{$projectId}}">
             <div class="message-input p-3">
                 <div class="row gx-2 align-items-center">
                     <div class="col">
@@ -141,7 +141,7 @@
         var message = $('#messageInput').val().trim();
         var senderId = $('#messageForm').data('sender-id');
         var receiverId = $('#messageForm').data('receiver-id');
-
+        var projectId = $('#messageForm').data('project-id');
         if (message !== '') {
             $.ajax({
                 headers: {
@@ -153,6 +153,7 @@
                     content: message,
                     sender_id: senderId,
                     receiver_id: receiverId,
+                    project_id: projectId,
                 },
                 dataType: 'json',
                 success: function(response) {
