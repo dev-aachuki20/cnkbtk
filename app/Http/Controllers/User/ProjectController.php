@@ -256,7 +256,7 @@ class ProjectController extends Controller
 
             $assignStatus =  DB::table('project_creator')->where('project_id', $project_id)->where('creator_id', $creator_id)->value('assign_status');
 
-            $creatorRatingStatus = Rating::where('project_id', $project->id)->value('creator_rating');
+            $creatorRatingStatus = Rating::where('project_id', $project_id)->value('creator_rating');
 
             return view('project-request.creator-show', compact('creator', 'project', 'creatorStatus', 'bid', 'assignStatus', 'creatorRatingStatus'));
         }
