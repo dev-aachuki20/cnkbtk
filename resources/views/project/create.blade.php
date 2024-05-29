@@ -32,7 +32,7 @@
       <div class="card-header">{{__('cruds.create_project.title')}}</div>
       <div class="card-body">
         <div class="edit-inner-box">
-          <form id="projectForm" action="{{ route('user.project.store') }}" method="post">
+          <form id="projectForm" action="{{ route('user.project.store') }}" method="post" data-action="{{__('cruds.global.save')}}">
             @include("project._form")
           </form>
         </div>

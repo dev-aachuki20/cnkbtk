@@ -32,7 +32,7 @@
             <div class="card-header">{{trans("cruds.global.edit")}} {{__('cruds.create_project.project')}}</div>
             <div class="card-body">
                 <div class="edit-inner-box">
-                    <form id="projectEditForm" action="{{ route('user.project.update',$project->id) }}" method="POST">
+                    <form id="projectEditForm" action="{{ route('user.project.update',$project->id) }}" method="POST" data-action="{{__('cruds.global.update')}}">
                         @csrf
                         @method("PATCH")
                         @include("project._form")
