@@ -147,15 +147,11 @@
                       @if(auth()->user()->role_id == config("constant.role.creator"))
                         <li>
                           <a class="dropdown-item {{Route::currentRouteName() === 'user.project.request' ? 'active' : ''}}" href="{{ route('user.project.request') }}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                              <g clip-path="url(#clip0_22_2)">
-                                <path d="M20.59 22C20.59 18.13 16.74 15 12 15C7.26003 15 3.41003 18.13 3.41003 22M12 12C13.3261 12 14.5979 11.4732 15.5356 10.5355C16.4733 9.59785 17 8.32608 17 7C17 5.67392 16.4733 4.40215 15.5356 3.46447C14.5979 2.52678 13.3261 2 12 2C10.674 2 9.40218 2.52678 8.4645 3.46447C7.52682 4.40215 7.00003 5.67392 7.00003 7C7.00003 8.32608 7.52682 9.59785 8.4645 10.5355C9.40218 11.4732 10.674 12 12 12Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                              </g>
-                              <defs>
-                                <clipPath id="clip0_22_2">
-                                  <rect width="24" height="24" fill="white" />
-                                </clipPath>
-                              </defs>
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M15 17.5C16.3807 17.5 17.5 16.3807 17.5 15C17.5 13.6193 16.3807 12.5 15 12.5C13.6193 12.5 12.5 13.6193 12.5 15C12.5 16.3807 13.6193 17.5 15 17.5Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                              <path d="M5 7.5C6.38071 7.5 7.5 6.38071 7.5 5C7.5 3.61929 6.38071 2.5 5 2.5C3.61929 2.5 2.5 3.61929 2.5 5C2.5 6.38071 3.61929 7.5 5 7.5Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                              <path d="M10.8335 5H13.3335C13.7755 5 14.1994 5.17559 14.512 5.48816C14.8246 5.80072 15.0002 6.22464 15.0002 6.66667V12.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                              <path d="M5 7.5V17.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                             {{trans("global.project_request")}}
                           </a>
@@ -422,16 +418,12 @@
                         @if(auth()->user()->role_id == config("constant.role.creator"))
                         <li>
                           <a class="dropdown-item {{Route::currentRouteName() === 'user.project.request' ? 'active' : ''}}" href="{{ route('user.project.request') }}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                              <g clip-path="url(#clip0_22_2)">
-                                <path d="M20.59 22C20.59 18.13 16.74 15 12 15C7.26003 15 3.41003 18.13 3.41003 22M12 12C13.3261 12 14.5979 11.4732 15.5356 10.5355C16.4733 9.59785 17 8.32608 17 7C17 5.67392 16.4733 4.40215 15.5356 3.46447C14.5979 2.52678 13.3261 2 12 2C10.674 2 9.40218 2.52678 8.4645 3.46447C7.52682 4.40215 7.00003 5.67392 7.00003 7C7.00003 8.32608 7.52682 9.59785 8.4645 10.5355C9.40218 11.4732 10.674 12 12 12Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                              </g>
-                              <defs>
-                                <clipPath id="clip0_22_2">
-                                  <rect width="24" height="24" fill="white" />
-                                </clipPath>
-                              </defs>
-                            </svg>
+                          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 17.5C16.3807 17.5 17.5 16.3807 17.5 15C17.5 13.6193 16.3807 12.5 15 12.5C13.6193 12.5 12.5 13.6193 12.5 15C12.5 16.3807 13.6193 17.5 15 17.5Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M5 7.5C6.38071 7.5 7.5 6.38071 7.5 5C7.5 3.61929 6.38071 2.5 5 2.5C3.61929 2.5 2.5 3.61929 2.5 5C2.5 6.38071 3.61929 7.5 5 7.5Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M10.8335 5H13.3335C13.7755 5 14.1994 5.17559 14.512 5.48816C14.8246 5.80072 15.0002 6.22464 15.0002 6.66667V12.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M5 7.5V17.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
                             {{trans("global.project_request")}}
                           </a>
                         </li>

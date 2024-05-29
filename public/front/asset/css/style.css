@@ -359,9 +359,13 @@ label .required {
 }
 
 .modal-footer .btn-secondary {
-  height: 35px;
+  line-height: 27px;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  min-width: 100px;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .social-login-content {
@@ -5206,4 +5210,22 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td.dtr-control:before, table.dataT
 
 .modal-footer .btn {
   line-height: 27px;
+}
+
+.btn-secondary{
+  font-size: 14px;
+}
+
+.dataTables_wrapper .dataTable tbody tr td .btn:hover i{
+  color: var(--bg-black);
+}
+
+.dataTables_wrapper .dataTable tbody tr td a.btn.btn-primary.btn-sm{
+  color: var(--color-white);
+}
+
+.dataTables_wrapper .dataTable tbody tr td a.btn.btn-primary.btn-sm:active{
+  color: var(--color-white);
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
 }
