@@ -36,6 +36,22 @@
 
 <section class="single-wrapper project_card_group">
     <div class="container">
+        <!-- search bar  -->
+        <!-- <div class="row justify-content-end">
+            <div class="col-12 col-md-6">
+                <div class="search-wrapper-box mb-4">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search....">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
         <div class="row g-3">
             @foreach($allRequestProjects as $item)
             <div class="col-lg-6 col-12">
@@ -148,6 +164,22 @@
             </div>
             @endforeach
         </div>
+        <!-- pagination  -->
+        <!-- <div class="row">
+            <div class="col-12">
+                <div class="center mt-5 pt-4">
+                    <div class="pagination inner_pagination">
+                    <a href="#">«</a>
+                    <a href="#">1</a>
+                    <a href="#" class="active">2</a>
+                    <a href="#">...</a>
+                    <a href="#">10</a>
+                    <a href="#">»</a>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <!-- end  -->
     </div>
 
     @include("project.add_bid_form")    
