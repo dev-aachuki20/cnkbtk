@@ -5212,10 +5212,6 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td.dtr-control:before, table.dataT
   line-height: 27px;
 }
 
-.btn-secondary{
-  font-size: 14px;
-}
-
 .dataTables_wrapper .dataTable tbody tr td .btn:hover i{
   color: var(--bg-black);
 }
@@ -5228,4 +5224,14 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td.dtr-control:before, table.dataT
   color: var(--color-white);
   background-color: var(--color-primary) !important;
   border-color: var(--color-primary) !important;
+}
+
+.creator_assign_message {
+  font-size: 13px !important;
+  font-weight: 600;
+  color: var(--color-primary);
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #ff625b26;
+  /* border: 1px solid #ff625b59; */
 }

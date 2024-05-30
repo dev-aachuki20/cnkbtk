@@ -134,7 +134,7 @@
                                             @endif
                                             @if($item['project']->project_status == 1 && $item['creatorStatus'] != 1)
                                                 <div class="col-auto">
-                                                    <p>{{__('messages.project_assigned')}}</p>
+                                                    <p class="creator_assign_message">{{__('messages.project_assigned')}}</p>
                                                 </div>
                                             @endif
                                         </div>
