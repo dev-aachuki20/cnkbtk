@@ -79,12 +79,14 @@
                         <li>
                            <div class="col-12 buttongroupborder">
                               <div class="row gx-3 row-gap-3">
-                                  @if(isset($project) && $project->status == 1)
-                                 <div class="col-auto text-end">
-                                    <a href="{{ route('message.index', ['projectId' => $project->id]) }}" class="btn btn-primary ml-auto cancel-btn" id="message" data-project-id="{{$project->id}}" data-user-id="{{$project->user_id}}">
-                                    {{__('cruds.global.message')}}
-                                    </a>
-                                 </div>
+                                 @if(isset($project) && $project->status == 1)
+                                       @if($project->project_status != 1)
+                                          <div class="col-auto">
+                                             <button type="button" class="btn btn-secondary add-bid-btn" id="addBidBtn" data-bid="{{$bid}}" data-project-id="{{$project->id}}" data-user-id="{{$project->user_id}}" data-creator-id="{{Auth::user()->id}}" {{$project->project_status == 1  ? 'disabled' : ''}}>
+                                             {{ $creatorStatus == 2 ? __('cruds.create_project.headings.bid_added') : __('cruds.create_project.headings.add_bid') }}
+                                             </button>
+                                          </div>
+                                       @endif
                                  @endif
                                  @if($creatorStatus == 1 && $project->project_status == 1 && $creatorRatingStatus == null)                                            
                                  <div class="col-auto">
@@ -94,13 +96,11 @@
 
                                  <!-- new  -->
                                  @if(isset($project) && $project->status == 1)
-                                    @if($project->project_status != 1)
-                                    <div class="col-auto">
-                                        <button type="button" class="btn btn-secondary add-bid-btn" id="addBidBtn" data-bid="{{$bid}}" data-project-id="{{$project->id}}" data-user-id="{{$project->user_id}}" data-creator-id="{{Auth::user()->id}}" {{$project->project_status == 1  ? 'disabled' : ''}}>
-                                        {{ $creatorStatus == 2 ? __('cruds.create_project.headings.bid_added') : __('cruds.create_project.headings.add_bid') }}
-                                        </button>
-                                    </div>
-                                    @endif
+                                    <div class="col-auto text-end">
+                                       <a href="{{ route('message.index', ['projectId' => $project->id]) }}" class="btn btn-primary ml-auto cancel-btn" id="message" data-project-id="{{$project->id}}" data-user-id="{{$project->user_id}}">
+                                       {{__('cruds.global.message')}}
+                                       </a>
+                                    </div>                                   
 
                                     @if($assignStatus == 1 && $project->project_status != 1)
                                     <div class="col-auto">
@@ -109,7 +109,6 @@
                                         </button>
                                     </div>
                                     @endif
-
                                  @endif
                               </div>
                            </div>

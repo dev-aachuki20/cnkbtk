@@ -132,6 +132,7 @@
                                                 <button class="btn btn-primary ml-auto cancel-btn messages-button" type="button" title="{{__('cruds.global.rating')}}" id="add_rating" data-project-id="{{$item['project']->id}}">{{__('cruds.global.rating')}}</button>
                                             </div>
                                             @endif
+
                                             @if($item['project']->project_status == 1 && $item['creatorStatus'] != 1)
                                                 <div class="col-auto">
                                                     <p class="creator_assign_message">{{__('messages.project_assigned')}}</p>
