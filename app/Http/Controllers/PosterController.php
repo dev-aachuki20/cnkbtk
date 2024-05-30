@@ -221,7 +221,7 @@ class PosterController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {   //dd($request->all());
+    {
         $id = Crypt::decrypt($id);
         $rules = [
             'title' => ['required', 'string'],
@@ -279,7 +279,10 @@ class PosterController extends Controller
         try {
 
             $posterData = ['title_en' =>  $request->title, 'title_ch' =>  $request->title, 'parent_section' => $request->parent_section, 'sub_section' => $request->sub_section, 'child_section' => $request->child_section, 'description_en' => $request->description, 'description_ch' => $request->description, 'tags' => $request->tags, 'status' => $request->status];
-            $save = Poster::where("id", $id)->update($posterData);
+            // $save = Poster::where("id", $id)->update($posterData);
+
+            $save = Poster::findOrFail($id);
+            $save->update($posterData);
 
             if ($request->has("episodes")) {
                 $episodeCount =  count($request->episodes);
@@ -314,10 +317,21 @@ class PosterController extends Controller
             }
 
 
+            // if ($request->hasFile('poster_image')) {
+            //     if (isset($save->uploads->first()->path) && Storage::disk('public')->exists($save->uploads->first()->path)) {
+            //         deleteFile($save->uploads->first()->id);
+            //     }
+            //     $file = $request->file('poster_image');
+            //     uploadImage($save, $file, $this->folder);
+            // }
+
             if ($request->hasFile('poster_image')) {
-                if (isset($save->uploads->first()->path) && Storage::disk('public')->exists($save->uploads->first()->path)) {
-                    deleteFile($save->uploads->first()->id);
+                $existingUpload = $save->uploads->first();
+    
+                if ($existingUpload && isset($existingUpload->path) && Storage::disk('public')->exists($existingUpload->path)) {
+                    deleteFile($existingUpload->id);
                 }
+    
                 $file = $request->file('poster_image');
                 uploadImage($save, $file, $this->folder);
             }
@@ -325,6 +339,7 @@ class PosterController extends Controller
             \DB::commit();
             return response()->json(['message' => trans("messages.update_success", ['module' => trans("global.post")]), 'alert-type' =>  'success'], 200);
         } catch (\Exception $e) {
+            // dd($e->getMessage(). $e->getFile() . $e->getLine());
             \DB::rollback();
             return response()->json(['message' => trans("messages.something_went_wrong"), 'alert-type' =>  'error'], 500);
         }

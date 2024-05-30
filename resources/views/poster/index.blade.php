@@ -75,97 +75,54 @@
                    {!! nl2br($poster->description) !!}
                 </div>
 
-                @if(isset($poster->episodes)  &&  $poster->episodes->count() > 0)
+                @if(isset($poster->episodes) && $poster->episodes->count() > 0)
                     @foreach ($poster->episodes as $episode)
-                        @if((isset($purchasedEpisodes) &&  $purchasedEpisodes->contains($episode->id)) || (Auth::check() && (Auth::user()->role_id == 1  ||  Auth::user()->id ==  $poster->user_id)) )
+                        @if((isset($purchasedEpisodes) && $purchasedEpisodes->contains($episode->id)) || (Auth::check() && (Auth::user()->role_id == 1 || Auth::user()->id == $poster->user_id)))
                             <div class="card mt-2">
                                 <div class="card-body">
                                     <h5 class="card-title">{{$episode->title}}</h5>
                                     <p class="card-text">{!! $episode->description !!}</p>
                                 </div>
                             </div>
-                            @if(isset($episode->uploads)  && $episode->uploads->count() > 0)  
+                            @if(isset($episode->uploads) && $episode->uploads->count() > 0)
                                 <main class="img-grid-wrapper">
                                     <div id="gallery" class="photos-grid-container gallery">
-                                    <div class="main-photo img-box">
-                                        <a
-                                        href="{{asset('front/asset/images/card-img1.jpg')}}"
-                                        class="glightbox"
-                                        data-glightbox="type: image"
-                                        >
-                                        <img src="{{asset('front/asset/images/card-img1.jpg')}}" alt="image" />
-                                        </a>
+                                        @foreach($episode->uploads as $index => $upload)
+                                            @if($index == 0)
+                                                <div class="main-photo img-box">
+                                                    <a href="{{ Storage::disk('public')->url($upload->path) }}" class="glightbox" data-glightbox="type: image">
+                                                        <img src="{{ Storage::disk('public')->url($upload->path) }}" alt="image" />
+                                                    </a>
+                                                </div>
+                                            @elseif($index < 4)
+                                                <div class="sub">
+                                                    <div class="img-box">
+                                                        <a href="{{ Storage::disk('public')->url($upload->path) }}" class="glightbox" data-glightbox="type: image">
+                                                            <img src="{{ Storage::disk('public')->url($upload->path) }}" alt="image" />
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            @elseif($index == 4)
+                                                <div id="multi-link" class="img-box">
+                                                    <a href="{{ Storage::disk('public')->url($upload->path) }}" class="glightbox" data-glightbox="type: image">
+                                                        <img src="{{ Storage::disk('public')->url($upload->path) }}" alt="image" />
+                                                        <div class="transparent-box">
+                                                            <div class="caption">+{{ $episode->uploads->count() - 5 }}</div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            @endif
+                                        @endforeach
                                     </div>
-                                    <div>
-                                        <div class="sub">
-                                        <div class="img-box">
-                                            <a
-                                            href="{{asset('front/asset/images/card-img2.jpg')}}"
-                                            class="glightbox"
-                                            data-glightbox="type: image"
-                                            >
-                                            <img src="{{asset('front/asset/images/card-img2.jpg')}}" alt="image" />
-                                            </a>
+                                    @if($episode->uploads->count() > 5)
+                                        <div id="more-img" class="extra-images-container hide-element">
+                                            @foreach($episode->uploads->slice(5) as $upload)
+                                                <a href="{{ Storage::disk('public')->url($upload->path) }}" class="glightbox" data-glightbox="type: image">
+                                                    <img src="{{ Storage::disk('public')->url($upload->path) }}" alt="image" />
+                                                </a>
+                                            @endforeach
                                         </div>
-                                        <div class="img-box">
-                                            <a
-                                            href="{{asset('front/asset/images/card-img3.jpg')}}"
-                                            class="glightbox"
-                                            data-glightbox="type: image"
-                                            >
-                                            <img src="{{asset('front/asset/images/card-img3.jpg')}}" alt="image" />
-                                            </a>
-                                        </div>
-                                        <div class="img-box">
-                                            <a
-                                            href="{{asset('front/asset/images/card-img4.jpg')}}"
-                                            class="glightbox"
-                                            data-glightbox="type: image"
-                                            >
-                                            <img src="{{asset('front/asset/images/card-img4.jpg')}}" alt="image" />
-                                            </a>
-                                        </div>
-                                        <div id="multi-link" class="img-box">
-                                            <a
-                                            href="{{asset('front/asset/images/card-img5.jpg')}}"
-                                            class="glightbox"
-                                            data-glightbox="type: image"
-                                            >
-                                            <img src="{{asset('front/asset/images/card-img5.jpg')}}" alt="image" />
-                                            <div class="transparent-box">
-                                                <div class="caption">+3</div>
-                                            </div>
-                                            </a>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    <div
-                                        id="more-img"
-                                        class="extra-images-container hide-element"
-                                    >
-                                        <a
-                                        href="{{asset('front/asset/images/card-img1.jpg')}}"
-                                        class="glightbox"
-                                        data-glightbox="type: image"
-                                        >
-                                        <img src="{{asset('front/asset/images/card-img1.jpg')}}" alt="image" />
-                                        </a>
-                                        <a
-                                        href="{{asset('front/asset/images/card-img2.jpg')}}"
-                                        class="glightbox"
-                                        data-glightbox="type: image"
-                                        >
-                                        <img src="{{asset('front/asset/images/card-img2.jpg')}}" alt="image" />
-                                        </a>
-                                        <a
-                                        href="{{asset('front/asset/images/card-img3.jpg')}}"
-                                        class="glightbox"
-                                        data-glightbox="type: image"
-                                        >
-                                        <img src="{{asset('front/asset/images/card-img3.jpg')}}" alt="image" />
-                                        </a>
-                                    </div>
-                                    </div>
+                                    @endif
                                 </main>
                             @endif
                         @else
@@ -174,7 +131,7 @@
                                     {{$episode->title}}
                                 </div>
                                 <div class="coupon-btn">
-                                    <a href="javascript:void(0)" data-episodeid="{{Crypt::encrypt($episode->id)}}" class="btn buy_episode">{{trans("global.points")}} : {{$episode->cost}}</a>
+                                    <a href="javascript:void(0)" data-episodeid="{{ Crypt::encrypt($episode->id) }}" class="btn buy_episode">{{ trans("global.points") }} : {{$episode->cost}}</a>
                                 </div>
                             </div>
                         @endif
