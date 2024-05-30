@@ -79,6 +79,7 @@ class BlacklistUserController extends Controller
                 return response()->json(['message' => trans("messages.excel_uploaded")], 200);
             }
         } catch (\Exception $e) {
+            // dd($e->getMessage(). $e->getFile() . $e->getLine());
             DB::rollback();
             $message = 'Something went wrong';
             return response()->json(['message' => $message], 400);
