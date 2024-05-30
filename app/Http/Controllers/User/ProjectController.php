@@ -467,7 +467,6 @@ class ProjectController extends Controller
         try {
             DB::beginTransaction();
             $project = Project::findOrFail($projectId);
-            $project->update(['finish_status' => 1, 'remark' => $request->remark]);
 
             $creatorId = DB::table('project_creator')->where('project_id', $projectId)->value('creator_id');
             $creator =  User::where('id', $creatorId)->first(); //get creator
@@ -483,6 +482,8 @@ class ProjectController extends Controller
             if ($user->role_id == config('constant.role.user')) {
                 $ratingData['user_rating'] = $request->star_rating;
                 $ratingData['user_remark'] = $request->remark;
+
+                $project->update(['finish_status' => 1]);
             } else {
                 $ratingData['creator_rating'] = $request->star_rating;
                 $ratingData['creator_remark'] = $request->remark;
