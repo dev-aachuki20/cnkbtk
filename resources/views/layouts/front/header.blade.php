@@ -70,7 +70,7 @@
                       </li>
                       <li>
 
-                        <a class="dropdown-item basicInfoDropdown" href="{{ route('user.profile', ['tab' => 'information'])}}">
+                        <a class="dropdown-item basicInfoDropdown {{Request::is('user/profile') && request()->input("tab") == "information" ? 'active' : ''}}" href="{{ route('user.profile', ['tab' => 'information'])}}">
                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M12 8V13M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                             <path d="M11.995 16H12.004" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -79,7 +79,7 @@
                         </a>
                       </li>
                       <li>
-                        <a class="dropdown-item" id="changePassDropdown" href="{{route('user.profile',['tab' => 'changepassword'])}}">
+                        <a class="dropdown-item {{Request::is('user/profile') && request()->input("tab") == "changepassword" ? 'active' : ''}}" id="changePassDropdown" href="{{route('user.profile',['tab' => 'changepassword'])}}">
                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M6 10V8C6 4.69 7 2 12 2C17 2 18 4.69 18 8V10M12 18.5C12.663 18.5 13.2989 18.2366 13.7678 17.7678C14.2366 17.2989 14.5 16.663 14.5 16C14.5 15.337 14.2366 14.7011 13.7678 14.2322C13.2989 13.7634 12.663 13.5 12 13.5C11.337 13.5 10.7011 13.7634 10.2322 14.2322C9.76339 14.7011 9.5 15.337 9.5 16C9.5 16.663 9.76339 17.2989 10.2322 17.7678C10.7011 18.2366 11.337 18.5 12 18.5Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                             <path d="M17 22H7C3 22 2 21 2 17V15C2 11 3 10 7 10H17C21 10 22 11 22 15V17C22 21 21 22 17 22Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -89,7 +89,7 @@
                       </li>
                       @if(auth()->user()->role_id != config("constant.role.admin"))
                       <li>
-                        <a class="dropdown-item" id="creditHistoryDropdown" href="{{route('user.profile',['tab' => 'credithistory'])}}">
+                        <a class="dropdown-item {{Request::is('user/profile') && request()->input("tab") == "credithistory" ? 'active' : ''}}" id="creditHistoryDropdown" href="{{route('user.profile',['tab' => 'credithistory'])}}">
                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M2 10H22" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
                             <path d="M11.548 20.5H6.43804C2.88804 20.5 1.98804 19.62 1.98804 16.11V7.89001C1.98804 4.71001 2.72804 3.69001 5.51804 3.53001C5.79804 3.52001 6.10804 3.51001 6.43804 3.51001H17.548C21.098 3.51001 21.998 4.39001 21.998 7.90001V12.31" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -101,7 +101,7 @@
                       </li>
                       @endif
                       <li>
-                        <a class="dropdown-item" id="basicInfoDropdown" href="{{route('post.create')}}">
+                        <a class="dropdown-item {{Request::is('post/create') ? 'active' : ''}}" id="basicInfoDropdown" href="{{route('post.create')}}">
                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M16 2H8C4 2 2 4 2 8V21C2 21.55 2.45 22 3 22H16C20 22 22 20 22 16V8C22 4 20 2 16 2Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                             <path d="M12.91 7.84003L7.72004 13.03C7.52004 13.23 7.33004 13.62 7.29004 13.9L7.01004 15.88C6.91004 16.6 7.41004 17.1 8.13004 17L10.11 16.72C10.39 16.68 10.78 16.49 10.98 16.29L16.17 11.1C17.06 10.21 17.49 9.17003 16.17 7.85003C14.85 6.52003 13.81 6.94003 12.91 7.84003Z" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
@@ -112,7 +112,7 @@
                         </a>
                       </li>
                       <li>
-                        <a class="dropdown-item" href="{{route('post.index')}}">
+                        <a class="dropdown-item {{Request::is('post') ? 'active' : ''}}" href="{{route('post.index')}}">
                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M13.5 21.5H2C1.45 21.5 1 21.05 1 20.5V7.5C1 3.5 3 1.5 7 1.5H15C19 1.5 21 3.5 21 7.5V12.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                             <path d="M11.91 7.34003L6.72004 12.53C6.52004 12.73 6.33004 13.12 6.29004 13.4L6.01004 15.38C5.91004 16.1 6.41004 16.6 7.13004 16.5L9.11004 16.22C9.39004 16.18 9.78004 15.99 9.98004 15.79L15.17 10.6C16.06 9.71003 16.49 8.67003 15.17 7.35003C13.85 6.02003 12.81 6.44003 11.91 7.34003Z" stroke="black" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />

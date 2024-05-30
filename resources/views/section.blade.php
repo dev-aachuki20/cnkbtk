@@ -162,7 +162,7 @@
                             if(isset($poster->userDetails->uploads) && !empty($poster->userDetails->uploads) && count($poster->userDetails->uploads) > 0){
                               $UserImage = asset('storage/'. $poster->userDetails->uploads->first()->path );
                             } else {
-                               $UserImage = asset("front/asset/images/user.jpg");
+                               $UserImage = asset("front/asset/images/user.png");
                             }
                             @endphp
                             <img src="{{$UserImage}}" alt="" />
