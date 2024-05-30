@@ -65,15 +65,14 @@ class ProjectController extends Controller
 
             $project = Project::create($validatedData);
 
-            $activeCreatorIds = User::where('status', 'active')->pluck('id')->toArray();
+            $activeCreatorIds = User::where('status', 1)->pluck('id')->toArray();
 
             if ($request->has('creator_id')) {
-                $project->creators()->attach($request->input('creator_id'));
+                $creatorIds = $request->input('creator_id');
             } else {
-                $project->creators()->attach($activeCreatorIds);
+                $creatorIds = $activeCreatorIds;
             }
-
-            $creatorIds = $request->input('creator_id');
+            $project->creators()->attach($creatorIds);
 
             if ($creatorIds) {
                 foreach ($creatorIds as $creatorId) {
@@ -164,12 +163,19 @@ class ProjectController extends Controller
                 'copyright' => $request->has('copyright') ? 1 : 0,
             ]);
 
-            $activeCreatorIds = User::where('status', 'active')->pluck('id')->toArray();
+            $activeCreatorIds = User::where('status', 1)->pluck('id')->toArray();
+            // if ($request->has('creator_id')) {
+            //     $project->creators()->sync($request->input('creator_id'));
+            // }else{
+            //     $project->creators()->sync($activeCreatorIds);
+            // }
+
             if ($request->has('creator_id')) {
-                $project->creators()->sync($request->input('creator_id'));
-            }else{
-                $project->creators()->sync($activeCreatorIds);
+                $creatorIds = $request->input('creator_id');
+            } else {
+                $creatorIds = $activeCreatorIds;
             }
+            $project->creators()->sync($creatorIds);
 
 
             $newCreatorIds = $request->input('creator_id', []);

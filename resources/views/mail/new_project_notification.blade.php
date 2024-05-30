@@ -40,7 +40,7 @@
                                     <td style="padding:0 0 36px 0;color:#153643;">
                                         <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">Hello!! {{$creator->user_name}},</p>
                                         <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">Welcome to CNKBTK</p>
-                                        <p style="margin:0;font-size:16px;line-height:24px;">New Project Created</p>
+                                        <p style="margin:0;font-size:16px;line-height:24px;">New Project "{{$project->title ?? ''}}" has been created</p>
                                         <p style="margin:0;font-size:16px;line-height:24px;">Please use the below link to view project details</p>
 
                                     </td>
