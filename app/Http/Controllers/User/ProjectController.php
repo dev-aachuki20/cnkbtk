@@ -275,19 +275,24 @@ class ProjectController extends Controller
         }
     }
 
-    public function getAllProjectRequest()
+    public function getAllProjectRequest(Request $request)
     {
         $user =  Auth::user();
-        $allRequestProjects = $user->projects->where('status', 1)->map(function ($project) use ($user) {
+
+        $allRequestProjects = $user->projects()->where('status', 1);
+        $keyword = $request->title;
+        if (isset($request->title) && (!empty($request->title))) {
+            $keyword = trim($keyword);
+            $allRequestProjects = $allRequestProjects->where('title', 'like', '%' . $keyword . '%');
+        }
+        $allRequestProjects = $allRequestProjects->get();
+
+
+        $allRequestProjects = $allRequestProjects->map(function ($project) use ($user) {
             $creatorStatus = DB::table('project_creator')
                 ->where('project_id', $project->id)
                 ->where('creator_id', $user->id)
                 ->value('creator_status');
-
-            // $userStatus = DB::table('project_creator')
-            //     ->where('project_id', $project->id)
-            //     ->where('creator_id', $user->id)
-            //     ->value('user_status');
 
             $bid = DB::table('project_creator')
                 ->where('project_id', $project->id)
@@ -305,8 +310,55 @@ class ProjectController extends Controller
             ];
         });
 
-        return view('project-request.creator-projectlist-show', compact('allRequestProjects'));
+        return view('project-request.creator-projectlist-show', compact('allRequestProjects', 'keyword'));
     }
+
+    // public function getAllProjectRequest(Request $request)
+    // {
+    //     $user =  Auth::user();
+    //     // $searchKeyword = $request->input('title');
+    //     // $projectsQuery = Project::where('status', 1);
+    //     // if ($searchKeyword) {
+    //     //     $projectsQuery->where('title', 'like', '%' . $searchKeyword . '%');
+    //     // }
+    //     // $projects = $projectsQuery->get();
+
+    //     $keyword = $request->input('title');
+    //     if (isset($request->title) && (!empty($request->title))) {
+    //         $projects = Project::where('title', 'like', ' % ' . $keyword . ' % ')->where('status', 1)->get();
+    //         // dd($projects);
+    //     }
+
+
+    //     $allRequestProjects = $user->projects->where('status', 1)->map(function ($project) use ($user) {
+    //         $creatorStatus = DB::table('project_creator')
+    //             ->where('project_id', $project->id)
+    //             ->where('creator_id', $user->id)
+    //             ->value('creator_status');
+
+    //         // $userStatus = DB::table('project_creator')
+    //         //     ->where('project_id', $project->id)
+    //         //     ->where('creator_id', $user->id)
+    //         //     ->value('user_status');
+
+    //         $bid = DB::table('project_creator')
+    //             ->where('project_id', $project->id)
+    //             ->where('creator_id', $user->id)
+    //             ->value('bid');
+
+    //         $assignStatus =  DB::table('project_creator')
+    //             ->where('project_id', $project->id)
+    //             ->where('creator_id', $user->id)
+    //             ->value('assign_status');
+
+    //         $creatorRatingStatus = Rating::where('project_id', $project->id)->value('creator_rating');
+    //         return [
+    //             'project' => $project, 'creatorStatus' => $creatorStatus, 'bid' => $bid, 'assignStatus' => $assignStatus, 'creatorRatingStatus' => $creatorRatingStatus,
+    //         ];
+    //     });
+
+    //     return view('project-request.creator-projectlist-show', compact('allRequestProjects'));
+    // }
 
     // add project bid by creator
     public function addBidByCreator(Request $request)
@@ -421,12 +473,12 @@ class ProjectController extends Controller
             $admin->notify(new ProjectConfirmedForAdminNotification($project, $creator, $user, $admin));
         }
         $bid =  DB::table('project_creator')->where('project_id', $project_id)->where('creator_id', $creator_id)->value('bid');
-        
+
         $assignStatus =  DB::table('project_creator')->where('project_id', $project_id)->where('creator_id', $creator_id)->value('assign_status');
-        
+
         $creatorRatingStatus = Rating::where('project_id', $project_id)->value('creator_rating');
 
-        return view('project-request.creator-show', compact('creator', 'project', 'creatorStatus','creatorRatingStatus','assignStatus','bid'));
+        return view('project-request.creator-show', compact('creator', 'project', 'creatorStatus', 'creatorRatingStatus', 'assignStatus', 'bid'));
         // return redirect()->route('user.project.index')->with('success', 'Project has been successfully cancelled.');
     }
 

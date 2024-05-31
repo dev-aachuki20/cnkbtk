@@ -247,6 +247,7 @@ return [
         'assigned' => 'Assigned',
         'confirmed' => 'Confirmed',
         'readmore' => 'Read More',
+        'search_by_project_title' => 'Search by title',
     ],
 
     'lang' => [

@@ -96,24 +96,24 @@ return [
         ],
 
         // //Child Section 
-        // 'child_section' => [
-        //     'title'              => '子部分',
-        //     'title_singular'     => '儿童科',
-        //     'fields' => [
-        //         'id' =>  'ID',
-        //         'title' => "标题",
-        //         'description' => '描述',
-        //         'creator_can_post' => '创建者可以发布',
-        //         'user_can_post' => '用户可以发帖',
-        //         'show_in_header' => '在标题中显示',
-        //         'show_in_footer' => '在页脚中显示',
-        //         'position' => '位置',
-        //         'parent_section' => "家长部分",
-        //         'section_logo' => "部分标志",
-        //         'sub_section' => "子部分",
-        //     ],
-        //     'delete_message' => 'If you delete child section all the posters will delete.'
-        // ]
+        'child_section' => [
+            'title'              => '子部分',
+            'title_singular'     => '儿童科',
+            'fields' => [
+                'id' =>  'ID',
+                'title' => "标题",
+                'description' => '描述',
+                'creator_can_post' => '创建者可以发布',
+                'user_can_post' => '用户可以发帖',
+                'show_in_header' => '在标题中显示',
+                'show_in_footer' => '在页脚中显示',
+                'position' => '位置',
+                'parent_section' => "家长部分",
+                'section_logo' => "部分标志",
+                'sub_section' => "子部分",
+            ],
+            'delete_message' => 'If you delete child section all the posters will delete.'
+        ]
 
     ],
     // Tag Type and Tag Cruds
@@ -252,6 +252,8 @@ return [
         'assigned' => '已分配',
         'confirmed' => '确认的',
         'readmore' => '阅读更多',
+        'search_by_project_title' => '按标题搜索',
+
     ],
 
     'lang' => [

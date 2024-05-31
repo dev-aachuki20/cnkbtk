@@ -36,22 +36,29 @@
 
 <section class="single-wrapper project_card_group">
     <div class="container">
-        <!-- search bar  -->
-        <!-- <div class="row justify-content-end">
+        <!-- designer search bar  -->
+        <div class="row justify-content-end">
             <div class="col-12 col-md-6">
                 <div class="search-wrapper-box mb-4">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search....">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                                Search
-                            </button>
+                    <form id="searchForm" action="{{route('user.project.request')}}" method="GET">
+                        <div class="input-group">
+                            <input type="text" name="title" id="searchQuery" value="{{ isset($keyword) ? $keyword : '' }}" class="form-control" placeholder="{{__('cruds.global.search_by_project_title')}}">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                    </svg>
+                                    {{__('global.search')}}
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
-        </div> -->
+        </div>
+        
+        
         <div class="row g-3">
             @foreach($allRequestProjects as $item)
             <div class="col-lg-6 col-12">
@@ -206,82 +213,126 @@
 <script src="{{ asset('admins/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
 <script src="{{ asset('admins/js/common.js')}}"></script>
 <script>
-      $(document).ready(function() {
-        $(document).on('click', '#add_rating', function(e){
-            e.preventDefault();
-            var url = '{{route("finish.project")}}';
-            var projectId = $(this).data('project-id');
-            // Set project ID in the form
-            $('#project_ids').val(projectId);
+$(document).ready(function() {
+    $(document).on('click', '#add_rating', function(e){
+        e.preventDefault();
+        var url = '{{route("finish.project")}}';
+        var projectId = $(this).data('project-id');
+        // Set project ID in the form
+        $('#project_ids').val(projectId);
 
-            // Show the modal
-            $('#finishProjectRatingModal').modal('show');
-        });
+        // Show the modal
+        $('#finishProjectRatingModal').modal('show');
+    });
 
-        $('#finishProjectRatingForm').on('submit', function(e){
-            e.preventDefault();
-            var form = $(this);
-            var url = form.attr('action');
-            var formData = form.serialize();
-            swal.fire({
-                // title: "{{trans('messages.are_you_sure')}}",
-                text: "{{trans('messages.finished_project_warning_message')}}",
-                icon: 'warning',
-                type: "warning",
-                showCancelButton: !0,
-                confirmButtonText: "{{trans('cruds.finished_project.options.finish_btn_text')}}",
-                cancelButtonText: "{{trans('cruds.global.cancel_delete_btn_text')}}",
-                reverseButtons: !0
-            }).then(function(e) {
-                if (e.value === true) {
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $("meta[name=csrf-token]").attr('content')
-                        },
-                        type: 'POST',
-                        url: url,
-                        data: formData,
-                        dataType: 'JSON',
-                        beforeSend: function(response) {
-                            showLoader();
-                        },
-                        success: function(response) {
-                            toastr.success(response.message);
-                            $('#finishProjectRatingModal').modal('hide');
-                            setTimeout(function() {
-                                location.reload();
-                            }, 1500);
-                        },
-                        error: function(response) {
-                            if (response.responseJSON.errors && response.responseJSON.errors.remark) {
-                                var errorMessage = response.responseJSON.errors.remark[0];
-                                // $('#remark').after('<div id="remark-error" class="text-danger mt-2">' + errorMessage + '</div>');
-                                $('#starRatings').after('<div id="star_rating-error" class="text-danger mt-2">' + errorMessage + '</div>');
+    $('#finishProjectRatingForm').on('submit', function(e){
+        e.preventDefault();
+        var form = $(this);
+        var url = form.attr('action');
+        var formData = form.serialize();
+        swal.fire({
+            // title: "{{trans('messages.are_you_sure')}}",
+            text: "{{trans('messages.finished_project_warning_message')}}",
+            icon: 'warning',
+            type: "warning",
+            showCancelButton: !0,
+            confirmButtonText: "{{trans('cruds.finished_project.options.finish_btn_text')}}",
+            cancelButtonText: "{{trans('cruds.global.cancel_delete_btn_text')}}",
+            reverseButtons: !0
+        }).then(function(e) {
+            if (e.value === true) {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $("meta[name=csrf-token]").attr('content')
+                    },
+                    type: 'POST',
+                    url: url,
+                    data: formData,
+                    dataType: 'JSON',
+                    beforeSend: function(response) {
+                        showLoader();
+                    },
+                    success: function(response) {
+                        toastr.success(response.message);
+                        $('#finishProjectRatingModal').modal('hide');
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1500);
+                    },
+                    error: function(response) {
+                        if (response.responseJSON.errors && response.responseJSON.errors.remark) {
+                            var errorMessage = response.responseJSON.errors.remark[0];
+                            // $('#remark').after('<div id="remark-error" class="text-danger mt-2">' + errorMessage + '</div>');
+                            $('#starRatings').after('<div id="star_rating-error" class="text-danger mt-2">' + errorMessage + '</div>');
 
-                            } else {
-                                var errorMessage = response.responseJSON.message || 'An error occurred. Please try again.';
-                                // $('#remark').after('<div id="remark-error" class="text-danger mt-2">' + errorMessage + '</div>');
-                                $('#starRatings').after('<div id="star_rating-error" class="text-danger mt-2">' + errorMessage + '</div>');
-                            }
-                        },
-                        complete: function() {
-                            hideLoader();
+                        } else {
+                            var errorMessage = response.responseJSON.message || 'An error occurred. Please try again.';
+                            // $('#remark').after('<div id="remark-error" class="text-danger mt-2">' + errorMessage + '</div>');
+                            $('#starRatings').after('<div id="star_rating-error" class="text-danger mt-2">' + errorMessage + '</div>');
                         }
-                        
-                    });
-                } else {
-                    e.dismiss;
-                }
-            });
+                    },
+                    complete: function() {
+                        hideLoader();
+                    }
+                    
+                });
+            } else {
+                e.dismiss;
+            }
         });
+    });
 
 
-        // Reset form values when the modal is hidden
-        $('#finishProjectRatingModal').on('hidden.bs.modal', function() {
-            $('#finishProjectRatingForm')[0].reset();
-            $('#remark-error').remove();
-        });
-      });
+    // Reset form values when the modal is hidden
+    $('#finishProjectRatingModal').on('hidden.bs.modal', function() {
+        $('#finishProjectRatingForm')[0].reset();
+        $('#remark-error').remove();
+    });
+
+    // Handle searching
+    // $("#searchButton").on("click", function() {
+    //     // Get the search query
+    //     var query = $("#searchQuery").val().trim();
+
+    //     if (query) {
+    //         // Send the search query to the backend
+    //         $.ajax({
+    //             // url: '/search-projects',
+    //             url: "{{route('user.project.request')}}",
+    //             type: 'GET', // Use GET method for search
+    //             data: { title: query }, // Send the search query as a parameter
+    //             success: function(response) {
+    //                 // Clear previous results
+    //                 // $("#searchResults").empty();
+
+    //                 // Check if there are results
+    //                 if (response.projects && response.projects.length > 0) {
+    //                     // Loop through the projects and display them
+    //                     response.projects.forEach(function(project) {
+    //                         $("#searchResults").append(`
+    //                             <div class="project">
+    //                                 <h3>${project.title}</h3>
+    //                                 <p>${project.description}</p>
+    //                             </div>
+    //                         `);
+    //                     });
+    //                 } else {
+    //                     // No results found
+    //                     $("#searchResults").append('<p>No projects found.</p>');
+    //                 }
+    //             },
+    //             error: function(xhr, status, error) {
+    //                 // Handle error
+    //                 console.error("Error fetching projects:", error);
+    //                 $("#searchResults").append('<p>There was an error searching for projects.</p>');
+    //             }
+    //         });
+    //     } else {
+    //         // Display a message if the search query is empty
+    //         $("#searchResults").empty().append('<p>Please enter a project title to search.</p>');
+    //     }
+    // });
+});
 </script>
     @include("project-request.partials.script")
 @endsection
