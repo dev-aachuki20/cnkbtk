@@ -3,11 +3,12 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class ProjectUpdatedNotification extends Notification 
+
+class ProjectUpdatedNotification extends Notification implements ShouldQueue
 {
     // implements ShouldQueue
     use Queueable;

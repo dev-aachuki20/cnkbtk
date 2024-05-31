@@ -41,7 +41,7 @@ return [
                 'confirm_password' => '确认密码',
             ],
         ],
-        'char_password' => '密码必须至少包含一个特殊字符。',
+        'char_password' => '密码必须至少包含 1 个小写字母、1 个大写字母、1 个数字和 1 个特殊字符。',
     ],
 
     'forget_password' => [

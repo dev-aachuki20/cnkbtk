@@ -5,8 +5,8 @@ namespace App\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-
-class ProjectFinishedCreatorNotification extends Notification
+use Illuminate\Contracts\Queue\ShouldQueue;
+class ProjectFinishedCreatorNotification extends Notification implements ShouldQueue
 {
     use Queueable;
     protected $project;
