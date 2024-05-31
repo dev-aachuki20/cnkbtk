@@ -176,7 +176,7 @@
                 </div>
             </div>
             @empty
-                <p>{{__('messages.project_not_found')}}</p>
+                <p class="no_data_found">{{__('messages.project_not_found')}}</p>
             @endforelse
         </div>
         <!-- pagination  -->

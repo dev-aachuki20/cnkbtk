@@ -75,6 +75,37 @@
                 acceptedFiles: '.png,.gif,.jpeg,.jpg,.svg',
                 dictDefaultMessage: "Put  files here",
                 dictRemoveFile: '<i class="fa fa-times mt-2" ><i>',
+
+                // add by me
+                // init: function() {
+                //   var dz = this; // Store Dropzone instance reference
+
+                //   // Event listener for the removedfile event
+                //   this.on("removedfile", function(file) {
+                //     // Remove the file from Dropzone's internal storage
+                //     dz.removeFile(file);
+                //     // Send an AJAX request to delete the image from the server
+                //     $.ajax({
+                //       type: 'POST',
+                //       url: "{{route('post.remove-episode')}}",
+                //       data: { 
+                //         image: file.name 
+                //       },
+                //       success: function(data) {
+                //         console.log("Image deleted:", data);
+                //       },
+                //       error: function(xhr, status, error) {
+                //         console.error("Error deleting image:", xhr.responseText);
+                //       }
+                //     });
+                //   });
+                // }
+
+                // $(".my-dropzone").each(function(index) {
+                //   var id = $(this).attr("id");
+                //   createDropzone(id);
+                // });
+                // end add by me
             }); 
             newDropzone.on('addedfile', function(file) {
               $(file.previewElement).addClass('dz-complete');
