@@ -65,7 +65,7 @@ class ProjectController extends Controller
 
             $project = Project::create($validatedData);
 
-            $activeCreatorIds = User::where('status', 1)->pluck('id')->toArray();
+            $activeCreatorIds = User::where('status', 1)->where('role_id', config('constant.role.creator'))->pluck('id')->toArray();
 
             if ($request->has('creator_id')) {
                 $creatorIds = $request->input('creator_id');
@@ -163,7 +163,7 @@ class ProjectController extends Controller
                 'copyright' => $request->has('copyright') ? 1 : 0,
             ]);
 
-            $activeCreatorIds = User::where('status', 1)->pluck('id')->toArray();
+            $activeCreatorIds = User::where('status', 1)->where('role_id', config('constant.role.creator'))->pluck('id')->toArray();
             // if ($request->has('creator_id')) {
             //     $project->creators()->sync($request->input('creator_id'));
             // }else{
