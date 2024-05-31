@@ -52,7 +52,7 @@ class ProfileController extends Controller
        
         $user->save();
 
-        return redirect()->back()->with(['message' => '{{trans("messages.profile.success")}}','alert-type' =>  'success']);
+        return redirect()->back()->with(['message' => trans("messages.profile.success"),'alert-type' =>  'success']);
     }
     
     public function showChangePasswordForm(Request $request) {

@@ -97,6 +97,11 @@
                 text: response.message,
                 icon: 'success',
                 confirmButtonText: '{{trans("global.okay")}}'
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      // Clear the error message
+                      $(".errors").text('');
+                  }
               });
             },
             error:function(jqXHR,exception){
