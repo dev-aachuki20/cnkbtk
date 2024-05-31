@@ -195,7 +195,7 @@ class SectionController extends Controller
                 $subsections =  Section::where('parent_id', $section->id)->delete();
                 $section->delete();
                 $notification = array(
-                    'message' => trans("messages.delete_success", ['module' => trans("cruds.parent_management.child_section.title_singular")]),
+                    'message' => trans("messages.delete_success", ['module' => trans("cruds.section_management.child_section.title_singular")]),
                     'alert-type' => 'success'
                 );
                 return $response = response()->json([

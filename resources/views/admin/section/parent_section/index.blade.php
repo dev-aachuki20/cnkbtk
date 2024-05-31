@@ -66,7 +66,7 @@
         var url = $(this).attr('action');
         swal.fire({
             title: "{{trans('messages.are_you_sure')}}",
-            text: "{{trans('section_management.parent_section.delete_message')}}",
+            text: "{{trans('cruds.section_management.parent_section.delete_message')}}",
             icon: 'question',
             type: "warning",
             showCancelButton: !0,

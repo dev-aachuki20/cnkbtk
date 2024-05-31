@@ -187,20 +187,52 @@ class SubSectionController extends Controller
         $section->status = $request->status;
         $section->parent_id = $request->parent_id;
         $section->level = config("constant.sectionLevel.level2");
-        
-        if($section->save()){
-            if ($request->hasFile('section_logo')) {
-                if (isset($section->uploads->first()->path) && Storage::disk('public')->exists($section->uploads->first()->path)) {
-                    deleteFile($section->uploads->first()->id);
-                }
-                $file = $request->file('section_logo');
-                $profileImage = uploadImage($section, $file, $this->folder); 
-            }
 
-            return redirect()->back()->with(['message' => 'Section has been updated successfully!','alert-type' =>  'success']);
-        }else{
-            return redirect()->back()->with(['message' =>  trans("messages.something_went_wrong"),'alert-type' =>  'error']);
+        if ($section->save()) {
+            if ($request->hasFile('section_logo')) {
+                // Check if the section has existing uploads
+                $existingUpload = $section->uploads->first();
+                
+                if ($existingUpload) {
+                    // Delete the existing file from storage
+                    if (Storage::disk('public')->exists($existingUpload->path)) {
+                        Storage::disk('public')->delete($existingUpload->path);
+                    }
+        
+                    // Upload the new file and update the existing upload record
+                    $file = $request->file('section_logo');
+                    $profileImage = uploaSectiondImage($section, $file, $this->folder, $existingUpload);
+                } else {
+                    // Upload the new file and create a new upload record
+                    $file = $request->file('section_logo');
+                    $profileImage = uploaSectiondImage($section, $file, $this->folder);
+                }
+            }
+        
+            return redirect()->back()->with([
+                'message' => 'Section has been updated successfully!',
+                'alert-type' => 'success'
+            ]);
+        } else {
+            return redirect()->back()->with([
+                'message' => trans("messages.something_went_wrong"),
+                'alert-type' => 'error'
+            ]);
         }
+        
+        // if($section->save()){
+        //     if ($request->hasFile('section_logo')) {
+        //         if (isset($section->uploads->first()->path) && Storage::disk('public')->exists($section->uploads->first()->path)) {
+        //             deleteFile($section->uploads->first()->id);
+        //         }
+        //         $file = $request->file('section_logo');
+        //         $profileImage = uploadImage($section, $file, $this->folder); 
+        //     }
+
+        //     return redirect()->back()->with(['message' => 'Section has been updated successfully!','alert-type' =>  'success']);
+        // }else{
+        //     return redirect()->back()->with(['message' =>  trans("messages.something_went_wrong"),'alert-type' =>  'error']);
+        // }
     }
 
     /**

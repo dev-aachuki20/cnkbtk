@@ -40,7 +40,8 @@ return [
                 'password' => 'Password',
                 'confirm_password' => 'Confirm password', 
             ],
-        ]
+        ],
+        'char_password' => 'The password must contain at least one special character.',
     ],
 
     'forget_password' =>[

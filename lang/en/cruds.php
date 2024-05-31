@@ -74,7 +74,7 @@ return [
                 'show_in_footer' => 'Show in footer',
                 'position' => 'Position'
             ],
-            'delete_message' => 'If you delete parent section all the sub section and child section will delete along with their posters.'
+            'delete_message' => 'If you delete parent section all the sub section will delete along with their posters.'
         ],
         // Sub Section 
         'sub_section' => [
@@ -95,24 +95,24 @@ return [
             'delete_message' => 'If you delete sub section all the child section will delete along with their posters.'
         ],
         // //Child Section 
-        // 'child_section' => [
-        //     'title'              => 'Child Sections',
-        //     'title_singular'     => 'Child Section',
-        //     'fields' => [
-        //         'id' =>  'ID',
-        //         'title' => "Title",
-        //         'description' => 'Description',
-        //         'creator_can_post' => 'Creator can post',
-        //         'user_can_post' => 'User can post',
-        //         'show_in_header' => 'Show in header',
-        //         'show_in_footer' => 'Show in footer',
-        //         'position' => 'Position',
-        //         'parent_section' => "Parent Section",
-        //         'sub_section' => "Sub Section",
-        //         'section_logo' => "Section Logo",
-        //     ],
-        //     'delete_message' => '如果删除子部分，所有海报都将被删除'
-        // ]
+        'child_section' => [
+            'title'              => 'Child Sections',
+            'title_singular'     => 'Child Section',
+            'fields' => [
+                'id' =>  'ID',
+                'title' => "Title",
+                'description' => 'Description',
+                'creator_can_post' => 'Creator can post',
+                'user_can_post' => 'User can post',
+                'show_in_header' => 'Show in header',
+                'show_in_footer' => 'Show in footer',
+                'position' => 'Position',
+                'parent_section' => "Parent Section",
+                'sub_section' => "Sub Section",
+                'section_logo' => "Section Logo",
+            ],
+            'delete_message' => '如果删除子部分，所有海报都将被删除'
+        ]
 
     ],
     // Tag Type and Tag Cruds

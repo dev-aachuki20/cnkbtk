@@ -16,7 +16,7 @@ use App\Models\Points;
  * @param string $folder
  * @return array $response
  */
-if (!function_exists('uploadImage')) {
+// if (!function_exists('uploadImage')) {
 
 	function uploadImage($directory, $file, $folder)
 	{
@@ -26,7 +26,30 @@ if (!function_exists('uploadImage')) {
 		$response             = $directory->uploads()->save($upload);
 	}
 
+// }
+
+if (!function_exists('uploaSectiondImage')) {
+
+	function uploaSectiondImage($directory, $file, $folder, $existingUpload = null)
+	{
+		if ($existingUpload) {
+			// Update existing upload record
+			$existingUpload->path = $file->store($folder, 'public');
+			$existingUpload->type = $file->getClientOriginalExtension();
+			$existingUpload->save();
+			return $existingUpload;
+		} else {
+			// Create new upload record
+			$upload = new Uploads;
+			$upload->path = $file->store($folder, 'public');
+			$upload->type = $file->getClientOriginalExtension();
+			$directory->uploads()->save($upload);
+			return $upload;
+		}
+	}
+
 }
+
 
 
 /**

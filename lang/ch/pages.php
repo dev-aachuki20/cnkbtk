@@ -40,7 +40,8 @@ return [
                 'password' => '密码',
                 'confirm_password' => '确认密码',
             ],
-        ]
+        ],
+        'char_password' => '密码必须至少包含一个特殊字符。',
     ],
 
     'forget_password' => [
