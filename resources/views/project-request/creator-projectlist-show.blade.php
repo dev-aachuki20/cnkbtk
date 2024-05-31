@@ -43,6 +43,12 @@
                     <form id="searchForm" action="{{route('user.project.request')}}" method="GET">
                         <div class="input-group">
                             <input type="text" name="title" id="searchQuery" value="{{ isset($keyword) ? $keyword : '' }}" class="form-control" placeholder="{{__('cruds.global.search_by_project_title')}}">
+                            <div class="search-cross-icon">
+                                <a href="{{route('user.project.request')}}" id="clearSearch">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                            
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="submit">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
@@ -60,7 +66,7 @@
         
         
         <div class="row g-3">
-            @foreach($allRequestProjects as $item)
+            @forelse($allRequestProjects as $item)
             <div class="col-lg-6 col-12">
                 <div class="right-single-box blacklist_box_user project_details_card h-100">
                     <div class="row gx-3">
@@ -169,7 +175,9 @@
                     </div>
                 </div>
             </div>
-            @endforeach
+            @empty
+                <p>{{__('messages.project_not_found')}}</p>
+            @endforelse
         </div>
         <!-- pagination  -->
         <!-- <div class="row">
@@ -289,47 +297,18 @@ $(document).ready(function() {
         $('#remark-error').remove();
     });
 
-    // Handle searching
-    // $("#searchButton").on("click", function() {
-    //     // Get the search query
-    //     var query = $("#searchQuery").val().trim();
-
-    //     if (query) {
-    //         // Send the search query to the backend
-    //         $.ajax({
-    //             // url: '/search-projects',
-    //             url: "{{route('user.project.request')}}",
-    //             type: 'GET', // Use GET method for search
-    //             data: { title: query }, // Send the search query as a parameter
-    //             success: function(response) {
-    //                 // Clear previous results
-    //                 // $("#searchResults").empty();
-
-    //                 // Check if there are results
-    //                 if (response.projects && response.projects.length > 0) {
-    //                     // Loop through the projects and display them
-    //                     response.projects.forEach(function(project) {
-    //                         $("#searchResults").append(`
-    //                             <div class="project">
-    //                                 <h3>${project.title}</h3>
-    //                                 <p>${project.description}</p>
-    //                             </div>
-    //                         `);
-    //                     });
-    //                 } else {
-    //                     // No results found
-    //                     $("#searchResults").append('<p>No projects found.</p>');
-    //                 }
-    //             },
-    //             error: function(xhr, status, error) {
-    //                 // Handle error
-    //                 console.error("Error fetching projects:", error);
-    //                 $("#searchResults").append('<p>There was an error searching for projects.</p>');
-    //             }
-    //         });
-    //     } else {
-    //         // Display a message if the search query is empty
-    //         $("#searchResults").empty().append('<p>Please enter a project title to search.</p>');
+    // Handle cross searching
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     document.getElementById('clearSearch').addEventListener('click', function (event) {
+    //         event.preventDefault();
+    //         clearSearchAndReload();
+    //     });
+        
+    //     function clearSearchAndReload() {
+    //         // Remove the search parameter from the URL
+    //         history.replaceState(null, null, window.location.pathname);
+    //         // Reload the page
+    //         window.location.reload();
     //     }
     // });
 });

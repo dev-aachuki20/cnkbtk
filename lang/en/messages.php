@@ -51,18 +51,19 @@ return [
     'registration_failed' => 'Registration failed. The provided email is blacklisted',
     'project_request_failed' => 'Sorry!! Your request is failed as you are blacklisted',
     'project_locked_successfully' => 'Project is locked successfully',
-    
+
     'project_lock_request' => ':module lock request sent successfully',
     'finished_project_warning_message' => 'Once finished you will not able to reopen the project.',
 
     'authentication_failed' => 'Authentication failed. The provided email is blacklisted',
     'email_already_blacklisted' => 'User is already blacklisted.',
-    'creator_message'=> 'If no selection is made, the request is automatically sent to all creators.',
+    'creator_message' => 'If no selection is made, the request is automatically sent to all creators.',
 
     'other_reason' => [
         'required_if' => 'The other reason field is required when the reason is other.',
     ],
-    
+
     'project_assigned' => 'Hey! This project is already assigned to another creator. You can only view this project.',
-    
+    'project_not_found' => 'No data found',
+
 ];
