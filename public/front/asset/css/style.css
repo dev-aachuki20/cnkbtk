@@ -5290,3 +5290,21 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td.dtr-control:before, table.dataT
   width: 18px;
   height: 18px;
 }
+
+.search-cross-icon {
+  position: absolute;
+  right: 115px;
+  font-size: 12px;
+  opacity: .5;
+  transform: translate(-50%, -50%);
+  bottom: 17%;
+}
+
+.no_data_found {
+  text-align: center;
+  padding: 4rem 1rem;
+  font-size: 18px;
+  font-weight: 500;
+  color: gray;
+  background-color: whitesmoke;
+}
