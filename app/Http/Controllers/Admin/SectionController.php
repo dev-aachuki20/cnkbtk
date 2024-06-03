@@ -62,7 +62,7 @@ class SectionController extends Controller
             'show_in_header' => ['required', 'in:0,1'],
             'show_in_footer' => ['required', 'in:0,1'],
             'status' => ['required', 'in:0,1'],
-            'position' => ['required']
+            'position' => ['required','unique:sections,position']
         ], [], [
             'name_en' => trans("cruds.section_management.parent_section.fields.title"),
             'name_ch'  => trans("cruds.section_management.parent_section.fields.title"),
@@ -138,7 +138,7 @@ class SectionController extends Controller
             'user_can_post' => ['required', 'in:0,1'],
             'show_in_header' => ['required', 'in:0,1'],
             'show_in_footer' => ['required', 'in:0,1'],
-            'position' => ['required'],
+            'position' => ['required','unique:sections,position'],
             'status' => ['required', 'in:0,1']
         ], [], [
             'name_en' => trans("cruds.section_management.parent_section.fields.title"),
