@@ -54,6 +54,8 @@ Route::group(["namespace" => "App\Http\Controllers"], function () {
     Route::post('report/store', "ReportController@store")->name('report.store');
 });
 
+// Delete episode image.
+Route::post('/delete-episode-image', 'App\Http\Controllers\PosterController@deleteEpisodeImage')->name('delete-episode-image');
 
 Route::resource('post', "App\Http\Controllers\PosterController")->middleware(["auth", "verified", "status"]);
 

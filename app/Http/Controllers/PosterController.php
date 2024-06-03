@@ -8,6 +8,7 @@ use App\Models\Section;
 use App\Models\TagType;
 use Validator;
 use App\Models\Poster;
+use App\Models\Uploads;
 use Storage;
 use Illuminate\Support\Facades\Crypt;
 
@@ -399,5 +400,23 @@ class PosterController extends Controller
         } catch (\Throwable $th) {
             return response()->json(['success' => false, 'errors' => '', 'message' => 'Error Occured!'], 500);
         }
+    }
+
+    public function deleteEpisodeImage(Request $request)
+    {
+        $upload = Uploads::find($request->id);
+
+        if ($upload && $upload->id == $request->id) {
+            // Delete the image file from the server (assuming it's stored in public disk)
+            if (Storage::disk('public')->exists($upload->path)) {
+                Storage::disk('public')->delete($upload->path);
+            }
+            // Delete the upload record from the database
+            $upload->delete();
+
+            return response()->json(['message' => 'Image deleted successfully'], 200);
+        }
+        // If the upload record doesn't exist or doesn't belong to the episode, return an error
+        return response()->json(['error' => 'Image not found or invalid episode'], 404);
     }
 }
