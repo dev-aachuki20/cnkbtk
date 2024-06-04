@@ -138,7 +138,8 @@ class SectionController extends Controller
             'user_can_post' => ['required', 'in:0,1'],
             'show_in_header' => ['required', 'in:0,1'],
             'show_in_footer' => ['required', 'in:0,1'],
-            'position' => ['required','unique:sections,position'],
+            // 'position' => ['required','unique:sections,position'],
+            'position' => ['required',Rule::unique('sections')->ignore($id)],
             'status' => ['required', 'in:0,1']
         ], [], [
             'name_en' => trans("cruds.section_management.parent_section.fields.title"),
@@ -195,7 +196,7 @@ class SectionController extends Controller
                 $subsections =  Section::where('parent_id', $section->id)->delete();
                 $section->delete();
                 $notification = array(
-                    'message' => trans("messages.delete_success", ['module' => trans("cruds.section_management.child_section.title_singular")]),
+                    'message' => trans("messages.delete_success", ['module' => trans("cruds.section_management.parent_section.title_singular")]),
                     'alert-type' => 'success'
                 );
                 return $response = response()->json([

@@ -44,6 +44,22 @@ class ResetPasswordController extends Controller
         }
         
     }
+    
+    protected function rules()
+    {
+        return [
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => ['required', 'string', 'min:8', 'confirmed','regex:/[a-z]/','regex:/[A-Z]/','regex:/[0-9]/','regex:/[@$!%*#?&]/'],
+        ];
+    }
+    
+    protected function validationErrorMessages()
+    {
+        return [
+            'password.regex' => trans("pages.sign_up.char_password"),
+        ];
+    }
 
 
     public function reset(Request $request)
