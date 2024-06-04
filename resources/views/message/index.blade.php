@@ -209,6 +209,9 @@
                                             <!-- <p class="text-truncate content m-0 activeuser">Active</p> -->
 
                                         </div>
+                                        <button id="refresh-messages" class="btn btn-primary" data-user-name="{{$user->user_name}}" data-user-id="{{$user->id}}" data-project-id="{{$projectId}}">
+                                            <i class="fa fa-refresh"></i>
+                                        </button>
 
                                         <div class="useraccount d-none">
 
@@ -554,6 +557,42 @@
         sendMessage();
     });
 
+function refreshMessages(userId, userName, projectId){
+    var url = @json(route('message.screen'));
+    $.ajax({
+        type: 'GET',
+        url: url,
+        data: {
+            user_id: userId,
+            user_name: userName,
+            project_id: projectId,
+        },
+        async: false,
+        dataType: 'json',
+        beforeSend: function(response) {   
+            showLoader();
+        },
+        success: function(response) {
+            $('#messageContainer').empty();
+            $('.chatscreen').html(response.html);
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        },
+        complete: function() {   
+            hideLoader();
+        }
+    });
+    }
+
+    // Event listener for refresh button click
+    $('#refresh-messages').click(function() {
+        var userId = $(this).data('user-id');
+        var userName = $(this).data('user-name');
+        var projectId = $(this).data('project-id');
+        refreshMessages(userId, userName, projectId);
+    });
+
 
 
     // $('#messageInput').keypress(function(e) {
@@ -571,57 +610,30 @@
 
 
     function sendMessage() {
-
         var message = $('#messageInput').val().trim();
-
         var senderId = $('#messageForm').data('sender-id');
-
         var receiverId = $('#messageForm').data('receiver-id');
-
         var projectId = $('#messageForm').data('project-id');
-
-
-
         if (message !== '') {
-
             $.ajax({
-
                 headers: {
-
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-
                 },
-
                 type: 'POST',
-
                 url: "{{ route('message.send') }}",
-
                 data: {
-
                     content: message,
-
                     sender_id: senderId,
-
                     receiver_id: receiverId,
-
                     project_id: projectId,
-
                 },
-
                 dataType: 'json',
-
                 success: function(response) {
-
                     $('#messageInput').val('');
-
                     $('#messageContainer').append('<div class="message outgoing"><div class="message-content">' + message + ' <span class="message_time"> </span></div></div>');
-
                 },
-
                 error: function(xhr, status, error) {
-
                     console.error(error);
-
                 }
 
             });
@@ -630,15 +642,12 @@
 
     }
 
-
-    $(document).ready(function() {
-      
+    $(document).ready(function() {      
         setTimeout(function(){
             $('.dynamicUserList:first').trigger('click');
         }, 100)
 
-        // show chat screen when click user in sidebar
-
+        // show chat screen when user click in sidebar
         $(document).on('click', '.dynamicUserList', function() {
             $('.dynamicUserList').removeClass('active');
             $(this).addClass('active');
@@ -648,47 +657,26 @@
             var url = @json(route('message.screen'));
 
             $.ajax({
-
                 type: 'GET',
-
                 url: url,
-
                 data: {
-
                     user_id: userId,
-
                     user_name: userName,
-
                     project_id: projectId,
-
                 },
-
                 async: false,
-
                 dataType: 'json',
-
                 success: function(response) {
-
                     $('.chatscreen').html(response.html);
-
                     setTimeout(function() {
-
                         scrollToBottom();
-
                     }, 2000)
-
                 },
-
                 error: function(xhr, status, error) {
-
                     console.error(error);
-
                 }
-
             });
-
         });
-
     });
 
 
