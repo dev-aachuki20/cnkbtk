@@ -140,9 +140,10 @@ class ProjectAdminController extends Controller
                 $query->where('sender_id', $creator->id)
                     ->where('receiver_id', $user->id);
             })
+            ->where('project_id', $projectId)
             ->orderBy('id', 'asc')
             ->get();
 
-        return view('admin.message.index', compact('getChatData', 'user', 'creator'));
+        return view('admin.message.index', compact('getChatData', 'user', 'creator','projectId'));
     }
 }
