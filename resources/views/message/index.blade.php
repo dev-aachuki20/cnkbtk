@@ -558,6 +558,7 @@
     });
 
 function refreshMessages(userId, userName, projectId){
+    // console.log('result',userId, userName, projectId)
     var url = @json(route('message.screen'));
     $.ajax({
         type: 'GET',
@@ -590,6 +591,7 @@ function refreshMessages(userId, userName, projectId){
         var userId = $(this).data('user-id');
         var userName = $(this).data('user-name');
         var projectId = $(this).data('project-id');
+        console.log('result',userId, userName, projectId)
         refreshMessages(userId, userName, projectId);
     });
 

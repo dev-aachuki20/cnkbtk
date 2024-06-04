@@ -16,7 +16,7 @@
                     <div class="useraccount text-truncate">
                         <h4 class="m-0 text-truncate" id="chatHeader">{{$user->user_name ?? ''}}</h4>
                     </div>
-                     <button id="refresh-messages" class="btn btn-primary">
+                     <button id="refresh-messages" class="btn btn-primary" data-user-name="{{$user->user_name}}" data-user-id="{{$user->id}}" data-project-id="{{$projectId}}">
                         <i class="fa fa-refresh"></i>
                     </button>
                 </div>
@@ -179,12 +179,8 @@
     //     container.scrollTop(container.prop("scrollHeight"));
     // }
     
-    function refreshMessages() {
-        var userId = $('.dynamicUserList').data('user-id');
-        var userName = $('.dynamicUserList').data('user-name');
-        var projectId = $('.dynamicUserList').data('project-id');
-
-        console.log(userId, userName, projectId)
+    function refreshMessages(userId, userName, projectId){
+    // console.log('result',userId, userName, projectId)
         var url = @json(route('message.screen'));
         $.ajax({
             type: 'GET',
@@ -214,7 +210,11 @@
 
     // Event listener for refresh button click
     $('#refresh-messages').click(function() {
-        refreshMessages();
+        var userId = $(this).data('user-id');
+        var userName = $(this).data('user-name');
+        var projectId = $(this).data('project-id');
+        console.log('result',userId, userName, projectId)
+        refreshMessages(userId, userName, projectId);
     });
 
     // locked project by user.
