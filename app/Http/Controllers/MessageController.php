@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Message;
 use App\Models\Chat;
 use App\Models\Project;
 use App\Models\User;
@@ -9,9 +10,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Services\PusherService;
 
 class MessageController extends Controller
 {
+    protected $pusherService;
+    public function __construct(PusherService $pusherService)
+    {
+        $this->pusherService = $pusherService;
+    }
+
+
+
     public function index($projectId)
     {
         try {
@@ -121,10 +131,16 @@ class MessageController extends Controller
     }
 
     public function storeMessage(Request $request)
-    {
+    {   
         Chat::create($request->all());
+        // event(new \App\Events\Message($request->all()));
+        event(new Message($request->all()));
+        // broadcast(new Message($request->all()));
+        //  Message::dispatch($request->all());
+
+        // $this->pusherService->trigger('chat', 'Message', ['data' => $request->all()]);
         return  response()->json(['message' => 'Message sent successfully']);
-    }
+    }   
 
     public function messageScreen(Request $request)
     {
@@ -181,7 +197,7 @@ class MessageController extends Controller
 
             return response()->json(['html' => $html]);
         } catch (\Exception $e) {
-            // dd($e->getMessage());
+            dd($e->getMessage());
             return response()->json([
                 'message' => trans("messages.something_went_wrong"),
                 'alert-type' => 'error'
