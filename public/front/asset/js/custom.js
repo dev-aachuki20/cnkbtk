@@ -7,68 +7,17 @@ function hideLoader(){
 }
 
 
-$(document).ready(function(){
+$(document).ready(function() {
     function scrollToBottom() {
-        var chatContainer = $('.messageBoxBg');
-        chatContainer.scrollTop(chatContainer.prop("scrollHeight"));
+      var chatContainer = $('.messageBoxBg, .chatbodypart .message-container');
+      chatContainer.scrollTop(chatContainer.prop("scrollHeight"));
     }
+  
     scrollToBottom();
-
-    setTimeout(function() {
-        scrollToBottom();
-    }, 120);
-
-    $(".dynamicUserList").click(function(){
-        function scrollToBottom() {
-            var chatContainer = $('.messageBoxBg');
-            chatContainer.scrollTop(chatContainer.prop("scrollHeight"));
-        }
-        scrollToBottom();
-    
-        setTimeout(function() {
-            scrollToBottom();
-        }, 120);
-    
-      });
-
-
-      function scrollToBottom() {
-        var chatContainer = $('.chatbodypart .message-container');
-        chatContainer.scrollTop(chatContainer.prop("scrollHeight"));
-    }
-    scrollToBottom();
-
-    setTimeout(function() {
-        scrollToBottom();
-    }, 120);
-
-    $(".dynamicUserList").click(function(){
-        function scrollToBottom() {
-            var chatContainer = $('.chatbodypart .message-container');
-            chatContainer.scrollTop(chatContainer.prop("scrollHeight"));
-        }
-        scrollToBottom();
-    
-        setTimeout(function() {
-            scrollToBottom();
-        }, 120);
-    
-      });
-
-      $("#refresh-messages").click(function(){
-        alert('ok');
-        function scrollToBottom() {
-            var chatContainer = $('.chatbodypart .message-container');
-            chatContainer.scrollTop(chatContainer.prop("scrollHeight"));
-        }
-        scrollToBottom();
-    
-        setTimeout(function() {
-            scrollToBottom();
-        }, 120);
-    
-      });
-    
-});
+    setTimeout(scrollToBottom, 120);
+  
+    $(".dynamicUserList, #refresh-messages").click(scrollToBottom);
+  });
+  
 
 
