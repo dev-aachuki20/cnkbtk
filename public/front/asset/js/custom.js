@@ -9,7 +9,7 @@ function hideLoader(){
 
 $(document).ready(function(){
     function scrollToBottom() {
-        var chatContainer = $('#messageContainer');
+        var chatContainer = $('.messageBoxBg');
         chatContainer.scrollTop(chatContainer.prop("scrollHeight"));
     }
     scrollToBottom();
@@ -20,7 +20,7 @@ $(document).ready(function(){
 
     $(".dynamicUserList").click(function(){
         function scrollToBottom() {
-            var chatContainer = $('#messageContainer');
+            var chatContainer = $('.messageBoxBg');
             chatContainer.scrollTop(chatContainer.prop("scrollHeight"));
         }
         scrollToBottom();

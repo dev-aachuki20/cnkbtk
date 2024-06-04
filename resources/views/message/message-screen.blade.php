@@ -16,6 +16,9 @@
                     <div class="useraccount text-truncate">
                         <h4 class="m-0 text-truncate" id="chatHeader">{{$user->user_name ?? ''}}</h4>
                     </div>
+                     <button id="refresh-messages" class="btn btn-primary">
+                        <i class="fa fa-refresh"></i>
+                    </button>
                 </div>
                 <div class="usersetting d-flex align-items-center gap-2">
                     @if($projectStatus != 1)
@@ -175,6 +178,44 @@
     //     var container = $('#messageContainer');
     //     container.scrollTop(container.prop("scrollHeight"));
     // }
+    
+    function refreshMessages() {
+        var userId = $('.dynamicUserList').data('user-id');
+        var userName = $('.dynamicUserList').data('user-name');
+        var projectId = $('.dynamicUserList').data('project-id');
+
+        console.log(userId, userName, projectId)
+        var url = @json(route('message.screen'));
+        $.ajax({
+            type: 'GET',
+            url: url,
+            data: {
+                user_id: userId,
+                user_name: userName,
+                project_id: projectId,
+            },
+            async: false,
+            dataType: 'json',
+            beforeSend: function(response) {   
+                showLoader();
+            },
+            success: function(response) {
+                $('#messageContainer').empty();
+                $('.chatscreen').html(response.html);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            },
+            complete: function() {   
+                hideLoader();
+            }
+        });
+    }
+
+    // Event listener for refresh button click
+    $('#refresh-messages').click(function() {
+        refreshMessages();
+    });
 
     // locked project by user.
     $('#lockProjectBtn').click(function() {
