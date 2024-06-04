@@ -19,6 +19,10 @@
                                         <div class="col-auto px-0">
                                             <h6 class="m-0"><span class="outgoing">Creator ({{$creator->user_name ?? ''}})</span></h6>
                                         </div>
+
+                                        <a href="{{route('admin.projects.readChat', $projectId)}}" id="refresh-messages" class="btn btn-primary">
+                                            <i class="fa fa-refresh">Refresh</i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
