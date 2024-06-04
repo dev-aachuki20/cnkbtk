@@ -16,11 +16,12 @@
                     <div class="useraccount text-truncate">
                         <h4 class="m-0 text-truncate" id="chatHeader">{{$user->user_name ?? ''}}</h4>
                     </div>
-                     <button id="refresh-messages" class="btn btn-primary" data-user-name="{{$user->user_name}}" data-user-id="{{$user->id}}" data-project-id="{{$projectId}}">
-                        <i class="fa fa-refresh"></i>
-                    </button>
+                     
                 </div>
                 <div class="usersetting d-flex align-items-center gap-2">
+                    <button id="refresh-messages" class="btn btn-primary" data-user-name="{{$user->user_name}}" data-user-id="{{$user->id}}" data-project-id="{{$projectId}}">
+                        <i class="fa fa-refresh"></i>
+                    </button>
                     @if($projectStatus != 1)
                         <div class="{{$projectStatus == 1 ? 'confirmRequest' :''}}">
                             <button type="button" class="dropdown-item del_btn dash-btn red-bg rounded-3 px-3 py-2" id="lockProjectBtn" data-project-id="{{$projectId}}" data-creator-id="{{$user->id}}" {{$projectAssginStatus == 1 ? 'disabled' : ''}}>{{ $buttonText }}</button>

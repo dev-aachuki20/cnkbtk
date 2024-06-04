@@ -166,10 +166,17 @@ p {
 .btn-primary {
   color: #fff;
 
+  background-color: var(--color-orange) !important;
+
+  border-color: var(--color-orange) !important;
+
+  box-shadow: none;
+}
+
+.btn-primary:active{
+  color: #fff;
   background-color: var(--color-orange);
-
   border-color: var(--color-orange);
-
   box-shadow: none;
 }
 
@@ -219,9 +226,9 @@ p {
 .btn-primary:hover {
   color: #fff;
 
-  background-color: #e95747;
+  background-color: #e95747 !important;
 
-  border-color: #e95747;
+  border-color: #e95747 !important;
 
   box-shadow: none;
 }
@@ -1142,6 +1149,31 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td.dtr-control:before, table.dataT
 
 .check-active:before{
   color:  orange;
+}
+
+#refresh-messages {
+  position: absolute;
+  right: 50px;
+  bottom: 20px;
+  border: none;
+  background-color: transparent !important;
+  padding: 0;
+  margin-right: 0;
+  border-radius: 6px;
+  min-width: auto;
+  transition: all .5s ease-in-out;
+}
+
+#refresh-messages svg {
+  width: 20px;
+  height: 20px;
+  stroke: #ff6457;
+  stroke-width: 3px;
+  transition: all .4s ease-in-out;
+}
+
+#refresh-messages:hover svg{
+  stroke: #000;
 }
 
 @media (max-width: 1440px) {

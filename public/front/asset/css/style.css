@@ -5308,3 +5308,22 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td.dtr-control:before, table.dataT
   color: gray;
   background-color: whitesmoke;
 }
+
+button#refresh-messages {
+  border: none;
+  color: var(--color-primary);
+  background-color: transparent !important;
+  padding: 8px 0 0;
+  margin-right: 6px;
+  border-radius: 6px;
+  min-width: auto;
+  transition: all .5s ease-in-out;
+}
+
+button#refresh-messages i{
+  font-size: 20px;
+}
+
+button#refresh-messages:hover{
+  color: var(--color-dark-charcol) !important;
+}
