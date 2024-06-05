@@ -249,4 +249,6 @@
 <!-- ChatBox Section End -->
 @endsection
 
+@section('scripts')
 @include("message.partials.script")
+@endsection

@@ -144,6 +144,11 @@ class ProjectAdminController extends Controller
             ->orderBy('id', 'asc')
             ->get();
 
-        return view('admin.message.index', compact('getChatData', 'user', 'creator','projectId'));
+        if ($request->isAjax == true) {
+            $html = view('admin.message.message', compact('getChatData', 'user', 'creator', 'projectId'))->render();
+            return response()->json(['html' => $html]);
+        } else {
+            return view('admin.message.index', compact('getChatData', 'user', 'creator', 'projectId'));
+        }
     }
 }

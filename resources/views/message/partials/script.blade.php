@@ -195,6 +195,8 @@
             textarea.style.overflowY = textarea.scrollHeight > maxHeight ? "auto" : "hidden"; 
         }
     }
+
+    const messageInput = document.getElementById('messageInput');
     
     // Add an event listener to the textarea for input events
     messageInput.addEventListener('input', function(event) {
