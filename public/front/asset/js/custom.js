@@ -7,6 +7,7 @@ function hideLoader(){
 }
 
 
+
 // Chat script 
 document.addEventListener('DOMContentLoaded', function () {
     Echo.channel('chat')
@@ -24,12 +25,66 @@ $(document).ready(function() {
       var chatContainer = $('.messageBoxBg, .chatbodypart .message-container');
       chatContainer.scrollTop(chatContainer.prop("scrollHeight"));
     }
+});  
+$(document).ready(function(){
+      function scrollToBottom() {
+          var chatContainer = $('.messageBoxBg');
+          chatContainer.scrollTop(chatContainer.prop("scrollHeight"));
+      }
+      scrollToBottom();
+
   
-    scrollToBottom();
-    setTimeout(scrollToBottom, 120);
+      setTimeout(function() {
+          scrollToBottom();
+      }, 120);
   
-    $(".dynamicUserList, #refresh-messages").click(scrollToBottom);
-  });
+      $(".dynamicUserList").click(function(){
+          function scrollToBottom() {
+              var chatContainer = $('.messageBoxBg');
+              chatContainer.scrollTop(chatContainer.prop("scrollHeight"));
+          }
+          scrollToBottom();
+      
+          setTimeout(function() {
+              scrollToBottom();
+          }, 120);
+      
+        });
   
+  
+        function scrollToBottom() {
+          var chatContainer = $('.chatbodypart .message-container');
+          chatContainer.scrollTop(chatContainer.prop("scrollHeight"));
+      }
+      scrollToBottom();
+  
+      setTimeout(function() {
+          scrollToBottom();
+      }, 120);
+  
+      $(".dynamicUserList").click(function(){
+          function scrollToBottom() {
+              var chatContainer = $('.chatbodypart .message-container');
+              chatContainer.scrollTop(chatContainer.prop("scrollHeight"));
+          }
+          scrollToBottom();
+      
+          setTimeout(function() {
+              scrollToBottom();
+          }, 120);
+      
+        });
+  
+        $("#refresh-messages").click(function() {
+          function scrollToBottom() {
+            var chatContainer = $('.chatbodypart .message-container');
+            chatContainer.scrollTop(chatContainer.prop("scrollHeight"));
+          }
+          scrollToBottom();
+          setTimeout(scrollToBottom, 120);
+        });
+        
+      
+ });
 
 
