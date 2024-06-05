@@ -37,9 +37,8 @@
     <link rel="stylesheet" href="{{ asset('admins/plugins/toastr/toastr.min.css') }}">
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
       
-     <!-- Include compiled app.css -->
-     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
-      {{-- <script src="{{ mix('js/app.js') }}"></script> --}}
+     <!-- Include compiled app.js -->
+     @vite(['resources/js/app.js'])
     @yield('styles')
     
 </head>
@@ -80,20 +79,6 @@
     <script src="{{ asset('front/asset/js/custom.js') }}"></script>
     <!--<script src="https://hipl-staging2.com/chat/chat-plugin/main.js"></script>-->
 
-    {{-- Chat script --}}
-    {{-- <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        if (window.Echo) {
-              window.Echo.channel('chat')
-                  .listen('.message', (e) => {
-                      console.log('listening event', e);
-                  });
-          } else {
-              console.error('Echo is not defined');
-          }
-      });
-  </script> --}}
-    {{-- End chat script --}}
    
     @include('scripts.app')
 

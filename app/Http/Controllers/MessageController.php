@@ -131,16 +131,12 @@ class MessageController extends Controller
     }
 
     public function storeMessage(Request $request)
-    {   
-        Chat::create($request->all());
-        // event(new \App\Events\Message($request->all()));
-        // event(new Message($request->all()));
-        // broadcast(new Message($request->all()));
-        //  Message::dispatch($request->all());
-
-        // $this->pusherService->trigger('chat', 'Message', ['data' => $request->all()]);
+    {
+        $data = $request->all();
+        Chat::create($data);
+        broadcast(new Message($data))->toOthers();
         return  response()->json(['message' => 'Message sent successfully']);
-    }   
+    }
 
     public function messageScreen(Request $request)
     {

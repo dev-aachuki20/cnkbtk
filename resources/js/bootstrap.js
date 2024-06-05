@@ -8,6 +8,7 @@ import 'bootstrap';
 
 import Echo from 'laravel-echo';
 
+// window.Pusher = require('pusher-js');
 import Pusher from 'pusher-js';
 window.Pusher = Pusher;
 
@@ -15,7 +16,7 @@ window.Echo = new Echo({
     broadcaster: 'pusher',
     key: process.env.MIX_PUSHER_APP_KEY,
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-    encrypted: true,
+    forceTLS: true
 });
 
 // window.Echo = new Echo({
@@ -24,6 +25,17 @@ window.Echo = new Echo({
 //     cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+
+
+
+
+
+
+
+
+
+
 
 
 
