@@ -16,11 +16,19 @@ class Message implements ShouldBroadcastNow
     use InteractsWithSockets, SerializesModels;
     // Dispatchable, 
 
-    public $data;
+    // public $data;
 
-    public function __construct($data)
+    public $message;
+    public $senderId;
+    public $receiverId;
+
+    public function __construct($message, $senderId, $receiverId)
     { 
-        $this->data = $data;
+        // $this->data = $data;
+
+        $this->message = $message;
+        $this->senderId = $senderId;
+        $this->receiverId = $receiverId;
     }
 
     public function broadcastOn()
@@ -28,10 +36,10 @@ class Message implements ShouldBroadcastNow
         return new Channel('chat');
     }
 
-    public function broadcastWith()
-    {
-        return ['data' => $this->data];
-    }
+    // public function broadcastWith()
+    // {
+    //     return ['data' => $this->data];
+    // }
 
     // public function broadcastAs(){
     //     return 'message';

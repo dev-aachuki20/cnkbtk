@@ -36,6 +36,8 @@
             </div>
         </div>
     </div>
+
+    {{-- form with msg start --}}
     <div class="col-12 h-100 flex-fill overflow-hidden messageBoxBg">
         <div class="h-100 chatbodypart ps-3">
         <div class="message-container pe-3 h-100 overflow-y-auto" id="messageContainer">
@@ -111,6 +113,8 @@
         </form>
         <!-- form end -->
     </div>
+    {{-- form with msg end --}}
+
 </div>
 </div>
 

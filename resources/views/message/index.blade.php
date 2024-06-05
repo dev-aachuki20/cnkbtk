@@ -125,6 +125,7 @@
                                 </div>
                             </div>
 
+                             {{-- form with msg start --}}
                             <div class="col-12 h-100 flex-fill overflow-y-auto messageBoxBg">
                                 <div class="message-container px-3 overflow-y-auto" id="messageContainer">
                                     @php
@@ -166,7 +167,6 @@
                                     @endforeach
                                 </div>
                             </div>
-
                             <div class="col-12">
                                 <form id="messageForm" data-project-id="{{$projectId}}" data-sender-id="{{$senderId}}" data-receiver-id="{{$receiverId}}">
                                     <div class="message-input p-3">
@@ -203,6 +203,7 @@
                                     </div>
                                 </form>
                             </div>
+                             {{-- form with msg end --}}
                         </div>
                     </div>
                 </div>
@@ -252,7 +253,6 @@
 @section("scripts")
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
 <script>
     $(document).ready(function() {      
         setTimeout(function(){
