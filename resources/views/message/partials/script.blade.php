@@ -1,49 +1,4 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
 <script>
-
-    $(document).ready(function() {      
-        setTimeout(function(){
-            $('.dynamicUserList:first').trigger('click');
-        }, 100)
-
-        // show chat screen when user click in sidebar
-        $(document).on('click', '.dynamicUserList', function() {
-            $('.dynamicUserList').removeClass('active');
-            $(this).addClass('active');
-            var userId = $(this).data('user-id');
-            var userName = $(this).data('user-name');
-            var projectId = $(this).data('project-id');
-            var url = @json(route('message.screen'));
-
-            $.ajax({
-                type: 'GET',
-                url: url,
-                data: {
-                    user_id: userId,
-                    user_name: userName,
-                    project_id: projectId,
-                },
-                async: false,
-                dataType: 'json',
-                success: function(response) {
-                    $('.chatscreen').html(response.html);
-                    setTimeout(function() {
-                        scrollToBottom();
-                    }, 2000)
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-    });
-
-
-    $(document).on('click', '.dynamicUserList', function(){
-        $('.chatscreen').show();
-    });
-
     // Searching users
     $('#searchInput').on('input', function() {
         var searchQuery = $(this).val().trim().toLowerCase();
@@ -174,49 +129,28 @@
     });
 
 
-    document.addEventListener("DOMContentLoaded", function(event) {
-        function scrollToBottom() {
-            var chatBox = document.getElementById("messageContainer");
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
-        scrollToBottom();
-    });
-    var maxHeight = 80;
-    function updateTextAreaHeight() {
-        var textarea = document.getElementById("textareaheight");
-        var messageContent = textarea.value.trim().toLowerCase();
-        var ignoreKeywords = ['keyword1', 'keyword2', 'keyword3'];
-        var ignore = ignoreKeywords.some(function(keyword) {
-            return messageContent.indexOf(keyword) !== -1;
-        });
-        if (!ignore) {
-            textarea.style.height = "40px"; 
-            textarea.style.height = Math.min(textarea.scrollHeight, maxHeight) + "px"; 
-            textarea.style.overflowY = textarea.scrollHeight > maxHeight ? "auto" : "hidden"; 
-        }
-    }
 
-    const messageInput = document.getElementById('messageInput');
+    // const messageInput = document.getElementById('messageInput');
     
-    // Add an event listener to the textarea for input events
-    messageInput.addEventListener('input', function(event) {
-    if (event.shiftKey && event.keyCode === 13) {
-        messageInput.value += '\n';
-    }
-    adjustTextareaHeight();
-    });
+    // // Add an event listener to the textarea for input events
+    // messageInput.addEventListener('input', function(event) {
+    // if (event.shiftKey && event.keyCode === 13) {
+    //     messageInput.value += '\n';
+    // }
+    // adjustTextareaHeight();
+    // });
 
-    // Add an event listener to the textarea for keydown events
-    messageInput.addEventListener('keydown', function(event) {
-        if (event.keyCode === 13 && !event.shiftKey) {
-            event.preventDefault(); 
-            sendMessage(); 
-        }
-    });
-    // Function to adjust the height of the textarea based on its content
-    function adjustTextareaHeight() {
-        messageInput.style.height = 'auto';
-        messageInput.style.height = Math.max(messageInput.scrollHeight, 20) + 'px';
-    }
+    // // Add an event listener to the textarea for keydown events
+    // messageInput.addEventListener('keydown', function(event) {
+    //     if (event.keyCode === 13 && !event.shiftKey) {
+    //         event.preventDefault(); 
+    //         sendMessage(); 
+    //     }
+    // });
+    // // Function to adjust the height of the textarea based on its content
+    // function adjustTextareaHeight() {
+    //     messageInput.style.height = 'auto';
+    //     messageInput.style.height = Math.max(messageInput.scrollHeight, 20) + 'px';
+    // }
 
 </script>
