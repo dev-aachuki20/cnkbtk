@@ -144,7 +144,7 @@
     
     
     // Add an event listener to the textarea for input events
-    const messageInput = document.getElementById('messageInput');
+    // const messageInput = document.getElementById('messageInput');
     messageInput.addEventListener('input', function(event) {
     if (event.shiftKey && event.keyCode === 13) {
         messageInput.value += '\n';
