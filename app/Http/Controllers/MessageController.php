@@ -14,14 +14,6 @@ use Carbon\Carbon;
 
 class MessageController extends Controller
 {
-    // protected $pusherService;
-    // public function __construct(PusherService $pusherService)
-    // {
-    //     $this->pusherService = $pusherService;
-    // }
-
-
-
     public function index($projectId)
     {
         try {
@@ -64,8 +56,9 @@ class MessageController extends Controller
                         ->where('receiver_id', $senderId);
                 })
                 ->where('project_id', $projectId)
-                ->orderBy('id', 'asc')
-                ->get();
+                ->orderBy('id', 'desc')
+                ->paginate(3);
+            $getChatData = $getChatData->reverse();
             return view('message.index', compact('receiverId', 'senderId', 'projectId', 'user', 'getChatData', 'creators'));
         } catch (\Throwable $th) {
         }
@@ -153,6 +146,7 @@ class MessageController extends Controller
             $user = User::findOrFail($userId);
             $senderId = Auth()->user()->id;
             $projectId =  $request->project_id;
+            $receiverId = $userId;
 
             $project = Project::findOrFail($projectId);
             $projectStatus = $project->project_status;
@@ -194,18 +188,42 @@ class MessageController extends Controller
                         ->where('receiver_id', $senderId);
                 })
                 ->where('project_id', $projectId)
-                ->orderBy('id', 'asc')
-                ->get();
-
-            $html = view('message.message-screen', compact('user', 'getChatData', 'projectId', 'projectStatus', 'shouldEnableButton', 'buttonText', 'projectAssginStatus'))->render();
+                ->orderBy('id', 'desc')->paginate(3);
+            $getChatData = $getChatData->reverse();
+            $html = view('message.message-screen', compact('user', 'getChatData', 'projectId', 'projectStatus', 'shouldEnableButton', 'buttonText', 'projectAssginStatus', 'receiverId', 'senderId'))->render();
 
             return response()->json(['html' => $html]);
         } catch (\Exception $e) {
-            // dd($e->getMessage());
+            // dd($e->getMessage(). $e->getFile() . $e->getLine());
             return response()->json([
                 'message' => trans("messages.something_went_wrong"),
                 'alert-type' => 'error'
             ], 500);
         }
+    }
+
+    public function loadMoreMessages(Request $request)
+    {
+        $senderId = Auth::user()->id;
+        $receiverId = $request->receiver_id;
+        $projectId = $request->project_id;
+        $lastMessageId = $request->last_message_id;
+
+        $additionalMessages = Chat::with('sender', 'receiver')
+            ->where('project_id', $projectId)
+            ->where(function ($q) use ($receiverId, $senderId) {
+                $q->where(function ($query) use ($receiverId, $senderId) {
+                    $query->where('receiver_id', $receiverId)
+                        ->where('sender_id', $senderId);
+                })
+                    ->orWhere(function ($query) use ($receiverId, $senderId) {
+                        $query->where('sender_id', $receiverId)
+                            ->where('receiver_id', $senderId);
+                    });
+            })
+            ->where('id', '<', $lastMessageId)
+            ->orderBy('id', 'desc')
+            ->paginate(3);
+        return response()->json($additionalMessages);
     }
 }

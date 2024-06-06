@@ -141,7 +141,7 @@
                 <!-- main right panel for user. -->
                 @if($ifRoleUser)
                     <div class="{{$ifRoleUser ? 'col-xxl-9 col-md-8' : 'col-xxl-12 col-lg-12' }} chat-panel h-100 chatscreen">
-                        {{-- @include('message.message-screen') --}}
+                        {{-- mesage-screen-blade-file --}}
                     </div>
                 @endif
                 <!-- main right panel end for user. -->
@@ -153,7 +153,12 @@
 @endsection
 
 @section("scripts")
-<script>    
+<script>
+
+// // lazy loading start.
+// // lazy loading end
+
+
     $(document).on('click', '.dynamicUserList', function(){
         $('.chatscreen').show();
     });
@@ -219,10 +224,10 @@
     
     // Add an event listener to the textarea for input events
     messageInput.addEventListener('input', function(event) {
-    if (event.shiftKey && event.keyCode === 13) {
-        messageInput.value += '\n';
-    }
-    adjustTextareaHeight();
+        if (event.shiftKey && event.keyCode === 13) {
+            messageInput.value += '\n';
+        }
+        adjustTextareaHeight();
     });
     // Add an event listener to the textarea for keydown events
     messageInput.addEventListener('keydown', function(event) {

@@ -60,6 +60,7 @@ Route::resource('post', "App\Http\Controllers\PosterController")->middleware(["a
 
 
 Route::post('/message/send', [MessageController::class, 'storeMessage'])->name('message.send');
+Route::get('/message/load-more', [MessageController::class, 'loadMoreMessages'])->name('message.load-more');
 
 
 // Message routes 

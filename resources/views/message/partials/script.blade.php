@@ -129,6 +129,75 @@
     });
 
 
+    
+    // lazy loading start.
+    $(document).ready(function() {
+        var messageContainer = $('#messageContainer');
+        var projectId = {{ $projectId }};
+        var receiverId = {{ $receiverId }};
+        var senderId = {{ $senderId }};
+
+        var lastMessageId  = null;
+        var isLoading = false;
+        var hasMoreMessages = true;
+        
+        messageContainer.scrollTop(messageContainer[0].scrollHeight);
+        
+        messageContainer.on('scroll', function() {
+            if (messageContainer.scrollTop() == 0) {
+                var firstMessage = messageContainer.find('.message:first');
+                lastMessageId = firstMessage.data('message-id');
+                loadMoreMessages(lastMessageId );
+            }
+        });
+
+        function loadMoreMessages(lastMessageId ) {
+            isLoading = true;
+            $.ajax({
+                url: '{{ route("message.load-more") }}',
+                method: 'GET',
+                data: {
+                    project_id: projectId,
+                    receiver_id: receiverId,
+                    sender_id: senderId,
+                    last_message_id: lastMessageId
+                },
+                success: function(response) {
+                    if (response && response.data && response.data.length > 0) {
+                        var messagesHtml = '';
+                        var data = response.data.reverse();
+                        // console.log(data);
+                        data.forEach(function(message) {
+                            var messageClass = (message.sender_id == senderId) ? 'outgoing' : 'incoming';
+                            messagesHtml += '<div class="message ' + messageClass + '" data-message-id="' + message.id + '" ><div class="message-content">' + message.content + '</div></div>';
+                            });
+
+                        messageContainer.prepend(messagesHtml);
+                    } else {
+                        hasMoreMessages = false;
+                    }
+                    isLoading = false;
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                    isLoading = false;
+                }
+            });
+        }
+    });
+    // lazy loading end
+
+
+
+
+
+
+
+
+
+
+
+
 
     // const messageInput = document.getElementById('messageInput');
     
