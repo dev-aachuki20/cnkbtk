@@ -124,7 +124,7 @@ Route::group(["namespace" => "App\Http\Controllers\Admin", 'as' => 'admin.', "pr
     Route::post('plan/update-status', 'PlanController@updateStatus')->name('plan.updateStatus');
     Route::post('projects/update-status', 'ProjectAdminController@updateStatus')->name('projects.updateStatus');
     Route::get('projects/read-chat/{projectId}', 'ProjectAdminController@readChat')->name('projects.readChat');
-
+    Route::get('/message/load-more-message', 'ProjectAdminController@loadMoreAdminMessages')->name('message.load-more');
 
     // Site statistics Graph Filteration Admin routes start
     Route::get('member-registration/{range?}', 'StatisticsController@membersRegistrationGraph')->name('statistics.members-registration');

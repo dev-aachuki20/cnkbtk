@@ -9,6 +9,7 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Models\Report;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Validator;
 
@@ -119,6 +120,7 @@ class ProjectAdminController extends Controller
 
     public function readChat(Request $request, $projectId)
     {
+        // dd($request->all());
         $project = Project::findOrFail($projectId);
 
         // find user
@@ -129,6 +131,7 @@ class ProjectAdminController extends Controller
         // find creator
         $creator = User::findOrFail(DB::table('project_creator')->where('project_id', $projectId)->where('user_status', 1)->where('creator_status', 1)->value('creator_id'));
 
+        $creatorId = $creator->id;
 
         // Get chat between user and creator
         $getChatData = Chat::with(['sender', 'receiver'])
@@ -141,14 +144,42 @@ class ProjectAdminController extends Controller
                     ->where('receiver_id', $user->id);
             })
             ->where('project_id', $projectId)
-            ->orderBy('id', 'asc')
-            ->get();
-
+            ->orderBy('id', 'desc')
+            ->paginate(4);
+        // ->get();
+        $getChatData = $getChatData->reverse();
         if ($request->isAjax == true) {
-            $html = view('admin.message.message', compact('getChatData', 'user', 'creator', 'projectId'))->render();
+            // dd('sdf');
+            $html = view('admin.message.message', compact('getChatData', 'user', 'creator', 'projectId', 'userId', 'creatorId'))->render();
             return response()->json(['html' => $html]);
         } else {
-            return view('admin.message.index', compact('getChatData', 'user', 'creator', 'projectId'));
+            return view('admin.message.index', compact('getChatData', 'user', 'creator', 'projectId', 'userId', 'creatorId'));
         }
+    }
+
+    public function loadMoreAdminMessages(Request $request)
+    {
+        // dd($request->all());
+        $senderId = $request->userId;
+        $receiverId = $request->creatorId;
+        $projectId = $request->project_id;
+        $lastMessageId = $request->last_message_id;
+
+        $additionalMessages = Chat::with('sender', 'receiver')
+            ->where('project_id', $projectId)
+            ->where(function ($q) use ($receiverId, $senderId) {
+                $q->where(function ($query) use ($receiverId, $senderId) {
+                    $query->where('receiver_id', $receiverId)
+                        ->where('sender_id', $senderId);
+                })
+                    ->orWhere(function ($query) use ($receiverId, $senderId) {
+                        $query->where('sender_id', $receiverId)
+                            ->where('receiver_id', $senderId);
+                    });
+            })
+            ->where('id', '<', $lastMessageId)
+            ->orderBy('id', 'desc')
+            ->paginate(3);
+        return response()->json($additionalMessages);
     }
 }

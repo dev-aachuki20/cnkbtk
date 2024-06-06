@@ -1,6 +1,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    function refreshMessages(projectId){
+    function refreshMessages(projectId) {
         var url = "{{ route('admin.projects.readChat', ':projectId') }}";
         url = url.replace(':projectId', projectId);
         var isAjax = true;
@@ -11,7 +11,7 @@
                 isAjax: isAjax
             },
             dataType: 'json',
-            beforeSend: function(response) {   
+            beforeSend: function(response) {
                 showLoader();
             },
             success: function(response) {
@@ -20,7 +20,7 @@
             error: function(xhr, status, error) {
                 console.error(error);
             },
-            complete: function() {   
+            complete: function() {
                 hideLoader();
             }
         });
@@ -30,5 +30,74 @@
     $('#refresh-messages').click(function() {
         var projectId = $(this).data('project-id');
         refreshMessages(projectId);
+    });
+
+
+    $(document).ready(function() {
+        var messageContainer = $('#chatbody');
+        var projectId = {{ $projectId }};
+        var creatorId = {{ $creatorId }};
+        var userId = {{ $userId }};
+
+        var lastMessageId = null;
+        var isLoading = false;
+        var hasMoreMessages = true;
+        messageContainer.scrollTop(messageContainer[0].scrollHeight);
+
+        // messageContainer.on('scroll', function() {
+        //     if (messageContainer.scrollTop() === 0 && !isLoading && hasMoreMessages) {
+        //         var firstMessage = messageContainer.find('.message:first');
+        //         lastMessageId = firstMessage.data('message-id');
+        //         loadMoreMessages(lastMessageId);
+        //     }
+        // });
+
+        messageContainer.on('scroll', function() {
+            if (messageContainer.scrollTop() == 0) {
+                var firstMessage = messageContainer.find('.message:first');
+                lastMessageId = firstMessage.data('message-id');
+                loadMoreMessages(lastMessageId);
+            }
+        });
+
+        function loadMoreMessages(lastMessageId) {
+            console.log('lastMessageId', lastMessageId)
+            isLoading = true;
+            $.ajax({
+                url: '{{ route('admin.message.load-more') }}',
+                method: 'GET',
+                data: {
+                    project_id: projectId,
+                    userId: userId,
+                    creatorId: creatorId,
+                    last_message_id: lastMessageId
+                },
+                success: function(response) {
+                    console.log(response.data);
+                    if (response && response.data && response.data.length > 0) {
+                        var messagesHtml = '';
+                        var data = response.data.reverse();
+                        console.log(data);
+                        data.forEach(function(message) {
+                            var messageClass = (message.sender_id == userId) ?
+                                'outgoing' : 'incoming';
+                            messagesHtml += '<div class="message ' + messageClass +
+                                '" data-message-id="' + message.id +
+                                '" ><div class="message-content">' + message.content +
+                                '</div></div>';
+                        });
+
+                        messageContainer.prepend(messagesHtml);
+                    } else {
+                        hasMoreMessages = false;
+                    }
+                    isLoading = false;
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                    isLoading = false;
+                }
+            });
+        }
     });
 </script>

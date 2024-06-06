@@ -1,6 +1,6 @@
 <div class="messageBoxBg">
 <div class="message-container pl-3 py-3 h-100" id="messageContainer">
-<div class="chatbody overflow-y-auto pr-3 h-100">
+<div class="chatbody overflow-y-auto pr-3 h-100" id="chatbody">
         @php
             $previousDate = null;
             $previousTime = null;
@@ -22,7 +22,7 @@
         
     <div class="date-message">
         @if($chat->sender_id == $user->id)
-        <div class="message outgoing">
+        <div class="message outgoing" data-message-id="{{ $chat->id }}">
             <div class="message-content">
                 {{ $chat->content }}
                 <span class="message_time"><span class="pe-1">{{-- User --}}</span> {{ $chat->created_at->format('H:i') }}</span>
@@ -30,7 +30,7 @@
         </div>
         @else
         <div class="message incoming">
-            <div class="message-content">
+            <div class="message-content" data-message-id="{{ $chat->id }}">
                 {{ $chat->content }}
                 <span class="message_time"><span class="pe-1">{{-- Creator --}}</span> {{ $chat->created_at->format('H:i') }}</span>
             </div>

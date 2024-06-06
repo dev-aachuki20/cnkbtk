@@ -42,5 +42,5 @@
 @endsection
 
 @section('scripts')
-@include("admin.message.partials.script") 
+@include('admin.message.partials.script', ['projectId' => $projectId, 'creatorId' => $creatorId, 'userId' => $userId])
 @endsection
