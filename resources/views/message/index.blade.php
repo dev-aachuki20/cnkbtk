@@ -75,7 +75,7 @@
                                                 <img class="userpic" src="{{$imagePath}}" alt="User Image">
                                             </div>
                                             <div class="useraccount">
-                                                <h5 class="content"><span class="text-truncate">{{$user->user_name}}</span> <span class="time">11:41 AM</span></h5>
+                                                <h5 class="content"><span class="text-truncate">{{ucfirst($user->user_name)}}</span> <span class="time"></span></h5>
                                             </div>
                                         </li>
                                         @endforeach
@@ -110,7 +110,7 @@
                                             </div>
 
                                             <div class="useraccount text-truncate">
-                                                <h4 class="m-0 text-truncate" id="chatHeader">{{$user->user_name}}</h4>
+                                                <h4 class="m-0 text-truncate" id="chatHeader">{{ucfirst($user->user_name)}}</h4>
                                             </div>
                                             
                                             <div class="useraccount d-none">

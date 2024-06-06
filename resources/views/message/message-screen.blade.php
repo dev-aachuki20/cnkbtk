@@ -14,7 +14,7 @@
                         <img class="userpic" src="{{ $imagePath }}" alt="user image" height="30px" width="30px">
                     </div>
                     <div class="useraccount text-truncate">
-                        <h4 class="m-0 text-truncate" id="chatHeader">{{$user->user_name ?? ''}}</h4>
+                        <h4 class="m-0 text-truncate" id="chatHeader">{{ucfirst($user->user_name) ?? ''}}</h4>
                     </div>                     
                 </div>
 
