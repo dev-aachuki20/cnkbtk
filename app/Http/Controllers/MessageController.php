@@ -57,7 +57,7 @@ class MessageController extends Controller
                 })
                 ->where('project_id', $projectId)
                 ->orderBy('id', 'desc')
-                ->paginate(3);
+                ->paginate(100);
             $getChatData = $getChatData->reverse();
             return view('message.index', compact('receiverId', 'senderId', 'projectId', 'user', 'getChatData', 'creators'));
         } catch (\Throwable $th) {
@@ -188,7 +188,7 @@ class MessageController extends Controller
                         ->where('receiver_id', $senderId);
                 })
                 ->where('project_id', $projectId)
-                ->orderBy('id', 'desc')->paginate(3);
+                ->orderBy('id', 'desc')->paginate(100);
             $getChatData = $getChatData->reverse();
             $html = view('message.message-screen', compact('user', 'getChatData', 'projectId', 'projectStatus', 'shouldEnableButton', 'buttonText', 'projectAssginStatus', 'receiverId', 'senderId'))->render();
 
@@ -223,7 +223,7 @@ class MessageController extends Controller
             })
             ->where('id', '<', $lastMessageId)
             ->orderBy('id', 'desc')
-            ->paginate(3);
+            ->paginate(100);
         return response()->json($additionalMessages);
     }
 }

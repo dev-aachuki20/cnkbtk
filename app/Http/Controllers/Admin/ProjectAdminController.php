@@ -179,7 +179,7 @@ class ProjectAdminController extends Controller
             })
             ->where('id', '<', $lastMessageId)
             ->orderBy('id', 'desc')
-            ->paginate(3);
+            ->paginate(100);
         return response()->json($additionalMessages);
     }
 }

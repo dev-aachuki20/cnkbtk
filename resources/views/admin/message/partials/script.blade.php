@@ -42,15 +42,12 @@
         var lastMessageId = null;
         var isLoading = false;
         var hasMoreMessages = true;
-        messageContainer.scrollTop(messageContainer[0].scrollHeight);
 
-        // messageContainer.on('scroll', function() {
-        //     if (messageContainer.scrollTop() === 0 && !isLoading && hasMoreMessages) {
-        //         var firstMessage = messageContainer.find('.message:first');
-        //         lastMessageId = firstMessage.data('message-id');
-        //         loadMoreMessages(lastMessageId);
-        //     }
-        // });
+        var initialScrollHeight = messageContainer.prop("scrollHeight");
+        messageContainer.scrollTop(initialScrollHeight);
+
+
+        // messageContainer.scrollTop(messageContainer[0].scrollHeight);
 
         messageContainer.on('scroll', function() {
             if (messageContainer.scrollTop() == 0) {
@@ -88,6 +85,9 @@
                         });
 
                         messageContainer.prepend(messagesHtml);
+                        var newScrollHeight = messageContainer.prop("scrollHeight");
+                        var scrollDifference = newScrollHeight - initialScrollHeight;
+                        messageContainer.scrollTop(scrollDifference);
                     } else {
                         hasMoreMessages = false;
                     }
