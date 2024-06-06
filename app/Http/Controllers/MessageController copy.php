@@ -30,8 +30,6 @@ class MessageController extends Controller
             $project = Project::findOrFail($projectId);
             $userId = $project->user_id;
             $creators = null;
-
-
             if ($senderRoleId == config('constant.role.creator')) {
                 $receiverId = $userId;
                 $projectId = $projectId;
@@ -39,8 +37,8 @@ class MessageController extends Controller
                 $receiverId = $senderId;
 
                 // If project is locked.
-                $projectStatus = $project->project_status;
-                if ($projectStatus == 1) {
+                $getProjectStatus = $project->project_status;
+                if ($getProjectStatus == 1) {
                     // get only one creator that is associated with that project after project is locked.
                     $creartorId = DB::table('project_creator')->where('project_id', $projectId)->where('creator_status', 1)->value('creator_id');
                     $creators = User::where('id', $creartorId)->get();

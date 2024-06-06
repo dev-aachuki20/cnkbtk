@@ -4,7 +4,6 @@ use App\Http\Controllers\Admin\StatisticsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\StatisticsCreatorController;
 use App\Http\Controllers\BlacklistUserController;
-use App\Http\Controllers\ChatController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\User\ProjectController;
 
@@ -58,10 +57,6 @@ Route::group(["namespace" => "App\Http\Controllers"], function () {
 Route::post('/delete-episode-image', 'App\Http\Controllers\PosterController@deleteEpisodeImage')->name('delete-episode-image');
 
 Route::resource('post', "App\Http\Controllers\PosterController")->middleware(["auth", "verified", "status"]);
-
-Route::get('chat/screen', [ChatController::class, 'chatScreen'])->name('chat.screen');
-Route::resource('chats', "App\Http\Controllers\ChatController")->middleware(["auth", "verified", "status"]);
-
 
 
 Route::post('/message/send', [MessageController::class, 'storeMessage'])->name('message.send');
