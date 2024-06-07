@@ -84,12 +84,18 @@
                 success: function(response) {
                     $('#messageInput').val('');
                     $('#messageContainer').append('<div class="message outgoing"><div class="message-content">' + message + ' <span class="message_time"> </span></div></div>');
+                    scrollToBottom();
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
                 }
             });
         }
+    }
+
+    function scrollToBottom() {
+    var chatContainer = $('.chatbodypart .message-container');
+    chatContainer.scrollTop(chatContainer.prop("scrollHeight"));
     }
 
     function refreshMessages(userId, userName, projectId){
