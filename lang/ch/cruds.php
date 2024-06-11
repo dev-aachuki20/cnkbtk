@@ -2,8 +2,8 @@
 
 return [
     'profile' => [
-        'title'                     => '型材',
-        'title_singular'            => '轮廓',
+        'title'                     => '简介',
+        'title_singular'            => '简介',
         'fields' => [
             'user_name' => '用户名',
             'email' => '电子邮件',
@@ -29,8 +29,8 @@ return [
             'id' =>  'ID',
             'name' => "姓名",
             'subject' => "主題",
-            'email_body' => "電子郵件正文",
-            'short_codes' => "短代碼",
+            'email_body' => "电子邮件正文",
+            'short_codes' => "短代码",
         ]
     ],
     //User Crud
@@ -58,44 +58,44 @@ return [
 
     // Sections Crud
     'section_management'  => [
-        'title'                     => '部门管理',
-        'title_singular'            => '科室管理',
+        'title'                     => '板块管理',
+        'title_singular'            => '板块管理',
         // Parent Section
         'parent_section' => [
-            'title'              => '家长部分',
-            'title_singular'     => '家长部分',
+            'title'              => '一级板块',
+            'title_singular'     => '一级板块',
             'fields' => [
                 'id' =>  'ID',
                 'title' => "标题",
                 'description' => '描述',
-                'creator_can_post' => '创建者可以发布',
+                'creator_can_post' => '制作组可以发布',
                 'user_can_post' => '用户可以发帖',
                 'show_in_header' => '在标题中显示',
                 'show_in_footer' => '在页脚中显示',
                 'position' => '位置'
             ],
-            'delete_message' => '如果您删除父部分，则所有子部分和子部分都将与其海报一起删除'
+            'delete_message' => '如果您删除一级板块，则所有二级板块都将与其帖子一起删除'
         ],
         // Sub Section 
         'sub_section' => [
-            'title'              => '子部分',
-            'title_singular'     => '子部分',
+            'title'              => '二级板块',
+            'title_singular'     => '二级板块',
             'fields' => [
                 'id' =>  'ID',
                 'title' => "标题",
                 'description' => '描述',
-                'creator_can_post' => '创建者可以发布',
+                'creator_can_post' => '制作组可以发布',
                 'user_can_post' => '用户可以发帖',
                 'show_in_header' => '在标题中显示',
                 'show_in_footer' => '在页脚中显示',
                 'position' => '位置',
-                'parent_section' => "家长部分",
-                'section_logo' => "部分标志",
+                'parent_section' => "一级板块",
+                'section_logo' => "板块标志",
             ],
-            'delete_message' => '如果您删除子部分，则所有子部分都将与其海报一起删除'
+            'delete_message' => '如果您删除二级板块，则所有二级板块都将与其帖子一起删除'
         ],
 
-        // //Child Section 
+        //Child Section 
         'child_section' => [
             'title'              => '子部分',
             'title_singular'     => '儿童科',
@@ -157,15 +157,15 @@ return [
     ],
     //Post management Cruds
     'post_management' => [
-        'title'                     => '海报管理',
-        'title_singular'            => '海报管理',
+        'title'                     => '帖子管理',
+        'title_singular'            => '帖子管理',
 
     ],
 
     'plan' => [
-        'title'                     => '计划管理',
-        'title_singular'            => '计划管理',
-        'module' => '计划',
+        'title'                     => '充值选项管理',
+        'title_singular'            => '充值选项管理',
+        'module' => '充值选项',
         'fields' => [
             'id' =>  'ID',
             'title' => '标题',
@@ -182,32 +182,32 @@ return [
             'id' =>  'ID',
             'email' => '电子邮件',
             'subject' => '主题',
-            'message' => '信息',
+            'message' => '内容',
         ]
     ],
 
     'reports' => [
-        'title' => '报告',
-        'title_singular' => '报告',
+        'title' => '举报',
+        'title_singular' => '举报',
         'fields' => [
             'id' =>  'ID',
             'reason' => '原因',
             'description' => '描述',
             'username' => '用户名',
-            'poster' => '海报'
+            'poster' => '帖子'
         ]
     ],
 
     'point' => [
         'title' => '积分',
-        'title_singular' => '观点'
+        'title_singular' => '积分'
     ],
 
 
 
     //  Global
     'global' => [
-        'status' => '地位',
+        'status' => '状态',
         'created_date' => '创建日期',
         'updated_date' => '更新日期',
         'add' => '添加',
@@ -215,8 +215,8 @@ return [
         'delete' =>  '删除',
         'edit' => '编辑',
         'action' => '行动',
-        'active' => '积极的',
-        'in_active' => '不活跃',
+        'active' => '启用',
+        'in_active' => '不启用',
         'short_code' => '短代码',
         'description' => '描述',
         'details' => '细节',
@@ -235,7 +235,7 @@ return [
         'allowed_file_type_png' => '（允许类型 png | PNG)',
         'na' => "无法使用",
         'purchase' => "购买",
-        'apply' => '申請',
+        'apply' => '应用',
         'message' => '信息',
         'read_chat' => '阅读聊天',
         'average' => '平均的',
@@ -253,24 +253,23 @@ return [
         'confirmed' => '确认的',
         'readmore' => '阅读更多',
         'search_by_project_title' => '按标题搜索',
-
     ],
 
     'lang' => [
         'english' => "英语",
-        'chinese' => "中国人",
+        'chinese' => "简体中文",
     ],
 
     'statistics' => [
-        'title' => '網站統計',
+        'title' => '网站统计',
         'statistics_filteration' => [
-            'title' => '選擇過濾器：',
-            'daterange_title' => '選擇日期範圍：',
+            'title' => '选择过滤器：',
+            'daterange_title' => '选择日期范围：',
             'tag_type_title'    => '选择标签类型：',
-            'day' => "天空",
+            'day' => "天",
             'week' => "星期",
             'month' => "月",
-            'custom_range'      => "定制范围",
+            'custom_range'      => "自选范围",
             'all'      => "全部",
             'purchased'      => "已购买",
             'visited'      => "访问过",
@@ -279,57 +278,57 @@ return [
     ],
 
     'registered_members' => [
-        'title'                     => '註冊會員',
-        'title_singular'            => '註冊會員',
+        'title'                     => '注册会员',
+        'title_singular'            => '注册会员',
         'fields' => [
-            'num_graph' => '會員註冊圖',
-            'time'      => '會員註冊時間',
-            'count'     => '會員數量',
-            'graph'     => '會員圖',
+            'num_graph' => '会员注册图',
+            'time'      => '时间',
+            'count'     => '数量',
+            'graph'     => '会员图',
         ]
     ],
 
     'number_of_posts' => [
-        'title'            => '貼文數量',
-        'title_singular'   => '貼文數量',
+        'title'            => '帖子数量',
+        'title_singular'   => '帖子数量',
         'fields' => [
             'num_graph'    => '帖子数量图',
-            'time'         => '帖子数量 时间',
-            'count'        => '帖子数',
+            'time'         => '时间',
+            'count'        => '数量',
             'graph'        => '帖子图',
         ]
     ],
 
     'most_popular_poster' => [
-        'title'             => '最常访问的标签类型',
-        'title_singular'    => '最常访问的标签类型',
+        'title'             => '最受欢迎的标签',
+        'title_singular'    => '最受欢迎的标签',
         'fields' => [
-            'num_graph'     => '访问量最大的海报图',
-            'time'          => '访问海报时间',
-            'count'         => '访问量最大的海报',
-            'graph'         => '访问海报图',
+            'num_graph'     => '最受欢迎的标签图',
+            'time'          => '时间',
+            'count'         => '数量',
+            'graph'         => '最受欢迎的标签图',
         ]
     ],
 
     'visiting_users' => [
-        'title'             => '來訪用戶',
-        'title_singular'    => '來訪用戶',
+        'title'             => '来访用户',
+        'title_singular'    => '来访用户',
         'fields' => [
-            'num_graph'     => '訪問用戶圖',
-            'time'          => '參觀時間',
-            'count'         => '訪問用戶數',
-            'graph'         => '訪問圖',
+            'num_graph'     => '访问用户图',
+            'time'          => '时间',
+            'count'         => '数量',
+            'graph'         => '访问用户图',
         ]
     ],
 
     'mobile_access' => [
-        'title'             => '移動訪問',
-        'title_singular'    => '移動訪問',
+        'title'             => '移动端访问',
+        'title_singular'    => '移动端访问',
         'fields' => [
-            'num_graph'     => '行動訪問用戶圖',
-            'time'          => '移動訪問時間',
-            'count'         => '移動訪問計數',
-            'graph'         => '移動訪問圖',
+            'num_graph'     => '移动端访问图',
+            'time'          => '时间',
+            'count'         => '数量',
+            'graph'         => '移动端访问图',
         ]
     ],
 
@@ -343,34 +342,33 @@ return [
     ],
 
     'create_project' => [
-        'title'    => '創建專案',
-        'home'     => '家',
-        'create'    => '創造',
-        'project'  => '專案',
+        'title'    => '创建项目',
+        'home'     => '主页',
+        'create'    => '创建',
+        'project'  => '项目',
         'projects'  => '项目',
-        'project_details'  => '项目清单',
+        'project_details'  => '项目详情',
         'detail' => '细节',
-        'post'  => '郵政',
+        'post'  => '发布',
         'list' => '列表',
         'list_title' => '列表',
         'request' => '要求',
         'fields' => [
             'title'     => '标题',
-            'type'     => '類型',
-            'tags'          => '標籤',
-            'creators'         => '創作者',
-            'budget'         => '預算',
+            'type'     => '类型',
+            'tags'          => '标签',
+            'creators'         => '制作组',
+            'budget'         => '预算',
             'description'         => '描述',
             'user_name'         => '用户名',
             'user_ip'         => 'IP地址',
-            'copyright'         => '版權',
-            'placeholder'         => '輸入預算',
-            'title_placeholder'         => '输入标题',
-            'text'         => '勾選此方塊即表示您同意遵守我們的版權政策。',
+            'copyright'         => '版权',
+            'placeholder'         => '输入预算',
+            'text'         => '勾选此方块即表示您同意遵守我们的板块政策。',
             'selected' => [
-                'type' => '選擇類型',
-                'tags' => '選擇標籤',
-                'creator' => '選擇創作者',
+                'type' => '选择类型',
+                'tags' => '选择标签',
+                'creator' => '选择制作组',
             ],
             'creator_name' => '创建者姓名',
             'project_request' => '项目确认请求',
@@ -382,12 +380,12 @@ return [
             'creator_rating' => 'Creator Rating',
         ],
         'headings' => [
-            'cancelled_project'     => '取消',
-            'cancel_project'        => '取消',
-            'confirmed_project'         => '确认的',
-            'confirm_project'        => '确认',
+            'cancelled_project'     => '取消的项目',
+            'cancel_project'        => '取消项目',
+            'confirmed_project'         => '已确认项目',
+            'confirm_project'        => '确认项目',
             'bid_added'        => '项目投标已添加',
-            'add_bid'        => '更新出价',
+            'add_bid'        => '添加您的出价',
             'add_bid_form'        => '添加投标表格',
 
         ],
@@ -401,6 +399,7 @@ return [
             'tutorial'  => '教程',
         ]
     ],
+
     'status' => [
         'active' => '积极的',
         'inactive' => '不活跃'
