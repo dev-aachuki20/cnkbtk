@@ -20,8 +20,15 @@ class BlacklistUserController extends Controller
 
     public function index(BlacklistUserDataTable $dataTable)
     {
-        $balcklistTag = BlacklistTag::where('status', 1)->get();
-        return $dataTable->render('blacklist-user.index', compact('balcklistTag'));
+        try {
+            $balcklistTag = BlacklistTag::where('status', 1)->get();
+            return $dataTable->render('blacklist-user.index', compact('balcklistTag'));
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => trans("messages.something_went_wrong"),
+                'alert-type' => 'error'
+            ], 500);
+        }
     }
 
     public function store(StoreBlacklistUserRequest $request)

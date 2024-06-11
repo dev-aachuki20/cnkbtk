@@ -29,7 +29,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Rule;
-use Carbon\Carbon;
 
 
 class ProjectController extends Controller
@@ -313,52 +312,6 @@ class ProjectController extends Controller
         return view('project-request.creator-projectlist-show', compact('allRequestProjects', 'keyword'));
     }
 
-    // public function getAllProjectRequest(Request $request)
-    // {
-    //     $user =  Auth::user();
-    //     // $searchKeyword = $request->input('title');
-    //     // $projectsQuery = Project::where('status', 1);
-    //     // if ($searchKeyword) {
-    //     //     $projectsQuery->where('title', 'like', '%' . $searchKeyword . '%');
-    //     // }
-    //     // $projects = $projectsQuery->get();
-
-    //     $keyword = $request->input('title');
-    //     if (isset($request->title) && (!empty($request->title))) {
-    //         $projects = Project::where('title', 'like', ' % ' . $keyword . ' % ')->where('status', 1)->get();
-    //         // dd($projects);
-    //     }
-
-
-    //     $allRequestProjects = $user->projects->where('status', 1)->map(function ($project) use ($user) {
-    //         $creatorStatus = DB::table('project_creator')
-    //             ->where('project_id', $project->id)
-    //             ->where('creator_id', $user->id)
-    //             ->value('creator_status');
-
-    //         // $userStatus = DB::table('project_creator')
-    //         //     ->where('project_id', $project->id)
-    //         //     ->where('creator_id', $user->id)
-    //         //     ->value('user_status');
-
-    //         $bid = DB::table('project_creator')
-    //             ->where('project_id', $project->id)
-    //             ->where('creator_id', $user->id)
-    //             ->value('bid');
-
-    //         $assignStatus =  DB::table('project_creator')
-    //             ->where('project_id', $project->id)
-    //             ->where('creator_id', $user->id)
-    //             ->value('assign_status');
-
-    //         $creatorRatingStatus = Rating::where('project_id', $project->id)->value('creator_rating');
-    //         return [
-    //             'project' => $project, 'creatorStatus' => $creatorStatus, 'bid' => $bid, 'assignStatus' => $assignStatus, 'creatorRatingStatus' => $creatorRatingStatus,
-    //         ];
-    //     });
-
-    //     return view('project-request.creator-projectlist-show', compact('allRequestProjects'));
-    // }
 
     // add project bid by creator
     public function addBidByCreator(Request $request)
@@ -573,26 +526,4 @@ class ProjectController extends Controller
             return response()->json(['message' => trans("messages.something_went_wrong"), 'alert-type' => 'error'], 500);
         }
     }
-
-    // public function deleteRequestProjects(Request $request)
-    // {
-    //     $oneWeekAgo = Carbon::now()->subWeek();
-
-    //     $projectsToDelete = DB::table('projects')
-    //         ->leftJoin('project_creator', 'projects.id', '=', 'project_creator.project_id')
-    //         ->whereDate('projects.created_at', '=', $oneWeekAgo->format('Y-m-d'))
-    //         ->whereNull('project_creator.creator_status')
-    //         ->where('project_creator.user_status', '1')
-    //         ->select('projects.id')
-    //         ->groupBy('projects.id')
-    //         ->havingRaw('COUNT(project_creator.id) = 1')
-    //         ->get();
-
-    //     // Delete the projects
-    //     foreach ($projectsToDelete as $project) {
-    //         Project::destroy($project->id);
-    //     }
-
-    //     return redirect()->back()->with('success', 'Projects deleted successfully.');
-    // }
 }
