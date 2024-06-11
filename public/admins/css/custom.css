@@ -1176,6 +1176,13 @@ table.dataTable.dtr-inline.collapsed>tbody>tr>td.dtr-control:before, table.dataT
   stroke: #000;
 }
 
+@supports not (-webkit-touch-callout:none) {
+  .layout-fixed .wrapper .sidebar {
+      height: calc(100vh - (7.5rem + 1px)) !important;
+  }
+}
+
+
 @media (max-width: 1440px) {
   label:not(.form-check-label):not(.custom-file-label) {
     font-size: 14px;
