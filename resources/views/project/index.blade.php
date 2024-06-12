@@ -182,7 +182,7 @@
                             toastr.success(response.message);
                             setTimeout(function() {
                                 location.reload();
-                            }, 1500);
+                            }, 2000);
                         }
                     });
 
@@ -237,7 +237,7 @@
                             $('#finishProjectModal').modal('hide');
                             setTimeout(function() {
                                 location.reload();
-                            }, 1500);
+                            }, 2000);
                         },
                         error: function(response) {
                             if (response.responseJSON.errors && response.responseJSON.errors.remark) {

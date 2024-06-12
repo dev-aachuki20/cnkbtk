@@ -307,7 +307,7 @@
                     toastr.success(response.message);
                     setTimeout(() => {
                             location.reload();
-                        }, 500);
+                        }, 1000);
                 },
                 complete: function() {
                     hideLoader();
@@ -370,7 +370,7 @@
                         toastr.error(jqXHR.responseJSON.message, '{{trans("global.alert.error")}}');
                         setTimeout(() => {
                             location.reload();
-                        }, 500);
+                        }, 1000);
                     }
                 },
                 complete: function() {

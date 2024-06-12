@@ -372,6 +372,10 @@ class ProjectController extends Controller
         }
 
         $project = Project::findOrFail($projectId);
+
+        if ($project->project_status == 1) {
+            return response()->json(['error' => false, 'message' => 'Project has been already assigned to another creator.']);
+        }
         DB::table('project_creator')->where('project_id', $projectId)->where('creator_id', $creatorId)->update(['creator_status' => 1, 'user_status' => 1]);
 
         $projectStatus =  $project->project_status == 0 ? 1 : 0;
@@ -384,14 +388,12 @@ class ProjectController extends Controller
         if ($project->project_status == 1) {
             // mail send to User
             $user->notify(new ProjectConfirmedForCreatorNotification($project, $creator, $user));
-
             // mail send to Creator
             $creator->notify(new ProjectConfirmedForUserNotification($project, $creator, $user));
-
             // mail send to Admin
             $admin->notify(new ProjectConfirmedForAdminNotification($project, $creator, $user, $admin));
         }
-        return response()->json(['message' => 'Project confirmed successfully.']);
+        return response()->json(['success' => true, 'message' => 'Project confirmed successfully.']);
     }
 
     // Confirm project by user by mail confirm button

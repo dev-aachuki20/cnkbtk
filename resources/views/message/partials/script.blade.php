@@ -34,7 +34,9 @@
             },
             success: function(response) {
                 toastr.success(response.message, '{{trans("global.alert.success")}}');
-                location.reload();
+                setTimeout(() => {
+                    location.reload();                    
+                }, 1000);
             },
             complete: function() {
                     hideLoader();

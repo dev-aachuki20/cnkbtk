@@ -265,7 +265,7 @@ $(document).ready(function() {
                         $('#finishProjectRatingModal').modal('hide');
                         setTimeout(function() {
                             location.reload();
-                        }, 1500);
+                        }, 2000);
                     },
                     error: function(response) {
                         if (response.responseJSON.errors && response.responseJSON.errors.remark) {

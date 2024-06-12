@@ -23,7 +23,7 @@
                         <i class="fa fa-refresh"></i>
                     </button>
 
-                    @if($projectStatus != 1)
+                    @if($projectStatus != 1 && $user->role_id != config('constant.role.user'))
                         <div class="{{$projectStatus == 1 ? 'confirmRequest' :''}}">
                             <button type="button" class="dropdown-item del_btn dash-btn red-bg rounded-3 px-3 py-2" id="lockProjectBtn" data-project-id="{{$projectId}}" data-creator-id="{{$user->id}}" {{$projectAssginStatus == 1 ? 'disabled' : ''}}>{{ $buttonText }}</button>
                         </div> 

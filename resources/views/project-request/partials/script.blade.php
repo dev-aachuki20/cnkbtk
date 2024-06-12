@@ -9,9 +9,9 @@
             $('#project_id').val(projectId);
             $('#user_id').val(userId);
             $('#auth_id').val(creatorId);
-            if(bid != 0){
+            if (bid != 0) {
                 $('#budget').val(bid);
-            }else{
+            } else {
                 $('#budget').val(null);
             }
 
@@ -53,14 +53,20 @@
 
                 },
                 error: function(response) {
-                    if (response.responseJSON.errors && response.responseJSON.errors.budget) {
+                    if (response.responseJSON.errors && response.responseJSON.errors
+                        .budget) {
                         var errorMessage = response.responseJSON.errors.budget[0];
-                        $('#budget').after('<div id="budget-error" class="text-danger mt-2">' + errorMessage + '</div>');
+                        $('#budget').after(
+                            '<div id="budget-error" class="text-danger mt-2">' +
+                            errorMessage + '</div>');
                     } else {
-                        // toastr.error(jqXHR.responseJSON.message, '{{trans("global.alert.error")}}');
+                        // toastr.error(jqXHR.responseJSON.message, '{{ trans('global.alert.error') }}');
                         // location.reload();
-                        var errorMessage = response.responseJSON.message || 'An error occurred. Please try again.';
-                        $('#budget').after('<div id="budget-error" class="text-danger mt-2">' + errorMessage + '</div>');
+                        var errorMessage = response.responseJSON.message ||
+                            'An error occurred. Please try again.';
+                        $('#budget').after(
+                            '<div id="budget-error" class="text-danger mt-2">' +
+                            errorMessage + '</div>');
                     }
                 },
                 complete: function() {
@@ -102,7 +108,9 @@
                 },
                 success: function(response) {
                     toastr.success(response.message);
-                    location.reload();
+                    setTimeout(function(){
+                        location.reload();
+                    },2000);
                 },
                 error: function(xhr, creatorStatus, error) {
                     toastr.error("Error occurred while confirming project: " + error);
@@ -131,7 +139,7 @@
                 this.button.innerText = 'Read Less';
             }
         }
-    }   
+    }
 
     // Initialize the ReadMoreToggle class for all description content sections
     document.addEventListener('DOMContentLoaded', () => {

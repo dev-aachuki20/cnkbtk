@@ -54,13 +54,15 @@
                     </tr>
 
                     <tr>
+                      @php
+                          $tagIds = explode(',', $project->tags); // Convert the string to an array of IDs
+                          $tags = \App\Models\Tag::whereIn('id', $tagIds)->get(); // Fetch the tags from the database
+                          
+                          $tagNames = app()->getLocale() == 'en' ? $tags->pluck('name_en')->toArray() : $tags->pluck('name_ch')->toArray();
+                        @endphp
                       <th>{{trans("cruds.create_project.fields.tags")}}</th>
                       <td>
-                        @if(app()->getLocale() == 'en')
-                        {{ $project->tags->name_en ?? '' }}
-                        @else
-                        {{ $project->tags->name_ch ?? '' }}
-                        @endif
+                        {{ implode(', ', $tagNames) }}
                       </td>
                     </tr>
 

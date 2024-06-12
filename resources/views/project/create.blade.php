@@ -115,7 +115,7 @@
             toastr.error(jqXHR.responseJSON.message, '{{trans("global.alert.error")}}');
             setTimeout(function() {
               location.reload();
-            }, 4000);
+            }, 2000);
 
           }
         },
