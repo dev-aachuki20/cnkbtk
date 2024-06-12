@@ -33,7 +33,9 @@
       <div class="row">
         <div class="col-12 col-lg-12">
           <form id="selftipup-form">
+              @if($plan)
               <input name="plan_id" type="hidden" value="{{Crypt::encrypt($plan->id)}}">
+             
               <div class="product-pay-details">
                 <div class="product-inner d-flex">
                   <div class="product-box">
@@ -89,6 +91,7 @@
                   <button type="submit" class="btn  pay-btn">{{trans("pages.selftopup.pay_immediately")}}</a>
                 </div>
               </div>
+             @endif
           </form>
 
         </div>
