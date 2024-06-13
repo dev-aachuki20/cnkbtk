@@ -279,7 +279,9 @@ $siteSettingData = getSiteSetting();
         selectedLabel = "Day";
       } else if (diffInDays === 6) {
         selectedLabel = "Week";
-      } else if (startDate.isSameMonth(endDate)) {
+      // } else if (startDate.isSameMonth(endDate)) { //working
+    // } else if (startDate.isSame(endDate, 'month')) { // example
+      } else if (startDate.isSame(endDate)) {
         selectedLabel = "Month";
       } else {
         selectedLabel = "Custom Range";
