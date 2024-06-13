@@ -582,7 +582,7 @@ class StatisticsController extends Controller
                     'end_date' => $endDate->format('Y-m-d H:i:s')
                 ])
                 ->pluck('poster_count', 'createddate');
-        } else if ($filterType == 'purchased') {
+         } else if ($filterType == 'purchased') {
             $popularPostersCounts = DB::table(DB::raw('(
                 SELECT
                     DATE_FORMAT(user_episodes.created_at, "' . $queryDateFormat . '") AS createddate,
@@ -591,19 +591,50 @@ class StatisticsController extends Controller
                     user_episodes
                 INNER JOIN
                     posters ON user_episodes.poster_id = posters.id
+                INNER JOIN
+                    tags ON FIND_IN_SET(tags.id, posters.tags) > 0 AND tags.tag_type = ' . $tagTypes . '
                 WHERE
-                user_episodes.created_at BETWEEN :start_date AND :end_date
+                    user_episodes.created_at BETWEEN :start_date AND :end_date
                 GROUP BY
                     createddate
                 ORDER BY
                     createddate ASC
             ) AS subquery_alias'))
-                ->setBindings([
-                    'start_date' => $startDate->format('Y-m-d H:i:s'),
-                    'end_date' => $endDate->format('Y-m-d H:i:s')
-                ])
-                ->pluck('poster_count', 'createddate');
+            ->setBindings([
+                'start_date' => $startDate->format('Y-m-d H:i:s'),
+                'end_date' => $endDate->format('Y-m-d H:i:s')
+            ])
+            ->pluck('poster_count', 'createddate');
         }
+
+
+        
+        
+        // else if ($filterType == 'purchased') {
+            
+        //     $popularPostersCounts = DB::table(DB::raw('(
+        //         SELECT
+        //             DATE_FORMAT(user_episodes.created_at, "' . $queryDateFormat . '") AS createddate,
+        //             COUNT(user_episodes.poster_id) AS poster_count
+        //         FROM
+        //             user_episodes
+        //         INNER JOIN
+        //             posters ON user_episodes.poster_id = posters.id
+        //         WHERE
+        //         user_episodes.created_at BETWEEN :start_date AND :end_date
+        //         GROUP BY
+        //             createddate
+        //         ORDER BY
+        //             createddate ASC
+        //     ) AS subquery_alias'))
+        //         ->setBindings([
+        //             'start_date' => $startDate->format('Y-m-d H:i:s'),
+        //             'end_date' => $endDate->format('Y-m-d H:i:s')
+        //         ])
+        //         ->pluck('poster_count', 'createddate');
+        // }
+
+
 
         // Populate data and labels arrays
         $startDateCopy = $startDate->copy();
