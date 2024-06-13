@@ -48,9 +48,11 @@
 
                                 @if($creator->id != null)
                                 <tr>
-                                    <td style="padding:0 0 36px 0;color:#153643;">
-                                        <p style="margin:0;font-size:16px;line-height:24px;"><a href="{{route('user.project.detail', ['creator_id' => $creator->id, 'project_id' => $project->id])}}" style="display: block; padding: 10px; background: #00255b; width: fit-content; color: #fff; text-decoration: none; font-size: 14px;">View Project</a></p>
-                                    </td>
+                                    <tr>
+                                        <td style="padding:0 0 36px 0;color:#153643;">
+                                            <p style="margin:0;font-size:16px;line-height:24px;"><a href="{{route('user.project.detail', ['creator_id' => $creator->id, 'project_id' => $project->id])}}" style="display: block; width: fit-content; color: #fff; text-decoration: none; font-size: 14px; background-color: #ff625b;font-weight: 600; padding: 10px 30px;" >View Project</a></p>
+                                        </td>
+                                    </tr>
                                 </tr>
                                 @endif
 
