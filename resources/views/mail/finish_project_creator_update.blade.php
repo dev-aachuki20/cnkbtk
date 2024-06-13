@@ -58,7 +58,7 @@
                             <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;font-size:9px;">
                                 <tr>
                                     <td style="padding:0;width:50%;" align="center">
-                                        <p style="margin:0;font-size:14px;line-height:16px;color:#ffffff;">
+                                        <p style="text-align: center; margin:0;font-size:14px;line-height:16px;color:#ffffff;">
                                             © 2024 All Rights Reserved.
                                         </p>
                                     </td>
