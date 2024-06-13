@@ -13,6 +13,7 @@ use App\Imports\BlacklistUsersImport;
 use App\Models\BlacklistTag;
 use App\Models\Uploads;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class BlacklistUserController extends Controller
@@ -146,5 +147,15 @@ class BlacklistUserController extends Controller
             DB::rollback();
             return response()->json(['message' => trans("messages.something_went_wrong"), 'alert-type' =>  'error'], 500);
         }
+    }
+
+    public function downloadExcel()
+    {
+        $filePath = public_path('sample_excel_blacklist_user.xlsx');
+        $headers = [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'Content-Disposition' => 'attachment; filename="sample_excel_blacklist_user.xlsx"',
+        ];
+        return response()->download($filePath, 'sample_excel_blacklist_user.xlsx', $headers);
     }
 }

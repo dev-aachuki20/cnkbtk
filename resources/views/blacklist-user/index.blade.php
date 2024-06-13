@@ -73,7 +73,9 @@
                                 <div class="row g-3">
                                     <div class="col-auto d-flex">
                                         <!-- View Sample Excel File -->
-                                        <button type="button" class="btn btn-primary px-3" id="openSampleFileBtn">{{__('pages.blacklist_user.button_one')}}</button>
+                                        {{-- <button type="button" class="btn btn-primary px-3" id="openSampleFileBtn">{{__('pages.blacklist_user.button_one')}}</button> --}}
+
+                                        <a href="{{ route('download.excel') }}" class="btn btn-primary px-3" id="openSampleFileBtn">{{__('pages.blacklist_user.button_one')}}</a>                                      
                                     </div>
                                     <div class="col-auto d-flex">
                                         <!-- Excel import Form -->
@@ -381,9 +383,9 @@
 
 
         // View sample file
-        $('#openSampleFileBtn').click(function() {
-            window.open("{{ asset('sample_excel_blacklist_user.xlsx') }}", '_blank');
-        });
+        // $('#openSampleFileBtn').click(function() {
+        //     window.open("{{ asset('sample_excel_blacklist_user.xlsx') }}", '_blank');
+        // });
 
 
         //edit form functionality

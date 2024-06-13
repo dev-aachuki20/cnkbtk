@@ -167,6 +167,7 @@ Route::get('visit-users/{range?}', [StatisticsCreatorController::class, 'visitin
 Route::get('popular-posters/{range?}', [StatisticsCreatorController::class, 'popularPostersGraph'])->name('statistics.popular-posters');
 Route::get('mobile-access/{range?}', [StatisticsCreatorController::class, 'mobileAccessGraph'])->name('statistics.mobile-access');
 // Site statistics Graph Filteration routes end
+Route::get('/download-excel', [BlacklistUserController::class, 'downloadExcel'])->name('download.excel');
 
 
 // Blacklist users routes start
