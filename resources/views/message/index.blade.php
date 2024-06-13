@@ -21,7 +21,15 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{route('home')}}">{{trans("global.home")}}</a></li>
-                <li class="breadcrumb-item"><a href="{{route('user.project.request')}}">{{trans("cruds.create_project.project")}} {{__('cruds.create_project.request')}}</a></li>
+                <li class="breadcrumb-item">
+                    @if(auth()->user()->role_id == config('constant.role.user'))
+                    <a href="{{route('user.project.index')}}">{{trans("cruds.create_project.project")}}</a>
+                    @else
+                    <a href="{{route('user.project.request')}}">{{trans("cruds.create_project.project")}} {{__('cruds.create_project.request')}}</a>
+                    @endif
+
+                    
+                </li>
                 <li class="breadcrumb-item active">{{trans("global.chat")}}</li>
             </ol>
         </nav>
