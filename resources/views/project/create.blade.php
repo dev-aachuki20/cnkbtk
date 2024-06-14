@@ -47,6 +47,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/38.1.0/classic/ckeditor.js"></script>
 <script>
+    $(function () {
+      $('[data-bs-toggle="tooltip"]').tooltip()
+    })
   $(document).ready(function() {
     $(".select-subject").select2({
       placeholder: "{{__('global.select')}}",

@@ -5327,3 +5327,23 @@ button#refresh-messages i{
 button#refresh-messages:hover{
   color: var(--color-dark-charcol) !important;
 }
+
+.info-tag {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ff6359;
+  border-radius: 30px;
+  background-color: #ff6359;
+  color: #ffffff !important;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.multipal_select_group label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}

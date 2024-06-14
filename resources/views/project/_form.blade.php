@@ -66,7 +66,7 @@
   <div class="col-md-4">
     <div class="mb-4">
       <div class="form-group multipal_select_group">
-        <label for="creator_id">{{__('cruds.create_project.fields.creators')}} <span class="text-danger">({{__('messages.creator_message')}})</span></label>
+        <label for="creator_id">{{__('cruds.create_project.fields.creators')}} <span class="text-danger info-tag"><i class="fa fa-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{__('messages.creator_message')}}"></i></span></label>
         <select class="form-select select-subject" aria-label="Default select example" name="creator_id[]" multiple id="creator_id">
           @foreach($creators as $creator)
           <option value="{{ $creator->id }}" {{ isset($project) && in_array($creator->id, $project->creators->pluck('id')->toArray()) ? 'selected' : '' }}>{{ $creator->user_name }}</option>
