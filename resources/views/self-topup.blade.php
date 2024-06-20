@@ -120,17 +120,24 @@
           beforeSend:function(response){
               $('.overlay').show();
           },
+          // success:function(response){
+          //     Swal.fire({
+          //         title: '{{trans("global.alert.success")}}',
+          //         text: response.message,
+          //         icon: 'success',
+          //         confirmButtonText: '{{trans("global.okay")}}'
+          //     }).then((result) => {
+          //       window.location.replace(
+          //         "{{route('user.profile',['tab' => 'information'])}}"
+          //       );
+          //     });
+          // }, 
           success:function(response){
-              Swal.fire({
-                  title: '{{trans("global.alert.success")}}',
-                  text: response.message,
-                  icon: 'success',
-                  confirmButtonText: '{{trans("global.okay")}}'
-              }).then((result) => {
-                window.location.replace(
-                  "{{route('user.profile',['tab' => 'information'])}}"
-                );
-              });
+            if (response.approvalUrl) {
+              window.location.replace(response.approvalUrl);
+            } else {
+              console.error('Error creating PayPal order');
+            }
           },
           error:function(jqXHR){
               toastr.error(jqXHR.responseJSON.message, '{{trans("global.alert.error")}}');  
