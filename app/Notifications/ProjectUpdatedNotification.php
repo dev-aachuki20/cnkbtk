@@ -43,8 +43,9 @@ class ProjectUpdatedNotification extends Notification implements ShouldQueue
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
-    {
+    {   
         if ($this->creator->id) {
+            
             return (new MailMessage)
                 ->markdown('mail.project_update_notification', ['project' => $this->project, 'creator' => $this->creator]);
         }

@@ -125,10 +125,6 @@ class MessageController extends Controller
 
     public function storeMessage(Request $request)
     {
-        // "content" => "l;k"
-        // "sender_id" => "17"
-        // "receiver_id" => "15"
-        // "project_id" => "1"
         $data = $request->all();
         Chat::create($data);
         // broadcast(new Message($data))->toOthers();

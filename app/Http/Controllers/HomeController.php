@@ -11,6 +11,8 @@ use App\Models\User;
 use App\Models\Query;
 use Carbon\Carbon;
 use Validator;
+use DB;
+use Illuminate\Support\Facades\Hash;
 
 
 class HomeController extends Controller
@@ -93,5 +95,50 @@ class HomeController extends Controller
         $save = Query::create($queryData);
         return response()->json(['message' => trans("messages.contact.success"),'alert-type' =>  'success'],200);
     }
+    
+    
+    public function addPreviousUser(Request $request){
+        $usersArray = DB::table('pre_ucenter_members')->get()->toArray();
+        
+        foreach ($usersArray as $userData) {
+            $user = new User();
+            $user->user_name = $userData->username;
+            $user->email = $userData->email;
+            $user->password = Hash::make('pass@1234');
+            $user->registration_ip = $userData->regip;
+            $user->created_at = Carbon::createFromTimestamp($userData->regdate);
+            $user->updated_at = Carbon::createFromTimestamp($userData->regdate);
+            $user->status = 1;
+            $user->role_id = config("constant.role.user");
+            
+            $user->save();
+        }
+    }
+    
+    public function addCreditPoints(Request $request){
+        $creditPointsArray = DB::table('pre_user_points')->get()->toArray();
+        
+        foreach ($creditPointsArray as $point) {
+            $point = new Points();
+            $point->user_id = $point->user_id;
+            $point->plan_id = $point->plan_id;
+            $point->credit  = $point->credit;
+            $point->debit   = $point->debit;
+            $point->amount  = $point->amount;
+            $point->available_general_point  = $point->available_general_point;
+            $point->available_integral_point  = $point->available_integral_point;
+            $point->post_id     = $point->post_id;
+            $point->episode_id  = $point->episode_id;
+            $point->type        = config("constant.point_type.general");    
+            $point->status      = 1;
+            // $point->creator_id  = $point->creator_id;
+            // $point->payment_id  = $point->payment_id;    
+            $point->created_at  = $point->created_at;
+            $point->updated_at  = $point->updated_at;
+            
+            $point->save();
+        }
+    }
+    
 }
 

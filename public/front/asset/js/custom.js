@@ -8,13 +8,13 @@ function hideLoader() {
 
 document.addEventListener('DOMContentLoaded', function () {
   var currentUserId = $('#messageForm').data('sender-id');
-  console.log('currentUserId ', currentUserId);
+//   console.log('currentUserId ', currentUserId);
   Echo.channel('chat')
     .listen('Message', (e) => {
-      console.log('listening event', e);
+    //   console.log('listening event', e);
       $('#messageInput').val('');
-      console.log(e.senderId, currentUserId)
-      console.log(e.senderId != currentUserId)
+    //   console.log(e.senderId, currentUserId)
+    //   console.log(e.senderId != currentUserId)
       if (e.senderId != currentUserId) {
         $('#messageContainer').append('<div class="message incoming"><div class="message-content">' + e.message + ' <span class="message_time"> </span></div></div>');
       }

@@ -13,7 +13,7 @@ return [
 
     'home' => 'Home',
     'dashboard'  => 'Dashboard',
-    'go_to_webiste' => "Go to website",
+    'go_to_webiste' => "Go To Website",
     'sign_in' => 'Sign in',
     'sign_up' => 'Sign up',
     'forget_password' => 'Forgot password',
