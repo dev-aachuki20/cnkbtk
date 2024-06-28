@@ -50,6 +50,7 @@ return [
     'in_active' => 'In-active',
     'credit' => "Credit",
     'debit' => 'Debit',
+    'details' => 'Details',
 
 
     // Header Navigation

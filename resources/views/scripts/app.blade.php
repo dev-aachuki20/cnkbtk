@@ -39,7 +39,7 @@
         }
         @endif
 
-        $('#searchBar').on("keyup",function(){
+        $('#searchBar').on("input",function(){
             var search_query = $(this).val();
             if(search_query != ''){
                 $.ajax({

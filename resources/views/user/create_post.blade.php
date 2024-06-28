@@ -155,7 +155,7 @@
                       <input class="form-control" type="text" placeholder="No file selected" readonly
                         data-target="file-input.value" />
                       <input type="file" class="form-control" id="customFile" data-target="file-input.input"
-                        data-action="file-input#display" />
+                        data-action="file-input#display" accept="image/png, image/jpg, image/jpeg, image/PNG, image/JPG, image/JPEG" />
                       <div class="input-group-append">
                         <label class="btn btn-secondary mb-0" for="customFile">Choose file</label>
                       </div>

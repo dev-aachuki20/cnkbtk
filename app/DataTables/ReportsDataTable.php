@@ -8,6 +8,7 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Support\Str;
 
 class ReportsDataTable extends DataTable
 {
@@ -47,7 +48,7 @@ class ReportsDataTable extends DataTable
                 return $record->reason ?? "N/A";
             })
             ->editColumn('description', function ($record) {
-                return $record->description ?? "N/A";
+                return Str::limit($record->description, 20) ?? "N/A";                
             })
 
             ->filterColumn('username', function ($query, $keyword) {

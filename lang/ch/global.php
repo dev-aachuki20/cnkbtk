@@ -49,6 +49,7 @@ return [
     'in_active' => '不启用',
     'credit' => "信用卡",
     'debit' => '借记卡',
+    'details' => '细节',
     // Header Navigation
     'forum' => "论坛",
     'site_statistics' => "网站统计",

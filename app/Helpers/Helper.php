@@ -16,7 +16,7 @@ use App\Models\Points;
  * @param string $folder
  * @return array $response
  */
-// if (!function_exists('uploadImage')) {
+if (!function_exists('uploadImage')) {
 
 	function uploadImage($directory, $file, $folder)
 	{
@@ -26,7 +26,7 @@ use App\Models\Points;
 		$response             = $directory->uploads()->save($upload);
 	}
 
-// }
+}
 
 if (!function_exists('uploaSectiondImage')) {
 

@@ -81,7 +81,7 @@
                                         <!-- Excel import Form -->
                                         <form class="m-0 px-3" id="excelForm" action="{{ route('blacklist.user.import') }}" method="POST" enctype="multipart/form-data">
                                             <label for="excel_file" class="btn btn-primary px-3 d-flex align-items-center">{{__('pages.blacklist_user.button_two')}}</label>
-                                            <input type="file" name="excel_file" id="excel_file" value="Import Excel" hidden>
+                                            <input type="file" accept="image/xls, image/xlsx" name="excel_file" id="excel_file" value="Import Excel" hidden>
                                         </form>
                                     </div>
                                     <div class="col-auto">

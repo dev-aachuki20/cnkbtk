@@ -51,7 +51,8 @@ class QueriesController extends Controller
      */
     public function show($id)
     {
-        //
+        $queryData = Query::findOrFail($id);
+        return response()->json($queryData);
     }
 
     /**
@@ -83,15 +84,15 @@ class QueriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request,$id)
+    public function destroy(Request $request, $id)
     {
         if ($request->ajax()) {
             $section = Query::findOrFail($id);
-           
+
             $section->delete();
             $notification = array(
-                'message' => trans("messages.delete_success",['module' => trans("cruds.enquiries.title_singular")]),
-                'alert-type' =>'success' 
+                'message' => trans("messages.delete_success", ['module' => trans("cruds.enquiries.title_singular")]),
+                'alert-type' => 'success'
             );
             return $response = response()->json([
                 'success' => true,

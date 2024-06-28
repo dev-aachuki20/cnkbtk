@@ -51,6 +51,45 @@
     </section>
     <!-- /.content -->
   </div>
+
+
+  <div class="modal fade" id="viewEnquiryModal" tabindex="-1" aria-labelledby="blackListModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="blackListModalLabel">{{trans('global.view')}} {{trans('global.details')}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+               
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{trans('cruds.global.cancel')}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+  <!-- view enquiryModal -->
+  {{-- <div id="viewEnquiryModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content query">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">View Details</h4>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>  
+    </div>
+  </div> --}}
+
 @endsection
 @section('scripts')
 {!! $dataTable->scripts() !!}
@@ -89,6 +128,27 @@
 
             } else {
                 e.dismiss;
+            }
+        });
+    });
+
+    // VIEW ENQUIERY DETAILS
+    $(document).on('click', '#viewEnquiery', function(e){
+      e.preventDefault();
+      var id = $(this).data('id');
+      var url = '{{ route("admin.query.show", ":id") }}';
+      url = url.replace(':id', id);
+      $('#viewEnquiryModal .modal-body').html('');
+        $.ajax({
+            url: url, 
+            method: 'GET',
+            success: function(data) {
+                console.log(data);
+                $('#viewEnquiryModal .modal-body').html(`<p>Email: ${data.email}</p><p>Subject: ${data.subject}</p><p>Message: ${data.message}</p>`);
+            },
+            error: function(xhr, status, error) {
+                $('#modal-content').html('<p>Error loading data. Please try again later.</p>');
+                console.error('Failed to fetch data:', error);
             }
         });
     });

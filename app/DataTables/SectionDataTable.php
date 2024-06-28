@@ -111,6 +111,7 @@ class SectionDataTable extends DataTable
             Column::make('DT_RowIndex')->title('#')->orderable(false)->searchable(false),
             Column::make('name_en')->title(trans("cruds.section_management.parent_section.fields.title").' <small>('. trans('cruds.lang.english') .')</small>'),
             Column::make('name_ch')->title(trans("cruds.section_management.parent_section.fields.title").' <small>('. trans('cruds.lang.chinese') .')</small>'),
+            Column::make('position')->title(trans("cruds.section_management.parent_section.fields.position")),
             Column::computed('status')->title(trans("cruds.global.status"))->orderable(false)->searchable(false),
             Column::make('created_at')->title(trans("cruds.global.created_date"))->orderable(false)->searchable(false),
             Column::computed('action')->title(trans("cruds.global.action"))->orderable(false)->searchable(false),

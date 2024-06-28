@@ -8,6 +8,7 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Support\Str;
 
 class QueriesDataTable extends DataTable
 {
@@ -32,11 +33,13 @@ class QueriesDataTable extends DataTable
                 return $record->subject ?? "N/A";
             }) 
             ->editColumn('message', function($record) {
-                return $record->message ?? "N/A";
+                return  Str::limit($record->message, 20) ?? "N/A";
             }) 
            
             ->addColumn('action', function($record) {
                 $action  = '<div class="d-flex">';
+                // view button
+                $action .= '<button type="button" id="viewEnquiery" class="btn btn-primary btn-sm view-btn" data-id="'.$record->id.'" data-toggle="modal" data-target="#viewEnquiryModal" title="'. trans("cruds.global.view") .'"><i class="fas fa-eye"></i></button>';
 
                 $action .= '<form action="'.route('admin.query.destroy', $record->id).'" method="POST" class="deleteForm">
                             <input type="hidden" name="_method" value="DELETE"> 

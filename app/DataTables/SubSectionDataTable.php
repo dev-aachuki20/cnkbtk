@@ -31,6 +31,10 @@ class SubSectionDataTable extends DataTable
             ->editColumn('name_ch', function($record) {
                 return $record->name_ch ?? "N/A";
             })  
+
+            ->editColumn('position', function($record) {
+                return $record->parent_category->position;
+            })  
             ->editColumn('status', function ($record) {
                 $checkedStatus = ($record->status == 1 ? 'checked' : '');
                 $currentStatus = ($record->status == 1 ? trans("cruds.global.active") : trans("cruds.global.in_active"));
@@ -111,6 +115,7 @@ class SubSectionDataTable extends DataTable
             Column::make('DT_RowIndex')->title('#')->orderable(false)->searchable(false),
             Column::make('name_en')->title(trans("cruds.section_management.sub_section.fields.title").' <small>('. trans('cruds.lang.english') .')</small>'),
             Column::make('name_ch')->title(trans("cruds.section_management.sub_section.fields.title").' <small>('. trans('cruds.lang.chinese') .')</small>'),
+            Column::make('position')->title(trans("cruds.section_management.parent_section.fields.position")),
             Column::computed('status')->title(trans("cruds.global.status"))->orderable(false)->searchable(false),
             Column::make('created_at')->title(trans("cruds.global.created_date"))->orderable(false)->searchable(false),
             Column::computed('action')->title(trans("cruds.global.action"))->orderable(false)->searchable(false),
