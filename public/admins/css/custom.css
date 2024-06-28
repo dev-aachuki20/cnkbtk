@@ -1213,6 +1213,23 @@ table.table-bordered.dataTable span.dtr-data {
  white-space: normal;
 }
 
+.viewEnquiryModal p{
+ font-size: 14px;
+}
+
+.viewEnquiryModal .close{
+ border: none;
+ width: 25px;
+ height: 25px;
+ background-color: #f8fafb;
+ border-radius: 50%;
+ border: 1px solid #cae6f3;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ margin: 0;
+}
+
 @media (max-width: 1440px) {
   label:not(.form-check-label):not(.custom-file-label) {
     font-size: 14px;

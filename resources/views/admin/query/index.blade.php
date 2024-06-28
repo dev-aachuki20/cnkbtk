@@ -52,22 +52,26 @@
     <!-- /.content -->
   </div>
 
-
-  <div class="modal fade" id="viewEnquiryModal" tabindex="-1" aria-labelledby="blackListModalLabel" aria-hidden="true" data-bs-backdrop="static">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="blackListModalLabel">{{trans('global.view')}} {{trans('global.details')}}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-               
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{trans('cruds.global.cancel')}}</button>
-            </div>
-        </div>
+<!-- Modal -->
+<div class="modal fade viewEnquiryModal" id="viewEnquiryModal" tabindex="-1" aria-labelledby="viewEnquiryModalLabel" aria-hidden="true" data-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewEnquiryModalLabel">{{trans('global.view')}} {{trans('global.details')}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">
+            
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </span>
+        </button>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{trans('cruds.global.cancel')}}</button>
+      </div>
     </div>
+  </div>
 </div>
 
 
@@ -144,7 +148,7 @@
             method: 'GET',
             success: function(data) {
                 console.log(data);
-                $('#viewEnquiryModal .modal-body').html(`<p>Email: ${data.email}</p><p>Subject: ${data.subject}</p><p>Message: ${data.message}</p>`);
+                $('#viewEnquiryModal .modal-body').html(`<p><b>Email:</b> ${data.email}</p><p><b>Subject</b>: ${data.subject}</p><p><b>Message</b>: ${data.message}</p>`);
             },
             error: function(xhr, status, error) {
                 $('#modal-content').html('<p>Error loading data. Please try again later.</p>');
