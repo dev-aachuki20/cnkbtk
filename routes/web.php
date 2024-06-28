@@ -89,6 +89,9 @@ Route::group(["namespace" => "App\Http\Controllers\User", 'as' => 'user.', "pref
     //Point Related Routes
     Route::get('/self-top-up', "PointsController@selftopup")->name('self-top-up');
     Route::post('/self-top-up/submit', "PointsController@paymenttopup")->name('self-top-up.submit');
+    
+    Route::get('/paypal/success',"PointsController@success")->name('paypal.success');
+    Route::get('/paypal/cancel', "PointsController@cancel")->name('paypal.cancel');
 
     // Project Controller routes
 
