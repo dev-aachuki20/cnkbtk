@@ -75,7 +75,7 @@
                                         <!-- View Sample Excel File -->
                                         {{-- <button type="button" class="btn btn-primary px-3" id="openSampleFileBtn">{{__('pages.blacklist_user.button_one')}}</button> --}}
 
-                                        <a href="{{ route('download.excel') }}" class="btn btn-primary px-3" id="openSampleFileBtn">{{__('pages.blacklist_user.button_one')}}</a>                                      
+                                        <a href="{{ route('download.excel') }}" class="btn btn-primary px-3" id="openSampleFileBtn">{{__('pages.blacklist_user.button_one')}}</a>
                                     </div>
                                     <div class="col-auto d-flex">
                                         <!-- Excel import Form -->
