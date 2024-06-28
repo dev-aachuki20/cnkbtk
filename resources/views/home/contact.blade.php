@@ -9,6 +9,7 @@
                     </div>
                     <div class="contact-listing">
                     <ul>
+                        @if($siteSettingData['contact_no'])
                         <li>
                         <div class="contact-icon-box">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-qq" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -29,6 +30,8 @@
                             <span>{{$siteSettingData['contact_no']}}</span>
                         </span>
                         </li>
+                        @endif
+
                         <li>
                         <div class="contact-icon-box">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-wechat" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -47,6 +50,7 @@
                         </span>
                         </li>
                         
+                        @if($siteSettingData['contact_email'])
                         <li>
                         <div class="contact-icon-box">
                             <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -62,6 +66,7 @@
                             <span>{{$siteSettingData['contact_email']}} </span>
                         </a>
                         </li>
+                        @endif
                     </ul>
                     </div>
                 </div>

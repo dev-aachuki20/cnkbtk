@@ -14,7 +14,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">{{trans("global.dashboard")}}</a></li>
-              <li class="breadcrumb-item"><a href="{{route('admin.advertisement.index')}}">{{trans("cruds.advertisement.title_singular")}}</a></li>
+              <li class="breadcrumb-item"><a href="{{route('admin.advertisement.index')}}">{{trans("cruds.advertisement.title")}}</a></li>
               <li class="breadcrumb-item active">{{trans("cruds.global.view")}} {{trans("cruds.advertisement.title_singular")}}</li>
             </ol>
           </div>

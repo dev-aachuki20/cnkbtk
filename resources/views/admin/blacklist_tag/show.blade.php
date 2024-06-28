@@ -11,6 +11,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">{{trans("global.dashboard")}}</a></li>
+            <li class="breadcrumb-item"><a href="{{route('admin.blacklist-tag.index')}}">{{trans("cruds.blacklist_tag.title")}}</a></li>
             <li class="breadcrumb-item active">{{trans("cruds.global.view")}} {{trans("cruds.blacklist_tag.title_singular")}}</li>
           </ol>
         </div>

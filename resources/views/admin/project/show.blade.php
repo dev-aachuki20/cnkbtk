@@ -11,6 +11,8 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">{{trans("global.dashboard")}}</a></li>
+            <li class="breadcrumb-item"><a href="{{route('admin.projects.index')}}">{{trans('cruds.create_project.projects')}}</a></li>
+
             <li class="breadcrumb-item active">{{trans("cruds.global.view")}} {{trans('cruds.create_project.project_details')}}</li>
           </ol>
         </div>
