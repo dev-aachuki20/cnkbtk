@@ -1263,7 +1263,7 @@ textarea.form-control {
   border-radius: 4px;
   margin-right: 0 !important;
   border-color: #dee9f7;
-  background-color: #ffffff;
+  background-color: var(--bg-white);
   opacity: 1;
 }
 
@@ -1290,11 +1290,27 @@ section.card-list {
 }
 
 .card-list .title-box-mid h3 {
-  font-size: 30px;
+  font-size: 24px;
   font-weight: 700;
   line-height: normal;
   color: var(--color-black);
   margin-bottom: 1.5rem;
+  margin-left: 10px;
+  position: relative;
+}
+
+.card-list .title-box-mid h3:before {
+  content: '';
+  width: 4px;
+  height: 30px;
+  display: block;
+  background-color: var(--color-primary);
+  border-radius: 6px;
+  position: absolute;
+  z-index: -1;
+  left: -10px;
+  top: 50%;
+  transform: translate(0, -50%);
 }
 
 .card-list .card {
@@ -2664,7 +2680,7 @@ span.count-number {
 
 .main-title h2 {
   font-size: 24px;
-  font-weight: 600;
+  font-weight: 700;
   line-height: inherit;
 }
 
@@ -3732,7 +3748,7 @@ cursor: pointer;
 .left-hero .banner-img {
   height: 100%;
   padding: 10px;
-  background-color: #ffffff;
+  background-color: var(--bg-white);
   border-radius: 10px;
   box-shadow: rgb(255 186 184 / 34%) 0px 5px 15px;
 }
@@ -3748,7 +3764,7 @@ cursor: pointer;
 
 .post-tags ul li {
   padding: 5px 10px;
-  background-color: #ffffff;
+  background-color: var(--bg-white);
   text-transform: capitalize;
   border-radius: 4px;
   font-size: 14px;
@@ -3762,7 +3778,7 @@ cursor: pointer;
 .left-hero .banner-img {
   height: 100%;
   padding: 10px;
-  background-color: #ffffff;
+  background-color: var(--bg-white);
   border-radius: 10px;
 }
 
@@ -3792,7 +3808,7 @@ section.chart-wrapper {
   transition: all 0.5s ease-in-out;
   border-radius: 10px;
   transition: all 0.5s ease-in-out;
-  background-color: #ffffff;
+  background-color: var(--bg-white);
 }
 .left-hero .slick-prev {
   left: 0;
@@ -3988,7 +4004,7 @@ section.chart-wrapper {
   max-width: fit-content;
   min-width: 100px;
   padding: 8px 10px;
-  color: #ffffff;
+  color: var(--color-white);
   gap: 5px;
   border-radius: 30px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
@@ -4002,7 +4018,7 @@ section.chart-wrapper {
 .postBtn-box .btn-primary:hover,
 .postBtn-box .btn-primary:focus,
 .postBtn-box .btn-primary:active {
-  color: #ffffff;
+  color: var(--color-white) !important;
   background-color: #e5675f !important;
   border-color: #e5675f !important;
 }
@@ -4015,7 +4031,7 @@ section.chart-wrapper {
 .postBtn-box .record_delete_btn:hover,
 .postBtn-box .record_delete_btn:focus,
 .postBtn-box .record_delete_btn:active {
-  color: #ffffff;
+  color: var(--color-white);
   background-color: #cf171f;
   border-color: #cf171f;
 }
@@ -4028,7 +4044,7 @@ section.chart-wrapper {
 .postBtn-box .statusSuccess_btn:hover,
 .postBtn-box .statusSuccess_btn:focus,
 .postBtn-box .statusSuccess_btn:active {
-  color: #ffffff;
+  color: var(--color-white);
   background-color: #08970d;
   border-color: #08970d;
 }
@@ -4041,7 +4057,7 @@ section.chart-wrapper {
 .postBtn-box .btn-secondary:hover,
 .postBtn-box .btn-secondary:focus,
 .postBtn-box .btn-secondary:active {
-  color: #ffffff;
+  color: var(--color-white);
   background-color: #7f818b;
   border-color: #7f818b;
 }
@@ -4056,7 +4072,7 @@ section.chart-wrapper {
     position: absolute;
     top: 40px;
     width: 100%;
-    background-color: #ffffff;
+    background-color: var(--bg-white);
     height: fit-content;
     border-radius: 10px;
     /* border: 1px solid #dee9f7; */
@@ -5346,4 +5362,17 @@ button#refresh-messages:hover{
   display: flex;
   align-items: center;
   gap: 5px;
+}
+
+.img-grid-wrapper {
+  margin-top: 24px;
+}
+
+.date-time-box {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.right-single-box .singel-top-head {
+  margin-bottom: 10px;
 }
