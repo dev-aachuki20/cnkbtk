@@ -38,7 +38,7 @@
     <nav class="mt-4">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item">
-          <a href="{{ route('admin.dashboard')}}" class="nav-link {{ request()->is('admin') ? 'active' : '' }}">
+          <a href="{{ route('admin.dashboard')}}" class="nav-link {{ request()->is('admin/dashboard') ? 'active' : '' }}">
             
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_106_2)">

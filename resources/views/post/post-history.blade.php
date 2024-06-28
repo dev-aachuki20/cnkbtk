@@ -178,11 +178,13 @@
                 </ul>
               </div>
             </div>
-            <div class="center">
-              <div class="pagination">
-                {{ $posters->links('pagination::bootstrap-5') }}
+            @if($posters->count() > 0)
+              <div class="center">
+                <div class="pagination">
+                  {{ $posters->links('pagination::bootstrap-5') }}
+                </div>
               </div>
-            </div>
+            @endif
           </div>
         </div>
       </div>
