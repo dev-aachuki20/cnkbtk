@@ -111,9 +111,14 @@
                                                 <div id="multi-link" class="img-box">
                                                     <a href="{{ Storage::disk('public')->url($upload->path) }}" class="glightbox" data-glightbox="type: image">
                                                         <img src="{{ Storage::disk('public')->url($upload->path) }}" alt="image" />
+                                                        @php
+                                                            $additionalCount = $episode->uploads->count() - 5;
+                                                        @endphp
+                                                        @if($additionalCount > 0)
                                                             <div class="transparent-box">
                                                                 <div class="caption">+{{ $episode->uploads->count() - 5 }}</div>
                                                             </div>
+                                                        @endif
                                                     </a>
                                                 </div>
                                             @endif
