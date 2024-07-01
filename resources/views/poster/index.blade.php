@@ -100,7 +100,7 @@
                                                     </a>
                                                 </div>
                                                 <div>
-                                                    <div class="sub"> <!-- New parent div for sub divs -->
+                                                    <div class="sub">
                                             @elseif($index < 4)
                                                 <div class="img-box">
                                                     <a href="{{ Storage::disk('public')->url($upload->path) }}" class="glightbox" data-glightbox="type: image">
@@ -111,17 +111,15 @@
                                                 <div id="multi-link" class="img-box">
                                                     <a href="{{ Storage::disk('public')->url($upload->path) }}" class="glightbox" data-glightbox="type: image">
                                                         <img src="{{ Storage::disk('public')->url($upload->path) }}" alt="image" />
-                                                        {{-- @if($episode->uploads->count() > 5) --}}
                                                             <div class="transparent-box">
                                                                 <div class="caption">+{{ $episode->uploads->count() - 5 }}</div>
                                                             </div>
-                                                        {{-- @endif --}}
                                                     </a>
                                                 </div>
                                             @endif
                                         @endforeach
-                                                    </div> <!-- Close the sub parent div -->
-                                                </div> <!-- Close the outer div wrapping main photo and sub -->
+                                                    </div>
+                                                </div>
                                     </div>
                                     @if($episode->uploads->count() > 5)
                                         <div id="more-img" class="extra-images-container hide-element">
