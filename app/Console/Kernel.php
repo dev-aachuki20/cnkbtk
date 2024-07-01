@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('requests:delete-old')->daily();
+        // $schedule->command('requests:delete-old')->daily();
         $schedule->command('queue:work --queue=default')
              ->everyMinute()
              ->withoutOverlapping();

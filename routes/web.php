@@ -195,5 +195,5 @@ Route::post('/email/resend', [App\Http\Controllers\Auth\VerificationController::
 
 //add previous users data and credit points
 // Route::get('/add-previous-user', 'App\Http\Controllers\HomeController@addPreviousUser');
-// Route::get('/add-credit-points', 'App\Http\Controllers\HomeController@addCreditPoints');
+Route::get('/add-credit-points', 'App\Http\Controllers\HomeController@addCreditPoints');
 

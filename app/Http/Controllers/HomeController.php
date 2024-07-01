@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Validator;
 use DB;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Points;
 
 
 class HomeController extends Controller
@@ -116,28 +117,29 @@ class HomeController extends Controller
     }
     
     public function addCreditPoints(Request $request){
-        $creditPointsArray = DB::table('pre_user_points')->get()->toArray();
+        $creditPointsArray = DB::table('pre_common_member')->select('uid', 'credits')->whereNotNull('uid')->get()->toArray();
         
         foreach ($creditPointsArray as $point) {
-            $point = new Points();
-            $point->user_id = $point->user_id;
-            $point->plan_id = $point->plan_id;
-            $point->credit  = $point->credit;
-            $point->debit   = $point->debit;
-            $point->amount  = $point->amount;
-            $point->available_general_point  = $point->available_general_point;
-            $point->available_integral_point  = $point->available_integral_point;
-            $point->post_id     = $point->post_id;
-            $point->episode_id  = $point->episode_id;
-            $point->type        = config("constant.point_type.general");    
-            $point->status      = 1;
-            // $point->creator_id  = $point->creator_id;
-            // $point->payment_id  = $point->payment_id;    
-            $point->created_at  = $point->created_at;
-            $point->updated_at  = $point->updated_at;
-            
-            $point->save();
+             DB::table('points')->insert([
+                'user_id' => $point->uid,
+                'plan_id' => 1,
+                'credit' => $point->credits,
+                'debit' => null,
+                'amount' => $point->credits,
+                'available_general_point' => $point->credits,
+                'available_integral_point' => null,
+                'post_id' => null,
+                'episode_id' => null,
+                'type' => config("constant.point_type.general"),
+                'status' => 1,
+                'creator_id' => null ,
+                'payment_id' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
         }
+        
+        return "points store successfully.";
     }
     
 }
