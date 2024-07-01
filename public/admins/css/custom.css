@@ -1231,6 +1231,20 @@ table.table-bordered.dataTable span.dtr-data {
  margin: 0;
 }
 
+.content .card-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.content .card-header .pull-right{
+  margin: 0;
+}
+
+.content .card-header::after{
+  display: none;
+}
+
 @media (max-width: 1440px) {
   label:not(.form-check-label):not(.custom-file-label) {
     font-size: 14px;
