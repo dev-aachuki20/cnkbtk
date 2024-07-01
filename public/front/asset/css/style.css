@@ -5377,3 +5377,7 @@ button#refresh-messages:hover{
 .right-single-box .singel-top-head {
   margin-bottom: 10px;
 }
+
+.swal2-styled.swal2-confirm{
+  background-color: var(--color-primary); 
+}

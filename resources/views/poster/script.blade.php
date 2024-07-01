@@ -110,6 +110,7 @@ $(document).ready(function(){
                     text: response.message,
                     icon: 'success',
                     confirmButtonText: '{{trans("global.okay")}}'
+                    confirmButtonColor: '#ff6359',
                 }).then((result) => {
                     location.reload();  
                 })
