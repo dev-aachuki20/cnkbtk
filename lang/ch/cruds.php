@@ -128,7 +128,8 @@ return [
                 'id' =>  'ID',
                 'title' => "标题",
             ],
-            'delete_message' => '如果删除，则该标签类型的所有标签都会被删除'
+            'delete_message' => '如果删除，则该标签类型的所有标签都会被删除',
+            'add_update_message' => '标签类型',
         ],
         //Tags Cruds
         'tag' => [
@@ -183,6 +184,7 @@ return [
             'email' => '电子邮件',
             'subject' => '主题',
             'message' => '内容',
+            'email_ip' => '电子邮件/IP 地址',
         ]
     ],
 
@@ -338,7 +340,8 @@ return [
         'fields' => [
             'id' =>  'ID',
             'title' => "标题",
-        ]
+        ],
+        'message' => '黑名单标签',
     ],
 
     'create_project' => [

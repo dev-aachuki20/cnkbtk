@@ -37,7 +37,7 @@ return [
     'search' => 'Search',
     'submit' => 'Submit',
     'chat'  => 'Chat',
-    'blacklist_user' => 'Blacklist Users',
+    'blacklist_user' => 'Blacklist users',
     'project' => 'Project',
     'bid'=>'Bid',
     'project_request' => 'Project Request',

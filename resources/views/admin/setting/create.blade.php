@@ -15,7 +15,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">{{trans("global.dashboard")}}</a></li>
-              <li class="breadcrumb-item">{{trans("cruds.setting.title_singular")}}</li>
+              <li class="breadcrumb-item">{{trans("cruds.setting.title")}}</li>
               <!--<li class="breadcrumb-item active">Site Setting</li>-->
             </ol>
           </div>
@@ -28,7 +28,7 @@
       <div class="container-fluid">
         <div class="row">
           <!-- left column -->
-          <div class="col-md-9">
+          <div class="col-md-12">
             <!-- general form elements -->
             <div class="card">
               <div class="card-header">

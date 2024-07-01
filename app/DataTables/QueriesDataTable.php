@@ -101,7 +101,7 @@ class QueriesDataTable extends DataTable
 
         return [
             Column::make('DT_RowIndex')->title('#')->orderable(false)->searchable(false),
-            Column::make('email')->title(trans("cruds.enquiries.fields.email")),
+            Column::make('email')->title(trans("cruds.enquiries.fields.email_ip")),
             Column::make('subject')->title(trans("cruds.enquiries.fields.subject")),
             Column::make('message')->title(trans("cruds.enquiries.fields.message")),
             Column::make('created_at')->title(trans("cruds.global.created_date"))->orderable(false)->searchable(false),

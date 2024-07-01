@@ -47,7 +47,7 @@ class BlacklistTagController extends Controller
 
             BlacklistTag::create($validatedData);
             DB::commit();
-            return redirect()->back()->with(['message' => trans("messages.add_success", ['module' => trans("cruds.blacklist_tag.title_singular")]), 'alert-type' =>  'success']);
+            return redirect()->back()->with(['message' => trans("messages.add_success", ['module' => trans("cruds.blacklist_tag.message")]), 'alert-type' =>  'success']);
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json([
@@ -102,7 +102,7 @@ class BlacklistTagController extends Controller
             if ($blacklistTag) {
                 $validatedData['updated_by'] = Auth::user()->id;
                 $blacklistTag->update($validatedData);
-                return redirect()->back()->with(['message' => trans("messages.update_success", ['module' => trans("cruds.blacklist_tag.title_singular")]), 'alert-type' =>  'success']);
+                return redirect()->back()->with(['message' => trans("messages.update_success", ['module' => trans("cruds.blacklist_tag.message")]), 'alert-type' =>  'success']);
             }
         } catch (\Exception $e) {
             return response()->json([

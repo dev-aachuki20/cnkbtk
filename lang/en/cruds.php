@@ -128,7 +128,8 @@ return [
                 'title' => "Title",
 
             ],
-            'delete_message' => 'If you delete it , all the tags with in these tag type will delete'
+            'delete_message' => 'If you delete it , all the tags with in these tag type will delete',
+            'add_update_message' => 'Tag type',
         ],
         //Tags Cruds
         'tag' => [
@@ -180,6 +181,7 @@ return [
             'email' => 'Email',
             'subject' => 'Subject',
             'message' => 'Message',
+            'email_ip' => 'Email/IP Address',
         ]
     ],
 
@@ -335,7 +337,8 @@ return [
         'fields' => [
             'id' =>  'ID',
             'title' => "Title",
-        ]
+        ],
+        'message' => 'Blacklist tag',
     ],
 
 
