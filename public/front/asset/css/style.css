@@ -5379,5 +5379,5 @@ button#refresh-messages:hover{
 }
 
 .swal2-styled.swal2-confirm{
-  background-color: var(--color-primary); 
+  background-color: var(--color-primary) !important; 
 }
