@@ -63,28 +63,5 @@ class CommonFunctionController extends Controller
         $view = view("admin.render.common.subparent_section",compact("datas"))->render();
         
         return response()->json(["message" => $view],200);
-    }
-    
-    public function updateLanguage($language){
-
-        
-        $locale = $language;
-        if($language == "en" || $language == "zh"){
-            app()->setLocale($locale);
-            session()->put('locale', $locale);
-            session()->save();
-            return back()->with(["alert-type" => "success","message",trans('global.language_change_error')]);
-        }
-        return back()->with(["alert-type" => "error","message" => trans('global.language_change_success')]);
-
-        // if (isset($locale) && in_array($locale, config('constant.language'))) {
-        //    
-        //    
-        //     return  back()->with(["alert-type" => "success","message" => ""]);
-        // }
-        // return back()->with(["alert-type" => "error","message" => "{{trans('global.language_change_success}}"]);
-    }
-
-
-    
+    }    
 }
