@@ -31,7 +31,8 @@
                 <table role="presentation" style="width: 100%; max-width:602px;border-collapse:collapse;border-spacing:0;text-align:left;">
                     <tr>
                         <td align="center" style="padding:20px 0;background:#ff6359;">
-                            <img src="" alt="" width="300" style="height:auto;display:block;" />
+                            {{-- <img src="" alt="" width="300" style="height:auto;display:block;" /> --}}
+                            <h1 style="text-align: center; margin:0;font-size:14px;line-height:16px;color:#ffffff;">{{ config('app.name') }}</h1>
                         </td>
                     </tr>
                     <tr>

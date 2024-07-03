@@ -43,7 +43,7 @@ class VerifyEmailNotification extends Notification
         $verificationUrl = $this->verificationUrl($notifiable);
 
         return (new MailMessage)
-            ->view('vendor.mail.html.verify_email', [
+            ->view('mail.auth.verify_email', [
                 'url' => $verificationUrl,
                 'name' => $notifiable->name,
             ])

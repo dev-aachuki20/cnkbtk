@@ -52,7 +52,7 @@
                                             {{trans('passwords.reset_email_line3')}}
                                         </p>
                                         <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">
-                                            <a href="{{ url(config('app.url').route('password.reset', $token, false)) }}" class="button">
+                                            <a href="{{ url(config('app.url').route('password.reset', $token, false)) }}" style="display: block; padding: 10px; background: #00255b; width: fit-content; color: #fff; text-decoration: none; font-size: 14px;">
                                                 {{ trans('passwords.reset_email_button') }}
                                             </a>
                                         </p>

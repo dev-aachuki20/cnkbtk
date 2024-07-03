@@ -31,7 +31,7 @@ class ResetPasswordNotification extends Notification
 
         return (new MailMessage)
             ->subject(trans('passwords.reset_email_subject'))
-            ->view('vendor.mail.html.reset_password', [
+            ->view('mail.auth.reset_password', [
                 'notifiable' => $notifiable,
                 'token' => $this->token
             ]);
