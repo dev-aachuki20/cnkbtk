@@ -44,13 +44,14 @@
                             <table role="presentation"
                                 style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
                                 <tr>
-                                    <td style="padding:0 0 36px 0;color:#153643;">
-                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">
+                                    <td style="padding:0; color:#4c4c4c;">
+                                        <h3 style="text-align: center margin-bottom:20px;">{{trans('verification.subject')}}</h3>
+                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px; font-weight:600;">
                                             {{ trans('verification.greeting') }}</p>
                                         <p style="margin:0;font-size:16px;line-height:24px;">
                                             {{ trans('verification.line1') }}</p>
                                         <p style="margin:20px 0;">
-                                            <a href="{{ $url }}" style="display: block; padding: 10px; background: #00255b; width: fit-content; color: #fff; text-decoration: none; font-size: 14px;">
+                                            <a href="{{ $url }}" style="display: block; padding: 10px 20px; background:#ff6359; width: fit-content; color: #ffffff; text-decoration: none; font-size: 14px;">
                                                 {{ trans('verification.action') }}
                                             </a>
                                         </p>

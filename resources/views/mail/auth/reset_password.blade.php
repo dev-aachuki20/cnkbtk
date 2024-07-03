@@ -39,9 +39,9 @@
                         <td style="padding:36px 30px 42px 30px;">
                             <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
                                 <tr>
-                                    <td style="padding:0 0 36px 0;color:#153643;">
-                                        <h3>{{trans('passwords.reset_email_subject')}}</h3>
-                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">
+                                    <td style="padding:0; color:#4c4c4c;">
+                                        <h3 style="text-align: center margin-bottom:20px;">{{trans('passwords.reset_email_subject')}}</h3>
+                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px; font-weight:600;">
                                             
                                             {{trans('passwords.reset_email_line1')}}
                                         </p>
@@ -62,7 +62,7 @@
                                         <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">
                                             {{trans('passwords.reset_email_notice', ['count' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire')])}}
                                         </p>
-                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">
+                                        <p style="margin:0; font-size:16px;line-height:24px;">
                                             {{trans('passwords.reset_email_salutation', ['app_name' => config('app.name')])}}
                                         </p>
                                         {{-- <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">
