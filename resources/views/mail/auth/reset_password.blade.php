@@ -51,8 +51,8 @@
                                         <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">
                                             {{trans('passwords.reset_email_line3')}}
                                         </p>
-                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;">
-                                            <a href="{{ url(config('app.url').route('password.reset', $token, false)) }}" style="display: block; padding: 10px; background: #00255b; width: fit-content; color: #fff; text-decoration: none; font-size: 14px;">
+                                        <p style="margin:0 0 12px 0;font-size:16px;line-height:24px; text-align: center;">
+                                            <a href="{{ url(config('app.url').route('password.reset', $token, false)) }}" style="display: block; padding: 10px 20px; background:#ff6359; width: fit-content; color: #ffffff; text-decoration: none; font-size: 14px;">
                                                 {{ trans('passwords.reset_email_button') }}
                                             </a>
                                         </p>
