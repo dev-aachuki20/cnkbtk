@@ -264,7 +264,7 @@
 
 
               <li class="nav-item">
-
+                <a class="nav-link  {{Request::is('user/self-top-up') ? 'active' : ''}}  self-top-up" href="{{auth()->check() ?  route('user.self-top-up') : 'javacript:void(0)'}}">{{trans("global.self_service")}}</a>
                 @if(isset($menues))
                 @php $headerMenus = $menues->where("show_in_header",1); @endphp
                 @forelse($headerMenus as $headerMenu)
