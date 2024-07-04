@@ -210,6 +210,7 @@ select.form-control {
   text-transform: uppercase;
   font-size: 14px !important;
   font-weight: 500 !important;
+  line-height: 25px;
   min-width: 100px;
 }
 
@@ -219,8 +220,13 @@ select.form-control {
   border-color: var(--color-primary) !important;
 }
 
+
 .btn-primary:hover{
   color: var(--color-primary) !important;
+}
+
+.btn-primary:focus{
+  color: var(--color-white);
 }
 
 .edit-blacklist-user i{
@@ -5380,4 +5386,9 @@ button#refresh-messages:hover{
 
 .swal2-styled.swal2-confirm{
   background-color: var(--color-primary) !important; 
+}
+
+.ck-rounded-corners ul,
+.ck-rounded-corners ol{
+  padding-left: 2rem;
 }

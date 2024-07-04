@@ -879,6 +879,10 @@ table.table-bordered.dataTable tbody td {
   padding: 8px 20px;
 }
 
+.badge-danger{
+  padding: 8px 20px;
+}
+
 tbody td .datatable-content {
   display: flex;
 
@@ -1243,6 +1247,15 @@ table.table-bordered.dataTable span.dtr-data {
 
 .content .card-header::after{
   display: none;
+}
+
+.note-editor ol,
+.note-editor ul{
+  padding-left: 2rem;
+}
+
+th.copy-content .Copy {
+  margin-top: 4px;
 }
 
 @media (max-width: 1440px) {
