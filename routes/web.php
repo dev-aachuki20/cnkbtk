@@ -26,7 +26,7 @@ Route::group(["namespace" => "App\Http\Controllers"], function () {
     // Route::view('terms-condition', "terms-condition")->name('terms-condition');
 
 
-    Route::get('{title}', [PageController::class, 'show'])->name('page.show');
+    Route::get('page/{title}', [PageController::class, 'show'])->name('page.show');
 
 
     //Common Function Route
