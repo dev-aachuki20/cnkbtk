@@ -19,6 +19,12 @@ use App\Http\Controllers\User\ProjectController;
 |
 */
 
+// Login Registeres releted routes 
+Auth::routes();
+Route::get('/email/verify', [App\Http\Controllers\Auth\VerificationController::class, 'show'])->name('verification.notice');
+Route::get('/email/verify/{id}/{hash}', [App\Http\Controllers\Auth\VerificationController::class, 'verify'])->name('verification.verify')->middleware(['signed']);
+Route::post('/email/resend', [App\Http\Controllers\Auth\VerificationController::class, 'resend'])->name('verification.resend');
+
 // Routes which does not require any authentication 
 Route::group(["namespace" => "App\Http\Controllers"], function () {
     Route::get('/', "HomeController@index")->name('home');
@@ -26,7 +32,7 @@ Route::group(["namespace" => "App\Http\Controllers"], function () {
     // Route::view('terms-condition', "terms-condition")->name('terms-condition');
 
 
-    Route::get('page/{title}', [PageController::class, 'show'])->name('page.show');
+    Route::get('/{title}', [PageController::class, 'show'])->name('page.show');
 
 
     //Common Function Route
@@ -198,11 +204,7 @@ Route::group(["middleware" => ["auth", "status"]], function () {
 // Blacklist users routes start end
 
 
-// Login Registeres releted routes 
-Auth::routes();
-Route::get('/email/verify', [App\Http\Controllers\Auth\VerificationController::class, 'show'])->name('verification.notice');
-Route::get('/email/verify/{id}/{hash}', [App\Http\Controllers\Auth\VerificationController::class, 'verify'])->name('verification.verify')->middleware(['signed']);
-Route::post('/email/resend', [App\Http\Controllers\Auth\VerificationController::class, 'resend'])->name('verification.resend');
+
 
 //add previous users data and credit points
 // Route::get('/add-previous-user', 'App\Http\Controllers\HomeController@addPreviousUser');
