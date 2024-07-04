@@ -24,15 +24,12 @@ class PointsController extends Controller
 
     public function paymenttopup(Request $request)
     {
-        // dump($request->all());
         try {
             $provider = new PayPalClient(config('paypal'));
             $token = $provider->getAccessToken();
             $provider->setAccessToken($token);
 
-            // Decrypt plan ID from request (adjust as per your application)
             $planid = Crypt::decrypt($request->plan_id);
-            // Retrieve the plan details from the database (adjust as per your application)
             $plan = Plan::find($planid);
             if (!$plan) {
                 return response()->json([
@@ -52,8 +49,8 @@ class PointsController extends Controller
                     'description' => 'Purchase of ' . $plan->points . ' points',
                 ]],
                 'application_context' => [
-                    'cancel_url' => route('user.paypal.cancel'),
-                    'return_url' => route('user.paypal.success'),
+                    'cancel_url' => route('user.paypal.cancel', ['plan_id' => $request->plan_id]),
+                    'return_url' => route('user.paypal.success', ['plan_id' => $request->plan_id]),
                 ],
             ];
 
@@ -61,26 +58,7 @@ class PointsController extends Controller
             $response = $provider->createOrder($paymentData);
 
             if (isset($response['id'])) {
-                $approvalUrl = $response['links'][1]['href'];
-
-                // store data in points table
-                $input = array();
-                $input["plan_id"] =  $planid;
-                $input["user_id"] = auth()->user()->id;
-                $input["credit"] = $plan->points;
-                $input["amount"] = $plan->amount;
-                $input["status"] = 1;
-                $input["payment_id"] = NULL;
-                $input["available_general_point"] = $plan->points;
-                $lastPointRow = Points::where(["user_id" => auth()->user()->id, "type" => config("constant.point_type.general")])->orderBy("id", "desc")->first();
-                if ($lastPointRow) {
-                    $avlGenPoint = $lastPointRow->available_general_point;
-                    $input["available_general_point"] = $avlGenPoint + $plan->points;
-                }
-                $input["type"] =  config("constant.point_type.general");
-                $create = Points::create($input);
-
-
+                $approvalUrl = $response['links'][1]['href'];  
                 return  response()->json(['approvalUrl' => $approvalUrl, 'message' => trans("messages.add_success", ['module' => trans("cruds.point.title_singular")]), 'alert-type' =>  'success'], 200);
             } else {
                 Log::error("PayPal createOrder response does not contain expected 'id' key.", ['response' => $response]);
@@ -104,7 +82,7 @@ class PointsController extends Controller
             $provider->setApiCredentials(config('paypal'));
             $provider->getAccessToken();
             $response = $provider->capturePaymentOrder($request['token']);
-            // dd($response);
+
             if (isset($response['status']) && $response['status'] == 'COMPLETED') {
                 $purchase_unit = $response['purchase_units'][0];
                 $capture = $purchase_unit['payments']['captures'][0];
@@ -123,16 +101,37 @@ class PointsController extends Controller
                 $transaction->payer_name = $response['payer']['name']['given_name'] . ' ' . $response['payer']['name']['surname'];
                 $transaction->save();
 
-                // Transaction::create($transaction);
+                // store data in points table
+                $planid = Crypt::decrypt($request->plan_id) ?? 1;
+                $plan = Plan::find($planid);
 
+                if($plan){
+                    $input = array();
+                    $input["plan_id"] =  $planid;
+                    $input["user_id"] = auth()->user()->id;
+                    $input["credit"] = $plan->points;
+                    $input["amount"] = $plan->amount;
+                    $input["status"] = 1;
+                    $input["payment_id"] = NULL;
+                    $input["available_general_point"] = $plan->points;
 
+                    $lastPointRow = Points::where(["user_id" => auth()->user()->id, "type" => config("constant.point_type.general")])->orderBy("id", "desc")->first();
+                    if ($lastPointRow) {
+                        $avlGenPoint = $lastPointRow->available_general_point;
+                        $input["available_general_point"] = $avlGenPoint + $plan->points;
+                    }
+                    $input["type"] =  config("constant.point_type.general");
+                    Points::create($input);
+                }                
                 return redirect()->route('user.profile', ['tab' => 'information'])->with('success', 'Payment completed successfully!');
+                // return redirect()->route('user.profile', ['tab' => 'information'])->with(['message' => 'Payment completed successfully!','alert-type' =>  'success']);
+                // return redirect()->route('user.profile')->with(['message' => trans("messages.profile.success"),'alert-type' =>  'success']);
             } else {
                 Log::error("PayPal payment capture failed", ['response' => $response]);
                 return redirect()->route('user.profile', ['tab' => 'information'])->with('error', 'Payment capture failed. Please try again.');
             }
         } catch (\Exception $e) {
-            Log::error("PayPal success callback error: " . $e->getMessage(), ['exception' => $e]);
+            Log::error("PayPal success callback error: " . $e->getMessage() . $e->getFile() . $e->getFile(), ['exception' => $e]);
             return response()->json([
                 'message' => 'Something went wrong',
                 'alert-type' => 'error'

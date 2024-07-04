@@ -417,8 +417,20 @@ return [
         'fields' => [
             'remark' => 'Remark',
         ],
-    ]
+    ],
 
+    'pages' => [
+        'title' => 'Pages',
+        'title_singular' => 'Page',
+        'sub_pages' =>[
+            'privacy_policy' => 'Privacy & policy',
+            'terms_condition' => 'Terms & Condition',
+            'terms_title1' => 'Terms &',
+            'terms_title2' => 'conditions',
+            'privacy_title1' => 'Privacy &',
+            'privacy_title2' => 'policy',
+        ]
+    ]
 
 
 ];

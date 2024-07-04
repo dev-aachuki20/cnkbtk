@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\StatisticsCreatorController;
 use App\Http\Controllers\BlacklistUserController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\User\PageController;
 use App\Http\Controllers\User\ProjectController;
 
 /*
@@ -90,8 +91,12 @@ Route::group(["namespace" => "App\Http\Controllers\User", 'as' => 'user.', "pref
     Route::get('/self-top-up', "PointsController@selftopup")->name('self-top-up');
     Route::post('/self-top-up/submit', "PointsController@paymenttopup")->name('self-top-up.submit');
     
-    Route::get('/paypal/success',"PointsController@success")->name('paypal.success');
-    Route::get('/paypal/cancel', "PointsController@cancel")->name('paypal.cancel');
+    // Route::get('/paypal/success',"PointsController@success")->name('paypal.success');
+    // Route::get('/paypal/cancel', "PointsController@cancel")->name('paypal.cancel');
+
+    Route::get('/paypal/success/{plan_id}',"PointsController@success")->name('paypal.success');
+    Route::get('/paypal/cancel/{plan_id}', "PointsController@cancel")->name('paypal.cancel');
+
 
     // Project Controller routes
 
@@ -191,7 +196,10 @@ Route::get('/email/verify', [App\Http\Controllers\Auth\VerificationController::c
 Route::get('/email/verify/{id}/{hash}', [App\Http\Controllers\Auth\VerificationController::class, 'verify'])->name('verification.verify')->middleware(['signed']);
 Route::post('/email/resend', [App\Http\Controllers\Auth\VerificationController::class, 'resend'])->name('verification.resend');
 
-
+// privacy policy and terms and condition pages
+// Route::get('pages/{title}', [PageController::class, 'show'])->name('pages.show');
+// Route::get('pages/{title}/edit', [PageController::class, 'edit'])->name('pages.edit');
+// Route::post('pages/{title}', [PageController::class, 'update'])->name('pages.update');
 
 //add previous users data and credit points
 // Route::get('/add-previous-user', 'App\Http\Controllers\HomeController@addPreviousUser');

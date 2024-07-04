@@ -418,6 +418,19 @@ return [
         'fields' => [
             'remark' => '评论',
         ],
+    ],
+
+    'pages' => [
+        'title' => '页面',
+        'title_singular' => '页',
+        'sub_pages' =>[
+            'privacy_policy' => '隐私政策',
+            'terms_condition' => '附带条约',
+            'terms_title1' => '条款及',
+            'terms_title2' => '状况',
+            'privacy_title1' => '隐私 ＆',
+            'privacy_title2' => '政策',
+        ]
     ]
 
 ];

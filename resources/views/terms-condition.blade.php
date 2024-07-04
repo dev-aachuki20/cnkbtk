@@ -8,7 +8,7 @@
       <div class="container">
         <div class="hero-banner">
           <div class="prc-title">
-            <h2>Terms & <span>conditions</span></h2>
+            <h2>{{__('cruds.pages.sub_pages.terms_title1')}} <span>{{__('cruds.pages.sub_pages.terms_title2')}}</span></h2>
           </div>
         </div>
       </div>
@@ -19,9 +19,9 @@
       <div class="container">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{route('home')}}">{{__('global.home')}}</a></li>
             <li class="breadcrumb-item active" aria-current="page">
-              Terms & conditions
+              {{__('cruds.pages.sub_pages.terms_condition')}}
             </li>
           </ol>
         </nav>
