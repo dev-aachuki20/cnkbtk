@@ -56,7 +56,7 @@
 <script>
     $(document).ready(function () {
       $('#contentEn, #contentCh').summernote({
-          height: 200,
+          height: 350,
           focus: true
       })
 
