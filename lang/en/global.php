@@ -51,6 +51,8 @@ return [
     'credit' => "Credit",
     'debit' => 'Debit',
     'details' => 'Details',
+    'paypal' => 'Paypal',
+    'order_number' => 'Order number',
 
 
     // Header Navigation

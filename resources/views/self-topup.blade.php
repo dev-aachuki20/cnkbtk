@@ -46,7 +46,7 @@
                     </div>
                     {{-- <div class="product-number product-name">
                       <h3>
-                        Order number: <span>{{$orderId}}</span>
+                        {{trans("global.order_number")}}: <span>{{$orderId}}</span>
                       </h3>
                     </div> --}}
                   </div>
@@ -73,7 +73,7 @@
                   <div class="payment-method mt-3">
                     <div class="method-box active">
                       <div class="title">
-                          Alipay
+                          {{trans("global.paypal")}}
                       </div>
                       <div class="logo">
                         <img class="img-fluid" src="assest/images/Alipay-logo.png" alt="">

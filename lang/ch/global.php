@@ -29,7 +29,7 @@ return [
     'create_post' => '创建帖子',
     'create_project' => '创建项目',
     'logout' => '登出',
-    'enter' => "进入",
+    'enter' => "输入",
     'post' => '帖子',
     'posts' => '帖子',
     'points' => '积分',
@@ -55,7 +55,8 @@ return [
     'site_statistics' => "网站统计",
     'self_service' => "自助充值",
     'user_communication_center' => "用户交流中心",
-
+    'paypal' => '贝宝',
+     'order_number' => '订单号',
     // Admin Global keys
     "dashboard_message" => "您好，欢迎来到 CNKBTK 资源中转站",
 
