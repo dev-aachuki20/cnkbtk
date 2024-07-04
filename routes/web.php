@@ -31,10 +31,6 @@ Route::group(["namespace" => "App\Http\Controllers"], function () {
     // Route::view('privacy-policy', "privacy-policy")->name('privacy-policy');
     // Route::view('terms-condition', "terms-condition")->name('terms-condition');
 
-
-    Route::get('/{title}', [PageController::class, 'show'])->name('page.show');
-
-
     //Common Function Route
     Route::get('get-subparent-section/{id}', "CommonFunctionController@getSubSections")->name('get-sub-section');
     // Route::get('get-child-section/{id}', "CommonFunctionController@getChildSections")->name('get-child-section');
@@ -202,7 +198,7 @@ Route::group(["middleware" => ["auth", "status"]], function () {
     Route::post('blacklist/user/import', [BlacklistUserController::class, 'importExcel'])->name('blacklist.user.import');
 });
 // Blacklist users routes start end
-
+Route::get('/{title}', [PageController::class, 'show'])->name('page.show');
 
 
 
