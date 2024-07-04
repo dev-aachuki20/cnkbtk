@@ -430,7 +430,11 @@ return [
             'terms_title2' => '状况',
             'privacy_title1' => '隐私 ＆',
             'privacy_title2' => '政策',
-        ]
+        ],
+        'fields' =>[
+            'content' => '内容',
+        ],
+        'update_message' => '页面内容',
     ]
 
 ];

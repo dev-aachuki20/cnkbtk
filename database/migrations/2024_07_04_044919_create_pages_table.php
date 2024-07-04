@@ -15,8 +15,10 @@ return new class extends Migration
     {
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
+            $table->string('slug')->unique();
             $table->string('title');
-            $table->text('content');
+            $table->text('content_en');
+            $table->text('content_ch');
             $table->timestamps();
         });
     }

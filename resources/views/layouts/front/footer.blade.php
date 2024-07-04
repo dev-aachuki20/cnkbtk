@@ -115,9 +115,9 @@
 
               <ul>
 
-                <li><a href="{{route('terms-condition')}}">{{ \App::getLocale() == "en"  ? "Terms & Conditions" :  "条款及条件"}}</a></li>
+                <li><a href="{{ route('page.show', 'terms-conditions') }}">{{ \App::getLocale() == "en"  ? "Terms & Conditions" :  "条款及条件"}}</a></li>
 
-                <li><a href="{{route('privacy-policy')}}">{{ \App::getLocale() == "en"  ? "Privacy & Policy" :  "隐私政策"}}</a></li>
+                <li><a href="{{route('page.show','privacy-policy')}}">{{ \App::getLocale() == "en"  ? "Privacy & Policy" :  "隐私政策"}}</a></li>
 
               </ul>
 

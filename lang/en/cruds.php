@@ -429,7 +429,13 @@ return [
             'terms_title2' => 'conditions',
             'privacy_title1' => 'Privacy &',
             'privacy_title2' => 'policy',
-        ]
+        ],
+        'fields' =>[
+            'content' => 'Content',
+            'content_en' => 'Content english',
+            'content_ch' => 'Content chinese',
+        ],
+        'update_message' => 'Page content',
     ]
 
 

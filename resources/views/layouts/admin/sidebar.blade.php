@@ -510,10 +510,10 @@
 
 
                 {{-- pages --}}
-                {{-- <li
-                    class="nav-item {{ request()->is('admin/tag') || request()->is('admin/tag*') ? 'menu-open' : '' }}">
+                <li
+                    class="nav-item {{ request()->is('admin/page/privacy-policy/edit') || request()->is('admin/page/terms-conditions/edit') ? 'menu-open' : '' }}">
                     <a href="javascript:void(0)"
-                        class="nav-link {{ request()->is('admin/tag') || request()->is('admin/tag*') ? 'active' : '' }}">
+                        class="nav-link {{ request()->is('admin/page/privacy-policy/edit') || request()->is('admin/page/terms-conditions/edit') ? 'active' : '' }}">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <g clip-path="url(#clip0_106_75)">
@@ -541,21 +541,21 @@
 
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('admin.tag-type.index') }}"
-                                class="nav-link {{ request()->is('admin/tags/tag-type') || request()->is('admin/tags/tag-type*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.pages.edit', 'privacy-policy') }}"
+                                class="nav-link {{ request()->is('admin/page/privacy-policy/edit') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>{{ trans('cruds.pages.sub_pages.privacy_policy') }}</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.tag.index') }}"
-                                class="nav-link {{ request()->is('admin/tags/tag') || request()->is('admin/tags/tag/*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.pages.edit', 'terms-conditions') }}"
+                                class="nav-link {{ request()->is('admin/page/terms-conditions/edit') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>{{ trans('cruds.pages.sub_pages.terms_condition') }}</p>
                             </a>
                         </li>
                     </ul>
-                </li> --}}
+                </li>
                 {{-- end pages --}}
 
 
