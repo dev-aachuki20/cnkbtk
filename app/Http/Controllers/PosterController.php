@@ -208,7 +208,7 @@ class PosterController extends Controller
         }
         $tagTypes = $this->tagTypes;
         $imgesArray = array();
-        if ($poster->user_id == auth()->user()->id) {
+        if ($poster->user_id == auth()->user()->id || auth()->user()->id == config('constant.role.admin') ) {
             return view("post.edit", compact('parentSections', 'subSections', 'tagTypes', 'poster'));
         }
         abort(403);

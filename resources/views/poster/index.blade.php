@@ -69,6 +69,10 @@
                     <span> <b>{{trans("global.reads")}}:</b> {{$poster->reads_count}} </span>
                     </div>
                     <div class="follow-btn">
+                        {{-- only visible to admin --}}
+                        @if(Auth::user()->role_id == config('constant.role.admin'))
+                            <a href="{{route('post.edit',Crypt::encrypt($poster->id))}}" id="reportPost"   data-post-id="{{Crypt::encrypt($poster->id)}}" class="btn btn-primary followbtn" > {{trans("global.edit")}} </a>
+                        @endif
                         <a href="javascript:void(0)"   id="reportPost"   data-post-id="{{Crypt::encrypt($poster->id)}}" class="btn btn-primary followbtn" > {{trans("pages.poster.report")}} </a>
                         <a href="javascript:void(0)" data-follow-status="{{ !empty($is_follower) ? Crypt::encrypt('0') :  Crypt::encrypt('1') }}"  data-post-id="{{Crypt::encrypt($poster->id)}}" class="btn btn-primary followbtn"  id="followBtn">  {{ !empty($is_follower) ? trans("pages.poster.following") :   trans("pages.poster.follow") }}</a>
                     </div>
