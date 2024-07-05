@@ -28,7 +28,7 @@ return [
     'credit_history' => 'Credit history',
     'post_history' => 'Post history',
     'create_post' => 'Create post',
-    'create_project' => 'Create Project',
+    'create_project' => 'Create project',
     'logout' => 'Logout',
     'enter' => 'Enter',
     'post' => 'Post',
@@ -40,7 +40,7 @@ return [
     'blacklist_user' => 'Blacklist users',
     'project' => 'Project',
     'bid'=>'Bid',
-    'project_request' => 'Project Request',
+    'project_request' => 'Project request',
     // footer static
     "useful_links" => "Useful links",
     "follow_us" => "Follow us",

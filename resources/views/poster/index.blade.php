@@ -70,7 +70,7 @@
                     </div>
                     <div class="follow-btn">
                         {{-- only visible to admin --}}
-                        @if(Auth::user()->role_id == config('constant.role.admin'))
+                        @if(Auth::check() && Auth::user()->role_id == config('constant.role.admin'))
                             <a href="{{route('post.edit',Crypt::encrypt($poster->id))}}" id="reportPost"   data-post-id="{{Crypt::encrypt($poster->id)}}" class="btn btn-primary followbtn" > {{trans("global.edit")}} </a>
                         @endif
                         <a href="javascript:void(0)"   id="reportPost"   data-post-id="{{Crypt::encrypt($poster->id)}}" class="btn btn-primary followbtn" > {{trans("pages.poster.report")}} </a>
