@@ -47,6 +47,6 @@ class VerifyEmailNotification extends Notification
                 'url' => $verificationUrl,
                 'name' => $notifiable->name,
             ])
-            ->subject(trans('verification.verify_email_subject'));
+            ->subject(trans('verification.subject'));
     }
 }
