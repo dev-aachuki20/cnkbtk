@@ -127,7 +127,6 @@ class MessageController extends Controller
     {
         $data = $request->all();
         Chat::create($data);
-        // broadcast(new Message($data))->toOthers();
         broadcast(new Message($request->content, Auth::id(), $request->receiver_id))->toOthers();
 
         return  response()->json(['message' => 'Message sent successfully']);

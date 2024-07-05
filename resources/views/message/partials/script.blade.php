@@ -70,6 +70,11 @@
         var receiverId = $('#messageForm').data('receiver-id');
         var projectId = $('#messageForm').data('project-id');
         if (message !== '') {
+            var timestamp = getCurrentTimestamp();
+            var messageHtml = '<div class="message outgoing"><div class="message-content">' + message + ' <span class="message_time">' + timestamp + '</span></div></div>';
+            $('#messageContainer').append(messageHtml);
+            $('#messageInput').val('');
+            scrollToBottom();
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -84,8 +89,9 @@
                 },
                 dataType: 'json',
                 success: function(response) {
-                    $('#messageInput').val('');
-                    $('#messageContainer').append('<div class="message outgoing"><div class="message-content">' + message + ' <span class="message_time"> </span></div></div>');
+                    console.log('Message sent successfully');
+                    // $('#messageInput').val('');
+                    // $('#messageContainer').append('<div class="message outgoing"><div class="message-content">' + message + ' <span class="message_time"> </span></div></div>');
                     scrollToBottom();
                 },
                 error: function(xhr, status, error) {
@@ -93,6 +99,15 @@
                 }
             });
         }
+    }
+
+    function getCurrentTimestamp() {
+        var now = new Date();
+        var hours = now.getHours();
+        var minutes = now.getMinutes();
+        // Format timestamp as needed (e.g., HH:mm)
+        var timestamp = hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0');
+        return timestamp;
     }
 
     function scrollToBottom() {
