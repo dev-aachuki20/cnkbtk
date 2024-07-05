@@ -11,15 +11,35 @@ document.addEventListener('DOMContentLoaded', function () {
 //   console.log('currentUserId ', currentUserId);
   Echo.channel('chat')
     .listen('Message', (e) => {
-    //   console.log('listening event', e);
-      $('#messageInput').val('');
-    //   console.log(e.senderId, currentUserId)
-    //   console.log(e.senderId != currentUserId)
+      // $('#messageInput').val('');
+    
       if (e.senderId != currentUserId) {
-        $('#messageContainer').append('<div class="message incoming"><div class="message-content">' + e.message + ' <span class="message_time"> </span></div></div>');
+          var timestamp = getCurrentTimestamp();
+          var formattedMessage = e.message.replace(/\n/g, '<br>');
+          var messageHtml = '<div class="message incoming"><div class="message-content">' + formattedMessage + ' <span class="message_time">' + timestamp + '</span></div></div>';
+            $('#messageContainer').append(messageHtml);
+
+          $('#messageInput').val('');
+          scrollToBottom();
+
+        // $('#messageContainer').append('<div class="message incoming"><div class="message-content">' + e.message + ' <span class="message_time"> </span></div></div>');
       }
     });
 });
+
+function getCurrentTimestamp() {
+  var now = new Date();
+  var hours = now.getHours();
+  var minutes = now.getMinutes();
+  // Format timestamp as needed (e.g., HH:mm)
+  var timestamp = hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0');
+  return timestamp;
+}
+
+// function scrollToBottom() {
+//   var chatContainer = $('.chatbodypart .message-container');
+//   chatContainer.scrollTop(chatContainer.prop("scrollHeight"));
+// }
 
 // End chat script
 

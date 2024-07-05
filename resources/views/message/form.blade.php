@@ -22,7 +22,7 @@
 
             @if($chat->sender_id == Auth::user()->id)
             <div class="message outgoing" data-message-id="{{ $chat->id }}">
-                <div class="message-content">{{ $chat->content }} <span class="message_time">{{ $formattedTime }}</span></div>
+                <div class="message-content"> {!! nl2br(e($chat->content)) !!}<span class="message_time">{{ $formattedTime }}</span></div>
             </div>
             {{-- <div class="message outgoing multipal-message">
                 <div class="message-content">Hello i am admin <span class="message_time"><span class="pe-1">Creator</span> 12:29</span></div>
@@ -31,7 +31,7 @@
             </div> --}}
             @else
             <div class="message incoming" data-message-id="{{ $chat->id }}">
-                <div class="message-content">{{ $chat->content }} <span class="message_time">{{ $formattedTime }}</span></div>
+                <div class="message-content"> {!! nl2br(e($chat->content)) !!} <span class="message_time">{{ $formattedTime }}</span></div>
             </div>
             @endif
             @endforeach

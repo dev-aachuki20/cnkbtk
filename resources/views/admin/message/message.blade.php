@@ -24,14 +24,14 @@
         @if($chat->sender_id == $user->id)
         <div class="message outgoing" data-message-id="{{ $chat->id }}">
             <div class="message-content">
-                {{ $chat->content }}
+                {!! nl2br(e($chat->content)) !!}
                 <span class="message_time"><span class="pe-1">{{-- User --}}</span> {{ $chat->created_at->format('H:i') }}</span>
             </div>
         </div>
         @else
         <div class="message incoming">
             <div class="message-content" data-message-id="{{ $chat->id }}">
-                {{ $chat->content }}
+                {!! nl2br(e($chat->content)) !!}
                 <span class="message_time"><span class="pe-1">{{-- Creator --}}</span> {{ $chat->created_at->format('H:i') }}</span>
             </div>
         </div>

@@ -71,7 +71,10 @@
         var projectId = $('#messageForm').data('project-id');
         if (message !== '') {
             var timestamp = getCurrentTimestamp();
-            var messageHtml = '<div class="message outgoing"><div class="message-content">' + message + ' <span class="message_time">' + timestamp + '</span></div></div>';
+
+            var formattedMessage = message.replace(/\n/g, '<br>');
+
+            var messageHtml = '<div class="message outgoing"><div class="message-content">' + formattedMessage + ' <span class="message_time">' + timestamp + '</span></div></div>';
             $('#messageContainer').append(messageHtml);
             $('#messageInput').val('');
             scrollToBottom();
@@ -111,8 +114,8 @@
     }
 
     function scrollToBottom() {
-    var chatContainer = $('.chatbodypart .message-container');
-    chatContainer.scrollTop(chatContainer.prop("scrollHeight"));
+        var chatContainer = $('.chatbodypart .message-container');
+        chatContainer.scrollTop(chatContainer.prop("scrollHeight"));
     }
 
     function refreshMessages(userId, userName, projectId){

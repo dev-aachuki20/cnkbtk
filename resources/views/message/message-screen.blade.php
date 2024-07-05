@@ -45,24 +45,59 @@
 <script>   
     // Add an event listener to the textarea for input events
     // const messageInput = document.getElementById('messageInput');
-    messageInput.addEventListener('input', function(event) {
-    if (event.shiftKey && event.keyCode === 13) {
-        messageInput.value += '\n';
-    }
-    adjustTextareaHeight();
-    });
-    // Add an event listener to the textarea for keydown events
-        messageInput.addEventListener('keydown', function(event) {
-        if (event.keyCode === 13 && !event.shiftKey) {
-            event.preventDefault(); 
-            sendMessage(); 
-        }
-    });
+    // messageInput.addEventListener('input', function(event) {
+    // if (event.shiftKey && event.keyCode === 13) {
+    //     messageInput.value += '\n';
+    // }
+    // adjustTextareaHeight();
+    // });
+    // // Add an event listener to the textarea for keydown events
+    // messageInput.addEventListener('keydown', function(event) {
+    //     if (event.keyCode === 13 && !event.shiftKey) {
+    //         event.preventDefault(); 
+    //         sendMessage(); 
+    //     }
+    // });
+
+    // messageInput.addEventListener('keydown', function(event) {
+    // if (event.keyCode === 13) {
+    //     if (event.shiftKey) {
+    //         const cursorPosition = messageInput.selectionStart;
+    //         const value = messageInput.value;
+    //         messageInput.value = value.substring(0, cursorPosition) + '\n' + value.substring(cursorPosition);
+    //         messageInput.selectionStart = messageInput.selectionEnd = cursorPosition + 1;
+    //         event.preventDefault();
+    //     } else {
+    //         event.preventDefault();
+    //         sendMessage();
+    //     }
+    // }
+
+
     // Function to adjust the height of the textarea based on its content
     function adjustTextareaHeight() {
         messageInput.style.height = 'auto';
         messageInput.style.height = Math.max(messageInput.scrollHeight, 20) + 'px';
     }
+
+    messageInput.addEventListener('input', function(event) {
+        adjustTextareaHeight();
+    });
+
+    messageInput.addEventListener('keydown', function(event) {
+        if (event.keyCode === 13) {
+            if (event.shiftKey) {
+                const cursorPosition = messageInput.selectionStart;
+                const value = messageInput.value;
+                messageInput.value = value.substring(0, cursorPosition) + '\n' + value.substring(cursorPosition);
+                messageInput.selectionStart = messageInput.selectionEnd = cursorPosition + 1;
+                event.preventDefault();
+            } else {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+    });
 </script>
 
 @include("message.partials.script")
