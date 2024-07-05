@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
 //   console.log('currentUserId ', currentUserId);
   Echo.channel('chat')
     .listen('Message', (e) => {
+      console.log(e.message);
       // $('#messageInput').val('');
     
       if (e.senderId != currentUserId) {
@@ -18,9 +19,8 @@ document.addEventListener('DOMContentLoaded', function () {
           var formattedMessage = e.message.replace(/\n/g, '<br>');
           var messageHtml = '<div class="message incoming"><div class="message-content">' + formattedMessage + ' <span class="message_time">' + timestamp + '</span></div></div>';
             $('#messageContainer').append(messageHtml);
-
           $('#messageInput').val('');
-          scrollToBottom();
+          scrollToBottomFun();
 
         // $('#messageContainer').append('<div class="message incoming"><div class="message-content">' + e.message + ' <span class="message_time"> </span></div></div>');
       }
@@ -36,27 +36,10 @@ function getCurrentTimestamp() {
   return timestamp;
 }
 
-// function scrollToBottom() {
-//   var chatContainer = $('.chatbodypart .message-container');
-//   chatContainer.scrollTop(chatContainer.prop("scrollHeight"));
-// }
-
-// End chat script
-
-
-// $(document).ready(function () {
-//   function scrollToBottom() {
-//     var chatContainer = $('.messageBoxBg, .chatbodypart .message-container');
-//     chatContainer.scrollTop(chatContainer.prop("scrollHeight"));
-//   }
-
-//   scrollToBottom();
-//   setTimeout(scrollToBottom, 120);
-
-//   $(".dynamicUserList, #refresh-messages").click(scrollToBottom);
-// });
-
-
+function scrollToBottomFun() {
+  var chatContainer = $('.chatbodypart .message-container');
+  chatContainer.scrollTop(chatContainer.prop("scrollHeight"));
+}
 
 
 
