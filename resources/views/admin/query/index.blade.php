@@ -147,7 +147,6 @@
             url: url, 
             method: 'GET',
             success: function(data) {
-                console.log(data);
                 $('#viewEnquiryModal .modal-body').html(`<p><b>Email:</b> ${data.email}</p><p><b>Subject</b>: ${data.subject}</p><p><b>Message</b>: ${data.message}</p>`);
             },
             error: function(xhr, status, error) {

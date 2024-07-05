@@ -92,13 +92,11 @@
                 },
                 dataType: 'json',
                 success: function(response) {
-                    console.log('Message sent successfully');
-                    // $('#messageInput').val('');
-                    // $('#messageContainer').append('<div class="message outgoing"><div class="message-content">' + message + ' <span class="message_time"> </span></div></div>');
+                    // console.log('Message sent successfully');
                     scrollToBottom();
                 },
                 error: function(xhr, status, error) {
-                    console.error(error);
+                    console.log(xhr.responseText);
                 }
             });
         }
@@ -150,7 +148,6 @@
         var userId = $(this).data('user-id');
         var userName = $(this).data('user-name');
         var projectId = $(this).data('project-id');
-        console.log('result',userId, userName, projectId)
         refreshMessages(userId, userName, projectId);
     });
 
@@ -195,7 +192,6 @@
                     if (response && response.data && response.data.length > 0) {
                         var messagesHtml = '';
                         var data = response.data.reverse();
-                        // console.log(data);
                         data.forEach(function(message) {
                             var messageClass = (message.sender_id == senderId) ? 'outgoing' : 'incoming';
                             messagesHtml += '<div class="message ' + messageClass + '" data-message-id="' + message.id + '" ><div class="message-content">' + message.content + '</div></div>';

@@ -14,7 +14,7 @@
     <div class="container">
         <div class="hero-banner">
             <div class="prc-title">
-                <h2>{{trans("cruds.create_project.project")}} {{__('cruds.create_project.request')}}</h2>
+                <h2>{{trans("cruds.create_project.project")}} <span>{{__('cruds.create_project.request')}}</span></h2>
             </div>
         </div>
     </div>

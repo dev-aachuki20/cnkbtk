@@ -59,11 +59,11 @@ $(document).ready(function(){
                       
                         $this.text('{{trans("pages.poster.following")}}');
                         $this.attr('data-follow-status', "{{Crypt::encrypt('0')}}");
-                        console.log("following");
+                        // console.log("following");
                     }else{
                         $this.text('{{trans("pages.poster.follow")}}');
                         $this.attr('data-follow-status', "{{Crypt::encrypt('1')}}");
-                        console.log("unfollow");
+                        // console.log("unfollow");
                     }
                     toastr.success(response.message,'{{trans("global.alert.success")}}');
                 },

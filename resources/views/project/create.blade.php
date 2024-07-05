@@ -110,7 +110,6 @@
                 index = index.replace(/([.])+/g, '_');
                 index.replace(".", '_');
               }
-              console.log(index);
               $("#" + index).parents(".form-group").append("<span class='text-danger errors'>" + value + "</span>");
 
             });

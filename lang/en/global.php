@@ -31,7 +31,7 @@ return [
     'create_project' => 'Create project',
     'logout' => 'Logout',
     'enter' => 'Enter',
-    'post' => 'Post',
+    'post' => 'post',
     'posts' => 'Posts',
     'points' => 'Points',
     'search' => 'Search',
@@ -53,6 +53,11 @@ return [
     'details' => 'Details',
     'paypal' => 'Paypal',
     'order_number' => 'Order number',
+    'history' => 'history',
+    'change' => 'Change',
+    'password' => 'password',
+    'basic' => 'Basic',
+    'information' => 'information',
 
 
     // Header Navigation

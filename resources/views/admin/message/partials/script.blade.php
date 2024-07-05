@@ -58,7 +58,6 @@
         });
 
         function loadMoreMessages(lastMessageId) {
-            console.log('lastMessageId', lastMessageId)
             isLoading = true;
             $.ajax({
                 url: '{{ route('admin.message.load-more') }}',
@@ -70,11 +69,9 @@
                     last_message_id: lastMessageId
                 },
                 success: function(response) {
-                    console.log(response.data);
                     if (response && response.data && response.data.length > 0) {
                         var messagesHtml = '';
                         var data = response.data.reverse();
-                        console.log(data);
                         data.forEach(function(message) {
                             var messageClass = (message.sender_id == userId) ?
                                 'outgoing' : 'incoming';

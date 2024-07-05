@@ -70,21 +70,21 @@ $(document).ready(function(){
       }
 
       if (param1 == "information") {
-        $(document).find(".prc-title").html("<h2>{{trans('global.basic_information')}}</h2>");
+        $(document).find(".prc-title").html("<h2>{{trans('global.basic')}} <span>{{trans('global.information')}}</span></h2>");
         $(document).find(".breadcrumb-item").last().text("{{trans('global.basic_information')}}");
         $(document).find(".filter-tabs").removeClass("active").end().find(".tab-pane-box").removeClass("active show");
         $(document).find("#contact-tab").addClass("active").end().find("#contact-tab-pane").addClass("active show");
       }
       
       if (param1 == "changepassword") {
-        $(document).find(".prc-title").html("<h2>{{trans('global.change_password')}}</h2>");
+        $(document).find(".prc-title").html("<h2>{{trans('global.change')}} <span>{{trans('global.password')}}</span></h2>");
         $(document).find(".breadcrumb-item").last().text("{{trans('global.change_password')}}");
         $(document).find(".filter-tabs").removeClass("active").end().find(".tab-pane-box").removeClass("active show");
         $(document).find("#profile-tab").addClass("active").end().find("#profile-tab-pane").addClass("active show");
       }
 
       if (param1 == "credithistory") {
-        $(document).find(".prc-title").html("<h2>{{trans('global.credit_history')}}</h2>");
+        $(document).find(".prc-title").html("<h2>{{trans('global.credit')}} <span>{{trans('global.history')}}</span></h2>");
         $(document).find(".breadcrumb-item").last().text("{{trans('global.credit_history')}}");
         $(document).find(".filter-tabs").removeClass("active").end().find(".tab-pane-box").removeClass("active show");
         $(document).find("#create-history-tab").addClass("active").end().find("#create-history").addClass("active show");

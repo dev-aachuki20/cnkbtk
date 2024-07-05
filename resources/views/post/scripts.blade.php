@@ -47,7 +47,6 @@
                 @endif
             @endforeach
           @endif
-          console.log(preload);
           var allEditors = document.querySelectorAll(".editor");
           for(i=0; i < allEditors.length; i++){
             ClassicEditor.create(allEditors[i],{
@@ -56,8 +55,7 @@
           }
           
           $(document).find(".my-dropzone").each(async function(index){ 
-            var newDropzone = $(this).attr("id");    
-            console.log("index",index);
+            var newDropzone = $(this).attr("id");
             await createDropzone(newDropzone,preload[index]);
           });
       @endif
@@ -88,7 +86,7 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         success: function (data) {
-                            console.log(data.message);
+                            // console.log(data.message);
                         },
                         error: function (xhr, status, error) {
                             console.log(xhr.responseText);
@@ -319,7 +317,6 @@
                             if(index.indexOf(".") != -1){
                                 index = index.replace(/([.])+/g, '_');index.replace(".", '_');
                             }
-                            console.log(index);
                             $("#"+index).parents(".form-group").append("<span class='text-danger errors'>"+value+"</span>");
                             
                         });
@@ -342,7 +339,6 @@
               var tags = $('#tags').val();
               formdata.append('tags',tags);
               var episodeLength  = $(document).find(".episode-main-box").length;
-              console.log(dropzoneInstances,episodeLength);
               if(episodeLength > 0){
                 $(document).find(".episode-main-box").each(function(index,value){
                   var instanceKey =  $(this).find(".my-dropzone").attr("id");
@@ -353,7 +349,6 @@
                     fileVals.forEach(function(file,key) {
                       formdata.append('episodes['+array_key+'][images]['+key+']', file);
                     });
-                    console.log(fileVals);
                   }
                 });
               }  
@@ -391,7 +386,6 @@
                                 index = index.replace(/([.])+/g, '_');index.replace(".", '_');
                             }
 
-                            console.log(index);
                             $("#"+index).parents(".form-group").append("<span class='text-danger errors'>"+value+"</span>");
                             
                         });
@@ -404,7 +398,6 @@
 
           $("#addepisode").click(function() {
               var editorCount = parseInt($(document).find("#editorCount").val());
-              console.log(editorCount);
               let svg = ' <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x"   width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none"/> <path d="M18 6l-12 12" /> <path d="M6 6l12 12" /> </svg>';
 
               $(".episode-row").append('<div class="col-12 alert fade show episode-main-box newEpisodes"><div class="row"><div class="col-12 col-md-4"><div class="row"><div class="col-md-12"><div class="mb-4"><div class="form-group"><label for="">{{trans("pages.post.form.fields.episode_title")}}<span class="text-danger">*</span></label><input type="hidden" name="episodes['+editorCount+'][id]" value="" class="episode_id"> <input type="text" class="form-control episode_title" name="episodes['+editorCount+'][title]" id="episodes_'+editorCount+'_title" placeholder="{{trans('global.enter')}} {{trans('pages.post.form.fields.episode_title')}}" value=""></div></div></div><div class="col-md-12"><div class="mb-2"><div class="form-group"><label for="">{{trans("pages.post.form.fields.episode_cost")}}<span class="text-danger">*</span></label><input type="number" class="form-control episode_cost" name="episodes['+editorCount+'][cost]" id="episodes_'+editorCount+'_cost" placeholder="{{trans('global.enter')}} {{trans('pages.post.form.fields.episode_cost')}}"></div></div></div></div></div><div class="col-md-8"><div class="editor-wrapper mb-2 form-group"><label for="my-textarea">{{trans("pages.post.form.fields.episode_description")}}<span class="text-danger">*</span></label><textarea name="episodes['+editorCount+'][content]" class="episode-editor episode_content editor'+editorCount+'" id="episodes_'+editorCount+'_content"></textarea></div></div><div class="col-md-12 d-flex remove-box"><a href="#" class="btn btn-primary post-btn remove-btn" data-bs-dismiss="alert" aria-label="Close">'+svg+'</a></div><div class="col-md-12"><div class="form-group"><label for="my-textarea">{{trans("global.upload_pictures")}}</label><div class="my-dropzone dropzone episode_image" id="dropzone_'+editorCount+'" data-id="'+editorCount+'"></div></div></div></div></div>');

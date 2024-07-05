@@ -56,7 +56,14 @@ return [
     'self_service' => "自助充值",
     'user_communication_center' => "用户交流中心",
     'paypal' => '贝宝',
-     'order_number' => '订单号',
+    'order_number' => '订单号',
+    'history' => '历史',
+    'change' => '改变',
+    'password' => '密码',
+    'basic' => '基本的',
+    'information' => '信息',
+
+
     // Admin Global keys
     "dashboard_message" => "您好，欢迎来到 CNKBTK 资源中转站",
 

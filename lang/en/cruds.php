@@ -353,7 +353,7 @@ return [
         'post'  => 'Post',
         'list' => 'List',
         'list_title' => 'Lists',
-        'request' => 'Request',
+        'request' => 'request',
         'fields' => [
             'title'     => 'Title',
             'type'     => 'Type',
