@@ -63,6 +63,7 @@ Route::group(["namespace" => "App\Http\Controllers"], function () {
 
 // Delete episode image.
 Route::post('/delete-episode-image', 'App\Http\Controllers\PosterController@deleteEpisodeImage')->name('delete-episode-image');
+Route::post('/post/upload-description-image', 'App\Http\Controllers\PosterController@uploadDescriptionImage')->name('post.upload.descriptionImage');
 
 Route::resource('post', "App\Http\Controllers\PosterController")->middleware(["auth", "verified", "status"]);
 

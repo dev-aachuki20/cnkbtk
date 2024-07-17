@@ -29,9 +29,11 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group mb-4">
-                                <label for="loginPassword">{{trans('pages.reset_password.form.fields.password')}}<span class="mailstar" style="color: red;">*</span></label>
+                                <label for="loginPassword">{{trans('pages.reset_password.form.fields.password')}}<span class="mailstar" style="color: red;">*</span>
+                                <small>({{ trans('pages.sign_up.form.special_char_label') }} @$!%*#?&)</small>
+                                </label>
                                 <div class="input-password-wrap">
-                                <input id="password" type="password" class="form-control @if($errors->has("password")) is-invalid @endif " name="password"  autocomplete="new-password"  placeholder="{{trans('global.enter')}} {{trans('pages.reset_password.form.fields.password')}}">
+                                <input id="password" type="password" class="form-control @if($errors->has('password')) is-invalid @endif " name="password"  autocomplete="new-password"  placeholder="{{trans('global.enter')}} {{trans('pages.reset_password.form.fields.password')}}">
                                     <i class="fa fa-eye toggle-password opened_eye" style="margin-left: -30px; cursor: pointer; display:none"></i>
                                         <i class="fa fa-eye-slash toggle-password closed_eye" style="cursor: pointer;"></i>
                                         @if($errors->has("password"))

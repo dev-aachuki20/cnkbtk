@@ -39,7 +39,9 @@
                            
                             <div class="col-md-12">
                                 <div class="form-group mb-4">
-                                    <label for="loginPassword">{{trans('pages.sign_up.form.fields.password')}}<span class="mailstar" style="color: red;">*</span></label>
+                                    <label for="loginPassword">{{trans('pages.sign_up.form.fields.password')}}<span class="mailstar" style="color: red;">*</span>
+                                    <small>({{ trans('pages.sign_up.form.special_char_label') }} @$!%*#?&)</small>
+                                    </label>
                                     <div class="input-password-wrap">
                                         <input type="password" value="" placeholder="{{trans('global.enter')}} {{trans('pages.sign_up.form.fields.password')}}" class="form-control @error('password') is-invalid @enderror" id="loginPassword" name="password">
                                         <i class="fa fa-eye toggle-password opened_eye" style="margin-left: -30px; cursor: pointer; display:none"></i>

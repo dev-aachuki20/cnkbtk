@@ -14,11 +14,11 @@
                     'numberedList',
                     'blockquote',
                     'undo',
-                    'redo'
+                    'redo',
                 ],
                 shouldNotGroupWhenFull: true
             };
-      var removedPlugins = ['Image', 'ImageCaption', 'ImageStyle', 'ImageToolbar', 'ImageUpload', 'MediaEmbed']; 
+      var removedPlugins = ['Image', 'ImageCaption', 'ImageStyle', 'ImageToolbar','ImageUpload', 'MediaEmbed']; 
       Dropzone.autoDiscover = false;
       
       @if(isset($poster))
@@ -126,12 +126,28 @@
       } --}}
       
 
+      function getDescriptionToolbar(){
+        const toolbar = ckeditorToolbar;
+        toolbar.items.push('ImageUpload');
+        return toolbar;
+      }
       $(document).ready(async function(){
+
           // Initialize default Editor 
-          ClassicEditor.create(document.querySelector(".editorDefault"),{
-              toolbar:ckeditorToolbar
-             
-            }); 
+          ClassicEditor
+          .create( document.querySelector(".editorDefault"), {
+                toolbar:getDescriptionToolbar(),
+                ckfinder: {
+                    uploadUrl: "{{ route('post.upload.descriptionImage', ['_token' => csrf_token() ]) }}"
+                },
+              } )
+          .then( editor => {
+              console.log( editor );
+          } )
+          .catch( error => {
+              console.error( error );
+          });
+            
             //File input related js
           class FileInputController extends Stimulus.Controller {
             static get targets() {
@@ -140,7 +156,7 @@
 
             display(evt) {
               const fileName = evt.target.value.split("\\").pop();
-
+              console.log('fileName',fileName);
               if (this.valueTarget.nodeName == "INPUT") {
                 this.valueTarget.placeholder = fileName;
               } else {

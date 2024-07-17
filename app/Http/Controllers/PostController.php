@@ -18,7 +18,7 @@ class PostController extends Controller
     {
       try {
         $slug = $request->slug;
-        $poster  = Poster::with(["parentSection" ,"subSection" ,"episodes.uploads","userDetails"])->withCount("reads")->where(["slug" => $slug, "status" => "1"])->first();
+        $poster  = Poster::with(["parentSection" ,"subSection" ,"episodes.uploads","userDetails",'uploads'])->withCount("reads")->where(["slug" => $slug, "status" => "1"])->first();
         if(empty($poster)){
             return redirect()->route("home")->with(["alert-type" => "info" , "message" => trans("messages.poster_not_found")]);
         }
@@ -30,6 +30,7 @@ class PostController extends Controller
         $ip = $request->ip();
         $poster_id = $poster->id;
         $this->addCount($ip,$poster_id);
+        
         if(auth()->check()){
           $purchasedEpisodes = UserEpisode::where(["poster_id" => $poster->id, "user_id" => auth()->user()->id])->get()->pluck("episode_id");
           return view("poster.index",compact("poster","is_follower","purchasedEpisodes"));

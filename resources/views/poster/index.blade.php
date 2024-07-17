@@ -77,10 +77,15 @@
                         <a href="javascript:void(0)" data-follow-status="{{ !empty($is_follower) ? Crypt::encrypt('0') :  Crypt::encrypt('1') }}"  data-post-id="{{Crypt::encrypt($poster->id)}}" class="btn btn-primary followbtn"  id="followBtn">  {{ !empty($is_follower) ? trans("pages.poster.following") :   trans("pages.poster.follow") }}</a>
                     </div>
                 </div>
+
+                <div class="detail-image mb-3">
+                    <img class="img-fluid rounded-4" src="{{ $poster->uploads()->first()->file_url ?? '' }}">
+                </div>
+
                 <div class="main-title">
                     <h2>{{$poster->title}}</h2>
                 </div>
-                <div class="description-text">
+                <div class="description-text mt-2 mb-4">
                    {!! nl2br($poster->description) !!}
                 </div>
 

@@ -67,7 +67,7 @@ class PosterController extends Controller
             'parent_section' => ['required', 'exists:sections,id'],
             'sub_section' => ['required', 'exists:sections,id'],
             // 'child_section' => ['required','exists:sections,id'],
-            'poster_image' => ['nullable', 'mimes:jpg,png,jpeg,JPG,JPEG,PNG', 'max:1024'],
+            'poster_image' => ['nullable', 'mimes:jpg,png,jpeg,JPG,JPEG,PNG', 'max:1024','dimensions:min_width=930,min_height=390'],
             'tags' => ['required', 'exists:tags,id'],
             'description' => ['required', 'string'],
             'episodes.*.title' => ['required'],
@@ -77,7 +77,7 @@ class PosterController extends Controller
         ];
 
         $customMessages = [
-
+            'poster_image.dimensions' => trans("pages.post.form.custom_validation_message.poster_image.invalid_dimension"),
             // 'title.required' => 'Title  is required',
             // 'parent_section.required' => "Parent section is required",
             // 'parent_section.exists' => "Parent section is invalid",
@@ -167,6 +167,26 @@ class PosterController extends Controller
         }
     }
 
+    public function uploadDescriptionImage(Request $request){
+        try {
+        
+            if ($request->hasFile('upload')) {
+                $file = $request->file('upload');
+                $originName = $file->getClientOriginalName();
+                $fileName = pathinfo($originName,PATHINFO_FILENAME);
+                $extension = $file->getClientOriginalExtension();
+
+                $fileName = $fileName.'_'.time().'.'.$extension;
+                $file->move(public_path('storage/post-description-media'),$fileName);
+
+                $url = asset('storage/post-description-media/' . $fileName);
+                return response()->json(['fileName' => $fileName,'uploaded' => true,'url'=>$url]);
+            }
+        } catch (\Throwable $th) {
+            return response()->json(['fileName' => '','uploaded' => false,'url'=>'']);
+        }
+    }
+
     /**
      * Display the specified resource.
      *
@@ -229,7 +249,7 @@ class PosterController extends Controller
             'parent_section' => ['required', 'exists:sections,id'],
             'sub_section' => ['required', 'exists:sections,id'],
             // 'child_section' => ['required','exists:sections,id'],
-            'poster_image' => ['nullable', 'mimes:jpg,png,jpeg,JPG,JPEG,PNG', 'max:1024'],
+            'poster_image' => ['nullable', 'mimes:jpg,png,jpeg,JPG,JPEG,PNG', 'max:1024','dimensions:min_width=930,min_height=390'],
             'tags' => ['required', 'exists:tags,id'],
             'description' => ['required', 'string'],
             'episodes.*.title' => ['required'],
@@ -239,6 +259,7 @@ class PosterController extends Controller
         ];
 
         $customMessages = [
+            'poster_image.dimensions' => trans("pages.post.form.custom_validation_message.poster_image.invalid_dimension"),
             // 'title.required' => 'Title  is required',
             // 'parent_section.required' => "Parent section is required",
             // 'parent_section.exists' => "Parent section is invalid",

@@ -40,6 +40,7 @@ return [
                 'password' => 'Password',
                 'confirm_password' => 'Confirm password', 
             ],
+            'special_char_label' => 'Recommended special characters',
         ],
         'char_password' => 'The password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character.',
     ],
@@ -104,8 +105,14 @@ return [
                 'episode_title' => 'Episode title',
                 'episode_cost' => 'Episode cost',
                 'episode_description' => 'Episode Description',
-                'allowed_file_type' => '(Allowed type jpg | png | jpeg | JPG | JPEG | PNG)'
+                'allowed_file_type' => '(Allowed type jpg | png | jpeg | JPG | JPEG | PNG)',
+                'allowed_dimension' => '(Recommended size: 930px x 390px)',
                 
+            ],
+            'custom_validation_message' => [
+                'poster_image' => [
+                    'invalid_dimension' => 'The image must be at least 930 pixels width and 390 pixels height.'
+                ]
             ],
             'delete_message' => 'Once deleted, this record cannot be restored. Also all the episode will be deleted associated with this poster.',
             'add_episode' => 'Add Episode',

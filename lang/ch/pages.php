@@ -40,6 +40,7 @@ return [
                 'password' => '密码',
                 'confirm_password' => '确认密码',
             ],
+            'special_char_label' => '推薦的特殊字符',
         ],
          'char_password' => '密码必须至少包含 1 个小写字母、1 个大写字母、1 个数字和 1 个特殊字符。',
     ],
@@ -104,7 +105,12 @@ return [
                 'episode_cost' => '剧集费用',
                 'episode_description' => '剧集描述',
                 'allowed_file_type' => '（允许类型 jpg | png | jpeg | JPG | JPEG | PNG)',
-
+                'allowed_dimension' => '(推薦尺寸 930px x 390px)',
+            ],
+            'custom_validation_message' => [
+                'poster_image' => [
+                    'invalid_dimension' => '圖片的寬度必須至少為 930 像素，高度必須至少 390 像素.'
+                ]
             ],
             'delete_message' => '该记录一旦删除，将无法恢复。此外，与此帖子相关的所有剧集都将被删除',
             'add_episode' => '添加剧集',

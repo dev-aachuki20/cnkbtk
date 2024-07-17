@@ -51,7 +51,9 @@
 
                 <div class="col-lg-6 col-12">
                   <div class="form-group mb-4">
-                    <label for="file">{{trans("pages.post.form.fields.poster_cover_image")}} <small>{{trans("pages.post.form.fields.allowed_file_type")}}</small></label>
+                    <label for="file">{{trans("pages.post.form.fields.poster_cover_image")}} 
+                      <small>{{trans("pages.post.form.fields.allowed_file_type")}}</small><br>
+                      <small>{{trans("pages.post.form.fields.allowed_dimension")}}</small></label>
                     <div class="input-group file-input-group" id="cover_image"  data-controller="file-input">
                       <input class="form-control" id="poster_image" type="text" placeholder="{{trans('global.no_file_selected')}}" readonly
                         data-target="file-input.value" />
